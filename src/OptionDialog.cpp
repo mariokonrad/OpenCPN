@@ -111,6 +111,8 @@ extern bool g_bserial_access_checked;
 
 options* g_pOptions;
 
+extern bool g_bmobile;
+
 extern "C" bool CheckSerialAccess(void);
 
 IMPLEMENT_DYNAMIC_CLASS(options, wxDialog)
@@ -1385,6 +1387,10 @@ void options::CreatePanel_Display(size_t parent, int border_size, int WXUNUSED(g
 		= new wxCheckBox(itemPanelUI, ID_SKEWCOMPBOX, _("Show Skewed Raster Charts as North-Up"));
 	itemStaticBoxSizerCDO->Add(pSkewComp, 1, wxALL, border_size);
 
+	// Mobile/Tochscreen checkbox
+	pMobile = new wxCheckBox(itemPanelUI, ID_MOBILEBOX, _("Enable Touchscreen/Tablet Interface"));
+	itemStaticBoxSizerCDO->Add(pMobile, 1, wxALL, border_size);
+
 	// "Mag Heading" checkbox
 	pCBMagShow
 		= new wxCheckBox(itemPanelUI, ID_MAGSHOWCHECKBOX, _("Show Magnetic bearings and headings"));
@@ -1729,10 +1735,10 @@ void options::CreatePanel_UI(size_t parent, int border_size, int WXUNUSED(group_
 void options::CreateControls()
 {
 	int border_size = 4;
+	int check_spacing = 4;
 	int group_item_spacing = 2; // use for items within one group, with Add(...wxALL)
 
-	wxFont* qFont = wxTheFontList->FindOrCreateFont(10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL,
-													wxFONTWEIGHT_NORMAL);
+	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
 	SetFont(*qFont);
 
 	int font_size_y, font_descent, font_lead;
@@ -1748,17 +1754,20 @@ void options::CreateControls()
 	int width, height;
 	::wxDisplaySize(&width, &height);
 
-	if (height <= 800) {
-		border_size = 2;
-		group_item_spacing = 1;
+	if (!g_bmobile) {
+		if (height <= 800) {
+			border_size = 2;
+			check_spacing = 2;
+			group_item_spacing = 1;
 
-		wxFont* sFont = wxTheFontList->FindOrCreateFont(8, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL,
-														wxFONTWEIGHT_NORMAL);
-		SetFont(*sFont);
+			wxFont* sFont = wxTheFontList->FindOrCreateFont(
+				8, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
+			SetFont(*sFont);
 
-		int font_size_y, font_descent, font_lead;
-		GetTextExtent(_T("0"), NULL, &font_size_y, &font_descent, &font_lead);
-		small_button_size = wxSize(-1, (int)(1.5 * (font_size_y + font_descent + font_lead)));
+			int font_size_y, font_descent, font_lead;
+			GetTextExtent(_T("0"), NULL, &font_size_y, &font_descent, &font_lead);
+			small_button_size = wxSize(-1, (int)(1.5 * (font_size_y + font_descent + font_lead)));
+		}
 	}
 
 	options* itemDialog1 = this;
@@ -1768,6 +1777,15 @@ void options::CreateControls()
 
 	m_pListbook
 		= new wxListbook(itemDialog1, ID_NOTEBOOK, wxDefaultPosition, wxSize(-1, -1), wxLB_TOP);
+
+	// Reduce the Font size on ListBook(ListView) selectors to allow single line layout
+	if (g_bmobile) {
+		wxListView* lv = m_pListbook->GetListView();
+		wxFont* sFont = wxTheFontList->FindOrCreateFont(10, wxFONTFAMILY_DEFAULT,
+														wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
+		lv->SetFont(*sFont);
+	}
+
 	m_topImgList = new wxImageList(40, 40, true, 1);
 	gui::Style& style = global::OCPN::get().styleman().current();
 
@@ -1941,6 +1959,7 @@ void options::SetInitialSettings()
 	pFullScreenQuilt->SetValue(!view.fullscreen_quilt);
 	pSDepthUnits->SetValue(view.show_depth_units);
 	pSkewComp->SetValue(view.skew_comp);
+	pMobile->SetValue(g_bmobile);
 	pOpenGL->SetValue(view.opengl);
 	pSmoothPanZoom->SetValue(view.smooth_pan_zoom);
 	if (view.enable_zoom_to_cursor || pEnableZoomToCursor->GetValue()) {
@@ -2516,6 +2535,7 @@ void options::OnApplyClick(wxCommandEvent& event)
 
 	gui.set_view_show_depth_units(pSDepthUnits->GetValue());
 	gui.set_skew_comp(pSkewComp->GetValue());
+	g_bmobile = pMobile->GetValue();
 	bool temp_bopengl = pOpenGL->GetValue();
 	gui.set_smooth_pan_zoom(pSmoothPanZoom->GetValue());
 

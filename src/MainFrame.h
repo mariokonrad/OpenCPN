@@ -64,6 +64,8 @@ namespace chart { class ChartBase; }
 
 class wxSocketEvent;
 
+wxFont* GetOCPNScaledFont(wxString item, int default_size); // FIXME: refactoring
+
 // Define a constant GPS signal watchdog timeout value
 #define GPS_TIMEOUT_SECONDS  6
 

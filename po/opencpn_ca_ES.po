@@ -269,6 +269,19 @@ msgstr ""
 msgid "%H:%M"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -329,6 +342,19 @@ msgstr "&Família de LLetres"
 msgid "&Go To"
 msgstr "Anar-hi [&G]"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -389,6 +415,19 @@ msgstr "Inve&rsió"
 msgid "&Send to GPS"
 msgstr "Enviar al GP&S"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -676,6 +715,19 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -732,6 +784,19 @@ msgstr "Llista d'Objectes AIS"
 msgid "AISRollover"
 msgstr "Info Extra d'AIS"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1635,6 +1700,19 @@ msgstr "Valors a Consola"
 msgid "Constrained by draught"
 msgstr "Constret pel corrent"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1725,6 +1803,19 @@ msgstr "Esborrar el Waypoint"
 msgid "Cruise ship"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1839,6 +1930,19 @@ msgstr "Cel·la"
 msgid "Data Connections"
 msgstr "Opcions en vers les Fonts de Lletra"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2106,6 +2210,19 @@ msgstr ""
 msgid "Dredge"
 msgstr "Draga"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2247,6 +2364,19 @@ msgstr ""
 msgid "Environmental Caution Area: Strong currents"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2438,6 +2568,20 @@ msgstr ""
 msgid "GPS Offset from Midship (m)"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2469,6 +2613,19 @@ msgstr "GPS"
 msgid "GUID"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2522,6 +2679,19 @@ msgstr ""
 msgid "HSC"
 msgstr "HSC"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2649,6 +2819,19 @@ msgstr "Importar arxius GPX"
 msgid "Important Text Only"
 msgstr "Mostra només el Text Important"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2766,6 +2949,19 @@ msgstr "Local de la posició"
 msgid "LMT @ Track Start"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2865,6 +3061,19 @@ msgstr "Trajecte"
 msgid "Leg: from "
 msgstr "Trajecte: des de "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3367,6 +3576,19 @@ msgstr "Cartes"
 msgid "New Group..."
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3620,6 +3842,19 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3858,6 +4093,19 @@ msgstr "Preferència del Canal Mà Babord"
 msgid "Preferred Channel Starboard Hand"
 msgstr "Preferència del Canal Mà Estribord"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3876,6 +4124,19 @@ msgstr "Prepari el GPS per carregar-hi Rutes/Wayopoints i premi Enviar... "
 msgid "Preserve Scale when Switching Charts"
 msgstr "Conservar l'escala en canviar de cartes"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3961,6 +4222,19 @@ msgstr ""
 msgid "Processing Waypoints..."
 msgstr "Processant els Waypoints..."
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4155,6 +4429,19 @@ msgstr "Ref.Babor"
 msgid "Reference Point"
 msgstr "Punt de Referència"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4347,6 +4634,19 @@ msgstr "Propietats de la Ruta"
 msgid "Route Properties"
 msgstr "Propietats de la Ruta"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4520,6 +4820,19 @@ msgid ""
 "after data reduction:"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4532,6 +4845,19 @@ msgstr ""
 msgid "Send"
 msgstr "Enviar"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4893,6 +5219,12 @@ msgstr "Especial"
 msgid "Special Mark"
 msgstr "Marca Especial"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 # 
 #, fuzzy
@@ -5012,6 +5344,19 @@ msgstr "CPA TCPA"
 msgid "TCPA"
 msgstr "CPA TCPA"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5231,6 +5576,19 @@ msgstr "Trajecte Viu"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5307,6 +5665,19 @@ msgstr "Al Waypoint"
 msgid "To route"
 msgstr "Temps en Ruta"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5330,6 +5701,19 @@ msgstr "Activa/Desact. la Derrota"
 msgid "Toggle track"
 msgstr "Activa/Desact. la Derrota"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5478,6 +5862,19 @@ msgstr ""
 msgid "Tug, single"
 msgstr "Vaixell Cisterna"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5662,6 +6059,19 @@ msgstr "Vaixell Llarg Remolcant"
 msgid "Vessel requesting non-distress assistance"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6017,6 +6427,137 @@ msgstr ""
 msgid "mph"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+# 
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "Dades RLL de l'Arxiu de la Carta corrompen en la carta"
+
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+# 
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "L'arxiu de la carta no té capçalera de BSB, no es pot Iniciar."
+
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+# 
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr ""
+"   No s'ha pogut llegir els primers %d bytes de la capçalera de l'arxiu de "
+"la carta:"
+
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+# 
+msgid "--"
+msgstr "--"
+
+#
+# 
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "N'està segur de voler esborrar <TOTES>les rutes?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr "Error en carregar waypoints. Comprovi els arxius de notes..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+# 
+#, fuzzy
+msgid "in "
+msgstr "Enllaços"
+
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6044,6 +6585,52 @@ msgstr ""
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6096,6 +6683,33 @@ msgstr ""
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6123,6 +6737,33 @@ msgstr ""
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "    Llargària de la fletxa previsora COG (Minuts):"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6150,6 +6791,33 @@ msgstr ""
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "    Velocitat màx. d'objectes amarrats (Nusos):"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6177,18 +6845,46 @@ msgstr ""
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "    Llargària de l'estela dels objectes (Minuts):"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "Dades RLL de l'Arxiu de la Carta corrompen en la carta"
-
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
 #
-#
-# 
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "L'arxiu de la carta no té capçalera de BSB, no es pot Iniciar."
-
 #
 #
 #
@@ -6229,14 +6925,52 @@ msgstr ""
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "   Projecció de la carta DESCONEGUDA, s'assumeix Mercator: "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr ""
-#~ "   No s'ha pogut llegir els primers %d bytes de la capçalera de l'arxiu "
-#~ "de la carta:"
-
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6283,6 +7017,52 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load library: "
 #~ msgstr "   Gestor de Mòduls: No es pot carregar la biblioteca: "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6329,6 +7109,52 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load symbol create_pi: "
 #~ msgstr "   Gestor de Mòduls: No es pot carregar el símbol creat_pi: "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6375,6 +7201,32 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load symbol destroy_pi: "
 #~ msgstr "   Gestor de Mòduls: No es pot carregar el símbol destruir_pi:"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6401,6 +7253,32 @@ msgstr ""
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  No es pot obrir el port sèrie d'AIS '"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6427,6 +7305,14 @@ msgstr ""
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  No podria obrir el port sèrie '"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6435,6 +7321,19 @@ msgstr ""
 #~ msgid " is %5g"
 #~ msgstr "és %5g"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6448,6 +7347,52 @@ msgstr ""
 #~ msgid "&Export Track..."
 #~ msgstr "&Exportar Derrota..."
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6494,6 +7439,32 @@ msgstr ""
 #~ msgid "&Toggle Chart"
 #~ msgstr "Commu&tar la Carta"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6524,6 +7495,32 @@ msgstr ""
 #~ "'\n"
 #~ " Consell: Proveu la notació: 'xxx.xxx.xxx.xxx'"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6554,14 +7551,34 @@ msgstr ""
 #~ "'\n"
 #~ "Suggeriment: Provi de tancar els altres programes."
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
 #
 # 
-#~ msgid "--"
-#~ msgstr "--"
-
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6591,6 +7608,34 @@ msgstr ""
 #~ msgid ":               "
 #~ msgstr "Classe:               "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6623,6 +7668,47 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Rumb:                   No Disponible\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6665,6 +7751,33 @@ msgstr ""
 #~ msgid "AIS SART Alert"
 #~ msgstr "Alerta d'AIS"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6692,6 +7805,42 @@ msgstr ""
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "Activació de la Correcció per CM93 "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6728,6 +7877,33 @@ msgstr ""
 #~ msgid "Activate Route"
 #~ msgstr "Activació de la Ruta"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6755,6 +7931,32 @@ msgstr ""
 #~ msgid "Add Selection"
 #~ msgstr "Afegir la Selecció"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6781,6 +7983,49 @@ msgstr ""
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Afegiu aquesta carta al visor"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6824,6 +8069,33 @@ msgstr ""
 #~ msgid "Additional information"
 #~ msgstr "Informació addicional"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6851,6 +8123,52 @@ msgstr ""
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Tots els arxius (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6897,6 +8215,32 @@ msgstr ""
 #~ msgid "Attempting to load libgps.so"
 #~ msgstr "Intentant carregar libgps.so"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6923,6 +8267,33 @@ msgstr ""
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Port de Sortida pel Pilot Automàtic"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6950,6 +8321,52 @@ msgstr ""
 #~ msgid "Available Chart Directories"
 #~ msgstr "Directoris Disponibles de Cartes "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6996,6 +8413,34 @@ msgstr ""
 #~ msgid "BaseClassCommonName"
 #~ msgstr "NomHabitual per ClasseBàsica"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7024,6 +8469,34 @@ msgstr ""
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Demora:                 %03d Graus.\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7052,6 +8525,33 @@ msgstr ""
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Demora:                 No Disponible\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7079,6 +8579,32 @@ msgstr ""
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7106,6 +8632,33 @@ msgstr ""
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Permetre la Colisa pel Detall CM93"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7133,6 +8686,33 @@ msgstr ""
 #~ msgid "CM93 Offset Display"
 #~ msgstr "Pantalla de Correcció CM93"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7160,6 +8740,33 @@ msgstr ""
 #~ msgid "CM93 Offsets"
 #~ msgstr "Correccions en CM93"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7187,6 +8794,34 @@ msgstr ""
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "Detall en Ampliació CM93"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7215,6 +8850,34 @@ msgstr ""
 #~ msgid "CPA:       \n"
 #~ msgstr "CPA:       \n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7243,6 +8906,32 @@ msgstr ""
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                %6.1f  MN\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7277,6 +8966,34 @@ msgstr ""
 #~ "\n"
 #~ "el host gpsd és: "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7305,6 +9022,48 @@ msgstr ""
 #~ msgid "CallSign:             "
 #~ msgstr "ID Trucada(CallSign): "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7347,6 +9106,33 @@ msgstr ""
 #~ msgid "Chart"
 #~ msgstr "Carta"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7374,6 +9160,32 @@ msgstr ""
 #~ msgid "Chart Display Filters"
 #~ msgstr "Filtres pel Visor de Cartes"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7401,6 +9213,34 @@ msgstr ""
 #~ msgid "Chart Position"
 #~ msgstr "Posició"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7429,6 +9269,32 @@ msgstr ""
 #~ msgid "Class:                "
 #~ msgstr "Classe:               "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7455,6 +9321,34 @@ msgstr ""
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "No s'ha pogut resoldre la TCP / IP del host"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7483,6 +9377,34 @@ msgstr ""
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "Rumb:                   %03d º.\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7512,6 +9434,34 @@ msgstr ""
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Rumb:                   %03d º.\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7540,6 +9490,33 @@ msgstr ""
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "Rumb:                   No Disponible\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7567,6 +9544,42 @@ msgstr ""
 #~ msgid "Cursor: "
 #~ msgstr "Cursor: "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7603,6 +9616,45 @@ msgstr ""
 #~ msgid "Deactivate Route"
 #~ msgstr "Desactivació de la Ruta"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7643,6 +9695,33 @@ msgstr ""
 #~ msgid "Default dataset"
 #~ msgstr "El color de la lletra"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7671,6 +9750,42 @@ msgstr ""
 #~ msgid "Deg"
 #~ msgstr "Draga"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7707,6 +9822,33 @@ msgstr ""
 #~ msgid "Delete Mark"
 #~ msgstr "Esborrar la Marca"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7734,6 +9876,33 @@ msgstr ""
 #~ msgid "Delete Route"
 #~ msgstr "Esborrar la Ruta"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7761,6 +9930,33 @@ msgstr ""
 #~ msgid "Delete Selection"
 #~ msgstr "Esborrar la Selecció"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7788,6 +9984,33 @@ msgstr ""
 #~ msgid "Delete Track"
 #~ msgstr "Esborrar la Derrota"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7815,6 +10038,34 @@ msgstr ""
 #~ msgid "Depth Settings"
 #~ msgstr "Configuració de Fondària"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7843,6 +10094,32 @@ msgstr ""
 #~ msgid "Destination:          "
 #~ msgstr "Destí:"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7870,6 +10147,22 @@ msgstr ""
 #~ msgid "Display Style"
 #~ msgstr "Estil de Mostrar la Cartografia"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7886,6 +10179,33 @@ msgstr ""
 #~ msgid "E&xport All..."
 #~ msgstr "E&xportar-ho Tot..."
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7913,6 +10233,34 @@ msgstr ""
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Vectorials"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7941,6 +10289,34 @@ msgstr ""
 #~ msgid "ETA:"
 #~ msgstr "ETA:"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7969,6 +10345,33 @@ msgstr ""
 #~ msgid "ETA:                  "
 #~ msgstr "ETA:                  "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7996,6 +10399,33 @@ msgstr ""
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "Permetre Correccions Manuals en CM93"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8023,6 +10453,33 @@ msgstr ""
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Habilitar la roda del ratolí com a eina de Zoom"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8050,6 +10507,52 @@ msgstr ""
 #~ msgid "Etc."
 #~ msgstr "Etc."
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8096,6 +10599,52 @@ msgstr ""
 #~ msgid "Exit OpenCPN"
 #~ msgstr "Tanca l'OpenCPN"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8142,6 +10691,52 @@ msgstr ""
 #~ msgid "Failed to load libgps.so"
 #~ msgstr "Fracàs en carregar libgps.so"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8188,6 +10783,33 @@ msgstr ""
 #~ msgid "Failed to load libgps.so.19"
 #~ msgstr "Fracàs en carregar libgps.so.19"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8216,6 +10838,33 @@ msgstr ""
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "DesDelVaixellPropi: %03d º  %6.2f  MNi"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8243,6 +10892,32 @@ msgstr ""
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8269,6 +10944,33 @@ msgstr ""
 #~ msgid "GPSD Data Server"
 #~ msgstr "Servidor de Dades GPSD"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8296,6 +10998,42 @@ msgstr ""
 #~ msgid "Go To Here"
 #~ msgstr "Anar Cap Aquí"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8332,6 +11070,34 @@ msgstr ""
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Cap a la Marca/Wpt"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8361,6 +11127,34 @@ msgstr ""
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Demora:                 %03d Graus.\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8390,6 +11184,52 @@ msgstr ""
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "Tipus:                "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8436,6 +11276,34 @@ msgstr ""
 #~ msgid "Import new layer"
 #~ msgstr "Importar noves capes"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8464,6 +11332,33 @@ msgstr ""
 #~ msgid "Inland Blue Flag        Clear\n"
 #~ msgstr "Bandera Blava            Esborrada\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8491,6 +11386,33 @@ msgstr ""
 #~ msgid "Jump To"
 #~ msgstr "Centrar-s'hi"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8518,6 +11440,42 @@ msgstr ""
 #~ msgid "Jump To Position"
 #~ msgstr "Salta a la Posició"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8554,6 +11512,33 @@ msgstr ""
 #~ msgid "Jump To Position..."
 #~ msgstr "Saltar a la Posició..."
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8582,6 +11567,46 @@ msgstr ""
 #~ msgid "Jump To..."
 #~ msgstr "Centrar-s'hi"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8622,6 +11647,34 @@ msgstr ""
 #~ msgid "Language/Fonts"
 #~ msgstr "Idioma/Lletres"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8651,6 +11704,33 @@ msgstr ""
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Hora del Darrer Informe:"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8678,6 +11758,33 @@ msgstr ""
 #~ msgid "Leg/Route"
 #~ msgstr "Trajecte/Ruta"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8705,6 +11812,49 @@ msgstr ""
 #~ msgid "META Objects"
 #~ msgstr "Mostra Objectes META"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8749,6 +11899,49 @@ msgstr ""
 #~ msgid "MMSI:                 %09d\n"
 #~ msgstr "Tipus:                "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8792,6 +11985,49 @@ msgstr ""
 #~ msgid "Mark Icon"
 #~ msgstr "Icona de la Marca"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8835,6 +12071,22 @@ msgstr ""
 #~ msgid "Mark Name"
 #~ msgstr "Nom de la Marca"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8851,6 +12103,42 @@ msgstr ""
 #~ msgid "Mark Properties"
 #~ msgstr "Propietats de la Marca"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8888,6 +12176,42 @@ msgstr ""
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Propietats de la Marca/Wpt "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8924,6 +12248,33 @@ msgstr ""
 #~ msgid "Measure....."
 #~ msgstr "Mesurar....."
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8951,6 +12302,32 @@ msgstr ""
 #~ msgid "Metres"
 #~ msgstr "Metres"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8977,6 +12354,33 @@ msgstr ""
 #~ msgid "NMEA Data Source"
 #~ msgstr "Font de les Dades NMEA"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9004,6 +12408,34 @@ msgstr ""
 #~ msgid "NMEA Options"
 #~ msgstr "Opcions en el NMEA"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9032,6 +12464,34 @@ msgstr ""
 #~ msgid "Name:  "
 #~ msgstr "Nom:   "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9060,6 +12520,52 @@ msgstr ""
 #~ msgid "Navigational Status:  "
 #~ msgstr "Estat de Navegació:   "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9106,6 +12612,32 @@ msgstr ""
 #~ msgid "New Mark"
 #~ msgstr "Marca Nova"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9133,6 +12665,52 @@ msgstr ""
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Nombre d'anells de radar a mostrar"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9179,6 +12757,52 @@ msgstr ""
 #~ msgid "OpenCPN PlugIn Base Class"
 #~ msgstr "Mòdul de l'OpenCPN de Classe Bàsica"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9229,6 +12853,52 @@ msgstr ""
 #~ "Mòdul de Clase Bàsica de l'OpenCPN\n"
 #~ "El Gestor de Mòduls ha creat aquesta classe bàsica"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9275,6 +12945,18 @@ msgstr ""
 #~ msgid "OpenCPN S57 SENC File Load"
 #~ msgstr "Càrrega de l'Arxiu S57 SENC de l'OpenCPN"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9287,6 +12969,32 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Altres"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9314,6 +13022,32 @@ msgstr ""
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Opcions en la Presentació del Vaixell Propi "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9341,6 +13075,32 @@ msgstr ""
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "Intèrval de navegació en inserir punts de Derrota (MNi)"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9368,6 +13128,19 @@ msgstr ""
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Intèrval de temps en inserir punts de Derrota (Segons)"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9381,6 +13154,52 @@ msgstr ""
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Velocitat de Ruta(Kts)"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9427,6 +13246,52 @@ msgstr ""
 #~ msgid "PlugInManager searching for PlugIns in location "
 #~ msgstr "El Gestor de Mòduls de Programari cerca mòduls en el lloc "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9473,6 +13338,52 @@ msgstr ""
 #~ msgid "PlugInManager: Deactivating PlugIn: "
 #~ msgstr "Gestor de Mòduls: Es Desactiva el Mòdul:"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9519,6 +13430,52 @@ msgstr ""
 #~ msgid "PlugInManager: Initializing PlugIn: "
 #~ msgstr "Gestor de Mòduls: S'inicialitza el Mòdul:"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9565,6 +13522,52 @@ msgstr ""
 #~ msgid "PlugInManager: Loading PlugIn: "
 #~ msgstr "Gestor de Mòduls: Es Carrega el Mòdul: "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9611,6 +13614,52 @@ msgstr ""
 #~ msgid "PlugInManager: UnLoading PlugIn: "
 #~ msgstr "Gestor de Mòduls: Es descarrega el Mòdul:"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9659,6 +13708,34 @@ msgstr ""
 #~ "Gestor de Mòduls: Es descarrega Mòdul amb una versió d'API invàlida %d."
 #~ "%d: "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9690,6 +13767,52 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Temps del Informe:   %3d Seg.\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9736,6 +13859,46 @@ msgstr ""
 #~ msgid "Position:               "
 #~ msgstr "Posició:                "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9786,6 +13949,32 @@ msgstr ""
 #~ "                       Voldríeu fer servir aquesta versió de libgps de "
 #~ "totes maneres?"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9812,6 +14001,34 @@ msgstr ""
 #~ msgid "Radar rings"
 #~ msgstr "Anells de Radar"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9840,6 +14057,34 @@ msgstr ""
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Distància:              No Disponible\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9868,6 +14113,33 @@ msgstr ""
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Distància:             %5.1f MN\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9895,6 +14167,34 @@ msgstr ""
 #~ msgid "Raster"
 #~ msgstr "Escanejades"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9923,6 +14223,34 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Maniobra de Gir:        %3d Graus/Min. Esquerra\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9951,6 +14279,34 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Maniobra de Gir:        %3d Graus/Min. Dreta\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9979,6 +14335,34 @@ msgstr ""
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Maniobra de Gir:        0\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10007,6 +14391,34 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Maniobra de Gir:    >5º /30seg. Esquerra\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10035,6 +14447,52 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Maniobra de Gir:    >5º /30seg. Dreta\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10085,6 +14543,32 @@ msgstr ""
 #~ "Període d'Informe Recent:   %3d Seg.\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10112,6 +14596,32 @@ msgstr ""
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Treure aquesta carta del visor"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10138,6 +14648,42 @@ msgstr ""
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Treure aquesta carta del visor"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10174,6 +14720,33 @@ msgstr ""
 #~ msgid "Reverse Route"
 #~ msgstr "Inverció de la Ruta"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10202,6 +14775,33 @@ msgstr ""
 #~ msgid "Route Properties..."
 #~ msgstr "Propietats de la Ruta"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10230,6 +14830,33 @@ msgstr ""
 #~ msgid "Route/Track"
 #~ msgstr "De Derrota a Ruta"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10257,6 +14884,22 @@ msgstr ""
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Triar els Tipus de Cartes a Presentar"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10274,6 +14917,42 @@ msgstr ""
 #~ msgid "Send to GPS ( "
 #~ msgstr "Enviar al GP&S"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10311,6 +14990,33 @@ msgstr ""
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Mode Rumb Amunt"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10338,6 +15044,33 @@ msgstr ""
 #~ msgid "Settings"
 #~ msgstr "Configuracions"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10365,6 +15098,45 @@ msgstr ""
 #~ msgid "Show ATON labels"
 #~ msgstr "Mostra les etiquetes ATON"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10404,6 +15176,45 @@ msgstr ""
 #~ msgid "Show Printing Icon"
 #~ msgstr "Mostra la Icona d'Impressió"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10443,6 +15254,34 @@ msgstr ""
 #~ msgid "Show Track icon"
 #~ msgstr "Mostrar la icona de derrota"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10476,6 +15315,34 @@ msgstr ""
 #~ "Mida:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10508,6 +15375,34 @@ msgstr ""
 #~ "Mida:                 %dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10540,6 +15435,34 @@ msgstr ""
 #~ "Mida:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10572,6 +15495,34 @@ msgstr ""
 #~ "Mida:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10604,6 +15555,34 @@ msgstr ""
 #~ "Mida:                 ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10636,6 +15615,34 @@ msgstr ""
 #~ "Mida:               %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10668,6 +15675,34 @@ msgstr ""
 #~ "Mida:               %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10696,6 +15731,34 @@ msgstr ""
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Velocitat:             No Disponible\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10724,6 +15787,17 @@ msgstr ""
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Velocitat:             %5.2f Kts.\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10736,6 +15810,33 @@ msgstr ""
 #~ msgid "T"
 #~ msgstr "Cap a"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10763,6 +15864,34 @@ msgstr ""
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "Servidor de Dades WiFi TCP/IP"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10791,6 +15920,34 @@ msgstr ""
 #~ msgid "TCPA:  \n"
 #~ msgstr "TCPA:  \n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10819,6 +15976,33 @@ msgstr ""
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA:                 %02d:%02d Hr:Min\n"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10846,6 +16030,33 @@ msgstr ""
 #~ msgid "Text Element"
 #~ msgstr "Element de Text"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10874,6 +16085,33 @@ msgstr ""
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "Mostrar-hi els Corrents"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10902,6 +16140,52 @@ msgstr ""
 #~ msgid "Tide/Current Data Selector"
 #~ msgstr "Avenç Gràfic, Marees/Corrents"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10948,6 +16232,52 @@ msgstr ""
 #~ msgid "Toggle Listing"
 #~ msgstr "Commu&tar la Llista"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10994,6 +16324,33 @@ msgstr ""
 #~ msgid "Toggle Names"
 #~ msgstr "Bescanvia Noms"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11021,6 +16378,33 @@ msgstr ""
 #~ msgid "ToolBox"
 #~ msgstr "Eines i Configuracions"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11049,6 +16433,33 @@ msgstr ""
 #~ msgid "Track Properties..."
 #~ msgstr "Característiques de la Derrota"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11076,6 +16487,34 @@ msgstr ""
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "EscalaVerd.: %8.0f             "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11104,6 +16543,34 @@ msgstr ""
 #~ msgid "Type:                 "
 #~ msgstr "Tipus:                "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11132,6 +16599,32 @@ msgstr ""
 #~ msgid "UN Ship Type:         "
 #~ msgstr "Tipus ONU de Vaixell: "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11164,6 +16657,32 @@ msgstr ""
 #~ "\n"
 #~ "el host gpsd és: "
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11191,6 +16710,26 @@ msgstr ""
 #~ msgid "Unable to load libgps"
 #~ msgstr "No es pot carregar libgps.so"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11212,6 +16751,32 @@ msgstr ""
 #~ msgid "Unavailable"
 #~ msgstr "Cap Carta Disponible"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11238,6 +16803,33 @@ msgstr ""
 #~ msgid "Units"
 #~ msgstr "Unitats"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11265,6 +16857,33 @@ msgstr ""
 #~ msgid "Use SCAMIN"
 #~ msgstr "Emprar SCAMIN"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11292,6 +16911,33 @@ msgstr ""
 #~ msgid "Waypoint Locking"
 #~ msgstr "Bloqueig de Waypoints"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11319,6 +16965,33 @@ msgstr ""
 #~ msgid "WiFi Options"
 #~ msgstr "Opcions WiFi"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11346,6 +17019,33 @@ msgstr ""
 #~ msgid "X Offset (Positive moves map to East) (NMi Projected) :"
 #~ msgstr "Correcció X (Positiu mou el mapa cal a l'Est) (Projectat en MNi) :"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11373,6 +17073,33 @@ msgstr ""
 #~ msgid "Y Offset (Positive moves map to North) (NMi Projected) :"
 #~ msgstr "Correcció Y (Positiu mou el mapa cap el Nord) (Projectat en MNi) :"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11400,6 +17127,46 @@ msgstr ""
 #~ msgid "cm93 Detail"
 #~ msgstr "Detall CM93"
 
+# #-#-#-#-#  .merge_file_5La7Wl (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_mkE6fd (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #

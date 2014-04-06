@@ -22,6 +22,8 @@
  **************************************************************************/
 
 #include "MessageBox.h"
+#include <MainFrame.h>
+
 #include <wx/dialog.h>
 #include <wx/sizer.h>
 #include <wx/msgdlg.h>
@@ -61,6 +63,9 @@ OCPNMessageDialog::OCPNMessageDialog(wxWindow* parent, const wxString& message,
 			   wxDEFAULT_DIALOG_STYLE | wxSTAY_ON_TOP)
 {
 	m_style = style;
+	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
+	SetFont(*qFont);
+
 	wxBoxSizer* topsizer = new wxBoxSizer(wxVERTICAL);
 
 #if wxUSE_STATBMP || wxUSE_STATTEXT

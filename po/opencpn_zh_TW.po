@@ -297,6 +297,18 @@ msgstr "%D Days, %H:%M"
 msgid "%H:%M"
 msgstr "%H:%M"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -362,6 +374,18 @@ msgstr "字型(&F):"
 msgid "&Go To"
 msgstr "前往(&G)"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -427,6 +451,18 @@ msgstr "反向(&R)"
 msgid "&Send to GPS"
 msgstr "傳送至GPS(&S)"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -502,6 +538,16 @@ msgstr "(保留供未來使用)"
 msgid "(unnamed)"
 msgstr "(未命名)"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -730,6 +776,18 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -784,6 +842,18 @@ msgstr "AIS 目標列表"
 msgid "AISRollover"
 msgstr "AISRollover"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -836,6 +906,16 @@ msgstr "關於"
 msgid "About OpenCPN"
 msgstr "關於 OpenCPN "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1115,6 +1195,18 @@ msgstr "平均速度"
 msgid "B"
 msgstr "B"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1240,6 +1332,18 @@ msgstr "船艏向"
 msgid "Buddy"
 msgstr "Buddy"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1251,6 +1355,18 @@ msgstr "Buddy"
 msgid "Bulk carrier maritime"
 msgstr "海洋散貨船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1765,6 +1881,18 @@ msgstr "Console 數值"
 msgid "Constrained by draught"
 msgstr "吃水受限"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1800,6 +1928,16 @@ msgstr "複製為 KML"
 msgid "Copy as KML..."
 msgstr "複製為 KML..."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1858,6 +1996,18 @@ msgstr "建立航路點"
 msgid "Create Waypoint"
 msgstr "建立航路點"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1869,6 +2019,18 @@ msgstr "建立航路點"
 msgid "Cruise ship"
 msgstr "遊輪"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1995,6 +2157,18 @@ msgstr "暗黃"
 msgid "Data Connections"
 msgstr "資料連接"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2278,6 +2452,18 @@ msgstr "點折線"
 msgid "Dredge"
 msgstr "濬挖船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2426,6 +2612,18 @@ msgstr "環境警戒區域: 暴風雨警告"
 msgid "Environmental Caution Area: Strong currents"
 msgstr "環境警戒區域: 強勁海流"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2526,6 +2724,18 @@ msgstr "漁船"
 msgid "Failed to initialize the user interface. "
 msgstr "使用者介面啓用失敗"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2549,6 +2759,18 @@ msgstr "噚"
 msgid "Feet"
 msgstr "英呎"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2578,6 +2800,18 @@ msgstr "篩選週期 (秒)"
 msgid "Filters"
 msgstr "篩選"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2619,6 +2853,18 @@ msgstr "強制重建索引資料庫"
 msgid "Format uploads for Furuno GP3X"
 msgstr "上傳 Furuno GP3X 格式"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2630,6 +2876,18 @@ msgstr "上傳 Furuno GP3X 格式"
 msgid "Freightbarge"
 msgstr "貨運駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2659,6 +2917,19 @@ msgstr "GPS 天線距船艏位置(m)"
 msgid "GPS Offset from Midship (m)"
 msgstr "GPS 天線距船舯位置(m) "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2692,6 +2963,18 @@ msgstr "GPX"
 msgid "GUID"
 msgstr "GUID"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2716,6 +2999,18 @@ msgstr "一般"
 msgid "General Options"
 msgstr "一般選項"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2752,6 +3047,18 @@ msgstr "Group \""
 msgid "HSC"
 msgstr "高速船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2847,6 +3154,18 @@ msgstr "高速船"
 msgid "Highlight Tracks"
 msgstr "航跡強調顯示"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2903,6 +3222,18 @@ msgstr "匯入 GPX 檔案"
 msgid "Important Text Only"
 msgstr "僅顯示重要文字"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2915,6 +3246,16 @@ msgstr "僅顯示重要文字"
 msgid "In"
 msgstr "圖示"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3028,6 +3369,18 @@ msgstr "LMT @ Location"
 msgid "LMT @ Track Start"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3140,6 +3493,18 @@ msgstr "航段"
 msgid "Leg: from "
 msgstr "航段: 從"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3256,6 +3621,18 @@ msgstr "連結開啓供編輯"
 msgid "Links are opened in the default browser."
 msgstr "連結已在預設瀏覽器中開啓"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3466,6 +3843,16 @@ msgstr "合併轉向點?"
 msgid "Merge waypoints?"
 msgstr "合併轉向點?"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3475,6 +3862,16 @@ msgstr "合併轉向點?"
 msgid "Message accepted"
 msgstr "訊息已接收"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3520,6 +3917,18 @@ msgstr "曙光"
 msgid "Moored"
 msgstr "繫泊中"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3531,6 +3940,18 @@ msgstr "繫泊中"
 msgid "Motor freighter"
 msgstr "動力貨船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3542,6 +3963,18 @@ msgstr "動力貨船"
 msgid "Motor freighter pushing at least one tank-ship"
 msgstr "動力貨船頂推最少一艘液貨儲槽船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3553,6 +3986,18 @@ msgstr "動力貨船頂推最少一艘液貨儲槽船"
 msgid "Motor freighter pushing one or more freighters"
 msgstr "動力貨船頂推一或多艘貨船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3564,6 +4009,18 @@ msgstr "動力貨船頂推一或多艘貨船"
 msgid "Motor freighter with one or more ships alongside"
 msgstr "動力貨船一或多艘並排"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3575,6 +4032,18 @@ msgstr "動力貨船一或多艘並排"
 msgid "Motor freighter with tanker"
 msgstr "具液態儲槽之動力貨船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3586,6 +4055,18 @@ msgstr "具液態儲槽之動力貨船"
 msgid "Motor freighter, tug"
 msgstr "動力貨船, 拖船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3597,6 +4078,18 @@ msgstr "動力貨船, 拖船"
 msgid "Motor tanker"
 msgstr "動力液貨船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3608,6 +4101,18 @@ msgstr "動力液貨船"
 msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
 msgstr "動力液貨船, 視同液體的乾貨(例如:水泥)"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3619,6 +4124,18 @@ msgstr "動力液貨船, 視同液體的乾貨(例如:水泥)"
 msgid "Motor tanker, liquid cargo, type C"
 msgstr "動力液貨船, 液態貨物, 型式 C"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3630,6 +4147,18 @@ msgstr "動力液貨船, 液態貨物, 型式 C"
 msgid "Motor tanker, liquid cargo, type N"
 msgstr "動力液貨船, 液態貨物, 型式 N"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3669,6 +4198,16 @@ msgstr "NMEA 0183"
 msgid "NMEA 2000"
 msgstr "NMEA 2000"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3718,6 +4257,18 @@ msgstr "導航至此處"
 msgid "Navigate To This"
 msgstr "導航至此處"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3744,6 +4295,18 @@ msgstr "新海圖群組"
 msgid "New Group..."
 msgstr "新群組..."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3765,6 +4328,16 @@ msgstr "下一個潮汐事件"
 msgid "Nighttime"
 msgstr "夜晚"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3844,6 +4417,18 @@ msgstr "物件查詢"
 msgid "Object Query..."
 msgstr "物件查詢..."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3855,6 +4440,18 @@ msgstr "物件查詢..."
 msgid "Object, not otherwise specified"
 msgstr "物件, 未定義"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4026,6 +4623,16 @@ msgstr "選項"
 msgid "Other - Define in associated text field"
 msgstr "其他 - 定義於相關說明文字"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4039,6 +4646,18 @@ msgstr "Out"
 msgid "Output"
 msgstr "輸出"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4117,6 +4736,18 @@ msgstr "客船"
 msgid "Passenger Ship"
 msgstr "客船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4128,6 +4759,18 @@ msgstr "客船"
 msgid "Passenger ship without accomodation"
 msgstr "無住艙區載客船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4157,6 +4800,16 @@ msgstr "貼上航跡"
 msgid "Paste Waypoint"
 msgstr "貼上轉向點"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4215,6 +4868,18 @@ msgstr "請重新啟動 OpenCPN 來顯示新設定的語系與樣式."
 msgid "Pleasure craft"
 msgstr "遊艇"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4330,6 +4995,18 @@ msgstr "主要航道左舷側"
 msgid "Preferred Channel Starboard Hand"
 msgstr "主要航道右舷側"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4347,6 +5024,18 @@ msgstr "準備好GPS, 按下傳送鍵上傳航路/轉向點..."
 msgid "Preserve Scale when Switching Charts"
 msgstr "切換海圖時保留原比例尺"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4433,6 +5122,18 @@ msgstr "前往此處 - 等候指示"
 msgid "Processing Waypoints..."
 msgstr "處理轉向點..."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4460,6 +5161,18 @@ msgstr "屬性..."
 msgid "Protocol"
 msgstr "協定"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4471,6 +5184,18 @@ msgstr "協定"
 msgid "Pushboat, single"
 msgstr "推式駁船, 單一艘"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4482,6 +5207,18 @@ msgstr "推式駁船, 單一艘"
 msgid "Pushtow, eight barges at least one tanker or gas barge"
 msgstr "頂推船, 八艘駁船其中至少一艘為液態貨或氣體駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4493,6 +5230,18 @@ msgstr "頂推船, 八艘駁船其中至少一艘為液態貨或氣體駁船"
 msgid "Pushtow, eight cargo barges"
 msgstr "頂推船, 八艘貨物駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4504,6 +5253,18 @@ msgstr "頂推船, 八艘貨物駁船"
 msgid "Pushtow, five barges at least one tanker or gas barge"
 msgstr "頂推船, 五艘駁船其中至少一艘為液態貨或氣體駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4515,6 +5276,18 @@ msgstr "頂推船, 五艘駁船其中至少一艘為液態貨或氣體駁船"
 msgid "Pushtow, five cargo barges"
 msgstr "頂推船, 五艘貨物駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4526,6 +5299,18 @@ msgstr "頂推船, 五艘貨物駁船"
 msgid "Pushtow, four barges at least one tanker or gas barge"
 msgstr "頂推船, 四艘駁船其中至少一艘為液態貨或氣體駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4537,6 +5322,18 @@ msgstr "頂推船, 四艘駁船其中至少一艘為液態貨或氣體駁船"
 msgid "Pushtow, four cargo barges"
 msgstr "頂推船, 四艘貨物駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4548,6 +5345,18 @@ msgstr "頂推船, 四艘貨物駁船"
 msgid "Pushtow, nine or more barges"
 msgstr "頂推船, 九艘以上駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4559,6 +5368,18 @@ msgstr "頂推船, 九艘以上駁船"
 msgid "Pushtow, nine or more barges at least one tanker or gas barge"
 msgstr "頂推船, 九艘駁船其中至少一艘為液態貨或氣體駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4570,6 +5391,18 @@ msgstr "頂推船, 九艘駁船其中至少一艘為液態貨或氣體駁船"
 msgid "Pushtow, one cargo barge"
 msgstr "頂推船, 單一艘貨運駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4581,6 +5414,18 @@ msgstr "頂推船, 單一艘貨運駁船"
 msgid "Pushtow, one tank/gas barge"
 msgstr "頂推船, 一艘 tank/gas 駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4592,6 +5437,18 @@ msgstr "頂推船, 一艘 tank/gas 駁船"
 msgid "Pushtow, seven barges at least one tanker or gas barge"
 msgstr "頂推船, 七艘駁船其中至少一艘為液態貨或氣體駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4603,6 +5460,18 @@ msgstr "頂推船, 七艘駁船其中至少一艘為液態貨或氣體駁船"
 msgid "Pushtow, seven cargo barges"
 msgstr "頂推船, 七艘貨物駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4614,6 +5483,18 @@ msgstr "頂推船, 七艘貨物駁船"
 msgid "Pushtow, six barges at least one tanker or gas barge"
 msgstr "頂推船, 六艘駁船其中至少一艘為液態貨或氣體駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4625,6 +5506,18 @@ msgstr "頂推船, 六艘駁船其中至少一艘為液態貨或氣體駁船"
 msgid "Pushtow, six cargo barges"
 msgstr "頂推船, 六艘貨物駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4636,6 +5529,18 @@ msgstr "頂推船, 六艘貨物駁船"
 msgid "Pushtow, three barges at least one tanker or gas barge"
 msgstr "頂推船, 三艘駁船其中至少一艘為液態貨或氣體駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4647,6 +5552,18 @@ msgstr "頂推船, 三艘駁船其中至少一艘為液態貨或氣體駁船"
 msgid "Pushtow, three cargo barges"
 msgstr "頂推船, 三艘貨物駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4658,6 +5575,18 @@ msgstr "頂推船, 三艘貨物駁船"
 msgid "Pushtow, two barges at least one tanker or gas barge"
 msgstr "頂推船, 兩艘駁船其中至少一艘為液態貨或氣體駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4732,6 +5661,18 @@ msgstr "已記錄航點"
 msgid "Red"
 msgstr "紅"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4771,6 +5712,18 @@ msgstr "參考點"
 msgid "Reference Point"
 msgstr "參考點:"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4782,6 +5735,16 @@ msgstr "參考點:"
 msgid "Reference Station :"
 msgstr "參考點:"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4914,6 +5877,16 @@ msgstr "限制區域: 禁止下錨"
 msgid "Restricted Manoeuvrability"
 msgstr "操縱性受限制"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4990,6 +5963,18 @@ msgstr "航路列印"
 msgid "Route Properties"
 msgstr "航路屬性"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5183,6 +6168,18 @@ msgstr ""
 "選擇最大容許錯誤(公尺)\n"
 "在資料減少後:"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5194,6 +6191,18 @@ msgstr ""
 msgid "Send"
 msgstr "傳送"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5227,6 +6236,18 @@ msgstr "字串篩選"
 msgid "Serial"
 msgstr "序列傳輸"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5556,6 +6577,16 @@ msgstr "SoG"
 msgid "Solid"
 msgstr "實線"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5584,6 +6615,13 @@ msgstr "特別"
 msgid "Special Mark"
 msgstr "特別標記"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5711,6 +6749,18 @@ msgstr "TCP"
 msgid "TCPA"
 msgstr "TCPA"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5722,6 +6772,18 @@ msgstr "TCPA"
 msgid "Tankbarge"
 msgstr "液態儲槽駁船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5733,6 +6795,18 @@ msgstr "液態儲槽駁船"
 msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
 msgstr "儲槽駁船, 視同液體的乾貨(例如:水泥)"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5744,6 +6818,18 @@ msgstr "儲槽駁船, 視同液體的乾貨(例如:水泥)"
 msgid "Tankbarge, gas"
 msgstr "儲槽駁船, 氣體"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5755,6 +6841,18 @@ msgstr "儲槽駁船, 氣體"
 msgid "Tankbarge, liquid cargo, type C"
 msgstr "液態貨駁船, 液態貨物, 型式 C"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5965,6 +7063,18 @@ msgstr "本區段"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr "此轉向點為圖層的一部份且無法編輯"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6042,6 +7152,18 @@ msgstr "前往轉向點"
 msgid "To route"
 msgstr "到 航路"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6066,6 +7188,18 @@ msgstr "切換航跡顯示"
 msgid "Toggle track"
 msgstr "切換航跡顯示"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6179,6 +7313,18 @@ msgstr "Track"
 msgid "Tug"
 msgstr "拖船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6190,6 +7336,18 @@ msgstr "拖船"
 msgid "Tug freighter, coupled"
 msgstr "貨運拖船, 成對"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6201,6 +7359,18 @@ msgstr "貨運拖船, 成對"
 msgid "Tug, assisting a vessel or linked combination"
 msgstr "拖船, 協助他船或與他船連結"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6212,6 +7382,18 @@ msgstr "拖船, 協助他船或與他船連結"
 msgid "Tug, freighter"
 msgstr "貨運拖船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6223,6 +7405,18 @@ msgstr "貨運拖船"
 msgid "Tug, freighter/tanker, coupled"
 msgstr "貨運/液態貨運拖船, 成對"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6234,6 +7428,18 @@ msgstr "貨運/液態貨運拖船, 成對"
 msgid "Tug, one or more tows"
 msgstr "拖船, 拖曳一或多艘"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6245,6 +7451,18 @@ msgstr "拖船, 拖曳一或多艘"
 msgid "Tug, single"
 msgstr "拖船, 單一艘"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6308,6 +7526,18 @@ msgstr "航行中"
 msgid "Undo"
 msgstr "復原"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6452,6 +7682,18 @@ msgstr "船舶長距拖曳中"
 msgid "Vessel requesting non-distress assistance"
 msgstr "船舶請求非船難協助"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6463,6 +7705,18 @@ msgstr "船舶請求非船難協助"
 msgid "Vessel, type unknown"
 msgstr "船舶, 型式未知"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6814,6 +8068,187 @@ msgstr ""
 msgid "Would you like include the Great Circle routing points for this leg?"
 msgstr "想要在此航段中包含大圈航路?"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "   圖檔 RLL 資料毀損 "
+
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "   圖檔無 BSB 標頭, 無法起始."
+
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "   無法讀取海圖標頭檔前 %d 位元組: "
+
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+msgid "--"
+msgstr "--"
+
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+msgid "NMi"
+msgstr "NMi"
+
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+msgid "km"
+msgstr "km"
+
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+msgid "kts"
+msgstr "kts"
+
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+msgid "m"
+msgstr "m"
+
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+msgid "mi"
+msgstr "mi"
+
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
+msgid "mph"
+msgstr "mph"
+
+#
+#
+#
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "確定刪除<所有>航路?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr "轉向點上傳錯誤.  請檢查 logfiles..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+#, fuzzy
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+"有一些轉向點已用於航路或錨泊警報. 你要刪除它嗎？這將會改變航路並取消錨泊警報."
+
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "in "
+msgstr "in"
+
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -6840,6 +8275,52 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -6892,6 +8373,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -6918,6 +8425,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "   COG 箭頭長度"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -6944,6 +8477,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "   目標最大移動速度(節)"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -6970,20 +8529,45 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "   目標航跡紀錄長度"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
 #
 #
 #
 #
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "   圖檔 RLL 資料毀損 "
-
 #
 #
 #
 #
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "   圖檔無 BSB 標頭, 無法起始."
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7023,13 +8607,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "   未知的球體投影方法, 假設使用麥卡托投影法: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
 #
 #
 #
 #
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "   無法讀取海圖標頭檔前 %d 位元組: "
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7077,6 +8701,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "   PlugInManager: Cannot load library: "
 #~ msgstr "   插件管理員: 無法載入程式庫: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7124,6 +8795,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "   PlugInManager: Cannot load symbol create_pi: "
 #~ msgstr "   插件管理員: 無法載入 symbol create_pi: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7171,6 +8889,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "   PlugInManager: Cannot load symbol destroy_pi: "
 #~ msgstr "   插件管理員: 無法載入 symbol destroy_pi: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7196,6 +8939,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  無法開啟 AIS 連接埠 '"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7221,6 +8989,16 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  無法開啟序列通訊埠 '"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7231,6 +9009,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid " </b>in<b> "
 #~ msgstr " </b>in<b> "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7256,6 +9059,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid " COG: %03d Deg."
 #~ msgstr " COG: %03d 度."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7281,6 +9109,15 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG: 000 度."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7290,6 +9127,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid " is %5g"
 #~ msgstr " is %5g"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7347,6 +9241,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "&Close"
 #~ msgstr "關閉(&C)"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7404,6 +9355,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "&Delete All Routes..."
 #~ msgstr "刪除所有航路(&D)..."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7461,6 +9469,18 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "&Delete All Tracks..."
 #~ msgstr "刪除所有航跡(&D)..."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7473,6 +9493,62 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "&Export Track..."
 #~ msgstr "匯出航跡(&E)..."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7529,6 +9605,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "&Toggle Chart"
 #~ msgstr "(&T)切換海圖顯示"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7558,6 +9659,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "'\n"
 #~ " 建議: 試著用 'xxx.xxx.xxx.xxx' 標示法"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7587,6 +9713,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "'\n"
 #~ "建議: 關閉其他應用程式"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7644,13 +9827,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "(Active Track)"
 #~ msgstr "(使用中航跡)"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
 #
 #
 #
 #
-#~ msgid "--"
-#~ msgstr "--"
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7679,6 +9882,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid ":               "
 #~ msgstr "船級:                  "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7710,6 +9940,46 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "\n"
 #~ msgstr "方位:                無法取得\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7751,6 +10021,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "AIS SART Alert"
 #~ msgstr "AIS 警告"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7777,6 +10073,41 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "啟用 CM93 Offset "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7812,6 +10143,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Activate Route"
 #~ msgstr "啟動導航"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7838,6 +10195,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Add Selection"
 #~ msgstr "增加選擇項目"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7863,6 +10245,48 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Add this chart to quilt."
 #~ msgstr "加入本圖為接圖一部份"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7905,6 +10329,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Additional information"
 #~ msgstr "其他資訊"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7931,6 +10381,56 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "所有檔案 (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -7981,6 +10481,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Attempting to load libgps.so"
 #~ msgstr "嘗試載入 libgps.so"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8006,6 +10531,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Autopilot Output Port"
 #~ msgstr "自動航行裝置輸出連接埠"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8032,6 +10583,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Available Chart Directories"
 #~ msgstr "擁有的海圖目錄"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8079,6 +10677,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "BaseClassCommonName"
 #~ msgstr "BaseClassCommonName"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8106,6 +10731,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "方位:                %03d Deg.\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8133,6 +10785,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "方位:                無法取得\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8159,6 +10837,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8185,6 +10888,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "啟用 CM93 詳細度控制滑桿"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8211,6 +10940,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CM93 Offset Display"
 #~ msgstr "CM93 Offset 顯示"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8268,6 +11054,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CM93 Offset Off"
 #~ msgstr "CM93 Offset Off"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8325,6 +11168,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CM93 Offset On"
 #~ msgstr "CM93 Offset On"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8382,6 +11282,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CM93 Offset Tool Off"
 #~ msgstr "CM93 Offset Tool Off"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8439,6 +11396,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CM93 Offset Tool....."
 #~ msgstr "CM93 Offset Tool....."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8465,6 +11448,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CM93 Offsets"
 #~ msgstr "CM93 Offsets"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8522,6 +11562,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CM93 Offsets On"
 #~ msgstr "CM93 Offsets On"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8548,6 +11614,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "CM93 縮放詳細度"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8575,6 +11668,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CPA:       \n"
 #~ msgstr "CPA:       \n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8602,6 +11722,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f NM\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8635,6 +11780,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "\n"
 #~ "gpsd host is: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8692,6 +11894,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CallSign:  "
 #~ msgstr "CallSign:  "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8719,6 +11948,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "CallSign:             "
 #~ msgstr "呼號:              "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8777,6 +12063,63 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Cell X Offset"
 #~ msgstr "設定 CM93 Offset"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8835,6 +12178,47 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Cell Y Offset"
 #~ msgstr "設定 CM93 Offset"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8876,6 +12260,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Chart"
 #~ msgstr "海圖"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8902,6 +12312,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Chart Display Filters"
 #~ msgstr "海圖顯示項目過濾條件"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8928,6 +12363,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Chart Position"
 #~ msgstr "位置"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8955,6 +12417,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Class:                "
 #~ msgstr "船級:                  "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -8980,6 +12467,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "無法解析 TCP/IP 主機 '"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9007,6 +12521,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "航向:                 %03d 度.\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9034,6 +12575,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "航向:                 000 度.\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9061,6 +12629,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "航向:                 無法取得\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9087,6 +12681,41 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Cursor: "
 #~ msgstr "游標: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9122,6 +12751,44 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Deactivate Route"
 #~ msgstr "取消導航"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9161,6 +12828,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Default dataset"
 #~ msgstr "預設顏色"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9188,6 +12881,41 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Deg"
 #~ msgstr "濬挖船"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9223,6 +12951,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Delete Mark"
 #~ msgstr "刪除標記"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9249,6 +13003,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Delete Route"
 #~ msgstr "刪除航路"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9275,6 +13055,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Delete Selection"
 #~ msgstr "刪除選擇項目"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9301,6 +13107,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Delete Track"
 #~ msgstr "刪除航跡"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9327,6 +13159,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Depth Settings"
 #~ msgstr "深度設定"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9354,6 +13213,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Destination:          "
 #~ msgstr "目的地:          "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9380,6 +13264,21 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Display Style"
 #~ msgstr "海圖顯示方式"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9395,6 +13294,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "E&xport All..."
 #~ msgstr "匯出全部(&x)..."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9421,6 +13346,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/向量圖"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9448,6 +13400,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "ETA:"
 #~ msgstr "ETA:"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9475,6 +13454,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "ETA:                  "
 #~ msgstr "ETA:                  "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9522,6 +13548,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "ETE/Timestamp"
 #~ msgstr "ETE/時間戳記"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9548,6 +13600,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "手動 CM93 Offsets"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9574,6 +13652,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "啟用滑鼠滾輪放大縮小游標所在位置功能"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9600,6 +13704,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Etc."
 #~ msgstr "其他"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9627,6 +13757,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "距離本船: %03d 度  %6.2f 海浬"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9653,6 +13809,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9678,6 +13859,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "GPSD Data Server"
 #~ msgstr "GPSD 伺服器"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9704,6 +13911,41 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Go To Here"
 #~ msgstr "前往這裡"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9739,6 +13981,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Go To Mark/WP"
 #~ msgstr "前往標記/轉向點"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9766,6 +14035,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "方位:                %03d 度.\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9793,6 +14089,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "IMO:                 %8d\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9820,6 +14143,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Inland Blue Flag        Clear\n"
 #~ msgstr "內陸藍旗        清除\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9846,6 +14195,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Jump To"
 #~ msgstr "跳至"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9872,6 +14247,41 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Jump To Position"
 #~ msgstr "變更位置"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9907,6 +14317,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Jump To Position..."
 #~ msgstr "跳至位置..."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9934,6 +14370,45 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Jump To..."
 #~ msgstr "跳至"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -9973,6 +14448,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Language/Fonts"
 #~ msgstr "語系/字型"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10000,6 +14502,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "最近位置發報時間:  "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10026,6 +14554,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Leg/Route"
 #~ msgstr "航程區段/航路"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10052,6 +14606,48 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "META Objects"
 #~ msgstr "中繼物件"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10094,6 +14690,48 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "MMSI:                 %09d\n"
 #~ msgstr "MMSI:                 %09d\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10136,6 +14774,48 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Mark Icon"
 #~ msgstr "標記圖示"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10178,6 +14858,21 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Mark Name"
 #~ msgstr "標記名稱"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10193,6 +14888,41 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Mark Properties"
 #~ msgstr "標記屬性"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10229,6 +14959,41 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "標記/轉向點屬性"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10264,6 +15029,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Measure....."
 #~ msgstr "測量....."
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10290,6 +15081,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Metres"
 #~ msgstr "公尺"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10315,6 +15131,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "NMEA Data Source"
 #~ msgstr "NMEA 資料來源"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10341,11 +15183,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "NMEA Options"
 #~ msgstr "NMEA 選項"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
 #
 #
-#~ msgid "NMi"
-#~ msgstr "NMi"
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10373,6 +15237,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Name:  "
 #~ msgstr "名稱:  "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10400,6 +15291,51 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Navigational Status:  "
 #~ msgstr "導航狀態:  "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10445,6 +15381,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "New Mark"
 #~ msgstr "新標記"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10471,6 +15432,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Number of Radar Rings"
 #~ msgstr "雷達距離圈數量"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10518,6 +15526,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "OpenCPN PlugIn Base Class"
 #~ msgstr "OpenCPN 插件基礎Class"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10569,6 +15624,18 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "OpenCPN 插件基礎Class\n"
 #~ "插件管理員建立基礎class"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10581,6 +15648,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Other"
 #~ msgstr "其他"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10607,6 +15699,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Own Ship Display Options"
 #~ msgstr "本船顯示選項"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10633,6 +15750,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "以距離間距(海浬)標記航跡"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10659,6 +15801,18 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "以時間間隔(秒)標記航跡"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10671,6 +15825,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "計畫航速 (Kts)"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10718,6 +15919,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "PlugInManager searching for PlugIns in location "
 #~ msgstr "插件管理員搜尋插件 "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10765,6 +16013,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "PlugInManager: Deactivating PlugIn: "
 #~ msgstr "插件管理員: 停止插件: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10812,6 +16107,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "PlugInManager: Initializing PlugIn: "
 #~ msgstr "插件管理員: 起始插件: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10859,6 +16201,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "PlugInManager: Loading PlugIn: "
 #~ msgstr "插件管理員: 載入插件: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10906,6 +16295,53 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "PlugInManager: UnLoading PlugIn: "
 #~ msgstr "插件管理員: 卸載插件: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10953,6 +16389,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "PlugInManager: Unloading PlugIn with invalid API version %d.%d: "
 #~ msgstr "插件管理員: 卸載插件 with invalid API version %d.%d: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -10984,6 +16447,52 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "位置發報經過時間:       %3d Sec.\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11030,6 +16539,45 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Position:               "
 #~ msgstr "位置:               "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11077,6 +16625,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "\n"
 #~ "仍要繼續使用這一版的libgps?"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11102,6 +16675,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Radar rings"
 #~ msgstr "雷達距離圈"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11129,6 +16729,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "範圍:                  無法取得\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11156,6 +16783,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "範圍:                %5.1f NM\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11182,6 +16835,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Raster"
 #~ msgstr "影像掃描式海圖"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11209,6 +16889,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "迴轉率            %3d Deg./Min. 向左\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11236,6 +16943,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "迴轉率            %3d Deg./Min. 向右\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11263,6 +16997,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "迴轉率            %3d Deg./Min.\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11290,6 +17051,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "迴轉率            %3d Deg./Min. 向左\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11317,6 +17105,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "迴轉率            %3d Deg./Min. 向右\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11343,6 +17156,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "從接圖中移除本圖"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11368,6 +17206,41 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "從接圖中移除本圖"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11403,6 +17276,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Reverse Route"
 #~ msgstr "反向航路"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11430,6 +17329,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Route Properties..."
 #~ msgstr "航路屬性"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11457,6 +17382,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Route/Track"
 #~ msgstr "從航跡設定航路"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11483,6 +17434,21 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "選擇自動接圖使用之海圖格式"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11499,6 +17465,41 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Send to GPS ( "
 #~ msgstr "傳送至GPS(&S)"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11534,6 +17535,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Set Course Up Mode"
 #~ msgstr "設定航向朝上模式"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11560,6 +17587,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Settings"
 #~ msgstr "設定"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11586,6 +17639,44 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Show ATON labels"
 #~ msgstr "顯示 ATON 標籤"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11624,6 +17715,44 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Show Printing Icon"
 #~ msgstr "顯示列印圖示"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11662,6 +17791,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Show Track icon"
 #~ msgstr "顯示航跡圖示"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11687,6 +17841,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Show layers initially"
 #~ msgstr "啟始時顯示圖層"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11718,6 +17899,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "尺寸:                 %dm x %dm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11749,6 +17957,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "Size:                 %dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11780,6 +18015,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "Size:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11811,6 +18073,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "Size:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11842,6 +18131,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "Size:                 ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11873,6 +18189,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "Size:               %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11904,6 +18247,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "Size:               %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11931,6 +18301,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "速度:                  無法取得\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11958,6 +18355,18 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "速度:                %5.2f 節.\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11970,6 +18379,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "T"
 #~ msgstr "T"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -11996,6 +18431,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "TCP/IP WiFi 資料伺服器"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12023,6 +18485,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "TCPA:  \n"
 #~ msgstr "TCPA:  \n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12050,6 +18539,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA:                 %02d:%02d Hr:Min\n"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12076,6 +18591,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Text Element"
 #~ msgstr "文字項目"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12103,6 +18644,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "顯示海流"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12130,6 +18697,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Tide/Current Data Selector"
 #~ msgstr "潮流圖表Rollover"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12156,6 +18749,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "ToolBox"
 #~ msgstr "工具箱"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12183,6 +18802,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Track Properties..."
 #~ msgstr "航跡屬性"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12209,6 +18854,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "真實比例: %8.0f             "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12236,6 +18908,33 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Type:                 "
 #~ msgstr "ETA:                  "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12263,6 +18962,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "UN Ship Type:         "
 #~ msgstr "UN Ship Type:         "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12294,6 +19018,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "\n"
 #~ "gpsd host is: "
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12319,6 +19068,25 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Unable to load libgps"
 #~ msgstr "無法載入 libgps"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12339,6 +19107,31 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Unavailable"
 #~ msgstr " COG: 無法取得"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12364,6 +19157,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Units"
 #~ msgstr "單位"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12390,6 +19209,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Use SCAMIN"
 #~ msgstr "使用 SCAMIN"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12416,6 +19261,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Waypoint Locking"
 #~ msgstr "轉向點鎖定"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12442,6 +19313,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "WiFi Options"
 #~ msgstr "WiFi 選項"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12468,6 +19365,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "X Offset (Positive moves map to East) (NMi Projected) :"
 #~ msgstr "X Offset (向東為正值) (NMi Projected) :"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12494,6 +19417,32 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "Y Offset (Positive moves map to North) (NMi Projected) :"
 #~ msgstr "Y Offset (向北為正值) (NMi Projected) :"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12520,16 +19469,45 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ msgid "cm93 Detail"
 #~ msgstr "cm93 詳細度"
 
+# #-#-#-#-#  .merge_file_RKYjGS (OpenCPN 3.3.814)  #-#-#-#-#
 #
 #
-#~ msgid "km"
-#~ msgstr "km"
-
 #
 #
-#~ msgid "kts"
-#~ msgstr "kts"
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_2NafxF (OpenCPN 3.3.814)  #-#-#-#-#
+#
 #
 #
 #
@@ -12577,18 +19555,3 @@ msgstr "想要在此航段中包含大圈航路?"
 #~ "Opencpn 找到版本 %d.%d, 但是最少需要版本 3.0\n"
 #~ "\n"
 #~ "仍要繼續使用這一版的 libgps?"
-
-#
-#
-#~ msgid "m"
-#~ msgstr "m"
-
-#
-#
-#~ msgid "mi"
-#~ msgstr "mi"
-
-#
-#
-#~ msgid "mph"
-#~ msgstr "mph"

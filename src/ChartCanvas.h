@@ -258,10 +258,11 @@ public:
 
 	void reset_click_stop();
 
+	void FinishRoute(void);
+
 private:
 	ViewPort VPoint;
 	void PositionConsole(void);
-	void FinishRoute(void);
 	wxString FindValidUploadPort();
 
 	void draw_ais_ARPA(ocpnDC&, const wxPoint&, const wxBrush&, const ais::AIS_Target_Data*) const;

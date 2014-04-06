@@ -280,6 +280,17 @@ msgstr "%D Dagar, %H:%M"
 msgid "%H:%M"
 msgstr "%H:%M"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -338,6 +349,17 @@ msgstr "Teckensnitt:"
 msgid "&Go To"
 msgstr "Gå till"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -394,6 +416,17 @@ msgstr "&Reversera rutt"
 msgid "&Send to GPS"
 msgstr "Skicka till GPS"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -459,6 +492,16 @@ msgstr "(reserverad)"
 msgid "(unnamed)"
 msgstr "(namnlös)"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -680,6 +723,17 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -730,6 +784,17 @@ msgstr "AIS lista"
 msgid "AISRollover"
 msgstr "AIS \"Rulla över\""
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -1044,6 +1109,17 @@ msgstr "Medelhastighet"
 msgid "B"
 msgstr "B"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -1057,8 +1133,13 @@ msgstr "Pråm, tanker, kemikalier"
 
 #
 #
+#, fuzzy
 msgid "Base"
-msgstr "Enkel"
+msgstr ""
+"#-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#\n"
+"Enkel\n"
+"#-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#\n"
+"Bas"
 
 #
 #
@@ -1155,6 +1236,17 @@ msgstr "Brg"
 msgid "Buddy"
 msgstr "Kompis"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -1166,6 +1258,17 @@ msgstr "Kompis"
 msgid "Bulk carrier maritime"
 msgstr "Bulktransportfartyg"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -1636,6 +1739,17 @@ msgstr "Värden i Aktiv rutt-fönstret"
 msgid "Constrained by draught"
 msgstr "Hämmad av sitt djupgående"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -1716,6 +1830,17 @@ msgstr "Skapa WPT"
 msgid "Create Waypoint"
 msgstr "Skapa waypoint"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -1727,6 +1852,17 @@ msgstr "Skapa waypoint"
 msgid "Cruise ship"
 msgstr "Kryssningsfartyg"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -1845,6 +1981,17 @@ msgstr "Mörkgul"
 msgid "Data Connections"
 msgstr "Anslutningar"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -1867,8 +2014,13 @@ msgstr "Dagtid"
 
 #
 #
+#, fuzzy
 msgid "De-Cluttered Text"
-msgstr "Rensa överlappande texter"
+msgstr ""
+"#-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#\n"
+"Rensa överlappande texter\n"
+"#-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#\n"
+"Rensa överlappande text"
 
 #
 #
@@ -2097,6 +2249,17 @@ msgstr "Streck-prickad"
 msgid "Dredge"
 msgstr "Muddring"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2235,6 +2398,17 @@ msgstr "Varningsområde: Stormvarning (Storm eller stormfronter)"
 msgid "Environmental Caution Area: Strong currents"
 msgstr "Varningsområde: Kraftig ström"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2326,6 +2500,17 @@ msgstr "F/V"
 msgid "Failed to initialize the user interface. "
 msgstr "Det saknas information för att bygga upp användargränssnittet."
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2347,6 +2532,17 @@ msgstr "Famnar"
 msgid "Feet"
 msgstr "Fot"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2373,6 +2569,17 @@ msgstr "Filterperiod (sek)"
 msgid "Filters"
 msgstr "Filter"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2411,6 +2618,17 @@ msgstr "Läs in alla sjökort på nytt"
 msgid "Format uploads for Furuno GP3X"
 msgstr "Formatera för överföring till Furuno GP3X"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2422,6 +2640,17 @@ msgstr "Formatera för överföring till Furuno GP3X"
 msgid "Freightbarge"
 msgstr "Fraktpråm"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2475,6 +2704,17 @@ msgstr "GPX"
 msgid "GUID"
 msgstr "GUID"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2496,6 +2736,17 @@ msgstr "Allmänna inställningar"
 msgid "General Options"
 msgstr "Allmänna inställningar"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2530,6 +2781,17 @@ msgstr "Bunten \""
 msgid "HSC"
 msgstr "HSC"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2613,6 +2875,17 @@ msgstr "Höghastighetsfartyg"
 msgid "Highlight Tracks"
 msgstr "Visa spår"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2663,9 +2936,25 @@ msgstr "Importera GPX-fil"
 
 #
 #
+#, fuzzy
 msgid "Important Text Only"
-msgstr "Enbart viktiga texter"
+msgstr ""
+"#-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#\n"
+"Enbart viktiga texter\n"
+"#-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#\n"
+"Enbart viktiga text"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2678,6 +2967,16 @@ msgstr "Enbart viktiga texter"
 msgid "In"
 msgstr "Symbol"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2786,6 +3085,17 @@ msgstr "LMT @ Plats"
 msgid "LMT @ Track Start"
 msgstr "LMT & Starta spår"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2884,6 +3194,17 @@ msgstr "Ben"
 msgid "Leg: from "
 msgstr "Ben: från "
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -2945,8 +3266,13 @@ msgstr "Ljusgrå"
 #
 #
 #
+#, fuzzy
 msgid "Limit range: NM"
-msgstr "Begränsad räckvidd: NM"
+msgstr ""
+"#-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#\n"
+"Begränsad räckvidd: NM\n"
+"#-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#\n"
+"Maximal räckvidd: NM"
 
 #
 #
@@ -2988,6 +3314,17 @@ msgstr "Länkar öppnas för redigering."
 msgid "Links are opened in the default browser."
 msgstr "Länkar öppnas i datorns webbläsare."
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3172,6 +3509,16 @@ msgstr "Slå samman waypoint?"
 msgid "Merge waypoints?"
 msgstr "Slå samman waypoints?"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3182,6 +3529,16 @@ msgstr "Slå samman waypoints?"
 msgid "Message accepted"
 msgstr "Kommandot accepterat"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3224,6 +3581,17 @@ msgstr "Gryning"
 msgid "Moored"
 msgstr "Förtöjd"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3235,6 +3603,17 @@ msgstr "Förtöjd"
 msgid "Motor freighter"
 msgstr "Motordrivet fraktfartyg"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3246,6 +3625,17 @@ msgstr "Motordrivet fraktfartyg"
 msgid "Motor freighter pushing at least one tank-ship"
 msgstr "Motordrivet fraktfartyg påskjutande minst en tanker"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3257,6 +3647,17 @@ msgstr "Motordrivet fraktfartyg påskjutande minst en tanker"
 msgid "Motor freighter pushing one or more freighters"
 msgstr "Motordrivet fraktfartyg påskjutande en eller fler fraktfartyg"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3268,6 +3669,17 @@ msgstr "Motordrivet fraktfartyg påskjutande en eller fler fraktfartyg"
 msgid "Motor freighter with one or more ships alongside"
 msgstr "Motordrivet fraktfartyg med ett eller flera fartyg vid sidan"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3279,6 +3691,17 @@ msgstr "Motordrivet fraktfartyg med ett eller flera fartyg vid sidan"
 msgid "Motor freighter with tanker"
 msgstr "Motordrivet fraktfartyg med tanker"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3290,6 +3713,17 @@ msgstr "Motordrivet fraktfartyg med tanker"
 msgid "Motor freighter, tug"
 msgstr "Motordrivet fraktfartyg, bogserbåt"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3301,6 +3735,17 @@ msgstr "Motordrivet fraktfartyg, bogserbåt"
 msgid "Motor tanker"
 msgstr "Motordriven tanker"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3312,6 +3757,17 @@ msgstr "Motordriven tanker"
 msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
 msgstr "Motordriven tanker, torrlast som om vätska (t.ex. cement)"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3323,6 +3779,17 @@ msgstr "Motordriven tanker, torrlast som om vätska (t.ex. cement)"
 msgid "Motor tanker, liquid cargo, type C"
 msgstr "Motordriven tanker, flytande last, typ C"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3334,6 +3801,17 @@ msgstr "Motordriven tanker, flytande last, typ C"
 msgid "Motor tanker, liquid cargo, type N"
 msgstr "Motordriven tanker, flytande last, typ N"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3371,6 +3849,16 @@ msgstr "NMEA 0183"
 msgid "NMEA 2000"
 msgstr "NMEA 2000"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3441,6 +3929,17 @@ msgstr "Ny sjökortsbunt"
 msgid "New Group..."
 msgstr "Ny bunt..."
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3461,6 +3960,16 @@ msgstr "Nästa tidvatten"
 msgid "Nighttime"
 msgstr "Nattetid"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3532,6 +4041,17 @@ msgstr "Detaljinformation"
 msgid "Object Query..."
 msgstr "Detaljinformation..."
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3543,6 +4063,17 @@ msgstr "Detaljinformation..."
 msgid "Object, not otherwise specified"
 msgstr "Objekt, ej specificerad ytterligare"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3691,6 +4222,16 @@ msgstr "Användarinställningar"
 msgid "Other - Define in associated text field"
 msgstr "Övrigt - Ange i tillhörande textfält"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3706,6 +4247,17 @@ msgstr "Utdata"
 msgid "Output"
 msgstr "Utdata"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3774,6 +4326,17 @@ msgstr "Pass/V"
 msgid "Passenger Ship"
 msgstr "Passagerarfartyg"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3785,6 +4348,17 @@ msgstr "Passagerarfartyg"
 msgid "Passenger ship without accomodation"
 msgstr "Passagerarfartyg utan logi"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3811,6 +4385,16 @@ msgstr "Klistra in spår"
 msgid "Paste Waypoint"
 msgstr "Klistra in waypoint"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3863,6 +4447,17 @@ msgstr ""
 msgid "Pleasure craft"
 msgstr "Fritidsfartyg"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3966,6 +4561,17 @@ msgstr "Rekommenderad kanal babords hand"
 msgid "Preferred Channel Starboard Hand"
 msgstr "Rekommenderad kanal styrbords hand"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -3982,6 +4588,17 @@ msgstr "Ställ in GPS för uppladdning av Rutt/Waypoint och klicka Skicka..."
 msgid "Preserve Scale when Switching Charts"
 msgstr "Behåll skala vid växling till nytt sjökort"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4037,6 +4654,17 @@ msgstr "Fortsätt till den här platsen - invänta instruktioner"
 msgid "Processing Waypoints..."
 msgstr "Bearbetar waypoints..."
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4062,6 +4690,17 @@ msgstr "&Egenskaper..."
 msgid "Protocol"
 msgstr "Protokoll"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4073,6 +4712,17 @@ msgstr "Protokoll"
 msgid "Pushboat, single"
 msgstr "Påskjutande bogserbåt, ensam"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4084,6 +4734,17 @@ msgstr "Påskjutande bogserbåt, ensam"
 msgid "Pushtow, eight barges at least one tanker or gas barge"
 msgstr "Påskjutande bogserbåt, åtta lastpråmar varav minst en tanker-/gaspråm"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4095,6 +4756,17 @@ msgstr "Påskjutande bogserbåt, åtta lastpråmar varav minst en tanker-/gaspr�
 msgid "Pushtow, eight cargo barges"
 msgstr "Påskjutande bogserbåt, åtta lastpråmar"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4106,6 +4778,17 @@ msgstr "Påskjutande bogserbåt, åtta lastpråmar"
 msgid "Pushtow, five barges at least one tanker or gas barge"
 msgstr "Påskjutande bogserbåt, fem lastpråmar varav minst en tanker-/gaspråm"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4117,6 +4800,17 @@ msgstr "Påskjutande bogserbåt, fem lastpråmar varav minst en tanker-/gaspråm
 msgid "Pushtow, five cargo barges"
 msgstr "Påskjutande bogserbåt, fem lastpråmar"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4128,6 +4822,17 @@ msgstr "Påskjutande bogserbåt, fem lastpråmar"
 msgid "Pushtow, four barges at least one tanker or gas barge"
 msgstr "Påskjutande bogserbåt, fyra lastpråmar varav minst en tanker-/gaspråm"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4139,6 +4844,17 @@ msgstr "Påskjutande bogserbåt, fyra lastpråmar varav minst en tanker-/gasprå
 msgid "Pushtow, four cargo barges"
 msgstr "Påskjutande bogserbåt, fyra lastpråmar"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4150,6 +4866,17 @@ msgstr "Påskjutande bogserbåt, fyra lastpråmar"
 msgid "Pushtow, nine or more barges"
 msgstr "Påskjutande bogserbåt, nio eller fler lastpråmar"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4163,6 +4890,17 @@ msgstr ""
 "Påskjutande bogserbåt, nio eller fler lastpråmar varav minst en tanker-/"
 "gaspråm"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4174,6 +4912,17 @@ msgstr ""
 msgid "Pushtow, one cargo barge"
 msgstr "Påskjutande bogserbåt, en lastpråm"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4185,6 +4934,17 @@ msgstr "Påskjutande bogserbåt, en lastpråm"
 msgid "Pushtow, one tank/gas barge"
 msgstr "Påskjutande bogserbåt, en tanker-/gaspråm"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4196,6 +4956,17 @@ msgstr "Påskjutande bogserbåt, en tanker-/gaspråm"
 msgid "Pushtow, seven barges at least one tanker or gas barge"
 msgstr "Påskjutande bogserbåt, sju lastpråmar varav minst en tanker-/gaspråm"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4207,6 +4978,17 @@ msgstr "Påskjutande bogserbåt, sju lastpråmar varav minst en tanker-/gaspråm
 msgid "Pushtow, seven cargo barges"
 msgstr "Påskjutande bogserbåt, sju lastpråmar"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4218,6 +5000,17 @@ msgstr "Påskjutande bogserbåt, sju lastpråmar"
 msgid "Pushtow, six barges at least one tanker or gas barge"
 msgstr "Påskjutande bogserbåt, sex lastpråmar varav minst en tanker-/gaspråm"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4229,6 +5022,17 @@ msgstr "Påskjutande bogserbåt, sex lastpråmar varav minst en tanker-/gaspråm
 msgid "Pushtow, six cargo barges"
 msgstr "Påskjutande bogserbåt, sex lastpråmar"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4240,6 +5044,17 @@ msgstr "Påskjutande bogserbåt, sex lastpråmar"
 msgid "Pushtow, three barges at least one tanker or gas barge"
 msgstr "Påskjutande bogserbåt, tre lastpråmar varav minst en tanker-/gaspråm"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4251,6 +5066,17 @@ msgstr "Påskjutande bogserbåt, tre lastpråmar varav minst en tanker-/gaspråm
 msgid "Pushtow, three cargo barges"
 msgstr "Påskjutande bogserbåt, tre lastpråmar"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4262,6 +5088,17 @@ msgstr "Påskjutande bogserbåt, tre lastpråmar"
 msgid "Pushtow, two barges at least one tanker or gas barge"
 msgstr "Påskjutande bogserbåt, två lastpråmar varav minst en tanker-/gaspråm"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4331,6 +5168,17 @@ msgstr "Inspelade punkter"
 msgid "Red"
 msgstr "Röd"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4369,6 +5217,17 @@ msgstr "Ref pkt"
 msgid "Reference Point"
 msgstr "Referenspunkt"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4498,6 +5357,16 @@ msgstr "Skyddsområde: Ankring ej tillåten"
 msgid "Restricted Manoeuvrability"
 msgstr "Nedsatt manöverförmåga"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4741,6 +5610,17 @@ msgstr ""
 "Välj största tillåtna avvikelse (i meter)\n"
 "efter datareducering"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -4752,6 +5632,17 @@ msgstr ""
 msgid "Send"
 msgstr "Skicka"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -5392,7 +6283,7 @@ msgstr ""
 
 #
 msgid "TideCurrentGraphRollover"
-msgstr ""
+msgstr "Tidvatten/Ström \"Rulla över\""
 
 #
 #
@@ -5857,9 +6748,8 @@ msgstr "Waypointegenskaper, lager: "
 #
 #
 #
-#, fuzzy
 msgid "Waypoint(s) Uploaded successfully."
-msgstr "Rutt uppladdad ok."
+msgstr "Waypoint(s) uppladdade ok."
 
 #
 #
@@ -6072,7 +6962,7 @@ msgstr "Gammal loggfil kommer att namnändras till opencpn.log.log"
 
 #
 msgid "SAR Aircraft"
-msgstr ""
+msgstr "SAR Flygplan"
 
 #
 msgid ""
@@ -6098,29 +6988,162 @@ msgstr ""
 msgid "Would you like include the Great Circle routing points for this leg?"
 msgstr "Vill du inkludera waypoints för storcirkel-rutten på det här benet?"
 
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
+#
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "   Sjökortets RLL-data är felaktigt "
+
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
+#
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "   Sjökortet saknar BSB header, kortet inaktiveras."
+
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
+#
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "   Första %d byte från sjökortets header är ej läsbart: "
+
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
+#
+#
+#
+msgid "--"
+msgstr "--"
+
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
+msgid "NMi"
+msgstr "NM"
+
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
+msgid "km"
+msgstr "km"
+
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
+msgid "kts"
+msgstr "knop"
+
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
+msgid "m"
+msgstr "m"
+
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
+msgid "mi"
+msgstr "mile"
+
+# #-#-#-#-#  .merge_file_2Fl4yD (OpenCPN version 3.0)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_iqGmUq (OpenCPN version 3.3.1419)  #-#-#-#-#
+#
+msgid "mph"
+msgstr "mph"
+
+#
+#
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Vill du radera <ALLA> rutter?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr "Fel vid uppladdning av waypoint.  Kontrollera loggfilen..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+#, fuzzy
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+"En eller flera waypoints används i andra rutter eller som ankarvakt. Vill du "
+"radera även dem? I så fall ändras rutterna och eventuella ankarvakter tas "
+"bort. Svara \"Nej\" för att bara radera de waypoints som inte påverkar något "
+"annat."
+
+#
+#
+#
+#
+#, fuzzy
+msgid "in "
+msgstr "in"
+
 #
 #
 #
 #~ msgid "Special Position Report"
 #~ msgstr "Särskild positionsrapport"
-
-#
-#
-#
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "   Sjökortets RLL-data är felaktigt "
-
-#
-#
-#
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "   Sjökortet saknar BSB header, kortet inaktiveras."
-
-#
-#
-#
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "   Första %d byte från sjökortets header är ej läsbart: "
 
 #
 #
@@ -6152,14 +7175,6 @@ msgstr "Vill du inkludera waypoints för storcirkel-rutten på det här benet?"
 #
 #~ msgid "&Export Track..."
 #~ msgstr "Exportera spår..."
-
-#
-#
-#
-#
-#
-#~ msgid "--"
-#~ msgstr "--"
 
 #
 #
@@ -6221,11 +7236,6 @@ msgstr "Vill du inkludera waypoints för storcirkel-rutten på det här benet?"
 
 #
 #
-#~ msgid "NMi"
-#~ msgstr "NM"
-
-#
-#
 #
 #
 #
@@ -6279,28 +7289,3 @@ msgstr "Vill du inkludera waypoints för storcirkel-rutten på det här benet?"
 #, fuzzy
 #~ msgid "Send to GPS ( "
 #~ msgstr "Skicka till GPS"
-
-#
-#
-#~ msgid "km"
-#~ msgstr "km"
-
-#
-#
-#~ msgid "kts"
-#~ msgstr "knop"
-
-#
-#
-#~ msgid "m"
-#~ msgstr "m"
-
-#
-#
-#~ msgid "mi"
-#~ msgstr "mile"
-
-#
-#
-#~ msgid "mph"
-#~ msgstr "mph"

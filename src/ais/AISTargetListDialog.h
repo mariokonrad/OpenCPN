@@ -80,6 +80,7 @@ private:
 	void OnHideAllTracks(wxCommandEvent& event);
 	void OnToggleTrack(wxCommandEvent& event);
 	void OnLimitRange(wxCommandEvent& event);
+	void OnCloseButton(wxCommandEvent& event);
 
 	wxWindow* m_pparent;
 	wxAuiManager* m_pAuiManager;
@@ -93,6 +94,7 @@ private:
 	wxSpinCtrl* m_pSpinCtrlRange;
 	wxStaticText* m_pStaticTextCount;
 	wxTextCtrl* m_pTextTargetCount;
+	wxButton* m_pButtonOK;
 };
 
 }

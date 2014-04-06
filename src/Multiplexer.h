@@ -37,6 +37,10 @@ class wxGauge;
 class OCPN_DataStreamEvent;
 class DataStream;
 
+// Garmin interface private error codes
+#define ERR_GARMIN_INITIALIZE           -1
+#define ERR_GARMIN_GENERAL              -2
+
 class Multiplexer : public wxEvtHandler
 {
 public:
@@ -54,9 +58,9 @@ public:
 	void SetAISHandler(wxEvtHandler* handler);
 	void SetGPSHandler(wxEvtHandler* handler);
 
-	bool SendRouteToGPS(Route* pr, const wxString& com_name, bool bsend_waypoints,
-						wxGauge* pProgress);
-	bool SendWaypointToGPS(RoutePoint* prp, const wxString& com_name, wxGauge* pProgress);
+	int SendRouteToGPS(Route* pr, const wxString& com_name, bool bsend_waypoints,
+					   wxGauge* pProgress);
+	int SendWaypointToGPS(RoutePoint* prp, const wxString& com_name, wxGauge* pProgress);
 
 	void LogOutputMessage(const wxString& msg, wxString stream_name, bool b_filter);
 	void LogOutputMessageColor(const wxString& msg, const wxString& stream_name,

@@ -151,6 +151,8 @@ extern Select* pSelect;
 extern Select* pSelectTC;
 extern Select* pSelectAIS;
 extern MainFrame* gFrame;
+extern bool g_bmobile;
+extern double g_pix_per_mm;
 
 #ifdef __WXMSW__
 bool TestGLCanvas(wxString& prog_dir)
@@ -1155,6 +1157,13 @@ bool App::OnInit()
 		SetUnhandledExceptionFilter(&MyUnhandledExceptionFilter);
 #endif
 
+	// Set up some drawing factors
+	int mmx, mmy;
+	wxDisplaySizeMM(&mmx, &mmy);
+	int sx, sy;
+	wxDisplaySize(&sx, &sy);
+	g_pix_per_mm = ((double)sx) / ((double)mmx);
+
 	install_signal_handler();
 
 	// Init the private memory manager
@@ -1279,6 +1288,7 @@ bool App::OnInit()
 
 	// Init the Selectable Route Items List
 	pSelect = new Select;
+	pSelect->SetSelectPixelRadius(12);
 
 	// Init the Selectable Tide/Current Items List
 	pSelectTC = new Select;
@@ -1288,6 +1298,7 @@ bool App::OnInit()
 
 	// Init the Selectable AIS Target List
 	pSelectAIS = new Select;
+	pSelectAIS->SetSelectPixelRadius(12);
 
 	// Initially AIS display is always on
 	global::OCPN::get().gui().set_ShowAIS(true);
@@ -1332,6 +1343,13 @@ bool App::OnInit()
 	// Open/Create the Config Object (Must be after UI Style init).
 	pConfig = new Config(wxString(_T("")), wxString(_T("")), sys.data().config_file);
 	pConfig->LoadConfig(0);
+
+	if (g_bmobile) {
+		int SelectPixelRadius = 50;
+		pSelect->SetSelectPixelRadius(SelectPixelRadius);
+		pSelectTC->SetSelectPixelRadius(wxMax(25, SelectPixelRadius));
+		pSelectAIS->SetSelectPixelRadius(SelectPixelRadius);
+	}
 
 	// Is this the first run after a clean install?
 	if (!sys.config().nav_message_shown)
@@ -1542,6 +1560,9 @@ bool App::OnInit()
 	gFrame->Show(true);
 
 	if (global::OCPN::get().gui().frame().maximized)
+		gFrame->Maximize(true);
+
+	if (g_bmobile && (g_pix_per_mm > 4.0))
 		gFrame->Maximize(true);
 
 	stats = new StatWin(cc1);

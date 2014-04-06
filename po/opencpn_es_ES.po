@@ -332,6 +332,16 @@ msgstr "%D Días, %H:%M"
 msgid "%H:%M"
 msgstr "%H:%M"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -416,6 +426,16 @@ msgstr "Tipo de &Fuente:"
 msgid "&Go To"
 msgstr "&Ir A"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -505,6 +525,16 @@ msgstr "&Inversa"
 msgid "&Send to GPS"
 msgstr "&Enviar a GPS..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -608,6 +638,11 @@ msgstr "(reservado para uso futuro)"
 msgid "(unnamed)"
 msgstr "(sin nombre)"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 msgid ", Out: None"
 msgstr ", Salida: Ninguno"
@@ -845,6 +880,16 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -904,6 +949,16 @@ msgstr "Lista Blancos AIS"
 msgid "AISRollover"
 msgstr "Cartel  AIS"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -961,6 +1016,11 @@ msgstr "Acerca de"
 msgid "About OpenCPN"
 msgstr "Acerca de OpenCPN"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 msgid "Accept"
 msgstr "Aceptar"
@@ -1301,6 +1361,13 @@ msgstr "Vel. media"
 msgid "B"
 msgstr "B"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1434,12 +1501,26 @@ msgstr "Demora"
 msgid "Buddy"
 msgstr "Buddy"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Bulk carrier maritime"
 msgstr "Transp. marit. de grano"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2039,6 +2120,13 @@ msgstr "Valor Consola"
 msgid "Constrained by draught"
 msgstr "Limitación por calado"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2069,6 +2157,11 @@ msgstr "Copiar como KML"
 msgid "Copy as KML..."
 msgstr "Copiar como KML..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# No se si se refiere a sonar o a profundidad
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 # No se si se refiere a sonar o a profundidad
 #, c-format
@@ -2135,12 +2228,29 @@ msgstr "Crear WPT"
 msgid "Create Waypoint"
 msgstr "Crear Waypoint"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Cruise ship"
 msgstr "Crucero"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2269,6 +2379,16 @@ msgstr "Amarillo Oscuro"
 msgid "Data Connections"
 msgstr "Conexiones de Datos"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2633,6 +2753,11 @@ msgstr "Guión punteado"
 msgid "Dredge"
 msgstr "Draga"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# Cartel en mensajes de parametros de conexion de datos
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 # Cartel en mensajes de parametros de conexion de datos
 msgid "Drop"
@@ -2796,6 +2921,15 @@ msgstr ""
 msgid "Environmental Caution Area: Strong currents"
 msgstr "Area de Precaución Medioambiental: Corrientes fuertes"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2907,6 +3041,13 @@ msgstr "Pesquero"
 msgid "Failed to initialize the user interface. "
 msgstr "Fallo al iniciar la interfaz de usuario."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2931,6 +3072,13 @@ msgstr "Brazas"
 msgid "Feet"
 msgstr "Pies"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2958,6 +3106,13 @@ msgstr "Filtrar Periodo (seg.)"
 msgid "Filters"
 msgstr "Filtros"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2997,12 +3152,26 @@ msgstr "Forzar Reparación de Toda la Base de Datos"
 msgid "Format uploads for Furuno GP3X"
 msgstr "Formato subida para Furuno GP3X"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Freightbarge"
 msgstr "Barcaza de carga"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3027,6 +3196,17 @@ msgstr "Ajuste GPS desde Proa (m)"
 msgid "GPS Offset from Midship (m)"
 msgstr "Ajuste GPS desde el Centro (m)"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3058,6 +3238,16 @@ msgstr "GPX"
 msgid "GUID"
 msgstr "GUID"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3086,6 +3276,13 @@ msgstr "General"
 msgid "General Options"
 msgstr "Opciones Generales"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3120,6 +3317,13 @@ msgstr "Grupo \""
 msgid "HSC"
 msgstr "HSC"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3230,6 +3434,13 @@ msgstr "Nave de alta velocidad"
 msgid "Highlight Tracks"
 msgstr "Resaltar Derrotas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3289,6 +3500,16 @@ msgstr "Importar Fichero GPX"
 msgid "Important Text Only"
 msgstr "Solo Texto Importante"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3298,6 +3519,11 @@ msgstr "Solo Texto Importante"
 msgid "In"
 msgstr "En"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 msgid "In: None"
 msgstr "Entrada: Ninguno"
@@ -3416,6 +3642,13 @@ msgstr "LMT @ Lugar"
 msgid "LMT @ Track Start"
 msgstr "LMT @ Inicio Derrota"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3532,6 +3765,12 @@ msgstr "Etapa"
 msgid "Leg: from "
 msgstr "Etapa:desde"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# Lista desplegable del selector de fuentes del Interface de Usuario
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 # Lista desplegable del selector de fuentes del Interface de Usuario
 msgid "Legend"
@@ -3662,6 +3901,13 @@ msgstr "Los enlaces se abren para edición."
 msgid "Links are opened in the default browser."
 msgstr "Los enlaces se abren en el navegador por defecto."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3910,10 +4156,20 @@ msgstr "¿Unir waypoint?"
 msgid "Merge waypoints?"
 msgstr "¿Unir waypoints?"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 msgid "Message accepted"
 msgstr "Mensaje aceptado"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 msgid "Message filtered and dropped"
 msgstr "Mensaje filtrado y descartado"
@@ -3957,66 +4213,143 @@ msgstr "MoCrepúsculo"
 msgid "Moored"
 msgstr "Amarrado"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Motor freighter"
 msgstr "Buque de carga a motor"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Motor freighter pushing at least one tank-ship"
 msgstr "Buque de carga a motor tirando al menos de un buque cisterna"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Motor freighter pushing one or more freighters"
 msgstr "Buque de carga a motor tirando de uno o más cargueros"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Motor freighter with one or more ships alongside"
 msgstr "Embarcación de carga junto a uno o más barcos"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Motor freighter with tanker"
 msgstr "Buque de carga a motor con cisterna"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Motor freighter, tug"
 msgstr "Buque de carga a motor, remolcado"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Motor tanker"
 msgstr "Barco cisterna a motor"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
 msgstr "Barco cisterna a motor, carga seca fluida (p.ej. cemento)"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Motor tanker, liquid cargo, type C"
 msgstr "Barco cisterna a motor, carga líquida, tipo C"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Motor tanker, liquid cargo, type N"
 msgstr "Barco cisterna a motor, carga liquida, tipo N"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4057,6 +4390,11 @@ msgstr "NMEA 0183"
 msgid "NMEA 2000"
 msgstr "NMEA 2000"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 msgid "NMEA Debug Window"
 msgstr "Ventana depuración NMEA"
@@ -4116,6 +4454,16 @@ msgstr "Navegar hasta Aquí"
 msgid "Navigate To This"
 msgstr "Navegar hasta Esta"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4142,6 +4490,16 @@ msgstr "Nuevo Grupo Cartas"
 msgid "New Group..."
 msgstr "Nuevo Grupo..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4162,6 +4520,11 @@ msgstr "Próximo evento de marea"
 msgid "Nighttime"
 msgstr "Nocturno"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 msgid "No"
 msgstr "No"
@@ -4190,12 +4553,17 @@ msgstr "No Hay Carta Disponible"
 #
 #
 #
+#, fuzzy
 msgid ""
 "No Charts Installed.\n"
 "Please select chart folders in Options > Charts."
 msgstr ""
+"#-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#\n"
 "No hay cartas instaladas.\n"
-"Por favor seleccione carpeta de cartas en Caja Herramientas  >Cartas."
+"Por favor seleccione carpeta de cartas en Caja Herramientas  >Cartas.\n"
+"#-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#\n"
+"No hay cartas instaladas.\n"
+"Por favor seleccione carpeta de cartas en Opciones  >Cartas."
 
 #
 msgid "No, I don't want to hide it."
@@ -4249,12 +4617,26 @@ msgstr "Consulta Objetos"
 msgid "Object Query..."
 msgstr "Consulta Objetos..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Object, not otherwise specified"
 msgstr "Objeto, mientras no se especifique otra cosa"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4460,13 +4842,23 @@ msgstr "Información OpenCPN"
 
 #
 # Es el mensaje que aparece en el Icono de la Caja de Herramientas
+#, fuzzy
 msgid "Options"
-msgstr "Caja de Herramientas"
+msgstr ""
+"#-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#\n"
+"Caja de Herramientas\n"
+"#-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#\n"
+"Opciones"
 
 #
 msgid "Other - Define in associated text field"
 msgstr "Otro - Definir en campo de texto asociado"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 msgid "Out"
 msgstr "Salida"
@@ -4475,6 +4867,16 @@ msgstr "Salida"
 msgid "Output"
 msgstr "Salida"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4561,12 +4963,26 @@ msgstr "Paso/V"
 msgid "Passenger Ship"
 msgstr "Buque de Pasajeros"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Passenger ship without accomodation"
 msgstr "Barco pasajeros sin acomodaciópn"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4600,6 +5016,11 @@ msgstr "Pegar Derrota"
 msgid "Paste Waypoint"
 msgstr "Pegar Waypoint"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 msgid "Pause"
 msgstr "Pausa"
@@ -4669,6 +5090,13 @@ msgstr "Reinicie OpenCPN para activar cambios de idioma o estilo."
 msgid "Pleasure craft"
 msgstr "Embarcación de recreo"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4793,6 +5221,16 @@ msgstr "Canal Principal Babor"
 msgid "Preferred Channel Starboard Hand"
 msgstr "Canal Principal Estribor"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4811,6 +5249,16 @@ msgstr "Prepare GPS para actualizar Ruta/Waypoint y pulse Enviar..."
 msgid "Preserve Scale when Switching Charts"
 msgstr "Conservar escala al alternar entre cartas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4909,6 +5357,16 @@ msgstr "Contiúe a este lugar - espere instrucciones"
 msgid "Processing Waypoints..."
 msgstr "Procesando Waypoints..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4940,12 +5398,26 @@ msgstr "Propiedades..."
 msgid "Protocol"
 msgstr "Protocolo"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Pushboat, single"
 msgstr "Remolcador empuje, solo"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4953,12 +5425,26 @@ msgid "Pushtow, eight barges at least one tanker or gas barge"
 msgstr ""
 "Remolcador de empuje, ocho barcazas al menos una barcaza depósito o gas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Pushtow, eight cargo barges"
 msgstr "Remolcador de empuje, ocho barcazas de carga"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4966,12 +5452,26 @@ msgid "Pushtow, five barges at least one tanker or gas barge"
 msgstr ""
 "Remolcador de empuje, cinco barcazas al menos una barcaza depósito o gas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Pushtow, five cargo barges"
 msgstr "Remolcador de empuje, cinco barcazas de carga"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4979,17 +5479,37 @@ msgid "Pushtow, four barges at least one tanker or gas barge"
 msgstr ""
 "Remolcador de empuje, cuatro barcazas al menos una barcaza depósito o gas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Pushtow, four cargo barges"
 msgstr "Remolcador de empuje, cuatro barcazas de carga"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 msgid "Pushtow, nine or more barges"
 msgstr "Remolcador de empuje, nueve o más barcazas de carga"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4998,18 +5518,39 @@ msgstr ""
 "Remolcador de empuje, nueve o más barcazas al menos una barcaza depósito o "
 "gas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Pushtow, one cargo barge"
 msgstr "Remolcador de empuje, una barcaza de carga"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Pushtow, one tank/gas barge"
 msgstr "Remolcador de empuje, una barcaza depósito/gas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5017,12 +5558,26 @@ msgid "Pushtow, seven barges at least one tanker or gas barge"
 msgstr ""
 "Remolcador de empuje, siete barcazas al menos una barcaza depósito o gas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Pushtow, seven cargo barges"
 msgstr "Remolcador de empuje, siete barcazas de carga"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5030,12 +5585,26 @@ msgid "Pushtow, six barges at least one tanker or gas barge"
 msgstr ""
 "Remolcador de empuje, seis barcazas al menos una barcaza depósito o gas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Pushtow, six cargo barges"
 msgstr "Remolcador de empuje, seis barcazas de carga"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5043,18 +5612,39 @@ msgid "Pushtow, three barges at least one tanker or gas barge"
 msgstr ""
 "Remolcador de empuje, tres barcazas al menos una barcaza depósito o gas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Pushtow, three cargo barges"
 msgstr "Remolcador de empuje, tres barcazas de carga"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Pushtow, two barges at least one tanker or gas barge"
 msgstr "Remolcador de empuje, dos barcazas al menos una barcaza depósito o gas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5141,6 +5731,13 @@ msgstr "Puntos grabados"
 msgid "Red"
 msgstr "Rojo"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5178,6 +5775,16 @@ msgstr "Ref. Pt"
 msgid "Reference Point"
 msgstr "Punto  de Referencia"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5187,6 +5794,11 @@ msgstr "Punto  de Referencia"
 msgid "Reference Station :"
 msgstr "Estación de Referencia :"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 msgid "Reject"
 msgstr "Rechazar"
@@ -5321,6 +5933,11 @@ msgstr "Restricted Area: No fondear."
 msgid "Restricted Manoeuvrability"
 msgstr "Maniobrabilidad Restringida"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 msgid "Resume"
 msgstr "Reanudar"
@@ -5416,6 +6033,15 @@ msgstr "Imprimir Ruta"
 msgid "Route Properties"
 msgstr "Propiedades Ruta"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5637,6 +6263,16 @@ msgstr ""
 "Seleccionar máximo error permitido (en metros)\n"
 "tras reducción de datos:"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5646,6 +6282,16 @@ msgstr ""
 msgid "Send"
 msgstr "Enviar"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5686,6 +6332,13 @@ msgstr "Filtro Sentencia"
 msgid "Serial"
 msgstr "Serie"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5854,8 +6507,13 @@ msgstr "Mostrar Texto ENC"
 #
 #
 #
+#, fuzzy
 msgid "Show Grid"
-msgstr "Mostrar Rejilla"
+msgstr ""
+"#-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#\n"
+"Mostrar Rejilla\n"
+"#-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#\n"
+"Mostrar Cuadrícula"
 
 #
 msgid "Show Highway"
@@ -6114,6 +6772,11 @@ msgstr "SoG"
 msgid "Solid"
 msgstr "Sólido"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #, c-format
 msgid "Sound file '%s' is in unsupported format."
@@ -6143,6 +6806,16 @@ msgstr "Especial"
 msgid "Special Mark"
 msgstr "Marca Especial"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6308,30 +6981,65 @@ msgstr "TCP"
 msgid "TCPA"
 msgstr "TCPA"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Tankbarge"
 msgstr "Barcaza cisterna"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
 msgstr "Barcaza tanque, carga seca similar a líquida (p.ej. cemento)"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Tankbarge, gas"
 msgstr "Barcaza tanque, gas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
 msgid "Tankbarge, liquid cargo, type C"
 msgstr "Barcaza tanque, carga líquida, tipo C"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6585,6 +7293,16 @@ msgstr "Esta Etapa"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr "Este waypoint es parte de una capa y no puede ser editado"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6670,6 +7388,16 @@ msgstr "Hacia Waypoint"
 msgid "To route"
 msgstr "Hacer Ruta"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6689,6 +7417,16 @@ msgstr "Dejar Derrota"
 msgid "Toggle track"
 msgstr "Dejar Derrota"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -7469,7 +8207,7 @@ msgstr "El log antiguo se moverá a opencpn.log.log"
 
 #
 msgid "SAR Aircraft"
-msgstr ""
+msgstr "Aeronave SAR"
 
 #
 msgid ""
@@ -7498,6 +8236,201 @@ msgstr "¿Quiere incluir los puntos de la ruta ortodrómica en esta etapa?"
 msgid "m"
 msgstr "m"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "   Fichero Carta RLL datos corruptos en carta"
+
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "   Fichero Carta sin encabezado BSB, no se puede Inic."
+
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "   No se pudo leer primeros %d bytes de encabezado de fichero carta: "
+
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
+#
+msgid "--"
+msgstr "--"
+
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "NMi"
+msgstr "NMi"
+
+#
+msgid "km"
+msgstr "km"
+
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+msgid "kts"
+msgstr "kts"
+
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
+msgid "mi"
+msgstr "mi"
+
+#
+msgid "mph"
+msgstr "mph"
+
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "¿Seguro que desea borrar <TODAS> las rutas?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr "Error en Carga de Waypoint.  Por favor compruebe fichero log..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+#, fuzzy
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+"Algunos waypoints se usan en rutas o alarmas de fondeo. ¿Quieres borrarlos "
+"también? Esto cambiará las rutas y deshabilitará las alarmas de fondeo. "
+"Respondiendo No mantendrá los waypoints usados en rutas y alarmas."
+
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "in "
+msgstr "en"
+
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7514,6 +8447,41 @@ msgstr "m"
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7555,6 +8523,16 @@ msgstr "m"
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7571,6 +8549,22 @@ msgstr "m"
 #~ "\n"
 #~ "Configurar continuidad libgps..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7587,6 +8581,22 @@ msgstr "m"
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "     Predicción longitud flecha COG (Minutos):"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7603,6 +8613,22 @@ msgstr "m"
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "     Velocidad Max objetivo amarrado (Kts.):"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7619,6 +8645,7 @@ msgstr "m"
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "      Longitud Derrota Objetivo (Minutos):"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
 #
 #
 #
@@ -7626,9 +8653,6 @@ msgstr "m"
 #
 #
 #
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "   Fichero Carta RLL datos corruptos en carta"
-
 #
 #
 #
@@ -7636,9 +8660,19 @@ msgstr "m"
 #
 #
 #
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "   Fichero Carta sin encabezado BSB, no se puede Inic."
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7667,6 +8701,7 @@ msgstr "m"
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "   Proyección DESCONOCIDA, se asume Mercator: "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
 #
 #
 #
@@ -7674,10 +8709,34 @@ msgstr "m"
 #
 #
 #
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr ""
-#~ "   No se pudo leer primeros %d bytes de encabezado de fichero carta: "
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7714,6 +8773,42 @@ msgstr "m"
 #~ msgid "   PlugInManager: Cannot load library: "
 #~ msgstr "   Gestor de PlugIns: No se puede cargar librería: "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7750,6 +8845,42 @@ msgstr "m"
 #~ msgid "   PlugInManager: Cannot load symbol create_pi: "
 #~ msgstr "   Gestor de PlugIns: No se puede cargar símbolo create_pi: "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7786,6 +8917,21 @@ msgstr "m"
 #~ msgid "   PlugInManager: Cannot load symbol destroy_pi: "
 #~ msgstr "   Gestor de PlugIns: No se puede cargar símbolo destroy_pi: "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7801,6 +8947,21 @@ msgstr "m"
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  No se pudo abrir puerto serie AIS '"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7816,11 +8977,28 @@ msgstr "m"
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  No se pudo abrir puerto serie '"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #~ msgid " </b>in<b> "
 #~ msgstr " </b>en<b> "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7833,6 +9011,18 @@ msgstr "m"
 #~ msgid " COG: %03d Deg."
 #~ msgstr " COG: %03d Deg."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7845,6 +9035,16 @@ msgstr "m"
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG: 000 Deg."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7855,6 +9055,64 @@ msgstr "m"
 #~ msgid " is %5g"
 #~ msgstr " es %5g"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7913,6 +9171,69 @@ msgstr "m"
 #~ msgid "&Close"
 #~ msgstr "&Cerrar"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -7976,6 +9297,69 @@ msgstr "m"
 #~ msgid "&Delete All Routes..."
 #~ msgstr "&Borrar Todas Las Rutas..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8039,6 +9423,16 @@ msgstr "m"
 #~ msgid "&Delete All Tracks..."
 #~ msgstr "&Borrar Todas Las Derrotas..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8049,6 +9443,21 @@ msgstr "m"
 #~ msgid "&Export Track..."
 #~ msgstr "&Exportar Derrota..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8068,6 +9477,21 @@ msgstr "m"
 #~ "'\n"
 #~ " Sugerencia: Pruebe formato'xxx.xxx.xxx.xxx' "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8087,6 +9511,69 @@ msgstr "m"
 #~ "'\n"
 #~ "Sugerencia: Pruebe a cerrar otros programas."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8150,6 +9637,27 @@ msgstr "m"
 #~ msgid "(Active Track)"
 #~ msgstr "(Derrota Activa)"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8171,13 +9679,23 @@ msgstr "m"
 #~ msgid "(m)"
 #~ msgstr "(m)"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
 #
 #
 #
 #
-#~ msgid "--"
-#~ msgstr "--"
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8195,6 +9713,23 @@ msgstr "m"
 #~ msgid ":               "
 #~ msgstr ":               "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8218,6 +9753,16 @@ msgstr "m"
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8228,6 +9773,36 @@ msgstr "m"
 #~ msgid "<--Remove"
 #~ msgstr "<--Eliminar"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8259,6 +9834,19 @@ msgstr "m"
 #~ msgid "AIS SART Alert"
 #~ msgstr "Alerta AIS"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8272,6 +9860,31 @@ msgstr "m"
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "Activar Compensación CM93"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8297,6 +9910,21 @@ msgstr "m"
 #~ msgid "Activate Route"
 #~ msgstr "Activar Ruta"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8312,6 +9940,22 @@ msgstr "m"
 #~ msgid "Active Charts"
 #~ msgstr "Cartas Activas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8328,6 +9972,21 @@ msgstr "m"
 #~ msgid "Add Selection"
 #~ msgstr "Añadir Selección"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8343,6 +10002,16 @@ msgstr "m"
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Añadir esta carta a continuidad"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8353,6 +10022,38 @@ msgstr "m"
 #~ msgid "Add-->"
 #~ msgstr "Añadir-->"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8385,6 +10086,22 @@ msgstr "m"
 #~ msgid "Additional information"
 #~ msgstr "Información adicional"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8401,6 +10118,45 @@ msgstr "m"
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Todos los archivos (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8440,6 +10196,21 @@ msgstr "m"
 #~ msgid "Attempting to load libgps.so"
 #~ msgstr "Intentando cargar libgps.so"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8455,6 +10226,22 @@ msgstr "m"
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Puerto Salida Piloto Automático"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8471,6 +10258,42 @@ msgstr "m"
 #~ msgid "Available Chart Directories"
 #~ msgstr "Carpetas de Cartas disponibles"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8507,6 +10330,23 @@ msgstr "m"
 #~ msgid "BaseClassCommonName"
 #~ msgstr "BaseClassCommonName"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8524,6 +10364,23 @@ msgstr "m"
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Demora:                %03d Deg.\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8541,6 +10398,22 @@ msgstr "m"
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Marcación:            No disponible\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8557,6 +10430,21 @@ msgstr "m"
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8573,6 +10461,19 @@ msgstr "m"
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Habilitar Control de Detalle CM93"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8586,6 +10487,57 @@ msgstr "m"
 #~ msgid "CM93 Offset Display"
 #~ msgstr "Mostrar Compensación CM93"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8637,6 +10589,57 @@ msgstr "m"
 #~ msgid "CM93 Offset Off"
 #~ msgstr "Compensación CM93 Off"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8688,6 +10691,57 @@ msgstr "m"
 #~ msgid "CM93 Offset On"
 #~ msgstr "Compensación CM93 On"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8739,6 +10793,57 @@ msgstr "m"
 #~ msgid "CM93 Offset Tool Off"
 #~ msgstr "Herramienta Compensación CM93 Off"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8790,6 +10895,19 @@ msgstr "m"
 #~ msgid "CM93 Offset Tool....."
 #~ msgstr "Herramienta Compensación CM93....."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8803,6 +10921,57 @@ msgstr "m"
 #~ msgid "CM93 Offsets"
 #~ msgstr "Compensación CM93"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8854,6 +11023,22 @@ msgstr "m"
 #~ msgid "CM93 Offsets On"
 #~ msgstr "Compensación CM93 On"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8870,6 +11055,23 @@ msgstr "m"
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "Detalle Zoom CM93"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8887,6 +11089,23 @@ msgstr "m"
 #~ msgid "CPA:       \n"
 #~ msgstr "CPA:       \n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8904,6 +11123,20 @@ msgstr "m"
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f NM\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8926,6 +11159,66 @@ msgstr "m"
 #~ "\n"
 #~ "anfitrión gpsd es: "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -8986,6 +11279,23 @@ msgstr "m"
 #~ msgid "CallSign:  "
 #~ msgstr "Señal Llamada:  "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9003,6 +11313,11 @@ msgstr "m"
 #~ msgid "CallSign:             "
 #~ msgstr "Señal Llamada:              "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #~ msgid "Can't send waypoint. Found no serial data port with output defined."
@@ -9010,6 +11325,55 @@ msgstr "m"
 #~ "No se puede enviar waypoint. No se encontró puerto serie con salida "
 #~ "definida."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9060,6 +11424,55 @@ msgstr "m"
 #~ msgid "Cell X Offset"
 #~ msgstr "Ajustar Compensación CM93"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9110,6 +11523,37 @@ msgstr "m"
 #~ msgid "Cell Y Offset"
 #~ msgstr "Ajustar Compensación CM93"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9141,6 +11585,22 @@ msgstr "m"
 #~ msgid "Chart"
 #~ msgstr "Carta"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9157,6 +11617,16 @@ msgstr "m"
 #~ msgid "Chart Display Filters"
 #~ msgstr "Filtros Visualización Cartas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9167,6 +11637,16 @@ msgstr "m"
 #~ msgid "Chart Groups..."
 #~ msgstr "Grupos Cartas..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9177,6 +11657,21 @@ msgstr "m"
 #~ msgid "Chart Groups...New Group"
 #~ msgstr "Grupos Cartas...Nuevo Grupo"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9193,6 +11688,60 @@ msgstr "m"
 #~ msgid "Chart Position"
 #~ msgstr "Posición"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9247,6 +11796,69 @@ msgstr "m"
 #~ msgid "Chart file corrupt.. disabling this chart \n"
 #~ msgstr "Fichero de carta corrupto.. desactivando carta \n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9314,6 +11926,66 @@ msgstr "m"
 #~ "Clase desconocida\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9377,6 +12049,23 @@ msgstr "m"
 #~ "Clase:     A\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9394,6 +12083,14 @@ msgstr "m"
 #~ msgid "Class:                "
 #~ msgstr "Clase:                "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9402,6 +12099,21 @@ msgstr "m"
 #~ msgid "Copy"
 #~ msgstr "Copiar"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9417,6 +12129,23 @@ msgstr "m"
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "No se pudo resolver anfitrión TCP/IP"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9434,6 +12163,23 @@ msgstr "m"
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "Rumbo:                 %03d Deg.\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9451,6 +12197,23 @@ msgstr "m"
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Rumbo:                 000 Deg.\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9468,6 +12231,22 @@ msgstr "m"
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "Rumbo:            No disponible\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9484,6 +12263,31 @@ msgstr "m"
 #~ msgid "Cursor: "
 #~ msgstr "Cursor: "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9509,6 +12313,34 @@ msgstr "m"
 #~ msgid "Deactivate Route"
 #~ msgstr "Desactivar Ruta"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9538,6 +12370,22 @@ msgstr "m"
 #~ msgid "Default dataset"
 #~ msgstr "Datos por defecto"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9554,6 +12402,31 @@ msgstr "m"
 #~ msgid "Deg"
 #~ msgstr "Deg"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9579,6 +12452,22 @@ msgstr "m"
 #~ msgid "Delete Mark"
 #~ msgstr "Eliminar Marca"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9595,6 +12484,22 @@ msgstr "m"
 #~ msgid "Delete Route"
 #~ msgstr "Borrar Ruta"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9611,6 +12516,22 @@ msgstr "m"
 #~ msgid "Delete Selection"
 #~ msgstr "Eliminar Selección"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9627,6 +12548,22 @@ msgstr "m"
 #~ msgid "Delete Track"
 #~ msgstr "Borrar Derrota"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9643,6 +12580,23 @@ msgstr "m"
 #~ msgid "Depth Settings"
 #~ msgstr "Ajustes Profundidad"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9660,6 +12614,21 @@ msgstr "m"
 #~ msgid "Destination:          "
 #~ msgstr "Destino:          "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9676,6 +12645,16 @@ msgstr "m"
 #~ msgid "Display Style"
 #~ msgstr "Estilo Visualización Carta"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9686,6 +12665,22 @@ msgstr "m"
 #~ msgid "E&xport All..."
 #~ msgstr "&Exportar Todo..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9702,6 +12697,22 @@ msgstr "m"
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Vectorial"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9718,6 +12729,23 @@ msgstr "m"
 #~ msgid "ETA:"
 #~ msgstr "ETA:"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9735,6 +12763,43 @@ msgstr "m"
 #~ msgid "ETA:                  "
 #~ msgstr "Tiempo estimado llegada:                  "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9772,6 +12837,19 @@ msgstr "m"
 #~ msgid "ETE/Timestamp"
 #~ msgstr "Tiempo estimado"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9785,6 +12863,22 @@ msgstr "m"
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "Activar Compensación Manual CM93 "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9801,6 +12895,22 @@ msgstr "m"
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Habilitar Zoom con rueda de ratón"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9817,6 +12927,56 @@ msgstr "m"
 #~ msgid "Etc."
 #~ msgstr "Etc."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9867,6 +13027,45 @@ msgstr "m"
 #~ msgid "Exit OpenCPN"
 #~ msgstr "Salir de OpenCPN"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9906,6 +13105,45 @@ msgstr "m"
 #~ msgid "Failed to load libgps.so"
 #~ msgstr "Error al cargar libgps.so"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9945,6 +13183,22 @@ msgstr "m"
 #~ msgid "Failed to load libgps.so.19"
 #~ msgstr "Incapaz de cargar libgps.so.19"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9962,6 +13216,22 @@ msgstr "m"
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "Desde Embarcación: %03d Deg  %6.2f NMi"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9978,6 +13248,21 @@ msgstr "m"
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -9993,6 +13278,22 @@ msgstr "m"
 #~ msgid "GPSD Data Server"
 #~ msgstr "Servidor Datos GPSD"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10009,6 +13310,31 @@ msgstr "m"
 #~ msgid "Go To Here"
 #~ msgstr "Ir Aquí"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10034,6 +13360,16 @@ msgstr "m"
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Ir a Marca/WP"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10044,6 +13380,29 @@ msgstr "m"
 #~ msgid "Groups"
 #~ msgstr "Grupos"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10068,6 +13427,23 @@ msgstr "m"
 #~ msgid "Harmonic dataset to use:"
 #~ msgstr "Usar datos harmónicos:"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10085,6 +13461,23 @@ msgstr "m"
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Demora:                %03d Deg.\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10102,6 +13495,52 @@ msgstr "m"
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "IMO:                 %8d\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10149,6 +13588,22 @@ msgstr "m"
 #~ msgid "Import new layer"
 #~ msgstr "Importar Fichero GPX"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10165,6 +13620,22 @@ msgstr "m"
 #~ msgid "Inland Blue Flag        Clear\n"
 #~ msgstr "B. azul aguas int.        Borrar\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10181,6 +13652,22 @@ msgstr "m"
 #~ msgid "Jump To"
 #~ msgstr "Saltar A"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10197,6 +13684,28 @@ msgstr "m"
 #~ msgid "Jump To Position"
 #~ msgstr "Saltar a Posición"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10219,6 +13728,22 @@ msgstr "m"
 #~ msgid "Jump To Position..."
 #~ msgstr "Saltar A Posición..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10236,6 +13761,18 @@ msgstr "m"
 #~ msgid "Jump To..."
 #~ msgstr "Saltar A"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#  if ( type == BLACKLIST )
+#         return _("All but");
+#     else
+#         return _("Just ");
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10248,6 +13785,35 @@ msgstr "m"
 #~ msgid "Just "
 #~ msgstr "Sólo"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10277,6 +13843,23 @@ msgstr "m"
 #~ msgid "Language/Fonts"
 #~ msgstr "Idioma/Fuentes"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10294,6 +13877,22 @@ msgstr "m"
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Hora Último Informe Posición:       "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10310,6 +13909,22 @@ msgstr "m"
 #~ msgid "Leg/Route"
 #~ msgstr "Etapa/Ruta"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10326,6 +13941,38 @@ msgstr "m"
 #~ msgid "META Objects"
 #~ msgstr "META Objetos"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10359,6 +14006,58 @@ msgstr "m"
 #~ msgid "MMSI:                 %09d\n"
 #~ msgstr "Tiempo estimado llegada:                  "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10411,6 +14110,38 @@ msgstr "m"
 #~ msgid "MarinersStandard"
 #~ msgstr "Estándar Marino"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10443,6 +14174,38 @@ msgstr "m"
 #~ msgid "Mark Icon"
 #~ msgstr "Icono Marca"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10475,6 +14238,16 @@ msgstr "m"
 #~ msgid "Mark Name"
 #~ msgstr "Nombre Marca"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10485,6 +14258,31 @@ msgstr "m"
 #~ msgid "Mark Properties"
 #~ msgstr "Propiedades Marca"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10510,6 +14308,31 @@ msgstr "m"
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Propiedades Marca/WP..."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10535,6 +14358,22 @@ msgstr "m"
 #~ msgid "Measure....."
 #~ msgstr "Medir....."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10551,6 +14390,21 @@ msgstr "m"
 #~ msgid "Metres"
 #~ msgstr "Metros"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10566,6 +14420,22 @@ msgstr "m"
 #~ msgid "NMEA Data Source"
 #~ msgstr "Origen Datos NMEA"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10582,6 +14452,7 @@ msgstr "m"
 #~ msgid "NMEA Options"
 #~ msgstr "Opciones NMEA"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
 #
 #
 #
@@ -10594,9 +14465,10 @@ msgstr "m"
 #
 #
 #
-#~ msgid "NMi"
-#~ msgstr "NMi"
-
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10614,6 +14486,23 @@ msgstr "m"
 #~ msgid "Name:  "
 #~ msgstr "Nombre:"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10631,6 +14520,41 @@ msgstr "m"
 #~ msgid "Navigational Status:  "
 #~ msgstr "Estado Navegación:  "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10666,6 +14590,21 @@ msgstr "m"
 #~ msgid "New Mark"
 #~ msgstr "Nueva Marca"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10682,6 +14621,42 @@ msgstr "m"
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Número de marcas de radar mostradas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10718,6 +14693,42 @@ msgstr "m"
 #~ msgid "OpenCPN PlugIn Base Class"
 #~ msgstr "Plugin OpenCPN Clase de base"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10758,6 +14769,50 @@ msgstr "m"
 #~ "Plugin OpenCPN Clase de Base\n"
 #~ "PlugInManager creó esta clase de base"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10802,6 +14857,16 @@ msgstr "m"
 #~ msgid "OpenCPN S57 SENC File Load"
 #~ msgstr "OpenCPN Carga Archivo S57 SENC"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10812,6 +14877,21 @@ msgstr "m"
 #~ msgid "Other"
 #~ msgstr "Otro"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10828,6 +14908,21 @@ msgstr "m"
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Opciones Visualización Embarcación"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10844,6 +14939,21 @@ msgstr "m"
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "Puntos de Derrota a intervalo de distancia (NMi):"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10860,6 +14970,16 @@ msgstr "m"
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Marcar Puntos de Derrota a intervalo de tiempo (Segundos):"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10870,6 +14990,41 @@ msgstr "m"
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Velocidad Estimada (Kts)"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10905,6 +15060,42 @@ msgstr "m"
 #~ msgid "PlugInManager searching for PlugIns in location "
 #~ msgstr "Gestor de PlugIns buscando PlugIns en ubicación"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10941,6 +15132,42 @@ msgstr "m"
 #~ msgid "PlugInManager: Deactivating PlugIn: "
 #~ msgstr "Gestor de PlugIns: Desactivando PlugIn: "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -10977,6 +15204,42 @@ msgstr "m"
 #~ msgid "PlugInManager: Initializing PlugIn: "
 #~ msgstr "Gestor de PlugIns: Iniciando PlugIn: "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11013,6 +15276,42 @@ msgstr "m"
 #~ msgid "PlugInManager: Loading PlugIn: "
 #~ msgstr "Gestor de PlugIns: Cargando PlugIn: "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11049,6 +15348,42 @@ msgstr "m"
 #~ msgid "PlugInManager: UnLoading PlugIn: "
 #~ msgstr "Gestor de PlugIns: Cerrando PlugIn: "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11086,6 +15421,23 @@ msgstr "m"
 #~ msgstr ""
 #~ "Gestor de PlugIns: Descargando PlugIn con versión inválida de API %d.%d: "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11105,6 +15457,42 @@ msgstr "m"
 #~ "\n"
 #~ msgstr "Antiguedad Informe Posición:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11141,6 +15529,34 @@ msgstr "m"
 #~ msgid "Position:               "
 #~ msgstr "Posición:              "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11177,6 +15593,21 @@ msgstr "m"
 #~ "\n"
 #~ "¿Desea usar igualmente esta versión de libgps?"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11192,6 +15623,23 @@ msgstr "m"
 #~ msgid "Radar rings"
 #~ msgstr "Marcas de Radar"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11209,6 +15657,23 @@ msgstr "m"
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Autonomía:            No disponible\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11226,6 +15691,22 @@ msgstr "m"
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Alcance:                %5.1f NM\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11242,6 +15723,23 @@ msgstr "m"
 #~ msgid "Raster"
 #~ msgstr "Raster"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11259,6 +15757,23 @@ msgstr "m"
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Tasa De Giro            %3d Deg./Min. Izq,\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11276,6 +15791,23 @@ msgstr "m"
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Tasa De Giro            %3d Deg./Min. Der.\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11293,6 +15825,23 @@ msgstr "m"
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Tasa De Giro            0\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11310,6 +15859,23 @@ msgstr "m"
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Tasa De Giro:       > 5 Deg./30 s. Left\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11327,6 +15893,53 @@ msgstr "m"
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Tasa De Giro:       > 5 Deg./30 s. Right\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11378,6 +15991,21 @@ msgstr "m"
 #~ "Plazo Informe Reciente:   %3d Sec.\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11394,6 +16022,21 @@ msgstr "m"
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Eliminar esta carta de continuidad."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11409,11 +16052,41 @@ msgstr "m"
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Eliminar esta carta de continuidad."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #~ msgid "RenderHPGL: The '%s' instruction is not implemented."
 #~ msgstr "RenderHPGL: La '%s' instrucción no está implementada."
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11439,6 +16112,22 @@ msgstr "m"
 #~ msgid "Reverse Route"
 #~ msgstr "Ruta Inversa"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11456,6 +16145,21 @@ msgstr "m"
 #~ msgid "Route Properties..."
 #~ msgstr "Propiedades Ruta"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11472,6 +16176,22 @@ msgstr "m"
 #~ msgid "Route/Track"
 #~ msgstr "Ruta desde Track"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11488,6 +16208,16 @@ msgstr "m"
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Seleccionar Tipo de Cartas para Continuidad"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11498,6 +16228,31 @@ msgstr "m"
 #~ msgid "Send to GPS ( "
 #~ msgstr "Enviar a GPS ( "
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11523,6 +16278,22 @@ msgstr "m"
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Fijar modo rumbo hacia arriba"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11539,6 +16310,58 @@ msgstr "m"
 #~ msgid "Settings"
 #~ msgstr "Ajustes"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11591,6 +16414,22 @@ msgstr "m"
 #~ msgid "ShipName:  "
 #~ msgstr "Nombre Barco:"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11607,6 +16446,34 @@ msgstr "m"
 #~ msgid "Show ATON labels"
 #~ msgstr "Mostrar Etiquetas ATON"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11635,6 +16502,34 @@ msgstr "m"
 #~ msgid "Show Printing Icon"
 #~ msgstr "Mostrar Icono Impresión"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11663,6 +16558,18 @@ msgstr "m"
 #~ msgid "Show Track icon"
 #~ msgstr "Mostrar Icono Derrotas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11675,6 +16582,23 @@ msgstr "m"
 #~ msgid "Show layers initially"
 #~ msgstr "Mostrar capas inicialmente"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11696,6 +16620,48 @@ msgstr "m"
 #~ "Tamaño:                 %dm x %dm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11743,6 +16709,23 @@ msgstr "m"
 #~ "Tamaño:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11764,6 +16747,23 @@ msgstr "m"
 #~ "Tamaño:                 %dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11785,6 +16785,23 @@ msgstr "m"
 #~ "Tamaño:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11806,6 +16823,23 @@ msgstr "m"
 #~ "Tamaño:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11827,6 +16861,23 @@ msgstr "m"
 #~ "Tamaño:                 ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11848,6 +16899,23 @@ msgstr "m"
 #~ "Tamaño:               %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11869,6 +16937,23 @@ msgstr "m"
 #~ "Tamaño:               %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11886,6 +16971,23 @@ msgstr "m"
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Velocidad:            No disponible\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11903,6 +17005,16 @@ msgstr "m"
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Velocidad:                %5.2f Kts.\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11913,6 +17025,22 @@ msgstr "m"
 #~ msgid "T"
 #~ msgstr "T"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11929,6 +17057,23 @@ msgstr "m"
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "Servidor Datos TCP/IP WiFi"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11946,6 +17091,23 @@ msgstr "m"
 #~ msgid "TCPA:  \n"
 #~ msgstr "TCPA:  \n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11963,6 +17125,22 @@ msgstr "m"
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA:                 %02d:%02d Hr:Min\n"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11979,6 +17157,22 @@ msgstr "m"
 #~ msgid "Text Element"
 #~ msgstr "Elementos de Texto"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -11996,6 +17190,19 @@ msgstr "m"
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "Mareas && Corrientes"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -12010,6 +17217,52 @@ msgstr "m"
 #~ msgid "Tide/Current Data Selector"
 #~ msgstr "TideCurrentGraphRollover"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -12057,6 +17310,52 @@ msgstr "m"
 #~ msgid "Toggle Listing"
 #~ msgstr "Alternar seguimiento"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -12104,6 +17403,22 @@ msgstr "m"
 #~ msgid "Toggle Names"
 #~ msgstr "Nombre Ruta"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -12120,6 +17435,22 @@ msgstr "m"
 #~ msgid "ToolBox"
 #~ msgstr "Herramientas"
 
+# #-#-#-#-#  .merge_file_mlaonA (OpenCPN Version 3.3.1303)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Q78Jxq (OpenCPN Version 3.3.1419)  #-#-#-#-#
+#
 #
 #
 #
@@ -12146,21 +17477,3 @@ msgstr "m"
 #
 #~ msgid "Unavailable"
 #~ msgstr "No disponible"
-
-#
-#~ msgid "km"
-#~ msgstr "km"
-
-#
-#
-#~ msgid "kts"
-#~ msgstr "kts"
-
-#
-#
-#~ msgid "mi"
-#~ msgstr "mi"
-
-#
-#~ msgid "mph"
-#~ msgstr "mph"

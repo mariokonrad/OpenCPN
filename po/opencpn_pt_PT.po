@@ -434,6 +434,23 @@ msgstr "&Tipo:"
 msgid "&Go To"
 msgstr "Mover Barco Para Aqui"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -537,6 +554,23 @@ msgstr "Rota Inversa"
 msgid "&Send to GPS"
 msgstr "Enviar para GPS..."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -881,6 +915,23 @@ msgstr ""
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -967,6 +1018,23 @@ msgstr "Consulta Destino AIS"
 msgid "AISRollover"
 msgstr "Alerta AIS"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2343,6 +2411,23 @@ msgstr "Eliminar waypoint"
 msgid "Cruise ship"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2484,6 +2569,23 @@ msgstr "Apagar Tudo"
 msgid "Data Connections"
 msgstr "Opções Tipo Letra"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2870,6 +2972,23 @@ msgstr ""
 msgid "Dredge"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3417,6 +3536,24 @@ msgstr ""
 msgid "GPS Offset from Midship (m)"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3486,6 +3623,23 @@ msgstr "GPX"
 msgid "GUID"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3728,6 +3882,23 @@ msgstr "Importar Fichero GPX"
 msgid "Important Text Only"
 msgstr "Só Texto Importante"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4651,6 +4822,23 @@ msgstr "Cartas"
 msgid "New Group..."
 msgstr ""
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5030,6 +5218,23 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5358,6 +5563,23 @@ msgstr ""
 msgid "Preferred Channel Starboard Hand"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5384,6 +5606,23 @@ msgstr "Prepare GPS para receber Rota/Waypoint e pulse Enviar..."
 msgid "Preserve Scale when Switching Charts"
 msgstr "Manter escala ao alternar entre cartas"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5503,6 +5742,23 @@ msgstr ""
 msgid "Processing Waypoints..."
 msgstr "Eliminar Todos Os Waypoints..."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5745,6 +6001,23 @@ msgstr ""
 msgid "Reference Point"
 msgstr "Estação de Referência:"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6225,6 +6498,23 @@ msgid ""
 "after data reduction:"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6241,6 +6531,23 @@ msgstr ""
 msgid "Send"
 msgstr "Enviar"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6787,6 +7094,16 @@ msgstr ""
 msgid "Special Mark"
 msgstr "Eliminar Marca"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 # 
 # 
@@ -7240,6 +7557,23 @@ msgstr "Esta Pernada"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -7331,6 +7665,23 @@ msgstr "Para Waypoint"
 msgid "To route"
 msgstr "Tempo na rota"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -7366,6 +7717,23 @@ msgstr "Comutar Rastro"
 msgid "Toggle track"
 msgstr "Comutar Rastro"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -8234,6 +8602,112 @@ msgstr ""
 msgid "mph"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# 
+#, fuzzy
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "Ficheiro de carta corrompido.. a desactivar carta \n"
+
+#
+# 
+# 
+# 
+# 
+# 
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Confirma Que Quer Apagar <TODAS> As Rotas?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr ""
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+#, fuzzy
+msgid "in "
+msgstr "Ligações"
+
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8265,6 +8739,37 @@ msgstr ""
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "      Vector COG Comprimento Previsto[Minutos]:"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8296,6 +8801,37 @@ msgstr ""
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "     Considerar amarrado velocidades menores que(Kts.):"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8327,6 +8863,27 @@ msgstr ""
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "      Tamanho Rastro [Minutos]:"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
@@ -8334,10 +8891,8 @@ msgstr ""
 # 
 # 
 # 
-#, fuzzy
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "Ficheiro de carta corrompido.. a desactivar carta \n"
-
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8368,6 +8923,36 @@ msgstr ""
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  Não se pôde abrir porta serie AIS '"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8398,6 +8983,79 @@ msgstr ""
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  Não foi possível abrir porta serie '"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8472,6 +9130,84 @@ msgstr ""
 #~ msgid "&Close"
 #~ msgstr "Fechar"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8551,6 +9287,84 @@ msgstr ""
 #~ msgid "&Delete All Routes..."
 #~ msgstr "Apagar todas as Rotas..."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8630,6 +9444,23 @@ msgstr ""
 #~ msgid "&Delete All Tracks..."
 #~ msgstr "Apagar todas as Rotas..."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8648,6 +9479,23 @@ msgstr ""
 #~ msgid "&Export Track..."
 #~ msgstr "Exportar...."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8666,6 +9514,36 @@ msgstr ""
 #~ msgid "&Export Wpt..."
 #~ msgstr "Exportar...."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8700,6 +9578,36 @@ msgstr ""
 #~ "'\n"
 #~ " Sugestão: Tente o formato'xxx.xxx.xxx.xxx' "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8734,6 +9642,84 @@ msgstr ""
 #~ "'\n"
 #~ "Sugestão: Tente fechar outros programas."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8813,6 +9799,38 @@ msgstr ""
 #~ msgid "(Active Track)"
 #~ msgstr "Apagar Rastro"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8846,6 +9864,38 @@ msgstr ""
 #~ msgid ":               "
 #~ msgstr "(ETA) Hora de Chegada Estimada:                  "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8882,6 +9932,51 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Tipo de Embarcação:            "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8928,6 +10023,46 @@ msgstr ""
 #~ msgid "AIS SART Alert"
 #~ msgstr "Alerta AIS"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8968,6 +10103,37 @@ msgstr ""
 #~ msgid "Activate Route"
 #~ msgstr "Activar Rota"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -8999,6 +10165,53 @@ msgstr ""
 #~ msgid "Add Selection"
 #~ msgstr "adicionar seleccionados"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9046,6 +10259,37 @@ msgstr ""
 #~ msgid "Additional information"
 #~ msgstr "Informação Adicional"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9077,6 +10321,36 @@ msgstr ""
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Todos os ficheiros (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9107,6 +10381,37 @@ msgstr ""
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Porta de saída Piloto Automático"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9138,6 +10443,38 @@ msgstr ""
 #~ msgid "Available Chart Directories"
 #~ msgstr "Pastas de Arquivo de Cartas, Disponíveis"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9171,6 +10508,38 @@ msgstr ""
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Proa:              %5.0f Deg.\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9204,6 +10573,36 @@ msgstr ""
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Tipo de Embarcação:            "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9235,6 +10634,37 @@ msgstr ""
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Activar Controlo de Detalhe CM93"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9266,6 +10696,38 @@ msgstr ""
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "Detalhe Zoom CM93"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9298,6 +10760,38 @@ msgstr ""
 #~ msgid "CPA:       \n"
 #~ msgstr "CPA:       \n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9330,6 +10824,81 @@ msgstr ""
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f NM\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9405,6 +10974,38 @@ msgstr ""
 #~ msgid "CallSign:  "
 #~ msgstr "Indicativo Estação VHF:  "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9438,6 +11039,52 @@ msgstr ""
 #~ msgid "CallSign:             "
 #~ msgstr "Posição:              "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9484,6 +11131,37 @@ msgstr ""
 #~ msgid "Chart"
 #~ msgstr "Carta"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9515,6 +11193,36 @@ msgstr ""
 #~ msgid "Chart Display Filters"
 #~ msgstr "Filtros de visualização das Cartas"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9546,6 +11254,75 @@ msgstr ""
 #~ msgid "Chart Position"
 #~ msgstr "Posição"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9615,6 +11392,81 @@ msgstr ""
 #~ msgid "Chart file corrupt.. disabling this chart \n"
 #~ msgstr "Ficheiro de carta corrompido.. a desactivar carta \n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9693,6 +11545,38 @@ msgstr ""
 #~ "Classe:     A\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9726,6 +11610,84 @@ msgstr ""
 #~ msgid "Class:                "
 #~ msgstr "(ETA) Hora de Chegada Estimada:                  "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9808,6 +11770,36 @@ msgstr ""
 #~ "Classe:     B\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9838,6 +11830,38 @@ msgstr ""
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "Não encontrou anfitrião TCP/IP"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9871,6 +11895,38 @@ msgstr ""
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "Rumo:               %5.0f Deg.\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9904,6 +11960,38 @@ msgstr ""
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Rumo:               %5.0f Deg.\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9937,6 +12025,37 @@ msgstr ""
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "Tipo de Embarcação:            "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -9968,6 +12087,46 @@ msgstr ""
 #~ msgid "Cursor: "
 #~ msgstr "Cursor: "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10008,6 +12167,49 @@ msgstr ""
 #~ msgid "Deactivate Route"
 #~ msgstr "Desactivar Rota"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10052,6 +12254,37 @@ msgstr ""
 #~ msgid "Default dataset"
 #~ msgstr "Cor da Letra."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10084,6 +12317,92 @@ msgstr ""
 #~ msgid "Deg"
 #~ msgstr "Perna"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10170,6 +12489,46 @@ msgstr ""
 #~ msgid "Delete All Routes..."
 #~ msgstr "Apagar todas as Rotas..."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10210,6 +12569,37 @@ msgstr ""
 #~ msgid "Delete Mark"
 #~ msgstr "Eliminar Marca"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10241,6 +12631,37 @@ msgstr ""
 #~ msgid "Delete Route"
 #~ msgstr "Apagar Rota"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10272,6 +12693,37 @@ msgstr ""
 #~ msgid "Delete Selection"
 #~ msgstr "Eliminar Selecção"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10303,6 +12755,37 @@ msgstr ""
 #~ msgid "Delete Track"
 #~ msgstr "Apagar Rastro"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10334,6 +12817,38 @@ msgstr ""
 #~ msgid "Depth Settings"
 #~ msgstr "Definições das Sondas Reduzidas"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10366,6 +12881,36 @@ msgstr ""
 #~ msgid "Destination:          "
 #~ msgstr "Destino:          "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10397,6 +12942,26 @@ msgstr ""
 #~ msgid "Display Style"
 #~ msgstr "Estilo Visual da Carta"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10418,6 +12983,46 @@ msgstr ""
 #~ msgid "E&xport All..."
 #~ msgstr "Exportar...."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10459,6 +13064,38 @@ msgstr ""
 #~ msgid "ETA:"
 #~ msgstr "ETE"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10491,6 +13128,81 @@ msgstr ""
 #~ msgid "ETA:                  "
 #~ msgstr "(ETA) Hora de Chegada Estimada:                  "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10566,6 +13278,37 @@ msgstr ""
 #~ msgid "ETA:                  Unknown"
 #~ msgstr "(ETA) Hora de Chegada Estimada:                  Desconhecida"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10597,6 +13340,37 @@ msgstr ""
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Habilitar Zoom com roda do rato"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10628,6 +13402,71 @@ msgstr ""
 #~ msgid "Etc."
 #~ msgstr "Etc."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10693,6 +13532,37 @@ msgstr ""
 #~ msgid "Exit OpenCPN"
 #~ msgstr "Sair do OpenCPN"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10725,6 +13595,37 @@ msgstr ""
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "Desde o Barco: %03d Deg  %6.2f NMi"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10756,6 +13657,36 @@ msgstr ""
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10786,6 +13717,77 @@ msgstr ""
 #~ msgid "GPSD Data Server"
 #~ msgstr "Servidor de Dados GPSD"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10857,6 +13859,79 @@ msgstr ""
 #~ msgid "GRIB"
 #~ msgstr "GRIB"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -10930,6 +14005,79 @@ msgstr ""
 #~ msgid "GRIB Data"
 #~ msgstr "Dados GRIB"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11003,6 +14151,79 @@ msgstr ""
 #~ msgid "GRIB Display Control"
 #~ msgstr "Controlo Visualização GRIB"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11076,6 +14297,37 @@ msgstr ""
 #~ msgid "GRIB File Directory"
 #~ msgstr "Pasta de Ficheiros GRIB"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11108,6 +14360,46 @@ msgstr ""
 #~ msgid "Go To Here"
 #~ msgstr "Mover Barco Para Aqui"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11149,6 +14441,38 @@ msgstr ""
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Mover Barco Para Aqui"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11182,6 +14506,38 @@ msgstr ""
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Proa:              %5.0f Deg.\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11215,6 +14571,37 @@ msgstr ""
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "(ETA) Hora de Chegada Estimada:                  "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11247,6 +14634,37 @@ msgstr ""
 #~ msgid "Jump To"
 #~ msgstr "Posição"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11279,6 +14697,37 @@ msgstr ""
 #~ msgid "Jump To Position"
 #~ msgstr "Posição"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11311,6 +14760,50 @@ msgstr ""
 #~ msgid "Jump To..."
 #~ msgstr "Posição"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11355,6 +14848,38 @@ msgstr ""
 #~ msgid "Language/Fonts"
 #~ msgstr "Idioma/Fontes"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11388,6 +14913,38 @@ msgstr ""
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Hora Última Aquisição:       "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# Etapa/Rota
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11420,6 +14977,37 @@ msgstr ""
 #~ msgid "Leg/Route"
 #~ msgstr "Pernada/Rota"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11451,6 +15039,53 @@ msgstr ""
 #~ msgid "META Objects"
 #~ msgstr "META Objectos"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11499,6 +15134,73 @@ msgstr ""
 #~ msgid "MMSI:                 %09d\n"
 #~ msgstr "(ETA) Hora de Chegada Estimada:                  "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11566,6 +15268,53 @@ msgstr ""
 #~ msgid "MarinersStandard"
 #~ msgstr "Standard Marítimo"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11613,6 +15362,53 @@ msgstr ""
 #~ msgid "Mark Icon"
 #~ msgstr "Ícone"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11660,6 +15456,26 @@ msgstr ""
 #~ msgid "Mark Name"
 #~ msgstr "Nome"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11681,6 +15497,46 @@ msgstr ""
 #~ msgid "Mark Properties"
 #~ msgstr "Propriedades de Marca/WP"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11722,6 +15578,46 @@ msgstr ""
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Propriedades de Marca/WP"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11762,6 +15658,37 @@ msgstr ""
 #~ msgid "Measure....."
 #~ msgstr "Medição....."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11793,6 +15720,36 @@ msgstr ""
 #~ msgid "Metres"
 #~ msgstr "Metros"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11823,6 +15780,37 @@ msgstr ""
 #~ msgid "NMEA Data Source"
 #~ msgstr "Origem dos Dados NMEA"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11854,6 +15842,38 @@ msgstr ""
 #~ msgid "NMEA Options"
 #~ msgstr "Ajustes NMEA"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11887,6 +15907,38 @@ msgstr ""
 #~ msgid "Name:  "
 #~ msgstr "Nome da Embarcação:"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11919,6 +15971,56 @@ msgstr ""
 #~ msgid "Navigational Status:  "
 #~ msgstr "Condição de Navegação:  "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -11969,6 +16071,36 @@ msgstr ""
 #~ msgid "New Mark"
 #~ msgstr "Nova Marca"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12000,6 +16132,22 @@ msgstr ""
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Numero de Círculos de radar mostrados"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12016,6 +16164,36 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Outro"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12047,6 +16225,36 @@ msgstr ""
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Opções de Visualização Cartas"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12078,6 +16286,36 @@ msgstr ""
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "Marcar pontos de Rastro à distancia de[NMi]:"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12109,6 +16347,23 @@ msgstr ""
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Marcar pontos de Rastro com intervalo de  [Segundos]:"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12127,6 +16382,79 @@ msgstr ""
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Velocidade Prevista"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12200,6 +16528,79 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed CRAIN GRIB"
 #~ msgstr "Ajuste Zoom ou Escala para ver CRAIN GRIB escondido"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12273,6 +16674,79 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed HTSGW GRIB"
 #~ msgstr "Ajuste Zoom ou Escala para ver HTSGW GRIB escondido"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12347,6 +16821,79 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed OCEAN CURRENT GRIB"
 #~ msgstr "Ajuste Zoom ou Escala para ver CRAIN GRIB escondido"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12421,6 +16968,38 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed SEATEMP GRIB"
 #~ msgstr "Ajuste Zoom ou Escala para ver HTSGW GRIB escondido"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12456,6 +17035,57 @@ msgstr ""
 #~ "\n"
 #~ msgstr "última aquisição tem:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12508,6 +17138,79 @@ msgstr ""
 #~ msgid "Position:               "
 #~ msgstr "Posição:              "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12581,6 +17284,37 @@ msgstr ""
 #~ msgid "Pressure, mBar"
 #~ msgstr "Pressão, mBar"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# Aneis de Radar
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12612,6 +17346,38 @@ msgstr ""
 #~ msgid "Radar rings"
 #~ msgstr "Círculos de Radar"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12645,6 +17411,38 @@ msgstr ""
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Tipo de Embarcação:            "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12677,6 +17475,37 @@ msgstr ""
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Alcance:                %5.1f NM\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12709,6 +17538,38 @@ msgstr ""
 #~ msgid "Raster"
 #~ msgstr "Base"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12742,6 +17603,38 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "última aquisição tem:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12775,6 +17668,38 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "última aquisição tem:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12808,6 +17733,38 @@ msgstr ""
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "última aquisição tem:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12841,6 +17798,38 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "última aquisição tem:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12874,6 +17863,68 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "última aquisição tem:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12941,6 +17992,36 @@ msgstr ""
 #~ "Período das aquisições mais recentes:     %3d Sec.\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -12972,6 +18053,36 @@ msgstr ""
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Eliminar waypoint da Rota"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13003,6 +18114,46 @@ msgstr ""
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Eliminar waypoint da Rota"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13043,6 +18194,37 @@ msgstr ""
 #~ msgid "Reverse Route"
 #~ msgstr "Rota Inversa"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13075,6 +18257,37 @@ msgstr ""
 #~ msgid "Route Properties..."
 #~ msgstr "Propriedades desta Rota"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13107,6 +18320,79 @@ msgstr ""
 #~ msgid "Route/Track"
 #~ msgstr "Rota"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13181,6 +18467,84 @@ msgstr ""
 #~ msgid "Select GRIB Directory"
 #~ msgstr "Pasta de Ficheiros GRIB"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13260,6 +18624,26 @@ msgstr ""
 #~ msgid "Send Route To GPS..."
 #~ msgstr "Enviar para GPS..."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13281,6 +18665,37 @@ msgstr ""
 #~ msgid "Send to GPS ( "
 #~ msgstr "Enviar para GPS..."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13312,6 +18727,73 @@ msgstr ""
 #~ msgid "Settings"
 #~ msgstr "Ajustes"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13379,6 +18861,37 @@ msgstr ""
 #~ msgid "ShipName:  "
 #~ msgstr "Nome da Embarcação:"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13410,6 +18923,84 @@ msgstr ""
 #~ msgid "Show ATON labels"
 #~ msgstr "Etiquetas ATON"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13488,6 +19079,84 @@ msgstr ""
 #~ msgid "Show GPX icons"
 #~ msgstr "Mostrar ícones GPX"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13566,6 +19235,77 @@ msgstr ""
 #~ msgid "Show GRIB dialog"
 #~ msgstr "Mostrar Janela GRIB"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13637,6 +19377,49 @@ msgstr ""
 #~ msgid "Show GRIB icon"
 #~ msgstr "Mostrar Ícone GRIB"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13680,6 +19463,49 @@ msgstr ""
 #~ msgid "Show Printing Icon"
 #~ msgstr "Mostrar Ícone Impressão"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13723,6 +19549,79 @@ msgstr ""
 #~ msgid "Show Track icon"
 #~ msgstr "Mostrar Ícone Rastro"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13796,6 +19695,38 @@ msgstr ""
 #~ msgid "Significant Wave Height, m"
 #~ msgstr "Altura de Vaga Significativa, m"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13833,6 +19764,63 @@ msgstr ""
 #~ "Dimensões:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13895,6 +19883,38 @@ msgstr ""
 #~ "Dimensões:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13932,6 +19952,38 @@ msgstr ""
 #~ "Dimensões:                %5dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -13969,6 +20021,38 @@ msgstr ""
 #~ "Dimensões:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14006,6 +20090,38 @@ msgstr ""
 #~ "Dimensões:                ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14043,6 +20159,38 @@ msgstr ""
 #~ "Dimensões:                ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14080,6 +20228,38 @@ msgstr ""
 #~ "Dimensões:                %5dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14117,6 +20297,38 @@ msgstr ""
 #~ "Dimensões:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14150,6 +20362,38 @@ msgstr ""
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Tipo de Embarcação:            "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14182,6 +20426,37 @@ msgstr ""
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Velocidade:                %5.2f Kts.\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14213,6 +20488,38 @@ msgstr ""
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "Servidor Dados TCP/IP WiFi"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14245,6 +20552,38 @@ msgstr ""
 #~ msgid "TCPA:  \n"
 #~ msgstr "TCPA:  \n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14277,6 +20616,37 @@ msgstr ""
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA:                 %02d:%02d Hr:Min\n"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14308,6 +20678,37 @@ msgstr ""
 #~ msgid "Text Element"
 #~ msgstr "Elementos de Texto"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14340,6 +20741,67 @@ msgstr ""
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "Mostrar Correntes"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14402,6 +20864,67 @@ msgstr ""
 #~ msgid "Toggle Listing"
 #~ msgstr "Comutar Rastro"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14464,6 +20987,37 @@ msgstr ""
 #~ msgid "Toggle Names"
 #~ msgstr "Rota"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14495,6 +21049,37 @@ msgstr ""
 #~ msgid "ToolBox"
 #~ msgstr "Configuração"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14527,6 +21112,37 @@ msgstr ""
 #~ msgid "Track Properties..."
 #~ msgstr "Propriedades Do Rastro"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14559,6 +21175,38 @@ msgstr ""
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "Escala Real: %8.0f  Zoom %4.0fx"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14592,6 +21240,38 @@ msgstr ""
 #~ msgid "Type:                 "
 #~ msgstr "(ETA) Hora de Chegada Estimada:                  "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14625,6 +21305,30 @@ msgstr ""
 #~ msgid "UN Ship Type:         "
 #~ msgstr "Tipo de Embarcação:            "
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14650,6 +21354,36 @@ msgstr ""
 #~ msgid "Unavailable"
 #~ msgstr "Não há Carta Disponível"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14680,6 +21414,77 @@ msgstr ""
 #~ msgid "Units"
 #~ msgstr "Unidades"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14751,6 +21556,37 @@ msgstr ""
 #~ msgid "Use High Definition Graphics"
 #~ msgstr "Usar Gráficos Alta Definição"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14782,6 +21618,79 @@ msgstr ""
 #~ msgid "Use SCAMIN"
 #~ msgstr "Usar SCAMIN"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14855,6 +21764,37 @@ msgstr ""
 #~ msgid "WARNING:  QuickScat GRIB data is %d hours old."
 #~ msgstr "ATENÇÃO:  Os dados GRIB QuickScat já têm %d horas atraso."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14886,6 +21826,37 @@ msgstr ""
 #~ msgid "Waypoint Locking"
 #~ msgstr "Bloquear Waypoints"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14917,6 +21888,79 @@ msgstr ""
 #~ msgid "WiFi Options"
 #~ msgstr "Ajustes WiFi"
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #
@@ -14990,6 +22034,37 @@ msgstr ""
 #~ msgid "Wind Speed, Kts."
 #~ msgstr "Velocidade Vento, Kts."
 
+# #-#-#-#-#  .merge_file_eMhwZq (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ruhqKe (opencpn 1.3.6 (Pt01))  #-#-#-#-#
+#
 #
 #
 #

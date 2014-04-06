@@ -281,6 +281,19 @@ msgstr "%D Dager, %H:%M"
 msgid "%H:%M"
 msgstr "%H:%M"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -340,6 +353,19 @@ msgstr "&Skrift familie:"
 msgid "&Go To"
 msgstr "&Gå til"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -396,6 +422,19 @@ msgstr "&Reverser"
 msgid "&Send to GPS"
 msgstr "&Send til GPS"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -462,6 +501,18 @@ msgstr "(reservert for fremtidig bruk)"
 msgid "(unnamed)"
 msgstr "(uten navn)"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -687,6 +738,19 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -740,6 +804,19 @@ msgstr "AIS fartøyliste"
 msgid "AISRollover"
 msgstr "AIS kursor over"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -791,6 +868,18 @@ msgstr "Om"
 msgid "About OpenCPN"
 msgstr "Om OpenCPN"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1063,6 +1152,19 @@ msgstr "Gjennomsn.fart"
 msgid "B"
 msgstr "B"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1178,6 +1280,19 @@ msgstr "Kurs"
 msgid "Buddy"
 msgstr "Kamerat"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1190,6 +1305,19 @@ msgstr "Kamerat"
 msgid "Bulk carrier maritime"
 msgstr "Maritim bulkfrakt"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1669,6 +1797,19 @@ msgstr "Konsoll Verdi"
 msgid "Constrained by draught"
 msgstr "Forhindret av dypgående"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1705,6 +1846,18 @@ msgstr "Kopier som KML"
 msgid "Copy as KML..."
 msgstr "Kopier som KML..."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1758,6 +1911,19 @@ msgstr "Sett ut veipunkt"
 msgid "Create Waypoint"
 msgstr "Sett ut veipunkt"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1770,6 +1936,19 @@ msgstr "Sett ut veipunkt"
 msgid "Cruise ship"
 msgstr "Cruiseskip"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1891,6 +2070,19 @@ msgstr "Mørk Gul"
 msgid "Data Connections"
 msgstr "Datatilkoblinger"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2145,6 +2337,19 @@ msgstr "Punkt strek"
 msgid "Dredge"
 msgstr "Oppmudring"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2285,6 +2490,19 @@ msgstr ""
 msgid "Environmental Caution Area: Strong currents"
 msgstr "Miljømessig forsiktighetsområde: Sterke strømmer"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2378,6 +2596,19 @@ msgstr "F/V"
 msgid "Failed to initialize the user interface. "
 msgstr "Kunne ikke starte brukergrensesnittet. "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2400,6 +2631,19 @@ msgstr "Favner"
 msgid "Feet"
 msgstr "Fot"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2427,6 +2671,19 @@ msgstr "Filterperiode (sek)"
 msgid "Filters"
 msgstr "Filtre"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2466,6 +2723,19 @@ msgstr "Fremtving full kartdatabase gjenoppbygging"
 msgid "Format uploads for Furuno GP3X"
 msgstr "Formater opplasting for Furuno GP3X"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2478,6 +2748,19 @@ msgstr "Formater opplasting for Furuno GP3X"
 msgid "Freightbarge"
 msgstr "Fraktelekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2507,6 +2790,20 @@ msgstr "GPS forskyvning fra baug (m)"
 msgid "GPS Offset from Midship (m)"
 msgstr "GPS forskyvning fra midtskip (m)"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2542,6 +2839,19 @@ msgstr "GPX"
 msgid "GUID"
 msgstr "GUID"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2565,6 +2875,19 @@ msgstr "Generelt"
 msgid "General Options"
 msgstr "Generelle alternativer"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2600,6 +2923,19 @@ msgstr "Gruppe \""
 msgid "HSC"
 msgstr "HSC"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2686,6 +3022,19 @@ msgstr "Høyhastighets fartøy"
 msgid "Highlight Tracks"
 msgstr "Merkede slepestrek"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2740,6 +3089,19 @@ msgstr "Importer GPX fil"
 msgid "Important Text Only"
 msgstr "Kun viktig tekst"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2752,6 +3114,18 @@ msgstr "Kun viktig tekst"
 msgid "In"
 msgstr "Inn"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2861,6 +3235,19 @@ msgstr "Lok.Tid @ Sted"
 msgid "LMT @ Track Start"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2961,6 +3348,19 @@ msgstr "Legg"
 msgid "Leg: from "
 msgstr "Legg: fra "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3071,6 +3471,19 @@ msgstr "Lenker er åpnet for endring."
 msgid "Links are opened in the default browser."
 msgstr "Lenker er åpnet i standard nettleser."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3259,6 +3672,18 @@ msgstr "Koble sammen veipunkt?"
 msgid "Merge waypoints?"
 msgstr "Koble sammen veipunkter?"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3270,6 +3695,18 @@ msgstr "Koble sammen veipunkter?"
 msgid "Message accepted"
 msgstr "Melding akseptert"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3313,6 +3750,19 @@ msgstr "MoSkumring"
 msgid "Moored"
 msgstr "Fortøyd"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3325,6 +3775,19 @@ msgstr "Fortøyd"
 msgid "Motor freighter"
 msgstr "Motorisert fraktefartøy"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3337,6 +3800,19 @@ msgstr "Motorisert fraktefartøy"
 msgid "Motor freighter pushing at least one tank-ship"
 msgstr "Motorisert fraktefartøy, skyver minst et tankskip"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3349,6 +3825,19 @@ msgstr "Motorisert fraktefartøy, skyver minst et tankskip"
 msgid "Motor freighter pushing one or more freighters"
 msgstr "Motorisert fraktefartøy, skyver en eller flere fraktefartøy"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3361,6 +3850,19 @@ msgstr "Motorisert fraktefartøy, skyver en eller flere fraktefartøy"
 msgid "Motor freighter with one or more ships alongside"
 msgstr "Motorisert fraktefartøy med en eller flere skip side om side"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3373,6 +3875,19 @@ msgstr "Motorisert fraktefartøy med en eller flere skip side om side"
 msgid "Motor freighter with tanker"
 msgstr "Motorisert fraktefartøy med tanker"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3385,6 +3900,19 @@ msgstr "Motorisert fraktefartøy med tanker"
 msgid "Motor freighter, tug"
 msgstr "Motorisert fraktefartøy, slepebåt"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3397,6 +3925,19 @@ msgstr "Motorisert fraktefartøy, slepebåt"
 msgid "Motor tanker"
 msgstr "Motortanker"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3409,6 +3950,19 @@ msgstr "Motortanker"
 msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
 msgstr "Motortanker, tørrlast som flytende (f.eks. betong)"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3421,6 +3975,19 @@ msgstr "Motortanker, tørrlast som flytende (f.eks. betong)"
 msgid "Motor tanker, liquid cargo, type C"
 msgstr "Motortanker, flytende last, type C"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3433,6 +4000,19 @@ msgstr "Motortanker, flytende last, type C"
 msgid "Motor tanker, liquid cargo, type N"
 msgstr "Motortanker, flytende last, type N"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3471,6 +4051,18 @@ msgstr "NMEA 0183"
 msgid "NMEA 2000"
 msgstr "NMEA 2000"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3519,6 +4111,19 @@ msgstr "Naviger hit"
 msgid "Navigate To This"
 msgstr "Naviger hit"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3544,6 +4149,19 @@ msgstr "Ny kartgruppe"
 msgid "New Group..."
 msgstr "Ny gruppe..."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3565,6 +4183,18 @@ msgstr "Neste tidevannsforekomst"
 msgid "Nighttime"
 msgstr "Natt"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3637,6 +4267,19 @@ msgstr "Objekt informasjon"
 msgid "Object Query..."
 msgstr "Objekt info..."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3649,6 +4292,19 @@ msgstr "Objekt info..."
 msgid "Object, not otherwise specified"
 msgstr "Objekt, ikke spesifisert"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3799,6 +4455,18 @@ msgstr "Alternativer"
 msgid "Other - Define in associated text field"
 msgstr "Annet - Definer i tilhørende tekstfelt"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3814,6 +4482,19 @@ msgstr "Ut"
 msgid "Output"
 msgstr "Utsending"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3883,6 +4564,19 @@ msgstr "Pass/V"
 msgid "Passenger Ship"
 msgstr "Passasjer Fartøy"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3895,6 +4589,19 @@ msgstr "Passasjer Fartøy"
 msgid "Passenger ship without accomodation"
 msgstr "Passasjerskip uten overnatting"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3922,6 +4629,18 @@ msgstr "Lim inn slepestrek"
 msgid "Paste Waypoint"
 msgstr "Lim inn slepestrek"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3973,6 +4692,19 @@ msgstr "Start OpenCPN på nytt for å aktivere valgt språk eller stilendring."
 msgid "Pleasure craft"
 msgstr "Lystbåt"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4077,6 +4809,19 @@ msgstr "Foretrukket kanal, babord side"
 msgid "Preferred Channel Starboard Hand"
 msgstr "Foretrukket kanal, styrbord side"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4094,6 +4839,19 @@ msgstr "Klargjør GPS for mottak av rute/veipunkt og trykk send..."
 msgid "Preserve Scale when Switching Charts"
 msgstr "Bevar skala ved bytte av karter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4179,6 +4937,19 @@ msgstr "Fortsett til denne posisjon - avvent instruksjoner"
 msgid "Processing Waypoints..."
 msgstr "Behandler veipunkter..."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4205,6 +4976,19 @@ msgstr "Egenskaper..."
 msgid "Protocol"
 msgstr "Protokoll"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4217,6 +5001,19 @@ msgstr "Protokoll"
 msgid "Pushboat, single"
 msgstr "Skyvebåt, enkel"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4229,6 +5026,19 @@ msgstr "Skyvebåt, enkel"
 msgid "Pushtow, eight barges at least one tanker or gas barge"
 msgstr "Skyv og slep, åtte lektere, minst en tanker eller gasslekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4241,6 +5051,19 @@ msgstr "Skyv og slep, åtte lektere, minst en tanker eller gasslekter"
 msgid "Pushtow, eight cargo barges"
 msgstr "Skyv og slep, åtte lastelektere"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4253,6 +5076,19 @@ msgstr "Skyv og slep, åtte lastelektere"
 msgid "Pushtow, five barges at least one tanker or gas barge"
 msgstr "Skyv og slep, fem lastelektere, minst en tanker eller gasslekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4265,6 +5101,19 @@ msgstr "Skyv og slep, fem lastelektere, minst en tanker eller gasslekter"
 msgid "Pushtow, five cargo barges"
 msgstr "Skyv og slep, fem lastelektere"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4277,6 +5126,19 @@ msgstr "Skyv og slep, fem lastelektere"
 msgid "Pushtow, four barges at least one tanker or gas barge"
 msgstr "Skyv og slep, fire lektere, minst en tanker eller gasslekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4289,6 +5151,19 @@ msgstr "Skyv og slep, fire lektere, minst en tanker eller gasslekter"
 msgid "Pushtow, four cargo barges"
 msgstr "Skyv og slep, fire lastelektere"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4301,6 +5176,19 @@ msgstr "Skyv og slep, fire lastelektere"
 msgid "Pushtow, nine or more barges"
 msgstr "Skyv og slep, ni eller flere lektere"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4313,6 +5201,19 @@ msgstr "Skyv og slep, ni eller flere lektere"
 msgid "Pushtow, nine or more barges at least one tanker or gas barge"
 msgstr "Skyv og slep, ni eller flere lektere, minst en tanker eller gasslekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4325,6 +5226,19 @@ msgstr "Skyv og slep, ni eller flere lektere, minst en tanker eller gasslekter"
 msgid "Pushtow, one cargo barge"
 msgstr "Skyv og slep, en lastelekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4337,6 +5251,19 @@ msgstr "Skyv og slep, en lastelekter"
 msgid "Pushtow, one tank/gas barge"
 msgstr "Skyv og slep, en tank/gasslekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4349,6 +5276,19 @@ msgstr "Skyv og slep, en tank/gasslekter"
 msgid "Pushtow, seven barges at least one tanker or gas barge"
 msgstr "Skyv og slep, syv lektere, minst en tanker eller gasslekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4361,6 +5301,19 @@ msgstr "Skyv og slep, syv lektere, minst en tanker eller gasslekter"
 msgid "Pushtow, seven cargo barges"
 msgstr "Skyv og slep, syv lastelektere"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4373,6 +5326,19 @@ msgstr "Skyv og slep, syv lastelektere"
 msgid "Pushtow, six barges at least one tanker or gas barge"
 msgstr "Skyv og slep, seks lektere, minst en tanker eller gasslekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4385,6 +5351,19 @@ msgstr "Skyv og slep, seks lektere, minst en tanker eller gasslekter"
 msgid "Pushtow, six cargo barges"
 msgstr "Skyv og slep, seks lastelektere"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4397,6 +5376,19 @@ msgstr "Skyv og slep, seks lastelektere"
 msgid "Pushtow, three barges at least one tanker or gas barge"
 msgstr "Skyv og slep, tre lektere, minst en tanker eller gasslekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4409,6 +5401,19 @@ msgstr "Skyv og slep, tre lektere, minst en tanker eller gasslekter"
 msgid "Pushtow, three cargo barges"
 msgstr "Skyv og slep, tre lastelektere"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4421,6 +5426,19 @@ msgstr "Skyv og slep, tre lastelektere"
 msgid "Pushtow, two barges at least one tanker or gas barge"
 msgstr "Skyv og slep, to lektere, minst en tanker eller gasslekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4490,6 +5508,19 @@ msgstr "Lagrede punkter"
 msgid "Red"
 msgstr "Rød"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4528,6 +5559,19 @@ msgstr "Ref.Pkt."
 msgid "Reference Point"
 msgstr "Referanse punkt"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4540,6 +5584,18 @@ msgstr "Referanse punkt"
 msgid "Reference Station :"
 msgstr "Referansestasjon :"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4665,6 +5721,18 @@ msgstr "Forbudt område: Ingen ankring."
 msgid "Restricted Manoeuvrability"
 msgstr "Begrenset manøvrerbarhet"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4913,6 +5981,19 @@ msgstr ""
 "Velg maksimum tillatt avvik (i meter)\n"
 "etter datareduksjon:"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4925,6 +6006,19 @@ msgstr ""
 msgid "Send"
 msgstr "Send"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4956,6 +6050,19 @@ msgstr "Setningsfilter"
 msgid "Serial"
 msgstr "Seriell"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5249,6 +6356,18 @@ msgstr "SOG"
 msgid "Solid"
 msgstr "Kraftig"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5276,6 +6395,12 @@ msgstr "Spesial"
 msgid "Special Mark"
 msgstr "Spesialmerke"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #, fuzzy
@@ -5387,6 +6512,19 @@ msgstr "TCP"
 msgid "TCPA"
 msgstr "TCPA"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5399,6 +6537,19 @@ msgstr "TCPA"
 msgid "Tankbarge"
 msgstr "Tanklekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5411,6 +6562,19 @@ msgstr "Tanklekter"
 msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
 msgstr "Tanklekter, tørrlast som flytende (f.eks. betong)"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5423,6 +6587,19 @@ msgstr "Tanklekter, tørrlast som flytende (f.eks. betong)"
 msgid "Tankbarge, gas"
 msgstr "Tanklekter, gass"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5435,6 +6612,19 @@ msgstr "Tanklekter, gass"
 msgid "Tankbarge, liquid cargo, type C"
 msgstr "Tanklekter, flytende last, type C"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5637,6 +6827,19 @@ msgstr "Denne leggen"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr "Dette veipunktet er del av et lag og kan ikke redigeres"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5709,6 +6912,19 @@ msgstr "Til veipunkt"
 msgid "To route"
 msgstr "Til rute"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5732,6 +6948,19 @@ msgstr "Slepestrek"
 msgid "Toggle track"
 msgstr "Slepestrek"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6400,6 +7629,205 @@ msgstr ""
 msgid "Would you like include the Great Circle routing points for this leg?"
 msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "   Kartfil RLL data er ødelagt i kart "
+
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "   Kartfil har ikke BSB hode, kan ikke åpne."
+
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "   Kunne ikke lese første %d bytes av hode for kartfil: "
+
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+msgid "--"
+msgstr "--"
+
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "NMi"
+msgstr "Nm"
+
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+msgid "km"
+msgstr "km"
+
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+msgid "kts"
+msgstr "kn"
+
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+msgid "m"
+msgstr "m"
+
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+msgid "mi"
+msgstr "mi"
+
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+msgid "mph"
+msgstr "mph"
+
+#
+#
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Er du sikker på at du vil slette <ALLE> rutene?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr "Feil ved veipunkt opplasting. Sjekk loggfiler..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+#, fuzzy
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+"Det er noen veipunkter som er brukt i ruter eller ankeralarmer. Vil du "
+"slette disse også? Dette vil endre ruter og deaktivere ankeralarmer. Svarer "
+"du NEI, beholdes veipunktene som er brukt i ruter eller alarmer."
+
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "in "
+msgstr "Lenke"
+
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6427,6 +7855,31 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6458,6 +7911,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "\n"
 #~ "Fortsetter libgps oppsett..."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6485,6 +7965,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "      COG kursvektor lengde (minutter):"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6512,6 +8019,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "      Maksimum fart på fortøyde mål (knop):"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6539,18 +8073,46 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "      Lengde på slepestrek etter mål (minutter):"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
 #
 #
 #
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "   Kartfil RLL data er ødelagt i kart "
-
 #
 #
 #
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "   Kartfil har ikke BSB hode, kan ikke åpne."
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6591,12 +8153,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "   Kartprojisering er UKJENT, antar Mercator: "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
 #
 #
 #
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "   Kunne ikke lese første %d bytes av hode for kartfil: "
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6623,6 +8205,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  Kunne ikke åpne AIS serie port '"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6649,6 +8257,18 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  Kunne ikke åpne serieport '"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6661,6 +8281,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid " </b>in<b> "
 #~ msgstr " </b>i<b> "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6688,6 +8335,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid " COG: %03d Deg."
 #~ msgstr " COG: %03d Gra."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6715,6 +8389,14 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG: 000 Gra."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6723,6 +8405,19 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid " is %5g"
 #~ msgstr " er %5g"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6736,6 +8431,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "&Export Track..."
 #~ msgstr "&Eksporter slepestrek..."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6766,6 +8487,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "'\n"
 #~ " Forslag: Forsøk 'xxx.xxx.xxx.xxx' oppføring"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6796,6 +8543,42 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "'\n"
 #~ "Forslag: Forsøk å lukke andre programmer."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6832,14 +8615,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "(m)"
 #~ msgstr "(m)"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
 #
 #
 #
 #
 #
-#~ msgid "--"
-#~ msgstr "--"
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6868,6 +8671,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid ":               "
 #~ msgstr ":               "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6902,6 +8733,31 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6927,6 +8783,46 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "<--Remove"
 #~ msgstr "<--Fjern"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6967,6 +8863,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "AIS SART Alert"
 #~ msgstr "AIS SART Varsel"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -6994,6 +8917,42 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "Aktiver CM93 korrigering"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7030,6 +8989,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Activate Route"
 #~ msgstr "Aktiver ruten"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7056,6 +9041,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Active Charts"
 #~ msgstr "Aktive karter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7083,6 +9095,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Add Selection"
 #~ msgstr "Legg til utvalg"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7109,6 +9147,31 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Legg dette kartet til for fletting."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7134,6 +9197,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Add-->"
 #~ msgstr "Legg til-->"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7161,6 +9251,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Alle filer (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7187,6 +9303,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Autopilot utgangs port"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7214,6 +9357,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Available Chart Directories"
 #~ msgstr "Tilgjengelige kartmapper"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7242,6 +9413,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Kurs:                %03d Gra.\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7270,6 +9469,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Kurs:                Utilgjengelig\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7297,6 +9523,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7324,6 +9576,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Aktiver CM93 detalj justering"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7351,6 +9630,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "CM93 Offset Display"
 #~ msgstr "CM93 korrigeringsvisning"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7378,6 +9684,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "CM93 Offsets"
 #~ msgstr "CM93 Korrigeringer"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7405,6 +9738,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "CM93 Zoom detalj"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7433,6 +9794,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "CPA:       \n"
 #~ msgstr "CPA:       \n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7461,6 +9850,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f Nm\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7495,6 +9910,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "\n"
 #~ "gpsd vert er: "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7523,6 +9966,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "CallSign:             "
 #~ msgstr "Kallesignal:             "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7550,6 +10020,31 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Chart Display Filters"
 #~ msgstr "Kartvisning filter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7575,6 +10070,31 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Chart Groups..."
 #~ msgstr "Kartgrupper..."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7600,6 +10120,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Chart Groups...New Group"
 #~ msgstr "Kartgrupper...Ny gruppe"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7627,6 +10173,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Chart Position"
 #~ msgstr "Posisjon"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7655,6 +10229,28 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Class:                "
 #~ msgstr "Klasse:                "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7677,6 +10273,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Copy"
 #~ msgstr "Kopier"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7703,6 +10325,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "Kunne ikke løse TCP/IP vert '"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7731,6 +10381,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "Kurs:                 %03d Gra.\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7759,6 +10437,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Kurs:                 000 Grad.\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7787,6 +10493,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "Kurs:                 Utilgjengelig\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7814,6 +10547,42 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Cursor: "
 #~ msgstr "Kursor: "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7850,6 +10619,45 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Deactivate Route"
 #~ msgstr "Deaktiver rute"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7889,6 +10697,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Default dataset"
 #~ msgstr "Standard datasett"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7916,6 +10751,42 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Deg"
 #~ msgstr "Gra."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7952,6 +10823,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Delete Mark"
 #~ msgstr "Slett merke"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -7979,6 +10877,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Delete Route"
 #~ msgstr "Slett rute"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8006,6 +10931,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Delete Selection"
 #~ msgstr "Slett utvalg"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8033,6 +10985,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Delete Track"
 #~ msgstr "Slett slepestrek"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8060,6 +11039,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Depth Settings"
 #~ msgstr "Dybde alternativer"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8088,6 +11095,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Destination:          "
 #~ msgstr "Destinasjon:          "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8115,6 +11148,22 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Display Style"
 #~ msgstr "Kartvisnings alternativer"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8131,6 +11180,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "E&xport All..."
 #~ msgstr "E&ksporter alle..."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8158,6 +11234,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Vektor"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8186,6 +11290,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "ETA:"
 #~ msgstr "ETA:"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8214,6 +11346,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "ETA:                  "
 #~ msgstr "ETA:                  "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8241,6 +11400,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "Aktiver manuell CM93 korrigering"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8268,6 +11454,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Aktiver Mushjul-Zoom-til-Kursor"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8295,6 +11508,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Etc."
 #~ msgstr "Diverse"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8323,6 +11563,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "Fra eget skip: %03d Gra.  %6.2f Nm"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8350,6 +11617,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8376,6 +11669,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "GPSD Data Server"
 #~ msgstr "GPSD Dataserver"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8403,6 +11723,42 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Go To Here"
 #~ msgstr "Gå hit"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8439,6 +11795,31 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Gå til merke/veipunkt"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8464,6 +11845,44 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Groups"
 #~ msgstr "Grupper"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8502,6 +11921,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Harmonic dataset to use:"
 #~ msgstr "Tidevannstabell i bruk:"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8530,6 +11977,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Kurs:                %03d Gra.\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8558,6 +12033,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "IMO:                 %8d\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8586,6 +12089,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Inland Blue Flag        Clear\n"
 #~ msgstr "Innenlands Blått Flagg        Fjern\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8613,6 +12143,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Jump To"
 #~ msgstr "Gå til"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8640,6 +12197,42 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Jump To Position"
 #~ msgstr "Gå til posisjon"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8676,6 +12269,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Jump To Position..."
 #~ msgstr "Gå til posisjon"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8704,6 +12324,29 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Jump To..."
 #~ msgstr "Gå til"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8727,6 +12370,46 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Just "
 #~ msgstr "Bare "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8767,6 +12450,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Language/Fonts"
 #~ msgstr "Språk og Skrift"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8795,6 +12506,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Tid for siste posisjonsrapport:  "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8822,6 +12560,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Leg/Route"
 #~ msgstr "Legg/Rute"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8849,6 +12614,22 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "META Objects"
 #~ msgstr "META Objekter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8865,6 +12646,42 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Mark Properties"
 #~ msgstr "Egenskaper for merke"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8901,6 +12718,42 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Egenskaper for Merke/Veipunkt"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8937,6 +12790,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Measure....."
 #~ msgstr "Avstandsmåling..."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8964,6 +12844,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Metres"
 #~ msgstr "Meter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -8990,6 +12896,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "NMEA Data Source"
 #~ msgstr "NMEA Datakilde"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9017,6 +12950,7 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "NMEA Options"
 #~ msgstr "NMEA Valg"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
 #
 #
 #
@@ -9029,9 +12963,21 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #
 #
 #
-#~ msgid "NMi"
-#~ msgstr "Nm"
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9060,6 +13006,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Name:  "
 #~ msgstr "Navn:  "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9088,6 +13062,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Navigational Status:  "
 #~ msgstr "Navigasjons status:  "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9115,6 +13115,18 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Antall radar ringer"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9127,6 +13139,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Other"
 #~ msgstr "Annet"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9154,6 +13192,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Alternativer for visning av eget skip"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9181,6 +13245,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "Plasser slepestrekpunkter ved distanse intervall (Nm):"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9208,6 +13298,19 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Plasser slepestrekpunkter ved tidsintervall (sek.):"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9221,6 +13324,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Planlagt fart (Knop)"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9253,6 +13384,46 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "Alder for posisjonsrapport:       %3d sek.\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9301,6 +13472,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "\n"
 #~ "Vil du benytte denne versjonen av libgps?"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9327,6 +13524,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Radar rings"
 #~ msgstr "Radar ringer"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9355,6 +13580,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Avstand:                  Unavailable\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9383,6 +13636,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Avstand:                %5.1f NM\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9410,6 +13690,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Raster"
 #~ msgstr "Raster"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9438,6 +13746,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Svinghastighet            %3d Gra./Min. Venstre\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9466,6 +13802,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Svinghastighet            %3d Gra./Min. Høyre\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9494,6 +13858,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Svinghastighet            0\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9522,6 +13914,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Svinghastighet:       > 5 Grad./30 s. Venstre\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9550,6 +13970,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Svinghastighet:       > 5 Grad./30 s. Høyre\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9577,6 +14023,32 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Fjern dette kartet fra fletting."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9603,6 +14075,24 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Fjern dette kartet fra fletting."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9621,6 +14111,42 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "RenderHPGL: The '%s' instruction is not implemented."
 #~ msgstr "RenderHPGL: '%s' instruksen er ikke implementert."
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9657,6 +14183,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Reverse Route"
 #~ msgstr "Snu rute"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9685,6 +14238,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Route Properties..."
 #~ msgstr "Egenskaper for rute"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9713,6 +14293,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Route/Track"
 #~ msgstr "Rute fra Slepestrek"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9740,6 +14347,22 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Velg kart typer for fletting"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9756,6 +14379,42 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Send to GPS ( "
 #~ msgstr "Send til GPS ( "
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9792,6 +14451,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Sett kurs opp"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9819,6 +14505,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Settings"
 #~ msgstr "Innstillinger"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9846,6 +14559,45 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Show ATON labels"
 #~ msgstr "Vis AtoN etiketter"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9885,6 +14637,45 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Show Printing Icon"
 #~ msgstr "Vis utskrifts ikon"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9924,6 +14715,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Show Track icon"
 #~ msgstr "Vis slepestrek ikon"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9951,6 +14769,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Show layers initially"
 #~ msgstr "Vis lag først"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -9983,6 +14829,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "Størrelse:                 %dm x %dm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10015,6 +14889,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "Størrelse:                 %dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10047,6 +14949,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "Størrelse:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10079,6 +15009,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "Størrelse:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10111,6 +15069,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "Størrelse:                 ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10143,6 +15129,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "Størrelse:               %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10175,6 +15189,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ "Størrelse:               %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10203,6 +15245,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Fart:                  Unavailable\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10231,6 +15301,17 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Fart:                %5.2f Kts.\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10242,6 +15323,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "T"
 #~ msgstr "T"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10269,6 +15377,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "TCP/IP WiFi data server"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10297,6 +15433,34 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "TCPA:  \n"
 #~ msgstr "TCPA:  \n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10325,6 +15489,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA:                 %02d:%02d Tim:Min\n"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10352,6 +15543,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Text Element"
 #~ msgstr "Tekstelement"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10380,6 +15598,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "Tidevann && Strømmer"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10408,6 +15653,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "Tide/Current Data Selector"
 #~ msgstr "TidevannstrømGrafMusOver"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10435,6 +15707,33 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #~ msgid "ToolBox"
 #~ msgstr "Verktøy"
 
+# #-#-#-#-#  .merge_file_9kTg09 (OpenCPN 3.3.1006)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_YMpSFY (OpenCPN 3.3.1006)  #-#-#-#-#
+#
 #
 #
 #
@@ -10462,28 +15761,3 @@ msgstr "Ønsker du å inkludere storsirkel rutepunkter for denne leggen?"
 #, fuzzy
 #~ msgid "Track Properties..."
 #~ msgstr "Egenskaper for slepestrek"
-
-#
-#
-#~ msgid "km"
-#~ msgstr "km"
-
-#
-#
-#~ msgid "kts"
-#~ msgstr "kn"
-
-#
-#
-#~ msgid "m"
-#~ msgstr "m"
-
-#
-#
-#~ msgid "mi"
-#~ msgstr "mi"
-
-#
-#
-#~ msgid "mph"
-#~ msgstr "mph"

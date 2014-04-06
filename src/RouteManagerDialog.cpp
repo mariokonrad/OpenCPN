@@ -256,6 +256,9 @@ RouteManagerDialog::RouteManagerDialog(wxWindow* parent)
 
 	wxDialog::Create(parent, -1, _("Route Manager"), wxDefaultPosition, wxDefaultSize, style);
 
+	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
+	SetFont(*qFont);
+
 	m_lastWptItem = -1;
 	m_lastTrkItem = -1;
 	m_lastRteItem = -1;
@@ -612,6 +615,8 @@ void RouteManagerDialog::Create()
 
 	Fit();
 	SetMinSize(GetBestSize());
+
+	Centre();
 
 	// create a image list for the list with just the eye icon
 	wxImageList* imglist = new wxImageList(20, 20, true, 1);

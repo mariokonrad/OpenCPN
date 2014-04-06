@@ -318,7 +318,15 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 	m_pAuiManager = auimgr;
 	m_pdecoder = pdecoder;
 
-	SetMinSize(wxSize(400, 240));
+	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
+	SetFont(*qFont);
+
+	// Make an estimate of the default dialog size
+	// for the case when the AUI Perspective for this dialog is undefined
+	wxSize esize;
+	esize.x = 700;
+	esize.y = GetCharHeight() * 18;
+	SetSize(esize);
 
 	s_p_sort_decoder = pdecoder;
 	m_pMMSI_array = new ArrayOfMMSI(ArrayItemCompareMMSI);
@@ -355,104 +363,106 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 		wxEVT_COMMAND_LIST_COL_CLICK,
 		wxListEventHandler(AISTargetListDialog::OnTargetListColumnClicked), NULL, this);
 
-	width = 20;
+	int dx = GetCharWidth();
+
+	width = dx * 4;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlTRK, _("Trk"), wxLIST_FORMAT_LEFT, width);
 	s_width = tkz.GetNextToken();
 
-	width = 105;
+	width = dx * 12;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlNAME, _("Name"), wxLIST_FORMAT_LEFT, width);
 	s_width = tkz.GetNextToken();
 
-	width = 55;
+	width = dx * 7;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlCALL, _("Call"), wxLIST_FORMAT_LEFT, width);
 	s_width = tkz.GetNextToken();
 
-	width = 80;
+	width = dx * 10;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlMMSI, _("MMSI"), wxLIST_FORMAT_LEFT, width);
 	s_width = tkz.GetNextToken();
 
-	width = 55;
+	width = dx * 7;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlCLASS, _("Class"), wxLIST_FORMAT_CENTER, width);
 	s_width = tkz.GetNextToken();
 
-	width = 80;
+	width = dx * 10;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlTYPE, _("Type"), wxLIST_FORMAT_LEFT, width);
 	s_width = tkz.GetNextToken();
 
-	width = 90;
+	width = dx * 12;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlNAVSTATUS, _("Nav Status"), wxLIST_FORMAT_LEFT, width);
 	s_width = tkz.GetNextToken();
 
-	width = 45;
+	width = dx * 6;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlBRG, _("Brg"), wxLIST_FORMAT_RIGHT, width);
 	s_width = tkz.GetNextToken();
 
-	width = 62;
+	width = dx * 8;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlRNG, _("Range"), wxLIST_FORMAT_RIGHT, width);
 	s_width = tkz.GetNextToken();
 
-	width = 50;
+	width = dx * 6;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlCOG, _("CoG"), wxLIST_FORMAT_RIGHT, width);
 	s_width = tkz.GetNextToken();
 
-	width = 50;
+	width = dx * 6;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlSOG, _("SoG"), wxLIST_FORMAT_RIGHT, width);
 
-	width = 55;
+	width = dx * 7;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlCPA, _("CPA"), wxLIST_FORMAT_RIGHT, width);
 
-	width = 65;
+	width = dx * 8;
 	if (s_width.ToLong(&lwidth)) {
-		width = wxMax(20, lwidth);
-		width = wxMin(width, 250);
+		width = wxMax(dx * 2, lwidth);
+		width = wxMin(width, dx * 30);
 	}
 	m_pListCtrlAISTargets->InsertColumn(tlTCPA, _("TCPA"), wxLIST_FORMAT_RIGHT, width);
 	wxListItem item;
@@ -534,6 +544,13 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 		= new wxTextCtrl(this, wxID_ANY, _T(""), wxDefaultPosition, wxDefaultSize, wxTE_READONLY);
 	boxSizer02->Add(m_pTextTargetCount, 0, wxALL, 0);
 
+	boxSizer02->AddSpacer(10);
+	m_pButtonOK
+		= new wxButton(this, wxID_ANY, _("Close"), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW);
+	m_pButtonOK->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
+						 wxCommandEventHandler(AISTargetListDialog::OnCloseButton), NULL, this);
+	boxSizer02->Add(m_pButtonOK, 0, wxEXPAND | wxALL, 0);
+
 	topSizer->Layout();
 
 	// This is silly, but seems to be required for __WXMSW__ build
@@ -550,7 +567,7 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 								 .CaptionVisible(true)
 								 .DestroyOnClose(true)
 								 .Float()
-								 .FloatingPosition(50, 200)
+								 .FloatingPosition(50, 50)
 								 .TopDockable(false)
 								 .BottomDockable(true)
 								 .LeftDockable(false)
@@ -560,6 +577,7 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 
 		bool b_reset_pos = false;
 
+		if ((pane.floating_size.x != -1) && (pane.floating_size.y != -1)) {
 #ifdef __WXMSW__
 		// Support MultiMonitor setups which an allow negative window positions.
 		// If the requested window title bar does not intersect any installed monitor,
@@ -590,7 +608,8 @@ AISTargetListDialog::AISTargetListDialog(wxWindow* parent, wxAuiManager* auimgr,
 #endif
 
 		if (b_reset_pos)
-			pane.FloatingPosition(50, 200);
+			pane.FloatingPosition(50, 50);
+		}
 
 		// If the list got accidentally dropped on top of the chart bar, move it away....
 		if (pane.IsDocked() && (pane.dock_row == 0)) {
@@ -641,6 +660,17 @@ void AISTargetListDialog::OnPaneClose(wxAuiManagerEvent& event)
 			m_pAuiManager->SavePaneInfo(*event.pane));
 	}
 	event.Skip();
+}
+
+void AISTargetListDialog::OnCloseButton(wxCommandEvent&)
+{
+	if (m_pAuiManager) {
+		wxAuiPaneInfo pane = m_pAuiManager->GetPane(_T("AISTargetList"));
+		global::OCPN::get().gui().set_ais_target_list_perspective(
+			m_pAuiManager->SavePaneInfo(pane));
+		m_pAuiManager->DetachPane(this);
+		Destroy();
+	}
 }
 
 void AISTargetListDialog::UpdateButtons()

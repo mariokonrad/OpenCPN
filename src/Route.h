@@ -104,7 +104,7 @@ public:
 	bool IsSelected() const;
 	bool IsTrack() const;
 
-	bool SendToGPS(const wxString& com_name, bool bsend_waypoints, wxGauge* pProgress);
+	int SendToGPS(const wxString& com_name, bool bsend_waypoints, wxGauge* pProgress);
 
 	double GetRouteArrivalRadius(void) const;
 	void SetRouteArrivalRadius(double radius);
@@ -131,6 +131,7 @@ public:
 	bool m_bRtIsActive;
 	RoutePoint* m_pRouteActivePoint;
 	bool m_bIsBeingCreated;
+	bool m_bIsBeingEdited;
 	double m_route_length;
 	double m_route_time;
 

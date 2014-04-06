@@ -264,6 +264,19 @@ msgstr ""
 msgid "%H:%M"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -324,6 +337,19 @@ msgstr "&Tipo de letra:"
 msgid "&Go To"
 msgstr "&Ir a"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -384,6 +410,19 @@ msgstr "&Inverter"
 msgid "&Send to GPS"
 msgstr "&Enviar a GPS"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -672,6 +711,19 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -729,6 +781,19 @@ msgstr "Lista de obxectivos AIS"
 msgid "AISRollover"
 msgstr "AISRollover"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1626,6 +1691,19 @@ msgstr "Valor Consola"
 msgid "Constrained by draught"
 msgstr "Restrinxido/Obligado polo calado"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1717,6 +1795,19 @@ msgstr "Borrar Waypoint"
 msgid "Cruise ship"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1831,6 +1922,19 @@ msgstr "Cela"
 msgid "Data Connections"
 msgstr "Opcións de tipo de letra"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2098,6 +2202,19 @@ msgstr ""
 msgid "Dredge"
 msgstr "Dragar"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2240,6 +2357,19 @@ msgstr ""
 msgid "Environmental Caution Area: Strong currents"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2433,6 +2563,20 @@ msgstr ""
 msgid "GPS Offset from Midship (m)"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2464,6 +2608,19 @@ msgstr "GPS"
 msgid "GUID"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2517,6 +2674,19 @@ msgstr ""
 msgid "HSC"
 msgstr "HSC"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2645,6 +2815,19 @@ msgstr "Importar ficheiro GPX"
 msgid "Important Text Only"
 msgstr "Amosar só o texto importante"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2762,6 +2945,19 @@ msgstr "LMT @ Ubicación"
 msgid "LMT @ Track Start"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2864,6 +3060,19 @@ msgstr "Tramo"
 msgid "Leg: from "
 msgstr "Tramo: dende"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3367,6 +3576,19 @@ msgstr "Cartas"
 msgid "New Group..."
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3619,6 +3841,19 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3858,6 +4093,19 @@ msgstr "Canal Preferente por Babor"
 msgid "Preferred Channel Starboard Hand"
 msgstr "Canal Preferente por Estribor"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3876,6 +4124,19 @@ msgstr "Prepare o GPS para cargar  Ruta/Waypoint e pulse Enviar..."
 msgid "Preserve Scale when Switching Charts"
 msgstr "Conservar escala cando se alternan cartas"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3961,6 +4222,19 @@ msgstr ""
 msgid "Processing Waypoints..."
 msgstr "Procesando Waypoitns..."
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4153,6 +4427,19 @@ msgstr "Ref. Pt"
 msgid "Reference Point"
 msgstr "Punto de Referencia"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4346,6 +4633,19 @@ msgstr "Propiedades da Ruta"
 msgid "Route Properties"
 msgstr "Propiedades da Ruta"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4520,6 +4820,19 @@ msgid ""
 "after data reduction:"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4532,6 +4845,19 @@ msgstr ""
 msgid "Send"
 msgstr "Enviar"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4893,6 +5219,12 @@ msgstr "Especial"
 msgid "Special Mark"
 msgstr "Marca especial"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 # 
 #, fuzzy
@@ -5012,6 +5344,19 @@ msgstr "CPA TCPA"
 msgid "TCPA"
 msgstr "CPA TCPA"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5231,6 +5576,19 @@ msgstr "Este tramo"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5308,6 +5666,19 @@ msgstr "Ó Waypoint"
 msgid "To route"
 msgstr "Tempo en Ruta"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5331,6 +5702,19 @@ msgstr "Alternar Seguimento"
 msgid "Toggle track"
 msgstr "Alternar Seguimento"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5479,6 +5863,19 @@ msgstr ""
 msgid "Tug, single"
 msgstr "Buque tanque"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5666,6 +6063,19 @@ msgstr "Buque Remolacador, Longo"
 msgid "Vessel requesting non-distress assistance"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6021,6 +6431,136 @@ msgstr ""
 msgid "mph"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+# 
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "   Ficheiro de carta RLL datos corruptos na carta "
+
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+# 
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "   Ficheiro de carta sen encabezado BSB, non se pode Inic."
+
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+# 
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "   Non se puido ler os primeiros %d bytes do encabezado da carta: "
+
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+# 
+msgid "--"
+msgstr "--"
+
+#
+# 
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Seguro que desexa borrar <TODAS> as rutas?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr ""
+"Erro na Carga do Waypoint. Por favor comprobe o ficheiro de rexistro..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+# 
+#, fuzzy
+msgid "in "
+msgstr "Enlaces"
+
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6048,6 +6588,52 @@ msgstr ""
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6100,6 +6686,33 @@ msgstr ""
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6127,6 +6740,33 @@ msgstr ""
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "     Predición da lonxitude da frecha COG (Minutos):"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6154,6 +6794,33 @@ msgstr ""
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "     Velocidade máxima obxectivo amarrado (Kts.):"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6181,18 +6848,46 @@ msgstr ""
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "      Lonxitude da Derrota Obxectivo (Minutos):"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "   Ficheiro de carta RLL datos corruptos na carta "
-
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
 #
-#
-# 
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "   Ficheiro de carta sen encabezado BSB, non se pode Inic."
-
 #
 #
 #
@@ -6233,12 +6928,52 @@ msgstr ""
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "   Proxección da carta DESCOÑECIDA, asúmese Mercator: "
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "   Non se puido ler os primeiros %d bytes do encabezado da carta: "
-
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6285,6 +7020,52 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load library: "
 #~ msgstr "   XestordeEngadidos: Non se pode cargar a libería:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6331,6 +7112,52 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load symbol create_pi: "
 #~ msgstr "   XestordeEngadidos: Non se pode cargar símbolo create_pi:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6377,6 +7204,32 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load symbol destroy_pi: "
 #~ msgstr "   XestordeEngadidos: Non se pode cargar símbolo destroy_pi:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6403,6 +7256,32 @@ msgstr ""
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  Non se puido abrir o porto serie AIS '"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6429,6 +7308,14 @@ msgstr ""
 #~ msgid "  Could not open serial port '"
 #~ msgstr "   Non se puido abrir o porto serie '"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6437,6 +7324,19 @@ msgstr ""
 #~ msgid " is %5g"
 #~ msgstr "é %5g"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6450,6 +7350,52 @@ msgstr ""
 #~ msgid "&Export Track..."
 #~ msgstr "&Exportar Derrota..."
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6496,6 +7442,32 @@ msgstr ""
 #~ msgid "&Toggle Chart"
 #~ msgstr "&Alternar Cartas"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6526,6 +7498,32 @@ msgstr ""
 #~ "'\n"
 #~ " Suxestión: Probe o formato 'xxx.xxx.xxx.xxx'"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6556,14 +7554,34 @@ msgstr ""
 #~ "'\n"
 #~ "Suxestión: Intente pechando outras aplicacións."
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
 #
 # 
-#~ msgid "--"
-#~ msgstr "--"
-
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6593,6 +7611,34 @@ msgstr ""
 #~ msgid ":               "
 #~ msgstr "Clase:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6625,6 +7671,47 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Rumbo:                 Non dispoñíbel\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6667,6 +7754,33 @@ msgstr ""
 #~ msgid "AIS SART Alert"
 #~ msgstr "Alerta AIS"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6694,6 +7808,42 @@ msgstr ""
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "Activar Desprazamento en CM93"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6730,6 +7880,33 @@ msgstr ""
 #~ msgid "Activate Route"
 #~ msgstr "Activar Ruta"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6757,6 +7934,32 @@ msgstr ""
 #~ msgid "Add Selection"
 #~ msgstr "Engadir o Seleccionado"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6783,6 +7986,49 @@ msgstr ""
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Engadir esta carta a continuidade"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6826,6 +8072,33 @@ msgstr ""
 #~ msgid "Additional information"
 #~ msgstr "Información adicional"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6853,6 +8126,52 @@ msgstr ""
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Todos os ficheiros (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6899,6 +8218,32 @@ msgstr ""
 #~ msgid "Attempting to load libgps.so"
 #~ msgstr "Intentando cargar libgps.so"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6925,6 +8270,33 @@ msgstr ""
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Saída do Peirao co Piloto Automático"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6952,6 +8324,52 @@ msgstr ""
 #~ msgid "Available Chart Directories"
 #~ msgstr "Directorio das Cartas Dispoñibles"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -6998,6 +8416,34 @@ msgstr ""
 #~ msgid "BaseClassCommonName"
 #~ msgstr "BaseClaseComúnNome"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7026,6 +8472,34 @@ msgstr ""
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Demora:                %03d Graos.\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7054,6 +8528,33 @@ msgstr ""
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Demora:                Non dispoñíbel\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7081,6 +8582,32 @@ msgstr ""
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7108,6 +8635,33 @@ msgstr ""
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Habilitar Desprazamento Detallado CM93"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7135,6 +8689,33 @@ msgstr ""
 #~ msgid "CM93 Offset Display"
 #~ msgstr "Amosa-lo Desprazamento en CM93"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7162,6 +8743,33 @@ msgstr ""
 #~ msgid "CM93 Offsets"
 #~ msgstr "Desprazamentos CM93"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7189,6 +8797,34 @@ msgstr ""
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "Detalle Ampliación CM93"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7217,6 +8853,34 @@ msgstr ""
 #~ msgid "CPA:       \n"
 #~ msgstr "CPA:       \n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7245,6 +8909,32 @@ msgstr ""
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f NM\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7279,6 +8969,34 @@ msgstr ""
 #~ "\n"
 #~ "O servidor gpsd é: "
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7307,6 +9025,48 @@ msgstr ""
 #~ msgid "CallSign:             "
 #~ msgstr "Sinal de Chamada:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7349,6 +9109,33 @@ msgstr ""
 #~ msgid "Chart"
 #~ msgstr "Carta"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7376,6 +9163,32 @@ msgstr ""
 #~ msgid "Chart Display Filters"
 #~ msgstr "Amosa-los filtros da Carta"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7403,6 +9216,34 @@ msgstr ""
 #~ msgid "Chart Position"
 #~ msgstr "Posicion"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7431,6 +9272,32 @@ msgstr ""
 #~ msgid "Class:                "
 #~ msgstr "Clase:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7457,6 +9324,34 @@ msgstr ""
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "Non se puido resolver o servidor TCP/IP '"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7485,6 +9380,34 @@ msgstr ""
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "Rumbo:                 %03d Graos.\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7514,6 +9437,34 @@ msgstr ""
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Rumbo:                 %03d Graos.\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7542,6 +9493,33 @@ msgstr ""
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "Rumbo:                 Non dispoñíbel\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7569,6 +9547,42 @@ msgstr ""
 #~ msgid "Cursor: "
 #~ msgstr "Cursor: "
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7605,6 +9619,45 @@ msgstr ""
 #~ msgid "Deactivate Route"
 #~ msgstr "Desactivar Ruta"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7645,6 +9698,33 @@ msgstr ""
 #~ msgid "Default dataset"
 #~ msgstr "A cor do tipo de letra"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7673,6 +9753,42 @@ msgstr ""
 #~ msgid "Deg"
 #~ msgstr "Dragar"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7709,6 +9825,33 @@ msgstr ""
 #~ msgid "Delete Mark"
 #~ msgstr "Borrar Marca"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7736,6 +9879,33 @@ msgstr ""
 #~ msgid "Delete Route"
 #~ msgstr "Borrar Ruta"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7763,6 +9933,33 @@ msgstr ""
 #~ msgid "Delete Selection"
 #~ msgstr "Borrar selección"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7790,6 +9987,33 @@ msgstr ""
 #~ msgid "Delete Track"
 #~ msgstr "Borrar Derrota"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7817,6 +10041,34 @@ msgstr ""
 #~ msgid "Depth Settings"
 #~ msgstr "Axustes de Profundidade"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7845,6 +10097,32 @@ msgstr ""
 #~ msgid "Destination:          "
 #~ msgstr "Destino:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7872,6 +10150,22 @@ msgstr ""
 #~ msgid "Display Style"
 #~ msgstr "Amosa-lo Estilo da Carta"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7888,6 +10182,33 @@ msgstr ""
 #~ msgid "E&xport All..."
 #~ msgstr "E&xportar Todo..."
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7915,6 +10236,34 @@ msgstr ""
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Vectorial"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7943,6 +10292,34 @@ msgstr ""
 #~ msgid "ETA:"
 #~ msgstr "ETA:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7971,6 +10348,33 @@ msgstr ""
 #~ msgid "ETA:                  "
 #~ msgstr "ETA:                  "
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -7998,6 +10402,33 @@ msgstr ""
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "Habilitar Desprazamento Manual CM93"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8025,6 +10456,33 @@ msgstr ""
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Habilitar Ampliación coa roda do ratón"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8052,6 +10510,52 @@ msgstr ""
 #~ msgid "Etc."
 #~ msgstr "Etc."
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8098,6 +10602,52 @@ msgstr ""
 #~ msgid "Exit OpenCPN"
 #~ msgstr "Saí­r de OpenCPN"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8144,6 +10694,52 @@ msgstr ""
 #~ msgid "Failed to load libgps.so"
 #~ msgstr "Houbo un erro cargando libgps.so"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8190,6 +10786,33 @@ msgstr ""
 #~ msgid "Failed to load libgps.so.19"
 #~ msgstr "Houbo un error cargando libgps.so.19"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8218,6 +10841,33 @@ msgstr ""
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "Dende a embarcación: %03d Graos  %6.2f NMi"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8245,6 +10895,32 @@ msgstr ""
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8271,6 +10947,33 @@ msgstr ""
 #~ msgid "GPSD Data Server"
 #~ msgstr "Servidor Datos GPSD"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8298,6 +11001,42 @@ msgstr ""
 #~ msgid "Go To Here"
 #~ msgstr "Ir Aquí"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8334,6 +11073,34 @@ msgstr ""
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Ir á Marca/WP"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8363,6 +11130,34 @@ msgstr ""
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Demora:                %03d Graos.\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8392,6 +11187,52 @@ msgstr ""
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "Tipo:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8438,6 +11279,34 @@ msgstr ""
 #~ msgid "Import new layer"
 #~ msgstr "Importar unha nova capa"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8466,6 +11335,33 @@ msgstr ""
 #~ msgid "Inland Blue Flag        Clear\n"
 #~ msgstr "Bandeira azul interior        Borrar\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8493,6 +11389,33 @@ msgstr ""
 #~ msgid "Jump To"
 #~ msgstr "Moverse a"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8520,6 +11443,42 @@ msgstr ""
 #~ msgid "Jump To Position"
 #~ msgstr "Moverse á posición"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8556,6 +11515,33 @@ msgstr ""
 #~ msgid "Jump To Position..."
 #~ msgstr "Moverse á posición..."
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8584,6 +11570,46 @@ msgstr ""
 #~ msgid "Jump To..."
 #~ msgstr "Moverse a"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8624,6 +11650,34 @@ msgstr ""
 #~ msgid "Language/Fonts"
 #~ msgstr "Idioma/Tipos de letra"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8653,6 +11707,33 @@ msgstr ""
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Hora último Informe:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8680,6 +11761,33 @@ msgstr ""
 #~ msgid "Leg/Route"
 #~ msgstr "Tramo/Ruta"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8707,6 +11815,49 @@ msgstr ""
 #~ msgid "META Objects"
 #~ msgstr "Obxectos META"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8751,6 +11902,49 @@ msgstr ""
 #~ msgid "MMSI:                 %09d\n"
 #~ msgstr "Tipo:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8794,6 +11988,49 @@ msgstr ""
 #~ msgid "Mark Icon"
 #~ msgstr "Icona da Marca"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8837,6 +12074,22 @@ msgstr ""
 #~ msgid "Mark Name"
 #~ msgstr "Nome da Marca"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8853,6 +12106,42 @@ msgstr ""
 #~ msgid "Mark Properties"
 #~ msgstr "Propiedades da Marca"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8890,6 +12179,42 @@ msgstr ""
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Propiedades da Marca/WP"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8926,6 +12251,33 @@ msgstr ""
 #~ msgid "Measure....."
 #~ msgstr "Medir....."
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8953,6 +12305,32 @@ msgstr ""
 #~ msgid "Metres"
 #~ msgstr "Metros"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -8979,6 +12357,33 @@ msgstr ""
 #~ msgid "NMEA Data Source"
 #~ msgstr "Orixe  Datos NMEA"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9006,6 +12411,34 @@ msgstr ""
 #~ msgid "NMEA Options"
 #~ msgstr "Opcións NMEA"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9034,6 +12467,34 @@ msgstr ""
 #~ msgid "Name:  "
 #~ msgstr "Nome:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9062,6 +12523,52 @@ msgstr ""
 #~ msgid "Navigational Status:  "
 #~ msgstr "Estado Marítimo:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9108,6 +12615,32 @@ msgstr ""
 #~ msgid "New Mark"
 #~ msgstr "Nova Marca"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9135,6 +12668,52 @@ msgstr ""
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Número de marcas de radar amosadas"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9181,6 +12760,52 @@ msgstr ""
 #~ msgid "OpenCPN PlugIn Base Class"
 #~ msgstr "Engadido OpenCPN Clase de base"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9231,6 +12856,52 @@ msgstr ""
 #~ "Engadido OpenCPN Clase de Base\n"
 #~ "RexistrodeEngadidos creou esta clase de base"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9277,6 +12948,18 @@ msgstr ""
 #~ msgid "OpenCPN S57 SENC File Load"
 #~ msgstr "Cargar ficheiro OpenCPN S57 SENC"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9289,6 +12972,32 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Outro"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9316,6 +13025,32 @@ msgstr ""
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Amosa-las Opcións da Embarcación"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9343,6 +13078,32 @@ msgstr ""
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "Marcar Puntos de Derrota a intervalos de distancia (NMi):"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9370,6 +13131,19 @@ msgstr ""
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Marcar Puntos de Derrota a intervalos de tempo (Segundos):"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9383,6 +13157,52 @@ msgstr ""
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Velocidade estimada (nudos)"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9429,6 +13249,52 @@ msgstr ""
 #~ msgid "PlugInManager searching for PlugIns in location "
 #~ msgstr "O XestordeEngadidos está buscando a localización dos Engadidos"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9475,6 +13341,52 @@ msgstr ""
 #~ msgid "PlugInManager: Deactivating PlugIn: "
 #~ msgstr "XestorEngadidos: Desactivando Engadido:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9521,6 +13433,52 @@ msgstr ""
 #~ msgid "PlugInManager: Initializing PlugIn: "
 #~ msgstr "XestordeEngadidos: Iniciando Engadido:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9567,6 +13525,52 @@ msgstr ""
 #~ msgid "PlugInManager: Loading PlugIn: "
 #~ msgstr "XestordeEngadidos: Cargando Engadido:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9613,6 +13617,52 @@ msgstr ""
 #~ msgid "PlugInManager: UnLoading PlugIn: "
 #~ msgstr "XestordeEngadidos: Descargando Engadido:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9661,6 +13711,34 @@ msgstr ""
 #~ "XestordeEngadidos: Descargando Engadido con unha versión API inválida  %d."
 #~ "%d: "
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9692,6 +13770,52 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Antiguedade do Informe:             %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9738,6 +13862,46 @@ msgstr ""
 #~ msgid "Position:               "
 #~ msgstr "Posición:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9788,6 +13952,32 @@ msgstr ""
 #~ "                              ¿Desexa empregar  igualmente esta versión "
 #~ "de libgps?"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9814,6 +14004,34 @@ msgstr ""
 #~ msgid "Radar rings"
 #~ msgstr "Marcas de radar"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9842,6 +14060,34 @@ msgstr ""
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Rango:                  Non dispoñíbel\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9870,6 +14116,33 @@ msgstr ""
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Rango:                %5.1f NM\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9897,6 +14170,34 @@ msgstr ""
 #~ msgid "Raster"
 #~ msgstr "Raster"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9925,6 +14226,34 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Xiro estimado:       %3d Graos/Min. Esquerda\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9953,6 +14282,34 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Xiro estimado:       %3d Graos/Min. Dereita\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -9981,6 +14338,34 @@ msgstr ""
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Xiro estimado            0\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10009,6 +14394,34 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Xiro estimado:       > 5 Graos/30 s. Esquerda\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10037,6 +14450,52 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Xiro estimado:       > 5 Graos/30 s. Dereita\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10087,6 +14546,32 @@ msgstr ""
 #~ "Período de Reporte Recente:   %3d Sec.\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10114,6 +14599,32 @@ msgstr ""
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Eliminar esta carta de continuidade"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10140,6 +14651,42 @@ msgstr ""
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Eliminar esta carta de continuidade"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10176,6 +14723,33 @@ msgstr ""
 #~ msgid "Reverse Route"
 #~ msgstr "Ruta Inversa"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10204,6 +14778,33 @@ msgstr ""
 #~ msgid "Route Properties..."
 #~ msgstr "Propiedades da Ruta"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10232,6 +14833,33 @@ msgstr ""
 #~ msgid "Route/Track"
 #~ msgstr "Ruta dende Derrota"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10259,6 +14887,22 @@ msgstr ""
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Seleccionar Tipos de Cartas para o Retallado"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10276,6 +14920,42 @@ msgstr ""
 #~ msgid "Send to GPS ( "
 #~ msgstr "&Enviar a GPS"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10313,6 +14993,33 @@ msgstr ""
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Course UP Mode"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10340,6 +15047,33 @@ msgstr ""
 #~ msgid "Settings"
 #~ msgstr "Parámetros"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10367,6 +15101,45 @@ msgstr ""
 #~ msgid "Show ATON labels"
 #~ msgstr "Amosa-las etiquetas ATON"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10406,6 +15179,45 @@ msgstr ""
 #~ msgid "Show Printing Icon"
 #~ msgstr "Amosa-la Icona de Impresión"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10445,6 +15257,34 @@ msgstr ""
 #~ msgid "Show Track icon"
 #~ msgstr "Amosa-la icona da Derrota"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10478,6 +15318,34 @@ msgstr ""
 #~ "Tamaño:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10510,6 +15378,34 @@ msgstr ""
 #~ "Tamaño:                %dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10542,6 +15438,34 @@ msgstr ""
 #~ "Tamaño:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10574,6 +15498,34 @@ msgstr ""
 #~ "Tamaño:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10606,6 +15558,34 @@ msgstr ""
 #~ "Tamaño:                 ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10638,6 +15618,34 @@ msgstr ""
 #~ "Tamaño:               %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10670,6 +15678,34 @@ msgstr ""
 #~ "Tamaño:              %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10698,6 +15734,34 @@ msgstr ""
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Velocidade:                  Non dispoñible\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10726,6 +15790,17 @@ msgstr ""
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Velocidade:                %5.2f Kts.\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10738,6 +15813,33 @@ msgstr ""
 #~ msgid "T"
 #~ msgstr "a"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10765,6 +15867,34 @@ msgstr ""
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "Servidor Datos TCP/IP WiFi"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10793,6 +15923,34 @@ msgstr ""
 #~ msgid "TCPA:  \n"
 #~ msgstr "TCPA:  \n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10821,6 +15979,33 @@ msgstr ""
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA:                 %02d:%02d Hr:Min\n"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10848,6 +16033,33 @@ msgstr ""
 #~ msgid "Text Element"
 #~ msgstr "Elemento de texto"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10876,6 +16088,33 @@ msgstr ""
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "Amosar Correntes"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10904,6 +16143,52 @@ msgstr ""
 #~ msgid "Tide/Current Data Selector"
 #~ msgstr "TideCurrentGraphRollover"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10950,6 +16235,52 @@ msgstr ""
 #~ msgid "Toggle Listing"
 #~ msgstr "Alternar Listados"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -10996,6 +16327,33 @@ msgstr ""
 #~ msgid "Toggle Names"
 #~ msgstr "Alternar Nomes"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11023,6 +16381,33 @@ msgstr ""
 #~ msgid "ToolBox"
 #~ msgstr "Ferramentas"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11051,6 +16436,33 @@ msgstr ""
 #~ msgid "Track Properties..."
 #~ msgstr "Propiedades da Derrota"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11078,6 +16490,34 @@ msgstr ""
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "EscalaReal: %8.0f "
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11106,6 +16546,34 @@ msgstr ""
 #~ msgid "Type:                 "
 #~ msgstr "Tipo:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11134,6 +16602,32 @@ msgstr ""
 #~ msgid "UN Ship Type:         "
 #~ msgstr "UN Tipo de Barco:"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11166,6 +16660,32 @@ msgstr ""
 #~ "\n"
 #~ "O servidor gpsd é: "
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11193,6 +16713,26 @@ msgstr ""
 #~ msgid "Unable to load libgps"
 #~ msgstr "Incapaz de cargar libgps.so"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11214,6 +16754,32 @@ msgstr ""
 #~ msgid "Unavailable"
 #~ msgstr "Non hai carta dispoñí­bel"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11240,6 +16806,33 @@ msgstr ""
 #~ msgid "Units"
 #~ msgstr "Unidades"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11267,6 +16860,33 @@ msgstr ""
 #~ msgid "Use SCAMIN"
 #~ msgstr "Empregar SCAMIN"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11294,6 +16914,33 @@ msgstr ""
 #~ msgid "Waypoint Locking"
 #~ msgstr "Bloquear Waypoint"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11321,6 +16968,33 @@ msgstr ""
 #~ msgid "WiFi Options"
 #~ msgstr "Opcións da WiFi"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11349,6 +17023,33 @@ msgstr ""
 #~ msgstr ""
 #~ "X Desprazado (En positivo move ó mapa ó Este) (Proxectadas en NMi) :"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11376,6 +17077,33 @@ msgstr ""
 #~ msgid "Y Offset (Positive moves map to North) (NMi Projected) :"
 #~ msgstr "Y Desprazado (En Positivo move ó mapa ó Norte) (NMi Proxectado) :"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #
@@ -11403,6 +17131,46 @@ msgstr ""
 #~ msgid "cm93 Detail"
 #~ msgstr "Detalle cm93"
 
+# #-#-#-#-#  .merge_file_fJTugz (opencpn 2.4.423)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# #-#-#-#-#  .merge_file_wEN6zo (opencpn 2.4.423)  #-#-#-#-#
+#
 #
 #
 #

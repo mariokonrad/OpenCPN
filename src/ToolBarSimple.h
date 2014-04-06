@@ -186,6 +186,9 @@ public:
 	void EnableTooltips();
 	void DisableTooltips();
 
+	// the list of all our tools
+	wxToolBarToolsList m_tools;
+
 protected:
 	// common part of all ctors
 	void Init();
@@ -214,9 +217,6 @@ protected:
 	virtual void SpringUpButton(int index);
 
 private:
-	// the list of all our tools
-	wxToolBarToolsList m_tools;
-
 	// the maximum number of toolbar rows/columns
 	int m_maxRows;
 	int m_maxCols;

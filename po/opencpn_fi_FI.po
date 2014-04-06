@@ -274,6 +274,20 @@ msgstr ""
 msgid "%H:%M"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -406,6 +420,20 @@ msgstr "&Käännä"
 msgid "&Send to GPS"
 msgstr "Lähetä GPS:lle..."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -718,6 +746,20 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -782,6 +824,20 @@ msgstr "AIS maaliluettelo"
 msgid "AISRollover"
 msgstr "AIS hälytysluettelo"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1911,6 +1967,20 @@ msgstr "Poista kiintopiste"
 msgid "Cruise ship"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2031,6 +2101,20 @@ msgstr "Kutsu"
 msgid "Data Connections"
 msgstr "Kirjasinasetukset"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2333,6 +2417,20 @@ msgstr ""
 msgid "Dredge"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2672,6 +2770,21 @@ msgstr ""
 msgid "GPS Offset from Midship (m)"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2727,6 +2840,20 @@ msgstr "GPX"
 msgid "GUID"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2920,6 +3047,20 @@ msgstr "Tuo GPX-tiedosto"
 msgid "Important Text Only"
 msgstr "Näytä vain tärkeät tekstit"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3694,6 +3835,20 @@ msgstr "Kartat"
 msgid "New Group..."
 msgstr ""
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3985,6 +4140,20 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4257,6 +4426,20 @@ msgstr ""
 msgid "Preferred Channel Starboard Hand"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4278,6 +4461,20 @@ msgstr ""
 msgid "Preserve Scale when Switching Charts"
 msgstr "Säilytä mittakaava kartan vaihdossa"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4371,6 +4568,20 @@ msgstr ""
 msgid "Processing Waypoints..."
 msgstr "Poista kaikki kiintopisteet"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4580,6 +4791,20 @@ msgstr ""
 msgid "Reference Point"
 msgstr "Vertailuasema:"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4972,6 +5197,20 @@ msgid ""
 "after data reduction:"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4985,6 +5224,20 @@ msgstr ""
 msgid "Send"
 msgstr "Lähetä"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5396,6 +5649,13 @@ msgstr ""
 msgid "Special Mark"
 msgstr "Poista merkintä"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 # 
 # 
@@ -5750,6 +6010,20 @@ msgstr "Tämä reittiosuus"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5825,6 +6099,20 @@ msgstr "Kiintopisteelle"
 msgid "To route"
 msgstr "Matka-aika"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5851,6 +6139,20 @@ msgstr "Kytke jälki"
 msgid "Toggle track"
 msgstr "Kytke jälki"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6576,6 +6878,138 @@ msgstr ""
 msgid "mph"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "  Karttatiedoston RLL on viallinen"
+
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "  Karttatiedostossa ei ole BSB-alkua, sitä ei voi käyttää."
+
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "  Karttatiedoston alun ensimmäisiä %d tavuja ei pysty lukemaan:"
+
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+# 
+# 
+#, fuzzy
+msgid "--"
+msgstr "-"
+
+#
+# 
+# 
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Haluatko varmasti poistaa KAIKKI reitit?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr ""
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+# 
+# 
+#, fuzzy
+msgid "in "
+msgstr "Linkit"
+
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -6604,6 +7038,34 @@ msgstr ""
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -6632,6 +7094,34 @@ msgstr ""
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "  COG-ennustenuolen pituus (minuuttia):"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -6660,6 +7150,34 @@ msgstr ""
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "  Kiinteän maalin max nopeus (solmua):"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -6688,20 +7206,47 @@ msgstr ""
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "  Maalijäljen pituus (minuuttia):"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
 # 
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "  Karttatiedoston RLL on viallinen"
-
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
 #
-#
-# 
-# 
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "  Karttatiedostossa ei ole BSB-alkua, sitä ei voi käyttää."
-
 #
 #
 #
@@ -6743,13 +7288,33 @@ msgstr ""
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "  Karttaprojektio on TUNTEMATON, oletus Mercator:"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
 # 
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "  Karttatiedoston alun ensimmäisiä %d tavuja ei pysty lukemaan:"
-
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -6777,6 +7342,33 @@ msgstr ""
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "AIS-sarjaportti ei aukea"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -6804,6 +7396,15 @@ msgstr ""
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  Ssarjaporttia ei pysty avaamaan'"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -6813,6 +7414,73 @@ msgstr ""
 #~ msgid " is %5g"
 #~ msgstr " on %5g"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -6880,6 +7548,73 @@ msgstr ""
 #~ msgid "&Close"
 #~ msgstr "&Sulje"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -6947,6 +7682,73 @@ msgstr ""
 #~ msgid "&Delete All Routes..."
 #~ msgstr "&Poista kaikki reitit"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7014,6 +7816,20 @@ msgstr ""
 #~ msgid "&Delete All Tracks..."
 #~ msgstr "&Poista kaikki jäljet"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7029,6 +7845,33 @@ msgstr ""
 #~ msgid "&Export Track..."
 #~ msgstr "Vie jälki..."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7060,6 +7903,33 @@ msgstr ""
 #~ "'\n"
 #~ " Ehdotus:  Kokeile 'xxx.xxx.xxx.xxx' merkintätapaa"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7091,6 +7961,73 @@ msgstr ""
 #~ "'\n"
 #~ "Ehdotus: Yritä sulkea muut sovellukset."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7158,16 +8095,35 @@ msgstr ""
 #~ msgid "(Active Track)"
 #~ msgstr "(Aktiivoitu reitti)"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
 #
 # 
 # 
-#, fuzzy
-#~ msgid "--"
-#~ msgstr "-"
-
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7198,6 +8154,35 @@ msgstr ""
 #~ msgid ":               "
 #~ msgstr "ETA:      "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7231,6 +8216,48 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Nopeus:            Tuntematon\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7274,6 +8301,43 @@ msgstr ""
 #~ msgid "AIS SART Alert"
 #~ msgstr "AIS hälytysluettelo"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7311,6 +8375,34 @@ msgstr ""
 #~ msgid "Activate Route"
 #~ msgstr "Aktivoi reitti"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7339,6 +8431,33 @@ msgstr ""
 #~ msgid "Add Selection"
 #~ msgstr "Valitse mukaan"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7366,6 +8485,50 @@ msgstr ""
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Lisää tämä kartta tilkkutäkkiin."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7410,6 +8573,34 @@ msgstr ""
 #~ msgid "Additional information"
 #~ msgstr "Lisätieto"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7438,6 +8629,33 @@ msgstr ""
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Kaikki tiedostot (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7465,6 +8683,34 @@ msgstr ""
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Lähtöportti autopilotille"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7493,6 +8739,35 @@ msgstr ""
 #~ msgid "Available Chart Directories"
 #~ msgstr "Käytettävät karttahakemistot"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7523,6 +8798,35 @@ msgstr ""
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Suuntima:              %5.0f Deg.\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7553,6 +8857,34 @@ msgstr ""
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Nopeus:            Tuntematon\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7581,6 +8913,33 @@ msgstr ""
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7609,6 +8968,34 @@ msgstr ""
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Aktivoi CM93 detaljisäädin"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7637,6 +9024,35 @@ msgstr ""
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "CM93 zoom-detaljit"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7666,6 +9082,35 @@ msgstr ""
 #~ msgid "CPA:       \n"
 #~ msgstr "CPA:       \n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7695,6 +9140,33 @@ msgstr ""
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f NM\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7730,6 +9202,73 @@ msgstr ""
 #~ "\n"
 #~ "gpsd isäntä on: "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7797,6 +9336,35 @@ msgstr ""
 #~ msgid "CallSign:  "
 #~ msgstr "Radiokutsu:"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7827,6 +9395,49 @@ msgstr ""
 #~ msgid "CallSign:             "
 #~ msgstr "Sijainti:"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7870,6 +9481,34 @@ msgstr ""
 #~ msgid "Chart"
 #~ msgstr "Kartta"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7898,6 +9537,33 @@ msgstr ""
 #~ msgid "Chart Display Filters"
 #~ msgstr "Karttanäyttösuodin"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7926,6 +9592,72 @@ msgstr ""
 #~ msgid "Chart Position"
 #~ msgstr "Sijainti"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -7992,6 +9724,73 @@ msgstr ""
 #~ msgid "Chart file corrupt.. disabling this chart \n"
 #~ msgstr "Viallinen karttatiedosto... käyttö estetty \n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8063,6 +9862,35 @@ msgstr ""
 #~ "Luokka tuntematon\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8093,6 +9921,73 @@ msgstr ""
 #~ msgid "Class:                "
 #~ msgstr "ETA:      "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8164,6 +10059,73 @@ msgstr ""
 #~ "Luokka:     A\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8235,6 +10197,33 @@ msgstr ""
 #~ "Luokka:     B\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8262,6 +10251,35 @@ msgstr ""
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "TCP/IP-hostia ei löydy '"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8292,6 +10310,35 @@ msgstr ""
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "Kurssi:               %5.0f Deg.\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8322,6 +10369,35 @@ msgstr ""
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Kurssi:               %5.0f Deg.\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8352,6 +10428,73 @@ msgstr ""
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "Nopeus:            Tuntematon\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8419,6 +10562,34 @@ msgstr ""
 #~ msgid "Current Velocity, Kts."
 #~ msgstr "Virran nopeus, solmua"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8447,6 +10618,43 @@ msgstr ""
 #~ msgid "Cursor: "
 #~ msgstr "Osoitin:"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8484,6 +10692,46 @@ msgstr ""
 #~ msgid "Deactivate Route"
 #~ msgstr "Deaktivoi reitti"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8525,6 +10773,34 @@ msgstr ""
 #~ msgid "Default dataset"
 #~ msgstr "Kirjasinväri."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8554,6 +10830,43 @@ msgstr ""
 #~ msgid "Deg"
 #~ msgstr "Reittiväli"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8591,6 +10904,34 @@ msgstr ""
 #~ msgid "Delete Mark"
 #~ msgstr "Poista merkintä"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8619,6 +10960,34 @@ msgstr ""
 #~ msgid "Delete Route"
 #~ msgstr "Poista reitti"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8647,6 +11016,34 @@ msgstr ""
 #~ msgid "Delete Selection"
 #~ msgstr "Poista valinta"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8675,6 +11072,34 @@ msgstr ""
 #~ msgid "Delete Track"
 #~ msgstr "Poista jälki"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8703,6 +11128,35 @@ msgstr ""
 #~ msgid "Depth Settings"
 #~ msgstr "Syvyysasetukset"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8732,6 +11186,33 @@ msgstr ""
 #~ msgid "Destination:          "
 #~ msgstr "Päämäärä:"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8760,6 +11241,23 @@ msgstr ""
 #~ msgid "Display Style"
 #~ msgstr "Karttanäyttötyyli"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8778,6 +11276,34 @@ msgstr ""
 #~ msgid "E&xport All..."
 #~ msgstr "&Vie..."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8806,6 +11332,35 @@ msgstr ""
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Vektori"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8836,6 +11391,35 @@ msgstr ""
 #~ msgid "ETA:"
 #~ msgstr "ETA"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8865,6 +11449,73 @@ msgstr ""
 #~ msgid "ETA:                  "
 #~ msgstr "ETA:      "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8932,6 +11583,55 @@ msgstr ""
 #~ msgid "ETA:                  Unknown"
 #~ msgstr "ETA:                  Tuntematon"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -8981,6 +11681,34 @@ msgstr ""
 #~ msgid "ETE/Timestamp"
 #~ msgstr "ETE/Aikaleima"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9009,6 +11737,34 @@ msgstr ""
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Hiiri-zoomaus kursorille päällä"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9037,6 +11793,68 @@ msgstr ""
 #~ msgid "Etc."
 #~ msgstr "jne."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9099,6 +11917,58 @@ msgstr ""
 #~ msgid "Exit OpenCPN"
 #~ msgstr "Poistu OpenCPN:stä"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9155,6 +12025,58 @@ msgstr ""
 #~ "\n"
 #~ "gpsd-isäntä on: "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9211,6 +12133,34 @@ msgstr ""
 #~ "\n"
 #~ "gpsd-isäntä on: "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9240,6 +12190,34 @@ msgstr ""
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "Omasta aluksesta: %03d ast  %6.2f mpk"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9268,6 +12246,33 @@ msgstr ""
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9295,6 +12300,73 @@ msgstr ""
 #~ msgid "GPSD Data Server"
 #~ msgstr "GPSD Data Server"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9362,6 +12434,73 @@ msgstr ""
 #~ msgid "GRIB"
 #~ msgstr "GRIB"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9429,6 +12568,73 @@ msgstr ""
 #~ msgid "GRIB Data"
 #~ msgstr "GRIB data"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9496,6 +12702,73 @@ msgstr ""
 #~ msgid "GRIB Display Control"
 #~ msgstr "GRIB-näytön hallinta"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9563,6 +12836,34 @@ msgstr ""
 #~ msgid "GRIB File Directory"
 #~ msgstr "GRIB-tiedostojen hakemisto"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9591,6 +12892,43 @@ msgstr ""
 #~ msgid "Go To Here"
 #~ msgstr "Mene tänne"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9629,6 +12967,35 @@ msgstr ""
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Mene tänne"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9659,6 +13026,35 @@ msgstr ""
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Suuntima:              %5.0f Deg.\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9689,6 +13085,64 @@ msgstr ""
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "ETA:      "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9748,6 +13202,34 @@ msgstr ""
 #~ msgid "Import new layer"
 #~ msgstr "Tuo GPX-tiedosto"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9777,6 +13259,47 @@ msgstr ""
 #~ msgid "Jump To Position"
 #~ msgstr "Sijainti"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9818,6 +13341,35 @@ msgstr ""
 #~ msgid "Language/Fonts"
 #~ msgstr "Kielet/kirjasimet"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9848,6 +13400,34 @@ msgstr ""
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Viime raporttiaika:"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9876,6 +13456,34 @@ msgstr ""
 #~ msgid "Leg/Route"
 #~ msgstr "Reittiosuus/reitti"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9904,6 +13512,50 @@ msgstr ""
 #~ msgid "META Objects"
 #~ msgstr "META Objects"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -9949,6 +13601,70 @@ msgstr ""
 #~ msgid "MMSI:                 %09d\n"
 #~ msgstr "ETA:      "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10013,6 +13729,50 @@ msgstr ""
 #~ msgid "MarinersStandard"
 #~ msgstr "MarinersStandard"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10057,6 +13817,50 @@ msgstr ""
 #~ msgid "Mark Icon"
 #~ msgstr "Merkitse ikoni"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10101,6 +13905,23 @@ msgstr ""
 #~ msgid "Mark Name"
 #~ msgstr "Merkitse nimi"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10118,6 +13939,43 @@ msgstr ""
 #~ msgid "Mark Properties"
 #~ msgstr "Merkitse ominaisuudet"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10156,6 +14014,43 @@ msgstr ""
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Merkkaa /WP ominaisuudet"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10193,6 +14088,34 @@ msgstr ""
 #~ msgid "Measure....."
 #~ msgstr "Mittaa..."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10221,6 +14144,33 @@ msgstr ""
 #~ msgid "Metres"
 #~ msgstr "Metrit"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10248,6 +14198,34 @@ msgstr ""
 #~ msgid "NMEA Data Source"
 #~ msgstr "NMEA lähde"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10276,6 +14254,35 @@ msgstr ""
 #~ msgid "NMEA Options"
 #~ msgstr "NMEA asetukset"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10306,6 +14313,35 @@ msgstr ""
 #~ msgid "Name:  "
 #~ msgstr "Nimi:"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10335,6 +14371,53 @@ msgstr ""
 #~ msgid "Navigational Status:  "
 #~ msgstr "Status: "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10382,6 +14465,33 @@ msgstr ""
 #~ msgid "New Mark"
 #~ msgstr "Uusi merkintä"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10410,6 +14520,19 @@ msgstr ""
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Tutkarenkaiden määrä"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10423,6 +14546,33 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Muu"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10451,6 +14601,33 @@ msgstr ""
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Oman aluksen asetukset"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10479,6 +14656,33 @@ msgstr ""
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "Jälkipisteiden etäisyysväli (mpk):"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10507,6 +14711,20 @@ msgstr ""
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Jälkipisteiden aikaväli (sekuntia):"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10522,6 +14740,73 @@ msgstr ""
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Suunniteltu nopeus"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10589,6 +14874,73 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed CRAIN GRIB"
 #~ msgstr "Zoomaa ulos nähdäksesi peitetyt CRAIN GRIB tiedot"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10656,6 +15008,73 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed HTSGW GRIB"
 #~ msgstr "Zoomaa ulos nähdäksesi peitetyt HTSGW GRIB tiedot"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10723,6 +15142,73 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed OCEAN CURRENT GRIB"
 #~ msgstr "Zoomaa ulos nähdäksesi peitetyt OCEAN CURRENT GRIB tiedot"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10790,6 +15276,35 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed SEATEMP GRIB"
 #~ msgstr "Zoomaa ulos nähdäksesi peitetyt SEATEMP GRIB tiedot"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10822,6 +15337,54 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Raportin ikä:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10871,6 +15434,47 @@ msgstr ""
 #~ msgid "Position:               "
 #~ msgstr "Sijainti:"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10919,6 +15523,73 @@ msgstr ""
 #~ "libgps API Version mismatch.\n"
 #~ "Opencpn found version %d.%d, but requires at least version 3.1"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -10986,6 +15657,33 @@ msgstr ""
 #~ msgid "Pressure, mBar"
 #~ msgstr "Ilmanpaine, mbar"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11013,6 +15711,35 @@ msgstr ""
 #~ msgid "Radar rings"
 #~ msgstr "Tutkarenkaat"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11043,6 +15770,35 @@ msgstr ""
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Nopeus:            Tuntematon\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11072,6 +15828,34 @@ msgstr ""
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Etäisys:                %5.1f NM\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11100,6 +15884,35 @@ msgstr ""
 #~ msgid "Raster"
 #~ msgstr "Rasteri"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11130,6 +15943,35 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Raportin ikä:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11160,6 +16002,35 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Raportin ikä:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11190,6 +16061,35 @@ msgstr ""
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Raportin ikä:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11220,6 +16120,35 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Raportin ikä:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11250,6 +16179,65 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Raportin ikä:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11314,6 +16302,33 @@ msgstr ""
 #~ "Äskeinen raporttiväli:     %3d Sec.\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11342,6 +16357,33 @@ msgstr ""
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Poista tämä kartta tilkkutäkistä."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11369,6 +16411,43 @@ msgstr ""
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Poista tämä kartta tilkkutäkistä."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11406,6 +16485,73 @@ msgstr ""
 #~ msgid "Reverse Route"
 #~ msgstr "Käännä reitti"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11473,6 +16619,34 @@ msgstr ""
 #~ msgid "Route Manager..."
 #~ msgstr "Reittien käsittely"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11502,6 +16676,34 @@ msgstr ""
 #~ msgid "Route Properties..."
 #~ msgstr "Reitin ominaisuudet"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11531,6 +16733,73 @@ msgstr ""
 #~ msgid "Route/Track"
 #~ msgstr "Reitti"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11598,6 +16867,34 @@ msgstr ""
 #~ msgid "Sea Surface Temp, C"
 #~ msgstr "Pintalämpötila, C"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11626,6 +16923,73 @@ msgstr ""
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Valitse tilkkutäkin karttatyypit"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11693,6 +17057,73 @@ msgstr ""
 #~ msgid "Select GRIB Directory"
 #~ msgstr "Valtse GRIB-hakemisto"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11760,6 +17191,23 @@ msgstr ""
 #~ msgid "Send Route To GPS..."
 #~ msgstr "Lähetä reitti GPS:lle..."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11778,6 +17226,43 @@ msgstr ""
 #~ msgid "Send to GPS ( "
 #~ msgstr "Lähetä GPS:lle..."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11816,6 +17301,34 @@ msgstr ""
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Kurssi-ylhäällä moodi"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11844,6 +17357,70 @@ msgstr ""
 #~ msgid "Settings"
 #~ msgstr "Asetukset"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11908,6 +17485,34 @@ msgstr ""
 #~ msgid "ShipName:  "
 #~ msgstr "Aluksen nimi:"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -11936,6 +17541,73 @@ msgstr ""
 #~ msgid "Show ATON labels"
 #~ msgstr "Näytä ATON-leimat"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12003,6 +17675,73 @@ msgstr ""
 #~ msgid "Show GPX icons"
 #~ msgstr "Näytä GPX-ikoni"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12070,6 +17809,73 @@ msgstr ""
 #~ msgid "Show GRIB dialog"
 #~ msgstr "Näytä GRIB-ruutu"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12137,6 +17943,46 @@ msgstr ""
 #~ msgid "Show GRIB icon"
 #~ msgstr "Näytä GRIB-ikoni"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12177,6 +18023,46 @@ msgstr ""
 #~ msgid "Show Printing Icon"
 #~ msgstr "Näytä tulostusikoni"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12217,6 +18103,73 @@ msgstr ""
 #~ msgid "Show Track icon"
 #~ msgstr "Näytä jälki-ikoni"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12284,6 +18237,35 @@ msgstr ""
 #~ msgid "Significant Wave Height, m"
 #~ msgstr "Merkitsevä aallonkorkeus, m"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12318,6 +18300,60 @@ msgstr ""
 #~ "Koko:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12377,6 +18413,35 @@ msgstr ""
 #~ "Koko:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12411,6 +18476,35 @@ msgstr ""
 #~ "Koko:                %5dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12445,6 +18539,35 @@ msgstr ""
 #~ "Koko:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12479,6 +18602,35 @@ msgstr ""
 #~ "Koko:                ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12513,6 +18665,35 @@ msgstr ""
 #~ "Koko:                ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12547,6 +18728,35 @@ msgstr ""
 #~ "Koko:                %5dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12581,6 +18791,35 @@ msgstr ""
 #~ "Koko:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12611,6 +18850,35 @@ msgstr ""
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Nopeus:            Tuntematon\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12640,6 +18908,18 @@ msgstr ""
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Nopeus:                %5.2f Kts.\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12653,6 +18933,34 @@ msgstr ""
 #~ msgid "T"
 #~ msgstr "mihin"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12681,6 +18989,35 @@ msgstr ""
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "TCP/IP WiFi Data Server"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12710,6 +19047,35 @@ msgstr ""
 #~ msgid "TCPA:  \n"
 #~ msgstr "TCPA:  \n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12739,6 +19105,34 @@ msgstr ""
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA:                 %02d:%02d Hr:Min\n"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12767,6 +19161,34 @@ msgstr ""
 #~ msgid "Text Element"
 #~ msgstr "Tekstielementit"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12796,6 +19218,64 @@ msgstr ""
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "Näytä virrat"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12855,6 +19335,64 @@ msgstr ""
 #~ msgid "Toggle Listing"
 #~ msgstr "Kytke jälki"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12914,6 +19452,34 @@ msgstr ""
 #~ msgid "Toggle Names"
 #~ msgstr "Reitin nimi"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12942,6 +19508,34 @@ msgstr ""
 #~ msgid "ToolBox"
 #~ msgstr "Työkalut"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12971,6 +19565,34 @@ msgstr ""
 #~ msgid "Track Properties..."
 #~ msgstr "Jäljen asetukset"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -12999,6 +19621,35 @@ msgstr ""
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "Mittakaava: %8.0f       "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13029,6 +19680,35 @@ msgstr ""
 #~ msgid "Type:                 "
 #~ msgstr "ETA:      "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13059,6 +19739,33 @@ msgstr ""
 #~ msgid "UN Ship Type:         "
 #~ msgstr "Alustyyppi:"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13092,6 +19799,33 @@ msgstr ""
 #~ "\n"
 #~ "gpsd isäntä on: "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13123,6 +19857,27 @@ msgstr ""
 #~ "\n"
 #~ "gpsd-isäntä on: "
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13145,6 +19900,33 @@ msgstr ""
 #~ msgid "Unavailable"
 #~ msgstr "Ei karttaa saatavilla"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13172,6 +19954,73 @@ msgstr ""
 #~ msgid "Units"
 #~ msgstr "Yksiköt"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13239,6 +20088,34 @@ msgstr ""
 #~ msgid "Use High Definition Graphics"
 #~ msgstr "Käytä tarkkuusgrafiikkaa"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13267,6 +20144,73 @@ msgstr ""
 #~ msgid "Use SCAMIN"
 #~ msgstr "Käytä SCAMIN-asetusta"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13334,6 +20278,34 @@ msgstr ""
 #~ msgid "WARNING:  QuickScat GRIB data is %d hours old."
 #~ msgstr "VAROITUS:  QuickScat GRIB tieto on %d tuntia vanha."
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13362,6 +20334,34 @@ msgstr ""
 #~ msgid "Waypoint Locking"
 #~ msgstr "Kiintopisteiden lukitus"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13390,6 +20390,34 @@ msgstr ""
 #~ msgid "WiFi Options"
 #~ msgstr "WiFi asetukset"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -13418,6 +20446,47 @@ msgstr ""
 #~ msgid "cm93 Detail"
 #~ msgstr "CM93 detaljit"
 
+# #-#-#-#-#  .merge_file_cYHRzy (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_CoCtho (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #

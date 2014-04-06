@@ -23,6 +23,7 @@
 
 #include "LinkPropDlg.h"
 #include <DimeControl.h>
+#include <MainFrame.h>
 
 LinkPropDialog::LinkPropDialog(
 		wxWindow * parent,
@@ -33,58 +34,65 @@ LinkPropDialog::LinkPropDialog(
 		long style)
 	: wxDialog(parent, id, title, pos, size, style)
 {
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
+	SetFont(*qFont);
+
+	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
 
 	wxBoxSizer* bSizerMain;
-	bSizerMain = new wxBoxSizer( wxVERTICAL );
+	bSizerMain = new wxBoxSizer(wxVERTICAL);
 
 	wxStaticBoxSizer* sbSizerLnkProp;
-	sbSizerLnkProp = new wxStaticBoxSizer( new wxStaticBox( this, wxID_ANY, _("Link") ),
-			wxVERTICAL );
+	sbSizerLnkProp = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("Link")), wxVERTICAL);
 
-	m_staticTextLinkDesc = new wxStaticText( this, wxID_ANY, _("Link description"),
-			wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextLinkDesc->Wrap( -1 );
-	sbSizerLnkProp->Add( m_staticTextLinkDesc, 0, wxALL, 5 );
+	m_staticTextLinkDesc = new wxStaticText(this, wxID_ANY, _("Link description"),
+											wxDefaultPosition, wxDefaultSize, 0);
+	m_staticTextLinkDesc->Wrap(-1);
+	sbSizerLnkProp->Add(m_staticTextLinkDesc, 0, wxALL, 5);
 
-	m_textCtrlLinkDescription = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition,
-			wxDefaultSize, 0 );
-	sbSizerLnkProp->Add( m_textCtrlLinkDescription, 0, wxALL | wxEXPAND, 5 );
+	m_textCtrlLinkDescription
+		= new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+	sbSizerLnkProp->Add(m_textCtrlLinkDescription, 0, wxALL | wxEXPAND, 5);
 
-	m_staticTextLinkUrl = new wxStaticText( this, wxID_ANY, _("URL"), wxDefaultPosition,
-			wxDefaultSize, 0 );
-	m_staticTextLinkUrl->Wrap( -1 );
-	sbSizerLnkProp->Add( m_staticTextLinkUrl, 0, wxALL, 5 );
+	m_staticTextLinkUrl
+		= new wxStaticText(this, wxID_ANY, _("URL"), wxDefaultPosition, wxDefaultSize, 0);
+	m_staticTextLinkUrl->Wrap(-1);
+	sbSizerLnkProp->Add(m_staticTextLinkUrl, 0, wxALL, 5);
 
-	m_textCtrlLinkUrl = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition,
-			wxDefaultSize, 0 );
-	sbSizerLnkProp->Add( m_textCtrlLinkUrl, 0, wxALL | wxEXPAND, 5 );
+	m_textCtrlLinkUrl
+		= new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+	sbSizerLnkProp->Add(m_textCtrlLinkUrl, 0, wxALL | wxEXPAND, 5);
 
-	m_buttonBrowseLocal = new wxButton( this, wxID_ANY, _("Local file..."), wxDefaultPosition,
-			wxDefaultSize, 0 );
-	sbSizerLnkProp->Add( m_buttonBrowseLocal, 0, wxALL, 5 );
+	m_buttonBrowseLocal
+		= new wxButton(this, wxID_ANY, _("Local file..."), wxDefaultPosition, wxDefaultSize, 0);
+	sbSizerLnkProp->Add(m_buttonBrowseLocal, 0, wxALL, 5);
 
-	bSizerMain->Add( sbSizerLnkProp, 1, wxALL | wxEXPAND, 5 );
+	bSizerMain->Add(sbSizerLnkProp, 1, wxALL | wxEXPAND, 5);
 
 	m_sdbSizerButtons = new wxStdDialogButtonSizer();
-	m_sdbSizerButtonsOK = new wxButton( this, wxID_OK );
-	m_sdbSizerButtons->AddButton( m_sdbSizerButtonsOK );
-	m_sdbSizerButtonsCancel = new wxButton( this, wxID_CANCEL );
-	m_sdbSizerButtons->AddButton( m_sdbSizerButtonsCancel );
+	m_sdbSizerButtonsOK = new wxButton(this, wxID_OK);
+	m_sdbSizerButtons->AddButton(m_sdbSizerButtonsOK);
+	m_sdbSizerButtonsCancel = new wxButton(this, wxID_CANCEL);
+	m_sdbSizerButtons->AddButton(m_sdbSizerButtonsCancel);
 	m_sdbSizerButtons->Realize();
 
-	bSizerMain->Add( m_sdbSizerButtons, 0, wxALL | wxEXPAND, 5 );
+	bSizerMain->Add(m_sdbSizerButtons, 0, wxALL | wxEXPAND, 5);
 
-	this->SetSizer( bSizerMain );
+	this->SetSizer(bSizerMain);
 	this->Layout();
+
+	Fit();
+
 	this->Centre(wxBOTH);
 
 	m_buttonBrowseLocal->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler(LinkPropDialog::OnLocalFileClick), NULL, this);
+								 wxCommandEventHandler(LinkPropDialog::OnLocalFileClick), NULL,
+								 this);
 	m_sdbSizerButtonsCancel->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler(LinkPropDialog::OnCancelClick), NULL, this);
+									 wxCommandEventHandler(LinkPropDialog::OnCancelClick), NULL,
+									 this);
 	m_sdbSizerButtonsOK->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler(LinkPropDialog::OnOkClick), NULL, this);
+								 wxCommandEventHandler(LinkPropDialog::OnOkClick), NULL, this);
 
 	DimeControl(this);
 }

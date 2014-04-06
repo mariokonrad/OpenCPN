@@ -87,6 +87,8 @@ private:
 	int m_dock_x;
 	int m_dock_y;
 	bool m_block;
+
+	bool m_marginsInvisible;
 };
 
 #endif

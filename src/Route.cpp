@@ -71,6 +71,7 @@ Route::Route(void)
 	, m_bRtIsActive(false)
 	, m_pRouteActivePoint(NULL)
 	, m_bIsBeingCreated(false)
+	, m_bIsBeingEdited(false)
 	, m_route_length(0.0)
 	, m_route_time(0.0)
 	, m_bIsTrack(false)
@@ -398,6 +399,10 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 	if (m_nPoints == 0)
 		return;
 
+	int hilite = 0;
+	if (m_bIsBeingEdited)
+		hilite = 50;
+
 	navigation::RouteManager& routemanager = global::OCPN::get().routeman();
 
 	if (m_bVisible && m_bRtIsSelected) {
@@ -457,7 +462,7 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 			// TODO This logic could be simpliifed
 			// Simple case
 			if (b_1_on && b_2_on)
-				RenderSegment(dc, rpt1.x, rpt1.y, rpt2.x, rpt2.y, VP, true); // with arrows
+				RenderSegment(dc, rpt1.x, rpt1.y, rpt2.x, rpt2.y, VP, true, hilite); // with arrows
 
 			// In the cases where one point is on, and one off
 			// we must decide which way to go in longitude
@@ -481,7 +486,7 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 				if (dp < dtest)
 					adder = 0;
 
-				RenderSegment(dc, rpt1.x, rpt1.y, rpt2.x + adder, rpt2.y, VP, true);
+				RenderSegment(dc, rpt1.x, rpt1.y, rpt2.x + adder, rpt2.y, VP, true, hilite);
 			} else if (!b_1_on && b_2_on) {
 				if (rpt1.x < rpt2.x)
 					adder = static_cast<int>(pix_full_circle);
@@ -494,7 +499,7 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 				if (dp < dtest)
 					adder = 0;
 
-				RenderSegment(dc, rpt1.x + adder, rpt1.y, rpt2.x, rpt2.y, VP, true);
+				RenderSegment(dc, rpt1.x + adder, rpt1.y, rpt2.x, rpt2.y, VP, true, hilite);
 			} else if (!b_1_on && !b_2_on) {
 				// Both off, need to check shortest distance
 				if (rpt1.x < rpt2.x)
@@ -508,7 +513,7 @@ void Route::Draw(ocpnDC& dc, const ViewPort& VP)
 				if (dp < dtest)
 					adder = 0;
 
-				RenderSegment(dc, rpt1.x + adder, rpt1.y, rpt2.x, rpt2.y, VP, true);
+				RenderSegment(dc, rpt1.x + adder, rpt1.y, rpt2.x, rpt2.y, VP, true, hilite);
 			}
 		}
 		rpt1 = rpt2;
@@ -1032,9 +1037,9 @@ void Route::RenameRoutePoints(void)
 	}
 }
 
-bool Route::SendToGPS(const wxString& com_name, bool bsend_waypoints, wxGauge* pProgress)
+int Route::SendToGPS(const wxString& com_name, bool bsend_waypoints, wxGauge* pProgress)
 {
-	bool result = false;
+	int result = 0;
 
 	if (g_pMUX) {
 		::wxBeginBusyCursor();
@@ -1043,14 +1048,17 @@ bool Route::SendToGPS(const wxString& com_name, bool bsend_waypoints, wxGauge* p
 	}
 
 	wxString msg;
-	if (result)
+	if (result == 0) {
 		msg = _("Route Uploaded successfully.");
-	else
+	} else if (result == ERR_GARMIN_INITIALIZE) {
+		msg = _("Error on Route Upload.  Garmin GPS not connected");
+	} else {
 		msg = _("Error on Route Upload.  Please check logfiles...");
+	}
 
 	OCPNMessageBox(NULL, msg, _("OpenCPN Info"), wxOK | wxICON_INFORMATION);
 
-	return result;
+	return result == 0;
 }
 
 // Is this route equal to another, meaning,

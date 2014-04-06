@@ -298,6 +298,21 @@ msgstr ""
 msgid "%H:%M"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -440,6 +455,21 @@ msgstr "&Ombyt fra/til på rute"
 msgid "&Send to GPS"
 msgstr "&Send til GPS"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -761,6 +791,21 @@ msgstr ""
 msgid "AIS"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -830,6 +875,21 @@ msgstr "AIS fartøjsliste"
 msgid "AISRollover"
 msgstr "AIS advarsel"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2014,6 +2074,21 @@ msgstr "Slet waypoint"
 msgid "Cruise ship"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2139,6 +2214,21 @@ msgstr "Kald"
 msgid "Data Connections"
 msgstr "Valgmuligheder for skrifttyper"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2463,6 +2553,21 @@ msgstr ""
 msgid "Dredge"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2616,6 +2721,20 @@ msgstr ""
 msgid "Environmental Caution Area: Strong currents"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3049,6 +3168,22 @@ msgstr "Importer GPX-fil"
 msgid "Important Text Only"
 msgstr "Vis kun vigtig tekst"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# Translation?
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3295,6 +3430,20 @@ msgstr "Ben"
 msgid "Leg: from "
 msgstr "Ben: fra"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3856,6 +4005,21 @@ msgstr "Kort"
 msgid "New Group..."
 msgstr ""
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4176,6 +4340,21 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4469,6 +4648,21 @@ msgstr ""
 msgid "Preferred Channel Starboard Hand"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4490,6 +4684,21 @@ msgstr "Klargør GPS til Rute/waypoint upload og tryk 'Send'..."
 msgid "Preserve Scale when Switching Charts"
 msgstr "Fasthold kortmålestok ved skift til andet kort"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4588,6 +4797,21 @@ msgstr ""
 msgid "Processing Waypoints..."
 msgstr "Omdøb waypoints"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4800,6 +5024,21 @@ msgstr ""
 msgid "Reference Point"
 msgstr "Reference Station:"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5029,6 +5268,20 @@ msgstr "Egenskaber for rute"
 msgid "Route Properties"
 msgstr "Egenskaber for rute"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5223,6 +5476,21 @@ msgid ""
 "after data reduction:"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5237,6 +5505,21 @@ msgstr ""
 msgid "Send"
 msgstr "Send"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5695,6 +5978,13 @@ msgstr ""
 msgid "Special Mark"
 msgstr "Slet waypoint"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 # 
 # 
@@ -6074,6 +6364,21 @@ msgstr "Ben"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6157,6 +6462,21 @@ msgstr "Til waypoint"
 msgid "To route"
 msgstr "Tid undervejs"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6186,6 +6506,21 @@ msgstr "Slå spor til/fra"
 msgid "Toggle track"
 msgstr "Slå spor til/fra"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6934,6 +7269,147 @@ msgstr ""
 msgid "mph"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+# 
+# 
+# 
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "    RLL data korrupt på kort "
+
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+# 
+# 
+# 
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "   Kortfil mangler 'BSB header', initiering umulig."
+
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+# 
+# 
+# 
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "   Kunne ikke læse de første %d bytes fra 'header' i kortfil: "
+
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+# 
+# 
+#, fuzzy
+msgid "--"
+msgstr "-"
+
+#
+# 
+# 
+# 
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Er du sikker på at <ALLE> ruter skal slettes"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr "Fejl ved Waypoint udlæsning.  Kontroller logfiler..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+
+#
+msgid "in "
+msgstr ""
+
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -6962,6 +7438,35 @@ msgstr ""
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "    Pillængde (minutter) for beholden kurs(COG):"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -6991,6 +7496,35 @@ msgstr ""
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "    Højeste hastighed for at være opankret/fortøjet(knob):"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7020,22 +7554,47 @@ msgstr ""
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "      Fartøjs spor længde (Minutter):"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
 # 
-# 
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "    RLL data korrupt på kort "
-
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
 #
-#
-# 
-# 
-# 
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "   Kortfil mangler 'BSB header', initiering umulig."
-
 #
 #
 #
@@ -7077,14 +7636,55 @@ msgstr ""
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "   Kortprojektion kan ikke uddrages. Mercator antages: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 # 
 # 
 # 
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "   Kunne ikke læse de første %d bytes fra 'header' i kortfil: "
-
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7134,6 +7734,55 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load library: "
 #~ msgstr "   PlugInManager: Programfunktioner kan ikke indlæses: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7183,6 +7832,55 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load symbol create_pi: "
 #~ msgstr "   PlugInManager: 'create_pi' kan ikke indlæses: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7232,6 +7930,34 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load symbol destroy_pi: "
 #~ msgstr "   PlugInManager: 'destroy_pi' kan ikke indlæses: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7260,6 +7986,34 @@ msgstr ""
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  Kunne ikke åbne AIS port '"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7288,6 +8042,16 @@ msgstr ""
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  Kunne ikke åbne AIS port '"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7298,6 +8062,75 @@ msgstr ""
 #~ msgid " is %5g"
 #~ msgstr " er %5g"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7367,6 +8200,80 @@ msgstr ""
 #~ msgid "&Close"
 #~ msgstr "&Luk"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7441,6 +8348,80 @@ msgstr ""
 #~ msgid "&Delete All Routes..."
 #~ msgstr "&Slet alle ruter..."
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7515,6 +8496,20 @@ msgstr ""
 #~ msgid "&Delete All Tracks..."
 #~ msgstr "&Slet alle spor..."
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7529,6 +8524,34 @@ msgstr ""
 #~ msgid "&Export Track..."
 #~ msgstr "&Eksporter spor..."
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7561,6 +8584,34 @@ msgstr ""
 #~ "'\n"
 #~ " Forslag: Prøv 'xxx.xxx.xxx.xxx' format"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7593,6 +8644,80 @@ msgstr ""
 #~ "'\n"
 #~ "Forslag: Prøv at lukke andre programmer."
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7667,16 +8792,35 @@ msgstr ""
 #~ msgid "(Active Track)"
 #~ msgstr "(Aktivt spor)"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
 #
 # 
 # 
-#, fuzzy
-#~ msgid "--"
-#~ msgstr "-"
-
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7707,6 +8851,35 @@ msgstr ""
 #~ msgid ":               "
 #~ msgstr "Klasse:                "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7740,6 +8913,49 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Pejling:                Ikke tilgængelig\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7784,6 +9000,44 @@ msgstr ""
 #~ msgid "AIS SART Alert"
 #~ msgstr "AIS advarsel"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7822,6 +9076,35 @@ msgstr ""
 #~ msgid "Activate Route"
 #~ msgstr "Aktiver rute"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7851,6 +9134,34 @@ msgstr ""
 #~ msgid "Add Selection"
 #~ msgstr "Tilføj (valgt)"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7879,6 +9190,51 @@ msgstr ""
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Tilføj dette kort til quiltning"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7924,6 +9280,35 @@ msgstr ""
 #~ msgid "Additional information"
 #~ msgstr "Yderligere information"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -7953,6 +9338,58 @@ msgstr ""
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Alle filer (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8006,6 +9443,34 @@ msgstr ""
 #~ msgid "Attempting to load libgps.so"
 #~ msgstr "Ikke muligt at indlæse 'libgps.so.19'"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8034,6 +9499,35 @@ msgstr ""
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Selvstyrer port"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8063,6 +9557,35 @@ msgstr ""
 #~ msgid "Available Chart Directories"
 #~ msgstr "Kort kataloger"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8092,6 +9615,35 @@ msgstr ""
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Pejling:                %03d.\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8121,6 +9673,33 @@ msgstr ""
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Pejling:                Ikke tilgængelig\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8149,6 +9728,35 @@ msgstr ""
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Slå CM93-detalje udvælgelse til"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8178,6 +9786,36 @@ msgstr ""
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "CM93 Zoom detaljer"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8208,6 +9846,36 @@ msgstr ""
 #~ msgid "CPA:       \n"
 #~ msgstr "Korteste afstand (CPA):              \n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8238,6 +9906,34 @@ msgstr ""
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "Korteste afstand (CPA):              %6.1f sømil\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8274,6 +9970,77 @@ msgstr ""
 #~ "\n"
 #~ "gpsd vært er: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8345,6 +10112,35 @@ msgstr ""
 #~ msgid "CallSign:  "
 #~ msgstr "Kaldesignal:"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8374,6 +10170,50 @@ msgstr ""
 #~ msgid "CallSign:             "
 #~ msgstr "Kaldesignal:             "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8418,6 +10258,34 @@ msgstr ""
 #~ msgid "Chart"
 #~ msgstr "Kort"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8446,6 +10314,35 @@ msgstr ""
 #~ msgid "Chart Display Filters"
 #~ msgstr "Valgmuligheder for kortvisning"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# Translation ok?
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8476,6 +10373,73 @@ msgstr ""
 #~ msgid "Chart Position"
 #~ msgstr "Kort Udskriv"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8543,6 +10507,80 @@ msgstr ""
 #~ msgid "Chart file corrupt.. disabling this chart \n"
 #~ msgstr "Kortfilen er ikke valid..Kortet bliver inaktiveret \n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8621,6 +10659,77 @@ msgstr ""
 #~ "Ukendt klasse\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8695,6 +10804,35 @@ msgstr ""
 #~ "Klasse:    A\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8724,6 +10862,34 @@ msgstr ""
 #~ msgid "Class:                "
 #~ msgstr "Klasse:                "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8752,6 +10918,35 @@ msgstr ""
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "Kunne ikke finde vært for netværk (TCP/IP) '"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8781,6 +10976,35 @@ msgstr ""
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "Kurs:                 %03d.\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8811,6 +11035,35 @@ msgstr ""
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Kurs:                 %03d.\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8840,6 +11093,75 @@ msgstr ""
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "Kurs:                 Ikke tilgængelig\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8909,6 +11231,35 @@ msgstr ""
 #~ msgid "Current Velocity, Kts."
 #~ msgstr "Hastighed, knob"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8938,6 +11289,43 @@ msgstr ""
 #~ msgid "Cursor: "
 #~ msgstr "Markør: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -8975,6 +11363,47 @@ msgstr ""
 #~ msgid "Deactivate Route"
 #~ msgstr "Deaktiver rute"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9017,6 +11446,35 @@ msgstr ""
 #~ msgid "Default dataset"
 #~ msgstr "Farve"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9047,6 +11505,43 @@ msgstr ""
 #~ msgid "Deg"
 #~ msgstr "Ben"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9084,6 +11579,34 @@ msgstr ""
 #~ msgid "Delete Mark"
 #~ msgstr "Slet waypoint"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9112,6 +11635,35 @@ msgstr ""
 #~ msgid "Delete Route"
 #~ msgstr "Slet rute"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9141,6 +11693,35 @@ msgstr ""
 #~ msgid "Delete Selection"
 #~ msgstr "Slet (valgt)"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9170,6 +11751,35 @@ msgstr ""
 #~ msgid "Delete Track"
 #~ msgstr "Slet spor"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9199,6 +11809,36 @@ msgstr ""
 #~ msgid "Depth Settings"
 #~ msgstr "Dybder"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9229,6 +11869,34 @@ msgstr ""
 #~ msgid "Destination:          "
 #~ msgstr "Destination:"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9258,6 +11926,23 @@ msgstr ""
 #~ msgid "Display Style"
 #~ msgstr "Kortvisning"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9275,6 +11960,35 @@ msgstr ""
 #~ msgid "E&xport All..."
 #~ msgstr "E&ksporter...."
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9304,6 +12018,56 @@ msgstr ""
 #~ msgid "ETA:                  "
 #~ msgstr "FREMME KL:                   "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9354,6 +12118,35 @@ msgstr ""
 #~ msgid "ETE/Timestamp"
 #~ msgstr "ETE/Kl."
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# What function, - precise?
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9383,6 +12176,35 @@ msgstr ""
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Aktiver zoom til cursor med musehjul"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9412,6 +12234,69 @@ msgstr ""
 #~ msgid "Etc."
 #~ msgstr "Andet"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9475,6 +12360,58 @@ msgstr ""
 #~ msgid "Exit OpenCPN"
 #~ msgstr "Afslut OpenCPN"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9528,6 +12465,58 @@ msgstr ""
 #~ msgid "Failed to load libgps.so"
 #~ msgstr "Ikke muligt at indlæse 'libgps.so.19'"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9581,6 +12570,35 @@ msgstr ""
 #~ msgid "Failed to load libgps.so.19"
 #~ msgstr "Ikke muligt at indlæse 'libgps.so.19'"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9611,6 +12629,34 @@ msgstr ""
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "Herfra kurs: %03d gr. %6.2f sømil"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9639,6 +12685,75 @@ msgstr ""
 #~ msgid "GPSD Data Server"
 #~ msgstr "GPSD vært"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9708,6 +12823,75 @@ msgstr ""
 #~ msgid "GRIB"
 #~ msgstr "Meteorologi(GRIB)"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9777,6 +12961,75 @@ msgstr ""
 #~ msgid "GRIB Data"
 #~ msgstr "Meteorologi(GRIB)"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9846,6 +13099,75 @@ msgstr ""
 #~ msgid "GRIB Display Control"
 #~ msgstr "Meteorologi(GRIB) visning"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9915,6 +13237,35 @@ msgstr ""
 #~ msgid "GRIB File Directory"
 #~ msgstr "Meteorologi(GRIB) folder"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9944,6 +13295,43 @@ msgstr ""
 #~ msgid "Go To Here"
 #~ msgstr "Gå hertil"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -9981,6 +13369,35 @@ msgstr ""
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Gå Til Mærke/WP"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10011,6 +13428,35 @@ msgstr ""
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Pejling:                %03d.\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10041,6 +13487,65 @@ msgstr ""
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "FREMME KL:                   "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10101,6 +13606,35 @@ msgstr ""
 #~ msgid "Import new layer"
 #~ msgstr "Importer GPX-fil"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10130,6 +13664,48 @@ msgstr ""
 #~ msgid "Inland Blue Flag        Clear\n"
 #~ msgstr "Insland Blå Flag        Fjern\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10172,6 +13748,35 @@ msgstr ""
 #~ msgid "Language/Fonts"
 #~ msgstr "Sprog/skrifttyper"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10202,6 +13807,35 @@ msgstr ""
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Seneste data kl:"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10231,6 +13865,35 @@ msgstr ""
 #~ msgid "Leg/Route"
 #~ msgstr "Ben|Rute"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10260,6 +13923,50 @@ msgstr ""
 #~ msgid "META Objects"
 #~ msgstr "Virtuelle markeringer"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10305,6 +14012,71 @@ msgstr ""
 #~ msgid "MMSI:                 %09d\n"
 #~ msgstr "FREMME KL:                   "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10370,6 +14142,52 @@ msgstr ""
 #~ msgid "MarinersStandard"
 #~ msgstr "Maritim standard"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# Translation?
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10416,6 +14234,52 @@ msgstr ""
 #~ msgid "Mark Icon"
 #~ msgstr "Ikon for waypoint"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# Mark - ?
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10462,6 +14326,24 @@ msgstr ""
 #~ msgid "Mark Name"
 #~ msgstr "Waypointnavn"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10480,6 +14362,44 @@ msgstr ""
 #~ msgid "Mark Properties"
 #~ msgstr "Egenskaber for waypoint"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10519,6 +14439,44 @@ msgstr ""
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Egenskaber for waypoint"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10557,6 +14515,35 @@ msgstr ""
 #~ msgid "Measure....."
 #~ msgstr "Afstandsmåler"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10586,6 +14573,34 @@ msgstr ""
 #~ msgid "Metres"
 #~ msgstr "Meter"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10614,6 +14629,35 @@ msgstr ""
 #~ msgid "NMEA Data Source"
 #~ msgstr "NMEA datakilde"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10643,6 +14687,36 @@ msgstr ""
 #~ msgid "NMEA Options"
 #~ msgstr "Valgmuligheder for NMEA-data"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10674,6 +14748,36 @@ msgstr ""
 #~ msgid "Name:  "
 #~ msgstr "Fartøjsnavn:"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10704,6 +14808,54 @@ msgstr ""
 #~ msgid "Navigational Status:  "
 #~ msgstr "Navigering:"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10752,6 +14904,34 @@ msgstr ""
 #~ msgid "New Mark"
 #~ msgstr "Nyt waypoint"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10781,6 +14961,55 @@ msgstr ""
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Antal afstandscirkler"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10830,6 +15059,55 @@ msgstr ""
 #~ msgid "OpenCPN PlugIn Base Class"
 #~ msgstr "OpenCPN PlugIn base klasse"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10883,6 +15161,20 @@ msgstr ""
 #~ "OpenCPN PlugIn base klasse\n"
 #~ "PlugInManager oprettede denne base klasse"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10897,6 +15189,34 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Andet"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10926,6 +15246,34 @@ msgstr ""
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Visningsmunigheder for eget fartøj"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10955,6 +15303,34 @@ msgstr ""
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "Gem sporpunkt pr. afstandsinterval (sømil):"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -10984,6 +15360,21 @@ msgstr ""
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Gem sporpunkt pr. tidsinterval  (sekunder):"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11000,6 +15391,75 @@ msgstr ""
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Estimeret hastighed"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11069,6 +15529,75 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed CRAIN GRIB"
 #~ msgstr "Zoom eller skaler ud for at se skjult CRAIN GRIB"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11138,6 +15667,75 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed HTSGW GRIB"
 #~ msgstr "Zoom eller skaler ud for at se skjult HTSGW GRIB"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11207,6 +15805,75 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed OCEAN CURRENT GRIB"
 #~ msgstr "Zoom eller skaler ud for at se skjult CRAIN GRIB"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11276,6 +15943,73 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed SEATEMP GRIB"
 #~ msgstr "Zoom eller skaler ud for at se skjult HTSGW GRIB"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11343,6 +16077,55 @@ msgstr ""
 #~ msgid "PlugIn Name"
 #~ msgstr "Tilføjelse, navn"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11392,6 +16175,55 @@ msgstr ""
 #~ msgid "PlugInManager searching for PlugIns in location "
 #~ msgstr "PlugInManager søger tilføjelser på lokation "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11441,6 +16273,55 @@ msgstr ""
 #~ msgid "PlugInManager: Deactivating PlugIn: "
 #~ msgstr "PlugInManager: Deaktiverer tilføjelse: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11490,6 +16371,55 @@ msgstr ""
 #~ msgid "PlugInManager: Initializing PlugIn: "
 #~ msgstr "PlugInManager: Initialiserer tilføjelse: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11539,6 +16469,55 @@ msgstr ""
 #~ msgid "PlugInManager: Loading PlugIn: "
 #~ msgstr "PlugInManager: Indlæser tilføjelse: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11588,6 +16567,55 @@ msgstr ""
 #~ msgid "PlugInManager: UnLoading PlugIn: "
 #~ msgstr "PlugInManager: Frakobler tilføjelse: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11637,6 +16665,35 @@ msgstr ""
 #~ msgid "PlugInManager: Unloading PlugIn with invalid API version %d.%d: "
 #~ msgstr "PlugInManager: Frakobler tilføjelse med forkert API version %d.%d: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11669,6 +16726,54 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Alder på data:             %3d Sek.\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11717,6 +16822,47 @@ msgstr ""
 #~ msgid "Position:               "
 #~ msgstr "Position:             "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11768,6 +16914,75 @@ msgstr ""
 #~ "                              Vil du køre denne version af 'libgps' "
 #~ "alligevel?"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11837,6 +17052,35 @@ msgstr ""
 #~ msgid "Pressure, mBar"
 #~ msgstr "Tryk, mBar"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# Translation?
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11866,6 +17110,35 @@ msgstr ""
 #~ msgid "Radar rings"
 #~ msgstr "Afstandscirkler"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11895,6 +17168,36 @@ msgstr ""
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Afstand:                  Ikke tilgængelig\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11925,6 +17228,35 @@ msgstr ""
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Afstand:              %5.1f sømil\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11954,6 +17286,35 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Dreje            %3d Gr./Min. Venstre\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -11983,6 +17344,35 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Dreje            %3d Gr./Min. Højre\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12013,6 +17403,35 @@ msgstr ""
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Dreje            %3d Gr./Min.\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12043,6 +17462,35 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Dreje            %3d Gr./Min. Venstre\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12073,6 +17521,65 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Dreje            %3d Gr./Min. Højre\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12136,6 +17643,34 @@ msgstr ""
 #~ "Nyeste data interval:   %3d Sek.\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12165,6 +17700,34 @@ msgstr ""
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Slet dette kort fra quiltning"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12193,6 +17756,44 @@ msgstr ""
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Slet dette kort fra quiltning"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12231,6 +17832,35 @@ msgstr ""
 #~ msgid "Reverse Route"
 #~ msgstr "Ombyt fra/til på rute"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12261,6 +17891,34 @@ msgstr ""
 #~ msgid "Route Properties..."
 #~ msgstr "Egenskaber for rute"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12290,6 +17948,75 @@ msgstr ""
 #~ msgid "Route/Track"
 #~ msgstr "Rute fra spor"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12359,6 +18086,35 @@ msgstr ""
 #~ msgid "Sea Surface Temp, C"
 #~ msgstr "Havoverflade temperatur, C"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12388,6 +18144,75 @@ msgstr ""
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Vælg korttyper for quiltning"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12457,6 +18282,23 @@ msgstr ""
 #~ msgid "Select GRIB Directory"
 #~ msgstr "Meteorologi(GRIB) folder"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12475,6 +18317,44 @@ msgstr ""
 #~ msgid "Send to GPS ( "
 #~ msgstr "&Send til GPS"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12514,6 +18394,35 @@ msgstr ""
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Kurs op tilstand"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12543,6 +18452,71 @@ msgstr ""
 #~ msgid "Settings"
 #~ msgstr "Konfiguration"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12608,6 +18582,36 @@ msgstr ""
 #~ msgid "ShipName:  "
 #~ msgstr "Fartøjsnavn:"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# Translation?
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12638,6 +18642,75 @@ msgstr ""
 #~ msgid "Show ATON labels"
 #~ msgstr "Vis ATON beskrivelser"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12707,6 +18780,47 @@ msgstr ""
 #~ msgid "Show GRIB icon"
 #~ msgstr "Vis meteorologiikon(GRIB)"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12748,6 +18862,47 @@ msgstr ""
 #~ msgid "Show Printing Icon"
 #~ msgstr "Vis udskrivningsikon"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12789,6 +18944,75 @@ msgstr ""
 #~ msgid "Show Track icon"
 #~ msgstr "Vis ikon for spor"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12858,6 +19082,35 @@ msgstr ""
 #~ msgid "Significant Wave Height, m"
 #~ msgstr "Signifikant bølgehøjde, m"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12892,6 +19145,60 @@ msgstr ""
 #~ "Str.:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12951,6 +19258,35 @@ msgstr ""
 #~ "Str.:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -12984,6 +19320,35 @@ msgstr ""
 #~ "Str.:                 %dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13017,6 +19382,35 @@ msgstr ""
 #~ "Str.:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13050,6 +19444,35 @@ msgstr ""
 #~ "Str.:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13083,6 +19506,35 @@ msgstr ""
 #~ "Str.:                 ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13116,6 +19568,35 @@ msgstr ""
 #~ "Str.:               %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13149,6 +19630,35 @@ msgstr ""
 #~ "Str:               %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13178,6 +19688,35 @@ msgstr ""
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Hastighed:         Ikke tilgængelig\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13207,6 +19746,19 @@ msgstr ""
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Hastighed:            %5.2f Knob\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13221,6 +19773,35 @@ msgstr ""
 #~ msgid "T"
 #~ msgstr "Til"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13250,6 +19831,36 @@ msgstr ""
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "TCP/IP WiFi data vært"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13280,6 +19891,36 @@ msgstr ""
 #~ msgid "TCPA:  \n"
 #~ msgstr "Tid til korteste afstand (TCPA):     \n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13310,6 +19951,35 @@ msgstr ""
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "Tid til korteste afstand (TCPA):     %02d:%02d Tim:Min\n"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13339,6 +20009,35 @@ msgstr ""
 #~ msgid "Text Element"
 #~ msgstr "Tekst element"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13369,6 +20068,65 @@ msgstr ""
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "Vis strømforhold"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13429,6 +20187,65 @@ msgstr ""
 #~ msgid "Toggle Listing"
 #~ msgstr "Slå spor til/fra"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13489,6 +20306,35 @@ msgstr ""
 #~ msgid "Toggle Names"
 #~ msgstr "Rute"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13518,6 +20364,35 @@ msgstr ""
 #~ msgid "ToolBox"
 #~ msgstr "Værktøjer"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13548,6 +20423,34 @@ msgstr ""
 #~ msgid "Track Properties..."
 #~ msgstr "Egenskaber for spor"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13576,6 +20479,35 @@ msgstr ""
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "Målestok: %8.0f  "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13606,6 +20538,36 @@ msgstr ""
 #~ msgid "Type:                 "
 #~ msgstr "FREMME KL:                   "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13637,6 +20599,34 @@ msgstr ""
 #~ msgid "UN Ship Type:         "
 #~ msgstr "Fartøjstype:"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13671,6 +20661,33 @@ msgstr ""
 #~ "\n"
 #~ "gpsd vært er: "
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13699,6 +20716,28 @@ msgstr ""
 #~ msgid "Unable to load libgps"
 #~ msgstr "Ikke muligt at indlæse 'libgps.so.19'"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13722,6 +20761,33 @@ msgstr ""
 #~ msgid "Unavailable"
 #~ msgstr "Ingen kort er tilgængelige"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13749,6 +20815,75 @@ msgstr ""
 #~ msgid "Units"
 #~ msgstr "Enheder"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13818,6 +20953,35 @@ msgstr ""
 #~ msgid "Use High Definition Graphics"
 #~ msgstr "Brug højopløsningsgrafik"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13847,6 +21011,75 @@ msgstr ""
 #~ msgid "Use SCAMIN"
 #~ msgstr "Standardskalering (SCAMIN)"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13916,6 +21149,35 @@ msgstr ""
 #~ msgid "WARNING:  QuickScat GRIB data is %d hours old."
 #~ msgstr "ADVARSEL:  QuickScat GRIB data er %d timer gammel."
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13945,6 +21207,35 @@ msgstr ""
 #~ msgid "Waypoint Locking"
 #~ msgstr "Lås waypoints"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -13974,6 +21265,35 @@ msgstr ""
 #~ msgid "WiFi Options"
 #~ msgstr "Valgmuligheder for trådløs forbindelse"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #
@@ -14003,6 +21323,47 @@ msgstr ""
 #~ msgid "cm93 Detail"
 #~ msgstr "CM93 detaljer"
 
+# #-#-#-#-#  .merge_file_6xh0ed (Open CPN 1.3.6)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_FeS533 (Open CPN 1.3.6)  #-#-#-#-#
+#
 #
 #
 #

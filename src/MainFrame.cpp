@@ -85,6 +85,7 @@
 #include <Units.h>
 #include <PositionConvert.h>
 #include <SerialPorts.h>
+#include <FontMgr.h>
 
 #include <gui/FontManager.h>
 #include <gui/StyleManager.h>
@@ -227,6 +228,14 @@ struct sigaction sa_all;
 struct sigaction sa_all_old;
 #endif
 
+int options_lastPage = -1;
+wxPoint options_lastWindowPos(0, 0);
+wxSize options_lastWindowSize(0, 0);
+
+double g_pix_per_mm;
+
+bool g_bmobile;
+
 #ifdef __WXMSW__
 // System color control support
 
@@ -288,6 +297,20 @@ DEFINE_EVENT_TYPE(EVT_THREADMSG)
 //------------------------------------------------------------------------------
 //    PNG Icon resources
 //------------------------------------------------------------------------------
+
+wxFont* GetOCPNScaledFont(wxString item, int default_size) // FIXME: refactoring, move to font manager?
+{
+	wxFont* dFont = global::OCPN::get().font().GetFont(item, default_size);
+
+	if (g_bmobile) {
+		if (dFont->GetPointSize() < 20) {
+			wxFont* qFont = wxTheFontList->FindOrCreateFont(20, dFont->GetFamily(),
+															dFont->GetStyle(), dFont->GetWeight());
+			return qFont;
+		}
+	}
+	return dFont;
+}
 
 #ifdef __WXGTK__
 	#include "bitmaps/opencpn.xpm"
@@ -1326,6 +1349,14 @@ void MainFrame::ODoSetSize(void)
 
 	if (pthumbwin)
 		pthumbwin->SetMaxSize(chart_canvas->GetParent()->GetSize());
+
+	// Reset the options dialog size logic
+	options_lastWindowSize = wxSize(0, 0);
+	options_lastWindowPos = wxPoint(0, 0);
+
+	if (pRouteManagerDialog && pRouteManagerDialog->IsShown()) {
+		pRouteManagerDialog->Centre();
+	}
 }
 
 void MainFrame::PositionConsole(void)
@@ -1547,8 +1578,14 @@ void MainFrame::OnToolLeftClick(wxCommandEvent& event)
 			break;
 
 		case ID_ROUTE:
-			nRoute_State = 1;
-			chart_canvas->SetCursor(chart_canvas->get_cursor_pencil());
+			if (0 == nRoute_State) {
+				nRoute_State = 1;
+				chart_canvas->SetCursor(chart_canvas->get_cursor_pencil());
+				g_toolbar->ToggleTool(ID_ROUTE, true);
+			} else {
+				chart_canvas->FinishRoute();
+				g_toolbar->ToggleTool(ID_ROUTE, false);
+			}
 			break;
 
 		case ID_FOLLOW:
@@ -2014,10 +2051,6 @@ void MainFrame::JumpToPosition(const geo::Position& pos, double scale)
 
 int MainFrame::DoOptionsDialog()
 {
-	static int lastPage = -1;
-	static wxPoint lastWindowPos(0, 0);
-	static wxSize lastWindowSize(0, 0);
-
 	::wxBeginBusyCursor();
 	g_options = new options(this, -1, _("Options"));
 	::wxEndBusyCursor();
@@ -2059,14 +2092,31 @@ int MainFrame::DoOptionsDialog()
 		stats->Hide();
 #endif
 
-	if (lastPage >= 0)
-		g_options->set_page_selection(lastPage);
-	g_options->set_last_window_pos(lastWindowPos);
-	if (lastWindowPos != wxPoint(0, 0)) {
-		g_options->Move(lastWindowPos);
-		g_options->SetSize(lastWindowSize);
+	if (options_lastPage >= 0)
+		g_options->set_page_selection(options_lastPage);
+
+	if (!g_bmobile) {
+		g_options->set_last_window_pos(options_lastWindowPos);
+		if (options_lastWindowPos != wxPoint(0, 0)) {
+			g_options->Move(options_lastWindowPos);
+			g_options->SetSize(options_lastWindowSize);
+		} else {
+			g_options->Center();
+		}
 	} else {
-		g_options->Center();
+		wxSize canvas_size = chart_canvas->GetSize();
+		wxPoint canvas_pos = chart_canvas->GetPosition();
+		wxSize fitted_size = g_options->GetSize();
+
+		fitted_size.x = wxMin(fitted_size.x, canvas_size.x);
+		fitted_size.y = wxMin(fitted_size.y, canvas_size.y);
+
+		g_options->SetSize(fitted_size);
+		int xp = (canvas_size.x - fitted_size.x) / 2;
+		int yp = (canvas_size.y - fitted_size.y) / 2;
+
+		wxPoint xxp = ClientToScreen(canvas_pos);
+		g_options->Move(xxp.x + xp, xxp.y + yp);
 	}
 
 	if (g_FloatingToolbarDialog)
@@ -2077,9 +2127,9 @@ int MainFrame::DoOptionsDialog()
 	if (g_FloatingToolbarDialog)
 		g_FloatingToolbarDialog->EnableTooltips();
 
-	lastPage = g_options->get_lastPage();
-	lastWindowPos = g_options->get_lastWindowPos();
-	lastWindowSize = g_options->get_lastWindowSize();
+	options_lastPage = g_options->get_lastPage();
+	options_lastWindowPos = g_options->get_lastWindowPos();
+	options_lastWindowSize = g_options->get_lastWindowSize();
 
 	if (b_sub) {
 		SurfaceToolbar();
@@ -2211,7 +2261,8 @@ int MainFrame::ProcessOptionsDialog(int rr, options* dialog)
 	sog_filter.resize(cfg.SOGFilterSec);
 	sog_filter.fill(wxIsNaN(nav.sog) ? 0.0 : nav.sog);
 
-	SetChartUpdatePeriod(chart_canvas->GetVP()); // Pick up changes to skew compensator
+	if (chart_canvas)
+		SetChartUpdatePeriod(chart_canvas->GetVP()); // Pick up changes to skew compensator
 
 	return 0;
 }

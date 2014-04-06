@@ -267,7 +267,17 @@ msgstr "%G Gün, %S:%D"
 msgid "%H:%M"
 msgstr "%Saat:%Dakika"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -326,7 +336,16 @@ msgstr "&Yazı türü:"
 msgid "&Go To"
 msgstr "&Oraya git"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -381,7 +400,17 @@ msgstr "&Tersine Çevir"
 msgid "&Send to GPS"
 msgstr "&GPS'e Gönder"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -447,7 +476,16 @@ msgstr "(sonraki kullanım için bırakıldı)"
 msgid "(unnamed)"
 msgstr "(Adsız)"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -665,7 +703,17 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -706,8 +754,17 @@ msgstr "AIS Hedefleri"
 msgid "AIS target list"
 msgstr "AIS hedef listesi"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+# Toolbox/Langue
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -718,7 +775,17 @@ msgstr "AIS hedef listesi"
 msgid "AISRollover"
 msgstr "AISRollover"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -730,8 +797,17 @@ msgstr "AISRollover"
 msgid "AISTargetAlert"
 msgstr "AISHedefAlarmı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+# Menu contextuel : AIS
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -768,7 +844,16 @@ msgstr "Hakkında"
 msgid "About OpenCPN"
 msgstr "OpenCPN Kılavuzu"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -1029,7 +1114,16 @@ msgstr "Ortalama hız"
 msgid "B"
 msgstr "B"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -1126,7 +1220,16 @@ msgstr "Kerteriz"
 msgid "Buddy"
 msgstr "Ad"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -1137,7 +1240,16 @@ msgstr "Ad"
 msgid "Bulk carrier maritime"
 msgstr "Açık deniz dökme yük teknesi"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -1569,8 +1681,13 @@ msgid "Combo!"
 msgstr "Açılır menü!"
 
 #
+#, fuzzy
 msgid "Confirm deletion of tracks and routes"
-msgstr "Rotaı ve Seyirizlerinin İptalini Onaylat"
+msgstr ""
+"#-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#\n"
+"Rotaı ve Seyirizlerinin İptalini Onaylat\n"
+"#-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#\n"
+"Rota ve Seyirizlerinin İptalini Onaylat"
 
 #
 #
@@ -1590,7 +1707,16 @@ msgstr "Kumanda Paneli Değeri"
 msgid "Constrained by draught"
 msgstr "Su kesimiyle sınırlı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -1625,7 +1751,16 @@ msgstr "KML Olarak Kopyala"
 msgid "Copy as KML..."
 msgstr "KML Olarak Kopyala"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -1676,7 +1811,16 @@ msgstr "Seyirnoktası Oluştur"
 msgid "Create Waypoint"
 msgstr "Seyirnoktaso Oluştur"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -1687,7 +1831,17 @@ msgstr "Seyirnoktaso Oluştur"
 msgid "Cruise ship"
 msgstr "Yolcu gemisi"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -1790,7 +1944,17 @@ msgstr "Koyu Sarı"
 msgid "Data Connections"
 msgstr "Veri Bağlanıları"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2033,7 +2197,16 @@ msgstr "Noktalı kesili çizgi"
 msgid "Dredge"
 msgstr "Tarama"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2161,7 +2334,16 @@ msgstr "Çevresel Uyarı Bölgesi: Fırtına uyarısı (fırtına hattı ya da a
 msgid "Environmental Caution Area: Strong currents"
 msgstr "Çevresel Uyarı Bölgesi: Güçlü akıntılar"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2173,8 +2355,16 @@ msgid "Error on Route Upload.  Please check logfiles..."
 msgstr ""
 "Rota yüklenirken hata oluştu. Lütfen kayıt dosyalarını kontrol edin ..."
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2247,7 +2437,16 @@ msgstr "F/V"
 msgid "Failed to initialize the user interface. "
 msgstr "Kullanıcı seçenekleri başlatılamadı."
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2268,7 +2467,16 @@ msgstr "Kulaç"
 msgid "Feet"
 msgstr "Ayak"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2292,7 +2500,16 @@ msgstr "Süzme Sıklığı (dakika ) "
 msgid "Filters"
 msgstr "Filtreler"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2327,7 +2544,16 @@ msgstr "Tüm Veritabanını Yeniden Yapılandırmaya Zorla"
 msgid "Format uploads for Furuno GP3X"
 msgstr "Furuno GP3X'e Göre Formatla"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2338,7 +2564,16 @@ msgstr "Furuno GP3X'e Göre Formatla"
 msgid "Freightbarge"
 msgstr "Yük Barjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2365,7 +2600,17 @@ msgstr "Pruvadan GPS Ayarı (m)"
 msgid "GPS Offset from Midship (m)"
 msgstr "Tekne Merkezinden GPS ayarı (m)"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2398,7 +2643,16 @@ msgstr "GPX"
 msgid "GUID"
 msgstr "REHBER"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2420,7 +2674,16 @@ msgstr "Genel"
 msgid "General Options"
 msgstr "Genel Seçenekler"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2452,7 +2715,16 @@ msgstr "Grup \""
 msgid "HSC"
 msgstr "HSC"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2537,7 +2809,16 @@ msgstr "Yüksek Hızlı Tekne"
 msgid "Highlight Tracks"
 msgstr "Seyirizlerini Aydınlat"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2588,7 +2869,17 @@ msgstr "Dosya Aç  (.gpx)"
 msgid "Important Text Only"
 msgstr "Sadece Önemli Metinler"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2600,7 +2891,16 @@ msgstr "Sadece Önemli Metinler"
 msgid "In"
 msgstr "Giriş"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2705,7 +3005,16 @@ msgstr "Mevkideki LMT"
 msgid "LMT @ Track Start"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2800,7 +3109,16 @@ msgstr "Bacak"
 msgid "Leg: from "
 msgstr "Başlangıç"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -2904,7 +3222,16 @@ msgstr "Bağlantılar düzeltme için açılır."
 msgid "Links are opened in the default browser."
 msgstr "Bağlantılar varsayılan tarayıcıda açılır."
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3024,8 +3351,17 @@ msgstr "Denizci Standardı"
 msgid "Mark targets as lost after (min)"
 msgstr "Hedefleri Kayıp Olarak İşaretleme Süresi (dakika) :"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3077,7 +3413,16 @@ msgstr "Seyirnoktası birleştirilsin mi ?"
 msgid "Merge waypoints?"
 msgstr "Seyirnoktaları birleştirilsin mi?"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3088,7 +3433,16 @@ msgstr "Seyirnoktaları birleştirilsin mi?"
 msgid "Message accepted"
 msgstr "Mesaj alındı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3130,7 +3484,16 @@ msgstr "GünOrtası"
 msgid "Moored"
 msgstr "Tonozda"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3141,7 +3504,16 @@ msgstr "Tonozda"
 msgid "Motor freighter"
 msgstr "Motorla çalışan mavna"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3152,7 +3524,16 @@ msgstr "Motorla çalışan mavna"
 msgid "Motor freighter pushing at least one tank-ship"
 msgstr "En az bir tanker çeken, motorla çalışan mavna"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3163,7 +3544,16 @@ msgstr "En az bir tanker çeken, motorla çalışan mavna"
 msgid "Motor freighter pushing one or more freighters"
 msgstr "Bir ya da iki mavna çeken, motorla çalışan mavna"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3174,7 +3564,16 @@ msgstr "Bir ya da iki mavna çeken, motorla çalışan mavna"
 msgid "Motor freighter with one or more ships alongside"
 msgstr "Yanında bir ya da iki gemi olan, motorla çalışan mavna"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3185,7 +3584,16 @@ msgstr "Yanında bir ya da iki gemi olan, motorla çalışan mavna"
 msgid "Motor freighter with tanker"
 msgstr "Tankerli motorla çalışan mavna"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3196,7 +3604,16 @@ msgstr "Tankerli motorla çalışan mavna"
 msgid "Motor freighter, tug"
 msgstr "Motorla çalışan mavna, römorkör"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3207,7 +3624,16 @@ msgstr "Motorla çalışan mavna, römorkör"
 msgid "Motor tanker"
 msgstr "Tanker"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3218,7 +3644,16 @@ msgstr "Tanker"
 msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
 msgstr "Tanker, sıvı görünümlü kuruyük (ör. çimento)"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3229,7 +3664,16 @@ msgstr "Tanker, sıvı görünümlü kuruyük (ör. çimento)"
 msgid "Motor tanker, liquid cargo, type C"
 msgstr "Tanker, sıvı yük, tip C"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3240,7 +3684,16 @@ msgstr "Tanker, sıvı yük, tip C"
 msgid "Motor tanker, liquid cargo, type N"
 msgstr "Tanker, sıvı yük, tip N"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3276,7 +3729,16 @@ msgstr "NMEA 0183"
 msgid "NMEA 2000"
 msgstr "NMEA 2000"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3324,7 +3786,17 @@ msgstr "Buraya Doğru Seyret"
 msgid "Navigate To This"
 msgstr "Buna Doğru Seyret"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3348,7 +3820,17 @@ msgstr "Yeni Harita Grubu"
 msgid "New Group..."
 msgstr "Yeni Grup"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3368,7 +3850,16 @@ msgstr "Soraki gelgit olayı"
 msgid "Nighttime"
 msgstr "Gece"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3439,7 +3930,16 @@ msgstr "Nesne Açıklaması"
 msgid "Object Query..."
 msgstr "Nesne Açıklaması"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3450,7 +3950,16 @@ msgstr "Nesne Açıklaması"
 msgid "Object, not otherwise specified"
 msgstr "Nesne (başka türlü belirtilmedikçe)"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3462,8 +3971,13 @@ msgid "Object, towed, not otherwise specified"
 msgstr "Nesne, (yedeklenen, başka türlü belirtilmedikçe)"
 
 #
+#, fuzzy
 msgid "ObjectQuery"
-msgstr "NesneAçıklaması"
+msgstr ""
+"#-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#\n"
+"NesneAçıklaması\n"
+"#-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#\n"
+"Nesne Açıklaması"
 
 #
 #
@@ -3594,7 +4108,16 @@ msgstr "Seçenekler"
 msgid "Other - Define in associated text field"
 msgstr "Diğer - Açıklama ilişikteki metinde"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3609,7 +4132,17 @@ msgstr "Çıkış"
 msgid "Output"
 msgstr "Çıktı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3675,7 +4208,16 @@ msgstr "Pass/V"
 msgid "Passenger Ship"
 msgstr "Yolcu Gemisi"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3686,7 +4228,16 @@ msgstr "Yolcu Gemisi"
 msgid "Passenger ship without accomodation"
 msgstr "Kamarasız Yolcu Gemisi"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3712,7 +4263,16 @@ msgstr "Seyirizini Yapıştır"
 msgid "Paste Waypoint"
 msgstr "Seyirnoktasını Yapıştır"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3763,7 +4323,16 @@ msgstr ""
 msgid "Pleasure craft"
 msgstr "Spor amaçlı tekne, Yat"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3858,7 +4427,17 @@ msgstr "Kanalın İskele Tarafından Geçin"
 msgid "Preferred Channel Starboard Hand"
 msgstr "Kanalın Sancak Tarafından Geçin"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3876,7 +4455,17 @@ msgstr ""
 msgid "Preserve Scale when Switching Charts"
 msgstr "Haritaları Değiştirirken Ölçüyü Koru "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3959,7 +4548,17 @@ msgstr "Bu noktaya geçin ve talimatları bekleyin"
 msgid "Processing Waypoints..."
 msgstr "Seyirnoktası Oluşturuluyor"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3985,7 +4584,16 @@ msgstr "Özellikler"
 msgid "Protocol"
 msgstr "Protokol"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -3996,7 +4604,16 @@ msgstr "Protokol"
 msgid "Pushboat, single"
 msgstr "İten tekne, tek"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4008,7 +4625,16 @@ msgid "Pushtow, eight barges at least one tanker or gas barge"
 msgstr ""
 "İtilerek/çekilerek hareket eden, en az biri tanker ya da gaz olan sekiz barj"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4019,7 +4645,16 @@ msgstr ""
 msgid "Pushtow, eight cargo barges"
 msgstr "İtilerek/çekilerek hareket eden, sekiz kargo barjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4031,7 +4666,16 @@ msgid "Pushtow, five barges at least one tanker or gas barge"
 msgstr ""
 "İtilerek/çekilerek hareket eden, en az biri tanker ya da gaz olan beş barj"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4042,7 +4686,16 @@ msgstr ""
 msgid "Pushtow, five cargo barges"
 msgstr "İtilerek/çekilerek hareket eden, beş kargo barjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4054,7 +4707,16 @@ msgid "Pushtow, four barges at least one tanker or gas barge"
 msgstr ""
 "İtilerek/çekilerek hareket eden, en az biri tanker ya da gaz olan dört barj"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4065,7 +4727,16 @@ msgstr ""
 msgid "Pushtow, four cargo barges"
 msgstr "İtilerek/çekilerek hareket eden, dört kargo barjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4076,7 +4747,16 @@ msgstr "İtilerek/çekilerek hareket eden, dört kargo barjı"
 msgid "Pushtow, nine or more barges"
 msgstr "İtilerek/çekilerek hareket eden, dokuz yada daha fazla kargo barjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4088,7 +4768,16 @@ msgid "Pushtow, nine or more barges at least one tanker or gas barge"
 msgstr ""
 "İtilerek/çekilerek hareket eden, en az biri tanker ya da gaz olan dokuz barj"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4099,7 +4788,16 @@ msgstr ""
 msgid "Pushtow, one cargo barge"
 msgstr "İtilerek/çekilerek hareket eden, tek kargo barjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4110,7 +4808,16 @@ msgstr "İtilerek/çekilerek hareket eden, tek kargo barjı"
 msgid "Pushtow, one tank/gas barge"
 msgstr "İtilerek/çekilerek hareket eden, tank/gaz barjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4122,7 +4829,16 @@ msgid "Pushtow, seven barges at least one tanker or gas barge"
 msgstr ""
 "İtilerek/çekilerek hareket eden, en az biri tanker ya da gaz olan yedi barj"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4133,7 +4849,16 @@ msgstr ""
 msgid "Pushtow, seven cargo barges"
 msgstr "İtilerek/çekilerek hareket eden, yedi kargo barjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4145,7 +4870,16 @@ msgid "Pushtow, six barges at least one tanker or gas barge"
 msgstr ""
 "İtilerek/çekilerek hareket eden, en az biri tanker ya da gaz olan altı barj"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4156,7 +4890,16 @@ msgstr ""
 msgid "Pushtow, six cargo barges"
 msgstr "İtilerek/çekilerek hareket eden, altı kargo barjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4168,7 +4911,16 @@ msgid "Pushtow, three barges at least one tanker or gas barge"
 msgstr ""
 "İtilerek/çekilerek hareket eden, en az biri tanker ya da gaz olan üç barj"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4179,7 +4931,16 @@ msgstr ""
 msgid "Pushtow, three cargo barges"
 msgstr "İtilerek/çekilerek hareket eden, üç kargo barjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4191,7 +4952,16 @@ msgid "Pushtow, two barges at least one tanker or gas barge"
 msgstr ""
 "İtilerek/çekilerek hareket eden, en az biri tanker ya da gaz olan iki barj"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4256,7 +5026,16 @@ msgstr "Kayıtlı noktalar"
 msgid "Red"
 msgstr "Kırmızı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4291,7 +5070,17 @@ msgstr "Başvuru Noktası"
 msgid "Reference Point"
 msgstr "Kerteriz Noktası"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4303,7 +5092,16 @@ msgstr "Kerteriz Noktası"
 msgid "Reference Station :"
 msgstr "Başvuru İstasyonu :"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4428,7 +5226,16 @@ msgstr "Yasak Bölge: Demirlemek yasaktır"
 msgid "Restricted Manoeuvrability"
 msgstr "Sınırlı Manevra Yeteneği"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4527,8 +5334,13 @@ msgstr "Rota: Buzdan geçişte önerilen rota"
 
 #
 # Toolbox/Langue
+#, fuzzy
 msgid "RouteLegInfoRollover"
-msgstr "Rota Bacağı Bilgi Uzatması"
+msgstr ""
+"#-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#\n"
+"Rota Bacağı Bilgi Uzatması\n"
+"#-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#\n"
+"Rota Bacağı Bilgisi"
 
 #
 #
@@ -4660,7 +5472,17 @@ msgstr ""
 "Veri düzeltimi sonrasında\n"
 " kabul edilir en çok hata payı (metre)"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4672,7 +5494,17 @@ msgstr ""
 msgid "Send"
 msgstr "Gönder"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# Menu contextuel : Route
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4703,7 +5535,16 @@ msgstr "Cümle Filtresi"
 msgid "Serial"
 msgstr "Seri"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -4821,8 +5662,13 @@ msgid "Show Highway"
 msgstr "Otoyolu Göster"
 
 #
+#, fuzzy
 msgid "Show Lat/Long as"
-msgstr "Enlem/Boylamın gösteriliş şekli.....................................:"
+msgstr ""
+"#-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#\n"
+"Enlem/Boylamın gösteriliş şekli.....................................:\n"
+"#-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#\n"
+"Enlem/Boylamın gösteriliş şekli"
 
 #
 msgid "Show Magnetic bearings and headings"
@@ -4984,7 +5830,16 @@ msgstr "SoG"
 msgid "Solid"
 msgstr "Kalın"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -5114,7 +5969,16 @@ msgstr "TCP"
 msgid "TCPA"
 msgstr "TCPA"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -5125,7 +5989,16 @@ msgstr "TCPA"
 msgid "Tankbarge"
 msgstr "TankerBarjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -5136,7 +6009,16 @@ msgstr "TankerBarjı"
 msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
 msgstr "TankerBarjı, sıvı görünümlü kuruyük (ör. çimento)"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -5147,7 +6029,16 @@ msgstr "TankerBarjı, sıvı görünümlü kuruyük (ör. çimento)"
 msgid "Tankbarge, gas"
 msgstr "Gas taşıyan tank barjı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -5158,7 +6049,16 @@ msgstr "Gas taşıyan tank barjı"
 msgid "Tankbarge, liquid cargo, type C"
 msgstr "Tank barjı, sıvı yük, tip C"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -5355,7 +6255,17 @@ msgstr "Bu Bacak"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr "Bu seyirnoktası bir etiketin parçası olduğu için iptal edilemiyor"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -5367,8 +6277,17 @@ msgstr "Bu seyirnoktası bir etiketin parçası olduğu için iptal edilemiyor"
 msgid "Tide"
 msgstr "Gelgit"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+# Toolbox/Langue
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -5420,7 +6339,17 @@ msgstr "Seyirnoktasına"
 msgid "To route"
 msgstr "Rotaya"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -5443,7 +6372,17 @@ msgstr "Seyirizi Ayarı"
 msgid "Toggle track"
 msgstr "Seyirizi Ayarı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -5836,8 +6775,16 @@ msgstr "Seyirnoktası Özellikleri"
 msgid "Waypoint Properties, Layer: "
 msgstr "Seyirnoktası Özellikler Etiketi:"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6084,8 +7031,197 @@ msgstr ""
 msgid "Would you like include the Great Circle routing points for this leg?"
 msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
+#
+#
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "  Haritada, harita dosyası RLL veri bozukluğu."
+
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
+#
+#
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "  Harita dosyasının BSB başlığı yok, başlatılamıyor."
+
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
+#
+#
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "  Harita dosya başlığındaki ilk %d biti okunamıyor:"
+
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
+#
+#
+#
+msgid "--"
+msgstr "--"
+
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "NMi"
+msgstr "NMi"
+
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
+#
+msgid "km"
+msgstr "km"
+
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
+#
+msgid "kts"
+msgstr "Knot"
+
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
+#
+msgid "m"
+msgstr "m"
+
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
+#
+msgid "mi"
+msgstr "Dak. "
+
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
+#
+msgid "mph"
+msgstr "mil/saat"
+
+#
+#
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Rotaların<TÜMÜNÜ> silmek istediğinizden emin misiniz?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr ""
+"Seyirnoktalası yüklenirken hata oluştu. Lütfen kayıt dosyalarını kontrol "
+"edin..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+#, fuzzy
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+"Rotalarda ya da demir alarmlarında kullanılan bazı seyir noktaları var. "
+"Onları de silmek istiyor musunuz? Silerseniz, rotalar değişecek, demir "
+"alarmları iptal edilecek. \"Hayır\" derseniz seyirnoktalarını ve alarmlarını "
+"kullanılmaya devam edebileceksiniz."
+
+#
+msgid "in "
+msgstr ""
+
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6111,8 +7247,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6142,8 +7300,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "\n"
 #~ "LibGPS kurulumu sürüyor..."
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6169,8 +7351,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "      COG oku gösterge uzunluğu (Dakika) :   "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6196,8 +7402,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "      Tonozdaki hedefler için enyüksek hız (Kts) :"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6223,20 +7453,44 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "     Hedef izsürüm uzunluğu (Dakika) :"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
 #
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "  Haritada, harita dosyası RLL veri bozukluğu."
-
 #
 #
 #
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "  Harita dosyasının BSB başlığı yok, başlatılamıyor."
-
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6275,14 +7529,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgstr ""
 #~ "  Harita projeksionu bilinemediği için, merkator olarak kabul edildi."
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
 #
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "  Harita dosya başlığındaki ilk %d biti okunamıyor:"
-
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6306,8 +7576,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  AIS seri bağlantı noktası açılamıyor  '"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6331,8 +7623,17 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "  Could not open serial port '"
 #~ msgstr "      Bağlantı noktası açılamadı "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6343,8 +7644,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid " </b>in<b> "
 #~ msgstr " </b>içinde<b> "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6369,8 +7693,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid " COG: %03d Deg."
 #~ msgstr " COG : %03d Deg."
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6395,16 +7742,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG : 000 Deg."
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
 #~ msgid " is %5g"
 #~ msgstr " %5g"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6416,8 +7778,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "&Export Track..."
 #~ msgstr "&Seyirizini Kaydet"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6446,8 +7831,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "'\n"
 #~ "Önerilen : Şu notasyonu deneyin 'xxx.xxx.xxx.xxx'"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6475,8 +7882,41 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "'\n"
 #~ "Tüm uygulamaları kapatarak yeniden deneyin."
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6511,15 +7951,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "(m)"
 #~ msgstr "(m)"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
 #
 #
-#~ msgid "--"
-#~ msgstr "--"
-
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6545,8 +8002,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid ":               "
 #~ msgstr ":               "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6578,8 +8059,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6603,8 +8106,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "<--Remove"
 #~ msgstr "<-- Kaldır"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6629,8 +8155,41 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "CM93 Uzantısını etkinleştir"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Menu contextuel : Route
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6665,8 +8224,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Activate Route"
 #~ msgstr "Rotayı etkinleştir"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6690,8 +8271,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Active Charts"
 #~ msgstr "Etkin harita"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6717,8 +8322,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Add Selection"
 #~ msgstr "Bölüm ekle"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6743,8 +8371,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Bu haritayı diğer haritalara ekle"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6768,8 +8418,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Add-->"
 #~ msgstr "Ekle -->"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6795,8 +8469,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Tüm dosyalar (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6820,8 +8516,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Autopilot Output Port"
 #~ msgstr "OtoPilot Çıkış Noktası"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6847,8 +8567,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Available Chart Directories"
 #~ msgstr "Kullanılabilir Harita Dosyaları"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6874,8 +8618,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Kerteriz   : %03d   Deg.\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6901,8 +8669,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Kerteriz  : Indisponible\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6928,8 +8720,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6954,8 +8768,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "CM93 Ayrıntı Sürgüsünü etkinleştir"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -6980,8 +8817,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "CM93 Offset Display"
 #~ msgstr "CM93 uzantısı görünümü"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7006,8 +8866,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "CM93 Offsets"
 #~ msgstr "CM93 Dengeleri"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7033,8 +8917,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "CM93 Haritası ayrıntı ayarı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7061,8 +8970,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "CPA:       \n"
 #~ msgstr "CPA  : \n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7088,8 +9021,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA  :               %6.1f NM\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7121,8 +9076,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "\n"
 #~ "GPS hizmet sunucusu : "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7149,8 +9129,24 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "CallSign:             "
 #~ msgstr "Çağrıİşareti: "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7170,8 +9166,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "Seyir noktası gönderilemiyor. Çıkışı tanımlanmış seri bağlantı noktası "
 #~ "bulunamıyor."
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7196,8 +9215,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Chart Display Filters"
 #~ msgstr "Harita gösterim süzgeci"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7221,8 +9262,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Chart Groups..."
 #~ msgstr "Harita grupları"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7246,8 +9309,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Chart Groups...New Group"
 #~ msgstr "Hrita grupları... Yeni grup"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7272,8 +9357,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Chart Position"
 #~ msgstr "Pozisyon"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7300,8 +9410,27 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Class:                "
 #~ msgstr "Sınıfı: "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7322,8 +9451,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Copy"
 #~ msgstr "Kopyala"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7348,8 +9500,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "TCP/IP servis sağlayıcısı bulunamadı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7375,8 +9551,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "COG                 : %03d   Deg.\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7402,8 +9602,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "COG                 : 000   Deg.\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7429,8 +9653,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "COG                 : Sağlanamıyor\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7456,8 +9704,41 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Cursor: "
 #~ msgstr "Fare işaret noktası: "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Menu contextuel : Route
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7492,8 +9773,44 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Deactivate Route"
 #~ msgstr "Rotayı etkisizleştir"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Toolbox/Langue
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7531,8 +9848,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Default dataset"
 #~ msgstr "Varsayılan veri bileşeni"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7557,8 +9897,40 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Deg"
 #~ msgstr "Deg"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7592,8 +9964,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Delete Mark"
 #~ msgstr "İşareti sil"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Menu contextuel : Route
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7619,8 +10015,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Delete Route"
 #~ msgstr "Rotayı sil"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7646,8 +10066,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Delete Selection"
 #~ msgstr "Seçimi sil"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Menu contextuel : Trace
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7673,8 +10117,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Delete Track"
 #~ msgstr "Seyirizini sil"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7700,8 +10168,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Depth Settings"
 #~ msgstr "Ayrıntı yapılandırması"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7728,8 +10221,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Destination:          "
 #~ msgstr "Varış :"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7755,8 +10271,21 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Display Style"
 #~ msgstr "Harita görünüm türü"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7771,8 +10300,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "E&xport All..."
 #~ msgstr "&Tümünü Kaydet"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7798,8 +10351,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Vektör"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7825,8 +10402,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "ETA:"
 #~ msgstr "Yaklaşık Varış Zamanı:"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7852,8 +10453,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "ETA:                  "
 #~ msgstr "Yaklaşık Varış Zamanı:"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7878,8 +10502,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "CM93 dengelemesini elle yapılandırmaya izin ver"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7905,8 +10553,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Fareyle yakınlaştırmayı etkinleştir."
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7932,8 +10604,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Etc."
 #~ msgstr "Diğer"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7960,8 +10656,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "KendiTeknenden: %03d Derece  %6.2f NMil"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -7987,8 +10707,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8013,8 +10756,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "GPSD Data Server"
 #~ msgstr "GPS Veri sağlayıcı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8040,8 +10807,40 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Go To Here"
 #~ msgstr "Buraya git"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8075,8 +10874,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Seyirnoktasına/İşarete git"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8100,8 +10921,43 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Groups"
 #~ msgstr "Grupla"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8138,8 +10994,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Harmonic dataset to use:"
 #~ msgstr "Kullanılacak uyumlu veri bileşeni:"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8165,8 +11045,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Pruva   : %03d   Deg.\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8192,8 +11096,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "IMO:                 %8d\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8219,8 +11147,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Inland Blue Flag        Clear\n"
 #~ msgstr "Karasal Mavi Bayrak         Temiz\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8245,8 +11196,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Jump To"
 #~ msgstr "Oraya git"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8271,8 +11245,40 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Jump To Position"
 #~ msgstr "Pozisyona Git"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8306,8 +11312,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Jump To Position..."
 #~ msgstr "Pozisyona git..."
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8333,8 +11362,28 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Jump To..."
 #~ msgstr "Oraya git"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8356,8 +11405,45 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Just "
 #~ msgstr "Tam"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8396,8 +11482,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Language/Fonts"
 #~ msgstr "Dil/Yazı Türü"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8423,8 +11533,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Son mevki rapor zamanı   : "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8450,8 +11584,43 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Leg/Route"
 #~ msgstr "Bacak/Rota"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8488,8 +11657,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Loaded legacy PLIB data: "
 #~ msgstr "Chargez les données PLIB"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8514,8 +11706,21 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "META Objects"
 #~ msgstr "META nesneleri"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Menu contextuel : Waypoint/marque
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8530,8 +11735,41 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Mark Properties"
 #~ msgstr "Seyirnoktası/İşaret Özellikleri"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Menu contextuel : Waypoint
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8566,8 +11804,40 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Seyirnoktası/İşaret özellikleri"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8601,8 +11871,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Measure....."
 #~ msgstr "Uzaklığıi ölç"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8628,8 +11922,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Metres"
 #~ msgstr "Metre"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8654,8 +11971,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "NMEA Data Source"
 #~ msgstr " NMEA Veri kaynağı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8681,6 +12022,7 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "NMEA Options"
 #~ msgstr "NMEA Seçenekleri"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8693,11 +12035,20 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #
 #
 #
-#~ msgid "NMi"
-#~ msgstr "NMi"
-
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8724,8 +12075,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Name:  "
 #~ msgstr "Adı : "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8752,8 +12128,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Navigational Status:  "
 #~ msgstr "Seyir durumu: "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8778,8 +12176,17 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Gösterilecek radar halka sayısı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8790,8 +12197,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Other"
 #~ msgstr "Diğer"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8817,8 +12247,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Own Ship Display Options"
 #~ msgstr "KendiTeknenizin görünüm seçenekleri"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8843,8 +12295,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "Her ( ) milde bir seyirizinoktası koy (NMI):"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8869,8 +12343,18 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Her ( ) dakikada bir seyirizinoktası koy:"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8882,8 +12366,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Planlanan hız (Kts)"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8911,8 +12419,44 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "\n"
 #~ msgstr "Mevki rapor ömrü     : %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8958,8 +12502,30 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "\n"
 #~ "Gene de libGPS'in bu sürümünü kullanmak ister misiniz ?"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -8983,8 +12549,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Radar rings"
 #~ msgstr "Radar halkaları"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9011,8 +12602,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Menzil            : Indisponible\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9039,8 +12655,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Menzil           :%5.1f  NM\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9066,8 +12706,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Raster"
 #~ msgstr "Raster"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9094,8 +12759,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Dönüş hızı : %3d Deg./Min. Gauche\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9122,8 +12812,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Dönüş hızı: %3d Deg./Min. Droite\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9150,8 +12865,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Dönüş hızı : 0\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9178,8 +12918,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Dönüş hızı : >5d Deg./Min. Gauche\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9206,8 +12971,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Dönüş hızı :  >5d Deg./Min. Droite\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9233,8 +13021,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Bu haritaları ekli diğer haritalardan çıkar"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9259,8 +13070,23 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Bu haritaları ekli diğer haritalardan çıkar"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9277,8 +13103,41 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "RenderHPGL: The '%s' instruction is not implemented."
 #~ msgstr "HPGL çevrimi:  '%s' yönergesi uygulanmadı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Menu contextuel : Route
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9313,8 +13172,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Reverse Route"
 #~ msgstr "Rotayı tersine çevir"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Menu contextuel : Route
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9341,8 +13224,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Route Properties..."
 #~ msgstr "Rota Özellikleri"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9368,8 +13274,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Route/Track"
 #~ msgstr "Seyirizinden Rota"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9395,8 +13325,21 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Birbirine eklenecek harita tiplerini seç"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9411,8 +13354,40 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Send to GPS ( "
 #~ msgstr "GPS'e Gönder "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9446,8 +13421,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Yön yukarı olacak şekilde kullan"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9473,8 +13472,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Settings"
 #~ msgstr "Yapılandırma"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9500,8 +13523,44 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Show ATON labels"
 #~ msgstr "ATON etiketlerini göster"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9539,8 +13598,43 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Show Printing Icon"
 #~ msgstr "Yazıcı Simgesini göster"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9577,8 +13671,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Show Track icon"
 #~ msgstr "Seyirizi simgesini göster"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9603,8 +13720,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Show layers initially"
 #~ msgstr "Başlangıçta etiketleri göster"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9634,8 +13775,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "Büyüklük               : %dm x %dm \n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9666,8 +13832,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "Büyüklük             : %dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9698,8 +13889,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "Büyüklük           : %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9730,8 +13946,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "Büyüklük              : ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9762,8 +14003,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "Büyüklük             : ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9794,8 +14060,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "Büyüklük           : %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9826,8 +14117,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ "Büyüklük           : %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9854,8 +14170,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Hız            : Indisponible\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9882,8 +14223,16 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Hız            : %5.2f noeuds.\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9893,8 +14242,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "T"
 #~ msgstr "T"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9920,8 +14293,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "TCP/IP, Wifi Veri sağlayıcısı "
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9948,8 +14346,33 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "TCPA:  \n"
 #~ msgstr "TCPA :\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -9976,8 +14399,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA :  %02d:%02d Hr:Min\n"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -10003,8 +14450,31 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Text Element"
 #~ msgstr "Metin Unsuru"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -10030,8 +14500,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "Gelgitler&&Akıntılar"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Toolbox/Langue
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -10058,8 +14552,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Tide/Current Data Selector"
 #~ msgstr "GelgitAkıntıÇizelgeUzantısı"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -10085,8 +14603,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "ToolBox"
 #~ msgstr "AraçKutusu"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# Menu contextuel : Trace
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -10113,8 +14655,32 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #~ msgid "Track Properties..."
 #~ msgstr "Seyirizi özellikleri"
 
+# #-#-#-#-#  .merge_file_GRipLf (opencpn)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_3WsvS2 (opencpn)  #-#-#-#-#
 #
 #
 #
@@ -10140,28 +14706,3 @@ msgstr "Bu ayağa Büyük Daire Seyri rotası eklemek ister misiniz?"
 #, fuzzy
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "Doğru ölçüm : %8.de"
-
-#
-#
-#~ msgid "km"
-#~ msgstr "km"
-
-#
-#
-#~ msgid "kts"
-#~ msgstr "Knot"
-
-#
-#
-#~ msgid "m"
-#~ msgstr "m"
-
-#
-#
-#~ msgid "mi"
-#~ msgstr "Dak. "
-
-#
-#
-#~ msgid "mph"
-#~ msgstr "mil/saat"

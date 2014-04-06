@@ -73,7 +73,7 @@ protected:
 	wxObject* m_contextObject;
 	wxMenu* m_menuLink;
 	wxNotebook* m_notebookProperties;
-	wxPanel* m_panelBasicProperties;
+	wxScrolledWindow* m_panelBasicProperties;
 	wxPanel* m_panelDescription;
 	wxPanel* m_panelExtendedProperties;
 	wxScrolledWindow* m_scrolledWindowLinks;
@@ -98,6 +98,7 @@ protected:
 	wxTextCtrl* m_textName;
 	wxToggleButton* m_toggleBtnEdit;
 	wxStaticBoxSizer* sbSizerLinks;
+	wxSize m_defaultClientSize;
 
 	// Virtual event handlers, overide them in your derived class
 	virtual void OnPositionCtlUpdated(wxCommandEvent& event);

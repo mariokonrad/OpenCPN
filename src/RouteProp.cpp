@@ -145,8 +145,16 @@ RouteProp::RouteProp(wxWindow* parent, wxWindowID id, const wxString& caption, c
 	wstyle |= wxSTAY_ON_TOP;
 #endif
 
+	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
+	SetFont(*qFont);
+
 	Create(parent, id, caption, pos, size, wstyle);
-	GetSizer()->SetSizeHints(this);
+
+	// Make an estimate of the dialog size, without scrollbars showing
+	wxSize esize;
+	esize.x = GetCharWidth() * 110;
+	esize.y = GetCharHeight() * 40;
+	SetSize(esize);
 	Centre();
 }
 
@@ -415,7 +423,15 @@ bool RouteProp::Create(wxWindow* parent, wxWindowID id, const wxString& caption,
 
 void RouteProp::CreateControls()
 {
-	RouteProp* itemDialog1 = this;
+
+	wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxVERTICAL);
+	SetSizer(itemBoxSizer1);
+
+	itemDialog1 = new wxScrolledWindow(this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+									   wxHSCROLL | wxVSCROLL);
+	itemDialog1->SetScrollRate(5, 5);
+
+	itemBoxSizer1->Add(itemDialog1, 1, wxEXPAND | wxALL, 0);
 
 	wxBoxSizer* itemBoxSizer2 = new wxBoxSizer(wxVERTICAL);
 	itemDialog1->SetSizer(itemBoxSizer2);
@@ -518,7 +534,7 @@ void RouteProp::CreateControls()
 				 5);
 
 	m_staticText1
-		= new wxStaticText(this, wxID_ANY, _("Color:"), wxDefaultPosition, wxDefaultSize, 0);
+		= new wxStaticText(itemDialog1, wxID_ANY, _("Color:"), wxDefaultPosition, wxDefaultSize, 0);
 	m_staticText1->Wrap(-1);
 	bSizer2->Add(m_staticText1, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
@@ -529,26 +545,26 @@ void RouteProp::CreateControls()
 			_("Yellow"),		_("Blue"),		_("Magenta"),	  _("Cyan"),
 			_("White") };
 	int m_chColorNChoices = sizeof(m_chColorChoices) / sizeof(wxString);
-	m_chColor = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_chColorNChoices,
-							 m_chColorChoices, 0);
+	m_chColor = new wxChoice(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+							 m_chColorNChoices, m_chColorChoices, 0);
 	m_chColor->SetSelection(0);
 	bSizer2->Add(m_chColor, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
 	m_staticText2
-		= new wxStaticText(this, wxID_ANY, _("Style:"), wxDefaultPosition, wxDefaultSize, 0);
+		= new wxStaticText(itemDialog1, wxID_ANY, _("Style:"), wxDefaultPosition, wxDefaultSize, 0);
 	m_staticText2->Wrap(-1);
 	bSizer2->Add(m_staticText2, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
 	wxString m_chStyleChoices[]
 		= { _("Default"), _("Solid"), _("Dot"), _("Long dash"), _("Short dash"), _("Dot dash") };
 	int m_chStyleNChoices = sizeof(m_chStyleChoices) / sizeof(wxString);
-	m_chStyle = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_chStyleNChoices,
-							 m_chStyleChoices, 0);
+	m_chStyle = new wxChoice(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+							 m_chStyleNChoices, m_chStyleChoices, 0);
 	m_chStyle->SetSelection(0);
 	bSizer2->Add(m_chStyle, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
 	m_staticText2
-		= new wxStaticText(this, wxID_ANY, _("Width:"), wxDefaultPosition, wxDefaultSize, 0);
+		= new wxStaticText(itemDialog1, wxID_ANY, _("Width:"), wxDefaultPosition, wxDefaultSize, 0);
 	m_staticText2->Wrap(-1);
 	bSizer2->Add(m_staticText2, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
@@ -556,8 +572,8 @@ void RouteProp::CreateControls()
 									_("4 pixels"), _("5 pixels"), _("6 pixels"), _("7 pixels"),
 									_("8 pixels"), _("9 pixels"), _("10 pixels") };
 	int m_chWidthNChoices = sizeof(m_chWidthChoices) / sizeof(wxString);
-	m_chWidth = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_chWidthNChoices,
-							 m_chWidthChoices, 0);
+	m_chWidth = new wxChoice(itemDialog1, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+							 m_chWidthNChoices, m_chWidthChoices, 0);
 	m_chWidth->SetSelection(0);
 	bSizer2->Add(m_chWidth, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
@@ -568,30 +584,32 @@ void RouteProp::CreateControls()
 	m_pListSizer = new wxStaticBoxSizer(itemStaticBoxSizer14Static, wxVERTICAL);
 	itemBoxSizer2->Add(m_pListSizer, 1, wxEXPAND | wxALL, 5);
 
-	wxBoxSizer* itemBoxSizer16 = new wxBoxSizer(wxHORIZONTAL);
-	itemBoxSizer2->Add(itemBoxSizer16, 0, wxALIGN_RIGHT | wxALL, 5);
+	wxBoxSizer* itemBoxSizerAux = new wxBoxSizer(wxHORIZONTAL);
+	itemBoxSizer2->Add(itemBoxSizerAux, 0, wxALIGN_LEFT | wxALL, 5);
 
 	m_PrintButton = new wxButton(itemDialog1, ID_ROUTEPROP_PRINT, _("Print Route"),
 								 wxDefaultPosition, wxDefaultSize, 0);
-	itemBoxSizer16->Add(m_PrintButton, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
+	itemBoxSizerAux->Add(m_PrintButton, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_PrintButton->Enable(true);
 
 	m_ExtendButton = new wxButton(itemDialog1, ID_ROUTEPROP_EXTEND, _("Extend Route"),
 								  wxDefaultPosition, wxDefaultSize, 0);
-	itemBoxSizer16->Add(m_ExtendButton, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
+	itemBoxSizerAux->Add(m_ExtendButton, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_ExtendButton->Enable(false);
 
 	m_SplitButton = new wxButton(itemDialog1, ID_ROUTEPROP_SPLIT, _("Split Route"),
 								 wxDefaultPosition, wxDefaultSize, 0);
-	itemBoxSizer16->Add(m_SplitButton, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
+	itemBoxSizerAux->Add(m_SplitButton, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_SplitButton->Enable(false);
 
-	m_CancelButton = new wxButton(itemDialog1, ID_ROUTEPROP_CANCEL, _("Cancel"), wxDefaultPosition,
-								  wxDefaultSize, 0);
+	wxBoxSizer* itemBoxSizer16 = new wxBoxSizer(wxHORIZONTAL);
+	itemBoxSizer1->Add(itemBoxSizer16, 0, wxALIGN_RIGHT | wxALL, 5);
+
+	m_CancelButton
+		= new wxButton(this, ID_ROUTEPROP_CANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0);
 	itemBoxSizer16->Add(m_CancelButton, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
-	m_OKButton
-		= new wxButton(itemDialog1, ID_ROUTEPROP_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0);
+	m_OKButton = new wxButton(this, ID_ROUTEPROP_OK, _("OK"), wxDefaultPosition, wxDefaultSize, 0);
 	itemBoxSizer16->Add(m_OKButton, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 	m_OKButton->SetDefault();
 
@@ -602,36 +620,38 @@ void RouteProp::CreateControls()
 	Connect(wxEVT_COMMAND_LIST_COL_END_DRAG,
 			(wxObjectEventFunction)(wxEventFunction) & RouteProp::OnEvtColDragEnd);
 
-	// Create the two list controls
+	// Create the list control
 	m_wpList = new wxListCtrl(itemDialog1, ID_LISTCTRL, wxDefaultPosition, wxSize(800, 200),
 							  wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_EDIT_LABELS);
 
-	m_wpList->InsertColumn(0, _("Leg"), wxLIST_FORMAT_LEFT, 45);
-	m_wpList->InsertColumn(1, _("To Waypoint"), wxLIST_FORMAT_LEFT, 120);
-	m_wpList->InsertColumn(2, _("Distance"), wxLIST_FORMAT_RIGHT, 70);
+	int char_size = GetCharWidth();
+
+	m_wpList->InsertColumn(0, _("Leg"), wxLIST_FORMAT_LEFT, char_size * 6);
+	m_wpList->InsertColumn(1, _("To Waypoint"), wxLIST_FORMAT_LEFT, char_size * 14);
+	m_wpList->InsertColumn(2, _("Distance"), wxLIST_FORMAT_RIGHT, char_size * 9);
 
 	const bool show_mag = global::OCPN::get().gui().view().ShowMag;
 
-	if (show_mag)
-		m_wpList->InsertColumn(3, _("Bearing (M)"), wxLIST_FORMAT_LEFT, 80);
-	else
-		m_wpList->InsertColumn(3, _("Bearing"), wxLIST_FORMAT_LEFT, 80);
-
-	m_wpList->InsertColumn(4, _("Latitude"), wxLIST_FORMAT_LEFT, 85);
-	m_wpList->InsertColumn(5, _("Longitude"), wxLIST_FORMAT_LEFT, 90);
-	m_wpList->InsertColumn(6, _("ETE/ETD"), wxLIST_FORMAT_LEFT, 135);
-	m_wpList->InsertColumn(7, _("Speed"), wxLIST_FORMAT_CENTER, 72);
-	m_wpList->InsertColumn(8, _("Next tide event"), wxLIST_FORMAT_LEFT, 90);
-	m_wpList->InsertColumn(9, _("Description"), wxLIST_FORMAT_LEFT,
-						   90); // additional columt with WP description
 	if (show_mag) {
-		// additional columt with WP new course. Is it same like "bearing" of the next WP.
-		m_wpList->InsertColumn(10, _("Course (M)"), wxLIST_FORMAT_LEFT, 80);
+		m_wpList->InsertColumn(3, _("Bearing (M)"), wxLIST_FORMAT_LEFT, char_size * 10);
 	} else {
-		// additional columt with WP new course. Is it same like "bearing" of the next WP.
-		m_wpList->InsertColumn(10, _("Course"), wxLIST_FORMAT_LEFT, 80);
+		m_wpList->InsertColumn(3, _("Bearing"), wxLIST_FORMAT_LEFT, char_size * 10);
 	}
-	m_wpList->Hide();
+
+	m_wpList->InsertColumn(4, _("Latitude"), wxLIST_FORMAT_LEFT, char_size * 11);
+	m_wpList->InsertColumn(5, _("Longitude"), wxLIST_FORMAT_LEFT, char_size * 11);
+	m_wpList->InsertColumn(6, _("ETE/ETD"), wxLIST_FORMAT_LEFT, char_size * 15);
+	m_wpList->InsertColumn(7, _("Speed"), wxLIST_FORMAT_CENTER, char_size * 9);
+	m_wpList->InsertColumn(8, _("Next tide event"), wxLIST_FORMAT_LEFT, char_size * 11);
+	m_wpList->InsertColumn(9, _("Description"), wxLIST_FORMAT_LEFT, char_size * 11);
+
+	if (show_mag) {
+		m_wpList->InsertColumn(10, _("Course (M)"), wxLIST_FORMAT_LEFT, char_size * 10);
+	} else {
+		m_wpList->InsertColumn(10, _("Course"), wxLIST_FORMAT_LEFT, char_size * 10);
+	}
+
+	m_pListSizer->Add(m_wpList, 2, wxEXPAND | wxALL, 5);
 
 	Connect(wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK,
 			wxListEventHandler(RouteProp::OnRoutePropRightClick), NULL, this);
@@ -805,18 +825,13 @@ void RouteProp::SetRouteAndUpdate(Route* pR)
 
 	m_wpList->DeleteAllItems();
 
-	// Select the proper list control, and add it to List sizer
-	m_pListSizer->Clear();
-
-	if (m_pRoute) {
-		m_wpList->Show();
-		m_pListSizer->Add(m_wpList, 2, wxEXPAND | wxALL, 5);
-	}
-	GetSizer()->Fit(this);
-	GetSizer()->Layout();
-
 	InitializeList();
 	UpdateProperties();
+
+	if (m_pRoute)
+		m_wpList->Show();
+
+	Refresh(false);
 }
 
 void RouteProp::InitializeList()
@@ -892,6 +907,11 @@ void RouteProp::update_track_properties()
 
 void RouteProp::update_route_properties()
 {
+	double brg, join_distance;
+	RoutePoint* first_point = m_pRoute->GetPoint(1);
+	geo::DistanceBearingMercator(first_point->get_position(),
+								 global::OCPN::get().nav().get_data().pos, &brg, &join_distance);
+
 	// Update the "tides event" column header
 	wxListItem column_info;
 	if (m_wpList->GetColumn(8, column_info)) {
@@ -922,7 +942,7 @@ void RouteProp::update_route_properties()
 	wxTimeSpan stopover_time(0); // time spent waiting for ETD
 	wxTimeSpan joining_time(0); // time spent before reaching first waypoint
 
-	double total_seconds = 0.;
+	double total_seconds = 0.0;
 
 	if (m_pRoute) {
 		total_seconds = m_pRoute->m_route_time;
@@ -932,6 +952,12 @@ void RouteProp::update_route_properties()
 			else
 				Start_LMT_Offset = static_cast<long>(m_pRoute->routepoints().front()->longitude() * 3600.0 / 15.0);
 		}
+	}
+
+	if (m_bStartNow) {
+		joining_time = wxTimeSpan::Seconds((long)wxRound((join_distance * 3600.0) / m_planspeed));
+		double join_seconds = joining_time.GetSeconds().ToDouble();
+		total_seconds += join_seconds;
 	}
 
 	const int tz_selection = pDispTz->GetSelection();
@@ -954,12 +980,18 @@ void RouteProp::update_route_properties()
 		m_ExtendButton->Enable(true);
 
 	// Total length
-	if (!m_pEnroutePoint) {
-		m_TotalDistCtl->SetValue(wxString::Format(wxT("%5.2f ") + getUsrDistanceUnit(),
-												  toUsrDistance(m_pRoute->m_route_length)));
-	} else {
-		m_TotalDistCtl->Clear();
+	double total_length = m_pRoute->m_route_length;
+	if (m_bStartNow) {
+		total_length += join_distance;
 	}
+
+	wxString slen;
+	slen.Printf(wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance(total_length));
+
+	if (!m_pEnroutePoint)
+		m_TotalDistCtl->SetValue(slen);
+	else
+		m_TotalDistCtl->Clear();
 
 	wxString time_form;
 	wxString tide_form;

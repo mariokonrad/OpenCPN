@@ -26,6 +26,7 @@
 #include <RolloverWin.h>
 #include <ChartCanvas.h>
 #include <DimeControl.h>
+#include <MainFrame.h>
 
 #include <windows/compatibility.h>
 
@@ -89,6 +90,9 @@ TCWin::TCWin(ChartCanvas* parent, int x, int y, tide::IDX_entry* pvIDX)
 
 	wxDialog::Create(parent, wxID_ANY, wxString(_T("test")), wxPoint(x, y), wxSize(550, 480),
 					 wstyle);
+
+	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
+	SetFont(*qFont);
 
 	gpIDXn++;
 
@@ -171,9 +175,17 @@ TCWin::TCWin(ChartCanvas* parent, int x, int y, tide::IDX_entry* pvIDX)
 							wxSize((sx * 32 / 100), (sy * 20 / 100)), 0, TClist,
 							wxLB_SINGLE | wxLB_NEEDED_SB);
 
-	OK_button = new wxButton(this, wxID_OK, _("OK"), wxPoint(sx - 100, sy - 32), wxDefaultSize);
+	// Measure the size of a generic button, with label
+	wxButton* test_button = new wxButton(this, wxID_OK, _("OK"), wxPoint(-1, -1), wxDefaultSize);
+	int tsx, tsy;
+	test_button->GetSize(&tsx, &tsy);
+	delete test_button;
 
-	PR_button = new wxButton(this, ID_TCWIN_PR, _("Prev"), wxPoint(10, sy - 32), wxSize(60, -1));
+	OK_button
+		= new wxButton(this, wxID_OK, _("OK"), wxPoint(sx - 100, sy - (tsy + 4)), wxDefaultSize);
+
+	PR_button
+		= new wxButton(this, ID_TCWIN_PR, _("Prev"), wxPoint(10, sy - (tsy + 4)), wxSize(-1, -1));
 
 	m_ptextctrl = new wxTextCtrl(this, -1, _T(""), wxPoint(sx * 3 / 100, 6),
 								 wxSize((sx * 60 / 100), (sy * 29 / 100)),
@@ -181,9 +193,8 @@ TCWin::TCWin(ChartCanvas* parent, int x, int y, tide::IDX_entry* pvIDX)
 	int bsx, bsy, bpx, bpy;
 	PR_button->GetSize(&bsx, &bsy);
 	PR_button->GetPosition(&bpx, &bpy);
-
 	NX_button
-		= new wxButton(this, ID_TCWIN_NX, _("Next"), wxPoint(bpx + bsx + 5, bpy), wxSize(60, -1));
+		= new wxButton(this, ID_TCWIN_NX, _("Next"), wxPoint(bpx + bsx + 5, bpy), wxSize(-1, -1));
 
 	m_TCWinPopupTimer.SetOwner(this, TCWININF_TIMER);
 

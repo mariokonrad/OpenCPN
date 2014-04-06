@@ -325,6 +325,22 @@ msgstr ""
 msgid "%H:%M"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -411,6 +427,22 @@ msgstr "&Fonte:"
 msgid "&Go To"
 msgstr "Ir Para Aqui"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -503,6 +535,22 @@ msgstr "Inverte&r"
 msgid "&Send to GPS"
 msgstr "Enviar para o GPS..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -855,6 +903,22 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -933,6 +997,22 @@ msgstr "Lista dos Alvos AIS"
 msgid "AISRollover"
 msgstr "Alerta AIS"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2238,6 +2318,22 @@ msgstr "Excluir Ponto da Derrota"
 msgid "Cruise ship"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2372,6 +2468,22 @@ msgstr "Chamada"
 msgid "Data Connections"
 msgstr "Opções de Fonte"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2732,6 +2844,22 @@ msgstr ""
 msgid "Dredge"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3223,6 +3351,23 @@ msgstr ""
 msgid "GPS Offset from Midship (m)"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3289,6 +3434,22 @@ msgstr "GPX"
 msgid "GUID"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3514,6 +3675,22 @@ msgstr "Importar arquivo GPX"
 msgid "Important Text Only"
 msgstr "Mostrar Somente Texto Importante"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4400,6 +4577,22 @@ msgstr "Cartas"
 msgid "New Group..."
 msgstr ""
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4749,6 +4942,22 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5063,6 +5272,22 @@ msgstr ""
 msgid "Preferred Channel Starboard Hand"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5089,6 +5314,22 @@ msgstr ""
 msgid "Preserve Scale when Switching Charts"
 msgstr "Preservar escala quando mudar de cartas"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5200,6 +5441,22 @@ msgstr ""
 msgid "Processing Waypoints..."
 msgstr "Excluir TODOS os Pontos da Derrota..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5431,6 +5688,22 @@ msgstr ""
 msgid "Reference Point"
 msgstr "Estação de Referência:"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5883,6 +6156,22 @@ msgid ""
 "after data reduction:"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5898,6 +6187,22 @@ msgstr ""
 msgid "Send"
 msgstr "Enviar"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6403,6 +6708,15 @@ msgstr ""
 msgid "Special Mark"
 msgstr "Excluir Marca"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 # 
 # 
@@ -6826,6 +7140,22 @@ msgstr "Esta Pernada"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6917,6 +7247,22 @@ msgstr "Para o Ponto"
 msgid "To route"
 msgstr "Tempo de Viagem"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6949,6 +7295,22 @@ msgstr "Ligar Acompanhamento"
 msgid "Toggle track"
 msgstr "Ligar Acompanhamento"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -7772,6 +8134,160 @@ msgstr ""
 msgid "mph"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "Arquivo da Carta corrompido..."
+
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "Arquivo da Carta não possui cabeçalho BSB, impossível iniciar."
+
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "Não foi possivel ler os primeiros %d bytes do arquivo da carta:"
+
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+# 
+# 
+# 
+# 
+#, fuzzy
+msgid "--"
+msgstr "-"
+
+#
+# 
+# 
+# 
+# 
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Tem certeza que quer excluir <TODAS> as Derrotas?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr ""
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+#, fuzzy
+msgid "in "
+msgstr "Atalhos"
+
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -7802,6 +8318,36 @@ msgstr ""
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -7832,6 +8378,36 @@ msgstr ""
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "     Tamanho do preditor da seta de Rfundo (Minutos):"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -7862,6 +8438,36 @@ msgstr ""
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "     Veloc. Max. para alvo atracado(Nós):"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -7892,24 +8498,49 @@ msgstr ""
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "     Tamanho dos rastros dos alvos (Minutos):"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
 # 
 # 
 # 
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "Arquivo da Carta corrompido..."
-
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
 #
-#
-# 
-# 
-# 
-# 
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "Arquivo da Carta não possui cabeçalho BSB, impossível iniciar."
-
 #
 #
 #
@@ -7953,15 +8584,35 @@ msgstr ""
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "A Projeção da Carta é DESCONHECIDA, assumindo Mercator:"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
 # 
 # 
 # 
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "Não foi possivel ler os primeiros %d bytes do arquivo da carta:"
-
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -7991,6 +8642,35 @@ msgstr ""
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "Não foi possível abrir a porta serial do AIS"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8020,6 +8700,17 @@ msgstr ""
 #~ msgid "  Could not open serial port '"
 #~ msgstr "Não foi possível abrir a porta serial '"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8031,6 +8722,78 @@ msgstr ""
 #~ msgid " is %5g"
 #~ msgstr "é %5g"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8103,6 +8866,82 @@ msgstr ""
 #~ msgid "&Close"
 #~ msgstr "Fechar"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8179,6 +9018,82 @@ msgstr ""
 #~ msgid "&Delete All Routes..."
 #~ msgstr "Excluir to&das as Derrotas..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8255,6 +9170,22 @@ msgstr ""
 #~ msgid "&Delete All Tracks..."
 #~ msgstr "Excluir to&dos os Acompanhamentos..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8272,6 +9203,22 @@ msgstr ""
 #~ msgid "&Export Track..."
 #~ msgstr "Exportar Acompanhamento..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8289,6 +9236,35 @@ msgstr ""
 #~ msgid "&Export Wpt..."
 #~ msgstr "&Exportar..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8322,6 +9298,35 @@ msgstr ""
 #~ "'\n"
 #~ " Sugestão: Tente o formato 'xxx.xxx.xxx.xxx'"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8355,6 +9360,82 @@ msgstr ""
 #~ "'\n"
 #~ "Sugestão: Tente fechar outros programas."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8431,6 +9512,27 @@ msgstr ""
 #~ msgid "(Active Track)"
 #~ msgstr "(Acompanhamento Ativo)"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -8439,10 +9541,8 @@ msgstr ""
 # 
 # 
 # 
-#, fuzzy
-#~ msgid "--"
-#~ msgstr "-"
-
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8475,6 +9575,37 @@ msgstr ""
 #~ msgid ":               "
 #~ msgstr "ETA:                  "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8510,6 +9641,50 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Veloc:           Não disponível\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8555,6 +9730,45 @@ msgstr ""
 #~ msgid "AIS SART Alert"
 #~ msgstr "Alerta AIS"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8594,6 +9808,36 @@ msgstr ""
 #~ msgid "Activate Route"
 #~ msgstr "Ativar Derrota"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8624,6 +9868,35 @@ msgstr ""
 #~ msgid "Add Selection"
 #~ msgstr "Adicionar Seleção"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8653,6 +9926,52 @@ msgstr ""
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Adicionar esta carta para emendar."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8699,6 +10018,36 @@ msgstr ""
 #~ msgid "Additional information"
 #~ msgstr "Informação Adicional"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8729,6 +10078,60 @@ msgstr ""
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Todos os Arquivos(*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8787,6 +10190,35 @@ msgstr ""
 #~ "\n"
 #~ "O host gpsd é: "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8816,6 +10248,36 @@ msgstr ""
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Porta de Saída do Piloto Automático"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8846,6 +10308,37 @@ msgstr ""
 #~ msgid "Available Chart Directories"
 #~ msgstr "Diretórios de Cartas Disponíveis"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8878,6 +10371,37 @@ msgstr ""
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Marcação:              %5.0f Graus.\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8910,6 +10434,36 @@ msgstr ""
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Veloc:           Não disponível\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8940,6 +10494,35 @@ msgstr ""
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -8970,6 +10553,36 @@ msgstr ""
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Habilitar Controle de Detalhes da CM93"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9000,6 +10613,37 @@ msgstr ""
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "Detalhes do zoom da CM93"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9031,6 +10675,37 @@ msgstr ""
 #~ msgid "CPA:       \n"
 #~ msgstr "PMA:       \n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9062,6 +10737,35 @@ msgstr ""
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "PMA:                 %6.1f NM\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9099,6 +10803,80 @@ msgstr ""
 #~ "\n"
 #~ "gpsd host is: "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9173,6 +10951,37 @@ msgstr ""
 #~ msgid "CallSign:  "
 #~ msgstr "Indicativo de Chamada:"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9205,6 +11014,51 @@ msgstr ""
 #~ msgid "CallSign:             "
 #~ msgstr "Posição:"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9250,6 +11104,36 @@ msgstr ""
 #~ msgid "Chart"
 #~ msgstr "Carta"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9280,6 +11164,35 @@ msgstr ""
 #~ msgid "Chart Display Filters"
 #~ msgstr "Filtros de Apresentação da Carta"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9310,6 +11223,74 @@ msgstr ""
 #~ msgid "Chart Position"
 #~ msgstr "Posição"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9378,6 +11359,82 @@ msgstr ""
 #~ msgid "Chart file corrupt.. disabling this chart \n"
 #~ msgstr "Arquivo da Carta corrompido...desabilitando esta carta\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9458,6 +11515,80 @@ msgstr ""
 #~ "Classe desconhecida\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9535,6 +11666,37 @@ msgstr ""
 #~ "Classe:     A\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9567,6 +11729,82 @@ msgstr ""
 #~ msgid "Class:                "
 #~ msgstr "ETA:                  "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9647,6 +11885,35 @@ msgstr ""
 #~ "Classe:     B\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9676,6 +11943,37 @@ msgstr ""
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "Não foi possível resolver o servidor TCP/IP"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9708,6 +12006,37 @@ msgstr ""
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "Rumo:               %5.0f Graus.\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9740,6 +12069,37 @@ msgstr ""
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Rumo:               %5.0f Graus.\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9772,6 +12132,78 @@ msgstr ""
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "Veloc:           Não disponível\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9844,6 +12276,36 @@ msgstr ""
 #~ msgid "Current Velocity, Kts."
 #~ msgstr "Velocidade da Corrente, Nós."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9874,6 +12336,45 @@ msgstr ""
 #~ msgid "Cursor: "
 #~ msgstr "Cursor: "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9913,6 +12414,48 @@ msgstr ""
 #~ msgid "Deactivate Route"
 #~ msgstr "Desativar Derrota"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9956,6 +12499,36 @@ msgstr ""
 #~ msgid "Default dataset"
 #~ msgstr "Cor da fonte."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -9987,6 +12560,82 @@ msgstr ""
 #~ msgid "Deg"
 #~ msgstr "Pernada"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10063,6 +12712,45 @@ msgstr ""
 #~ msgid "Delete All Routes..."
 #~ msgstr "Excluir TODAS as Derrotas"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10102,6 +12790,36 @@ msgstr ""
 #~ msgid "Delete Mark"
 #~ msgstr "Excluir Marca"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10132,6 +12850,36 @@ msgstr ""
 #~ msgid "Delete Route"
 #~ msgstr "Excluir Derrota"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10162,6 +12910,36 @@ msgstr ""
 #~ msgid "Delete Selection"
 #~ msgstr "Excluir Seleção"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10192,6 +12970,36 @@ msgstr ""
 #~ msgid "Delete Track"
 #~ msgstr "Excluir Acompanhamento"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10222,6 +13030,37 @@ msgstr ""
 #~ msgid "Depth Settings"
 #~ msgstr "Configuração das Profundidades"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10253,6 +13092,35 @@ msgstr ""
 #~ msgid "Destination:          "
 #~ msgstr "Destino:"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10283,6 +13151,25 @@ msgstr ""
 #~ msgid "Display Style"
 #~ msgstr "Estilo de Apresentação da Carta"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10303,6 +13190,36 @@ msgstr ""
 #~ msgid "E&xport All..."
 #~ msgstr "&Exportar..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10333,6 +13250,37 @@ msgstr ""
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Vetorial"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10365,6 +13313,37 @@ msgstr ""
 #~ msgid "ETA:"
 #~ msgstr "TEC"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10396,6 +13375,80 @@ msgstr ""
 #~ msgid "ETA:                  "
 #~ msgstr "ETA:                  "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10470,6 +13523,57 @@ msgstr ""
 #~ msgid "ETA:                  Unknown"
 #~ msgstr "ETA:                 Desconhecido"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10521,6 +13625,36 @@ msgstr ""
 #~ msgid "ETE/Timestamp"
 #~ msgstr "TED/Marca Temporal"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10551,6 +13685,36 @@ msgstr ""
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Habilitar Zoom-pela-Roda-no-Cursor"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10581,6 +13745,70 @@ msgstr ""
 #~ msgid "Etc."
 #~ msgstr "Etc."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10645,6 +13873,60 @@ msgstr ""
 #~ msgid "Exit OpenCPN"
 #~ msgstr "Sair OpenCPN"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10703,6 +13985,60 @@ msgstr ""
 #~ "\n"
 #~ "O host gpsd é: "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10761,6 +14097,36 @@ msgstr ""
 #~ "\n"
 #~ "O host gpsd é: "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10792,6 +14158,36 @@ msgstr ""
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "Do próprio Barco: %03d Deg  %6.2f NMi"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10822,6 +14218,35 @@ msgstr ""
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10851,6 +14276,76 @@ msgstr ""
 #~ msgid "GPSD Data Server"
 #~ msgstr "Servidor de Dados GPSD"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10921,6 +14416,78 @@ msgstr ""
 #~ msgid "GRIB"
 #~ msgstr "GRIB"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -10993,6 +14560,78 @@ msgstr ""
 #~ msgid "GRIB Data"
 #~ msgstr "Dados GRIB"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11065,6 +14704,78 @@ msgstr ""
 #~ msgid "GRIB Display Control"
 #~ msgstr "Controle da Apresentação GRIB"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11137,6 +14848,36 @@ msgstr ""
 #~ msgid "GRIB File Directory"
 #~ msgstr "Diretório de Arquivos GRIB"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11167,6 +14908,45 @@ msgstr ""
 #~ msgid "Go To Here"
 #~ msgstr "Ir Para Aqui"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11207,6 +14987,37 @@ msgstr ""
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Ir Para Aqui"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11239,6 +15050,37 @@ msgstr ""
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Marcação:              %5.0f Graus.\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11271,6 +15113,66 @@ msgstr ""
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "ETA:                  "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11332,6 +15234,36 @@ msgstr ""
 #~ msgid "Import new layer"
 #~ msgstr "Importar arquivo GPX"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11363,6 +15295,36 @@ msgstr ""
 #~ msgid "Jump To"
 #~ msgstr "Posição"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11394,6 +15356,36 @@ msgstr ""
 #~ msgid "Jump To Position"
 #~ msgstr "Posição"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11425,6 +15417,49 @@ msgstr ""
 #~ msgid "Jump To..."
 #~ msgstr "Posição"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11468,6 +15503,37 @@ msgstr ""
 #~ msgid "Language/Fonts"
 #~ msgstr "Idioma/Fontes"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11500,6 +15566,36 @@ msgstr ""
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Hora do Último Relatório:"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11530,6 +15626,36 @@ msgstr ""
 #~ msgid "Leg/Route"
 #~ msgstr "Pernada/Derrota"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11560,6 +15686,52 @@ msgstr ""
 #~ msgid "META Objects"
 #~ msgstr "META Objetos"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11607,6 +15779,72 @@ msgstr ""
 #~ msgid "MMSI:                 %09d\n"
 #~ msgstr "ETA:                  "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11673,6 +15911,52 @@ msgstr ""
 #~ msgid "MarinersStandard"
 #~ msgstr "MarinersStandard"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11719,6 +16003,52 @@ msgstr ""
 #~ msgid "Mark Icon"
 #~ msgstr "Símbolo da Marca"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11765,6 +16095,25 @@ msgstr ""
 #~ msgid "Mark Name"
 #~ msgstr "Nome da Marca"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11784,6 +16133,45 @@ msgstr ""
 #~ msgid "Mark Properties"
 #~ msgstr "Propriedades da Marca..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11824,6 +16212,45 @@ msgstr ""
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Propriedades da Marca/PD..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11863,6 +16290,36 @@ msgstr ""
 #~ msgid "Measure....."
 #~ msgstr "Medida..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11893,6 +16350,35 @@ msgstr ""
 #~ msgid "Metres"
 #~ msgstr "Metros"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11922,6 +16408,36 @@ msgstr ""
 #~ msgid "NMEA Data Source"
 #~ msgstr "Fonte de Dados NMEA"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11952,6 +16468,37 @@ msgstr ""
 #~ msgid "NMEA Options"
 #~ msgstr "Opções NMEA"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -11984,6 +16531,37 @@ msgstr ""
 #~ msgid "Name:  "
 #~ msgstr "Nome:"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12015,6 +16593,55 @@ msgstr ""
 #~ msgid "Navigational Status:  "
 #~ msgstr "Situação da Navegação:"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12064,6 +16691,35 @@ msgstr ""
 #~ msgid "New Mark"
 #~ msgstr "Nova Marca"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12094,6 +16750,21 @@ msgstr ""
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Número de Anéis de Distância mostrados"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12109,6 +16780,35 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Todos os Outros"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12139,6 +16839,35 @@ msgstr ""
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Opções de Apresentação do próprio Navio"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12170,6 +16899,35 @@ msgstr ""
 #~ msgstr ""
 #~ "Colocar Pontos dos Acompanhamentos em intervalos de distância de (MN):"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12201,6 +16959,22 @@ msgstr ""
 #~ msgstr ""
 #~ "Colocar Pontos dos Acompanhamentos em intervalos de tempo de (Segundos):"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12218,6 +16992,78 @@ msgstr ""
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Velocidade Planejada"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12290,6 +17136,78 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed CRAIN GRIB"
 #~ msgstr "Por favor Afaste ou Diminua a Escala para ver CRAIN GRIB suprimido"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12362,6 +17280,78 @@ msgstr ""
 #~ msgid "Please Zoom or Scale Out to view suppressed HTSGW GRIB"
 #~ msgstr "Por favor Afaste ou Diminua a Escala para ver HTSGW GRIB suprimido"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12435,6 +17425,78 @@ msgstr ""
 #~ msgstr ""
 #~ "Por favor Afaste ou Diminua a Escala para ver OCEAN CURRENT GRIB suprimido"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12508,6 +17570,37 @@ msgstr ""
 #~ msgstr ""
 #~ "Por favor Afaste ou Diminua a Escala para ver SEATEMP GRIB suprimido"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12542,6 +17635,56 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Idade do Relatório:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12593,6 +17736,49 @@ msgstr ""
 #~ msgid "Position:               "
 #~ msgstr "Posição:"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12643,6 +17829,78 @@ msgstr ""
 #~ "Versão da API libgps não confere.\n"
 #~ "Opencpn encontrou a versão %d.%d, mas é necessário pelo menos a versão 3.1"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12715,6 +17973,35 @@ msgstr ""
 #~ msgid "Pressure, mBar"
 #~ msgstr "Pressão, hPa"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12744,6 +18031,37 @@ msgstr ""
 #~ msgid "Radar rings"
 #~ msgstr "Anéis de Distância"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12776,6 +18094,37 @@ msgstr ""
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Veloc:           Não disponível\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12807,6 +18156,36 @@ msgstr ""
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Distância:                %5.1f MN\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12837,6 +18216,37 @@ msgstr ""
 #~ msgid "Raster"
 #~ msgstr "Raster"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12869,6 +18279,37 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Idade do Relatório:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12901,6 +18342,37 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Idade do Relatório:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12933,6 +18405,37 @@ msgstr ""
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Idade do Relatório:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12965,6 +18468,37 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Idade do Relatório:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -12997,6 +18531,67 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Idade do Relatório:               %3d Sec.\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13063,6 +18658,35 @@ msgstr ""
 #~ "Período Recente do Relatório:     %3d Seg.\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13093,6 +18717,35 @@ msgstr ""
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Remover esta carta das emendas."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13122,6 +18775,45 @@ msgstr ""
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Remover esta carta das emendas."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13161,6 +18853,82 @@ msgstr ""
 #~ msgid "Reverse Route"
 #~ msgstr "Inverter Derrota"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13237,6 +19005,36 @@ msgstr ""
 #~ msgid "Route Manager..."
 #~ msgstr "Gerenciador de Derrotas..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13268,6 +19066,36 @@ msgstr ""
 #~ msgid "Route Properties..."
 #~ msgstr "Propriedades da Derrota..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13299,6 +19127,78 @@ msgstr ""
 #~ msgid "Route/Track"
 #~ msgstr "Derrota"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13371,6 +19271,36 @@ msgstr ""
 #~ msgid "Sea Surface Temp, C"
 #~ msgstr "Temperatura da Superfície do Mar, C"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13401,6 +19331,78 @@ msgstr ""
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Selecionar Tipos de Carta para Emendar"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13473,6 +19475,82 @@ msgstr ""
 #~ msgid "Select GRIB Directory"
 #~ msgstr "Selecionar Diretório de Arquivos GRIB"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13549,6 +19627,25 @@ msgstr ""
 #~ msgid "Send Route To GPS..."
 #~ msgstr "Enviar Derrota para o GPS..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13569,6 +19666,45 @@ msgstr ""
 #~ msgid "Send to GPS ( "
 #~ msgstr "Enviar para o GPS..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13609,6 +19745,36 @@ msgstr ""
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Modo Rumo Acima"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13639,6 +19805,72 @@ msgstr ""
 #~ msgid "Settings"
 #~ msgstr "Configurações"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13705,6 +19937,36 @@ msgstr ""
 #~ msgid "ShipName:  "
 #~ msgstr "Nome do Navio:"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13735,6 +19997,82 @@ msgstr ""
 #~ msgid "Show ATON labels"
 #~ msgstr "Mostrar etiquetas dos AuxNav"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13811,6 +20149,82 @@ msgstr ""
 #~ msgid "Show GPX icons"
 #~ msgstr "Mostrar ícone GPX"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13887,6 +20301,76 @@ msgstr ""
 #~ msgid "Show GRIB dialog"
 #~ msgstr "Mostrar Janela GRIB"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13957,6 +20441,48 @@ msgstr ""
 #~ msgid "Show GRIB icon"
 #~ msgstr "Mostrar ícone GRIB"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -13999,6 +20525,48 @@ msgstr ""
 #~ msgid "Show Printing Icon"
 #~ msgstr "Mostrar Ícone Imprimir"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14041,6 +20609,78 @@ msgstr ""
 #~ msgid "Show Track icon"
 #~ msgstr "Mostrar ícone Acompanhamentos"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14113,6 +20753,37 @@ msgstr ""
 #~ msgid "Significant Wave Height, m"
 #~ msgstr "Altura Significativa das Ondas, m"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14149,6 +20820,62 @@ msgstr ""
 #~ "Tamanho:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14210,6 +20937,37 @@ msgstr ""
 #~ "Tamanho:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14246,6 +21004,37 @@ msgstr ""
 #~ "Tamanho:                %5dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14282,6 +21071,37 @@ msgstr ""
 #~ "Tamanho:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14318,6 +21138,37 @@ msgstr ""
 #~ "Tamanho:                ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14354,6 +21205,37 @@ msgstr ""
 #~ "Tamanho:                ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14390,6 +21272,37 @@ msgstr ""
 #~ "Tamanho:                %5dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14426,6 +21339,37 @@ msgstr ""
 #~ "Tamanho:                %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14458,6 +21402,37 @@ msgstr ""
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Veloc:           Não disponível\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14489,6 +21464,20 @@ msgstr ""
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Velocidade:                %5.2f Nós.\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14504,6 +21493,36 @@ msgstr ""
 #~ msgid "T"
 #~ msgstr "De Para"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14534,6 +21553,37 @@ msgstr ""
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "Servidor de Dados TCP/IP WiFi"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14565,6 +21615,37 @@ msgstr ""
 #~ msgid "TCPA:  \n"
 #~ msgstr "TPMA:  \n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14596,6 +21677,36 @@ msgstr ""
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TPMA:                 %02d:%02d Hr:Min\n"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14626,6 +21737,36 @@ msgstr ""
 #~ msgid "Text Element"
 #~ msgstr "Elementos de Texto"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14657,6 +21798,66 @@ msgstr ""
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "Mostrar Correntes"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14718,6 +21919,66 @@ msgstr ""
 #~ msgid "Toggle Listing"
 #~ msgstr "Ligar Acompanhamento"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14779,6 +22040,36 @@ msgstr ""
 #~ msgid "Toggle Names"
 #~ msgstr "Nome da Derrota"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14809,6 +22100,36 @@ msgstr ""
 #~ msgid "ToolBox"
 #~ msgstr "Ferramentas"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14840,6 +22161,36 @@ msgstr ""
 #~ msgid "Track Properties..."
 #~ msgstr "Propriedades do Acompanhamento..."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14870,6 +22221,37 @@ msgstr ""
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "Escala Real: %8.0f"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14902,6 +22284,37 @@ msgstr ""
 #~ msgid "Type:                 "
 #~ msgstr "ETA:                  "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14934,6 +22347,35 @@ msgstr ""
 #~ msgid "UN Ship Type:         "
 #~ msgstr "Tipo de Navio:"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -14969,6 +22411,35 @@ msgstr ""
 #~ "\n"
 #~ "O host gpsd é:: "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -15002,6 +22473,29 @@ msgstr ""
 #~ "\n"
 #~ "O host gpsd é: "
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -15026,6 +22520,35 @@ msgstr ""
 #~ msgid "Unavailable"
 #~ msgstr "Nenhuma Carta Disponível"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -15055,6 +22578,76 @@ msgstr ""
 #~ msgid "Units"
 #~ msgstr "Unidades"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -15125,6 +22718,36 @@ msgstr ""
 #~ msgid "Use High Definition Graphics"
 #~ msgstr "Usar Gráficos de Alta Definição"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -15155,6 +22778,78 @@ msgstr ""
 #~ msgid "Use SCAMIN"
 #~ msgstr "Usar SCAMIN"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -15227,6 +22922,36 @@ msgstr ""
 #~ msgid "WARNING:  QuickScat GRIB data is %d hours old."
 #~ msgstr "AVISO: Dados GRIB são de %d horas atrás."
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -15257,6 +22982,36 @@ msgstr ""
 #~ msgid "Waypoint Locking"
 #~ msgstr "Bloqueio dos Pontos da Derrota"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -15287,6 +23042,78 @@ msgstr ""
 #~ msgid "WiFi Options"
 #~ msgstr "Opções WiFi"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -15359,6 +23186,36 @@ msgstr ""
 #~ msgid "Wind Speed, Kts."
 #~ msgstr "Veloc. do Vento, Nós"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #
@@ -15389,6 +23246,49 @@ msgstr ""
 #~ msgid "cm93 Detail"
 #~ msgstr "Detalhe CM93"
 
+# #-#-#-#-#  .merge_file_HWwgIQ (opencpn 2.1.0b620)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_ADQcHE (opencpn 2.1.0b620)  #-#-#-#-#
+#
 #
 #
 #

@@ -69,6 +69,7 @@ RoutePoint::Segment::Segment()
 
 RoutePoint::RoutePoint()
 	: m_bPtIsSelected(false)
+	, m_bIsBeingEdited(false)
 	, m_bIsInRoute(false)
 	, m_bIsInTrack(false)
 	, m_bIsolatedMark(false)
@@ -413,19 +414,22 @@ bool RoutePoint::IsSame(const RoutePoint* pOtherRP) const
 
 bool RoutePoint::SendToGPS(const wxString& com_name, wxGauge* pProgress)
 {
-	bool result = false;
+	int result = 0;
 	if (g_pMUX)
 		result = g_pMUX->SendWaypointToGPS(this, com_name, pProgress);
 
 	wxString msg;
-	if (result)
+	if (result == 0) {
 		msg = _("Waypoint(s) Uploaded successfully.");
-	else
+	} else if (result == ERR_GARMIN_INITIALIZE) {
+		msg = _("Error on Waypoint Upload.  Garmin GPS not connected");
+	} else {
 		msg = _("Error on Waypoint Upload.  Please check logfiles...");
+	}
 
 	OCPNMessageBox(NULL, msg, _("OpenCPN Info"), wxOK | wxICON_INFORMATION);
 
-	return result;
+	return result == 0;
 }
 
 bool RoutePoint::IsVisible() const

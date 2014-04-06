@@ -190,6 +190,7 @@ private:
 	wxChoice* m_pcTCDatasets;
 	wxCheckBox* pCBMagShow;
 	wxTextCtrl* pMagVar;
+	wxCheckBox* pMobile;
 
 	int k_tides;
 

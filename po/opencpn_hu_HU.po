@@ -280,6 +280,19 @@ msgstr ""
 msgid "%H:%M"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -340,6 +353,19 @@ msgstr "Font család:"
 msgid "&Go To"
 msgstr "Menj"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -397,6 +423,19 @@ msgstr "Megfordítás"
 msgid "&Send to GPS"
 msgstr "GPS-re küldés"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -463,6 +502,17 @@ msgstr "(későbbi felhasználásra foglalt)"
 msgid "(unnamed)"
 msgstr "(névtelen)"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -669,6 +719,19 @@ msgstr ""
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -723,6 +786,19 @@ msgstr "AIS célpont lista"
 msgid "AISRollover"
 msgstr "AISfelirat"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1025,6 +1101,19 @@ msgstr "Átlagos sebesség (csomó)"
 msgid "B"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1140,6 +1229,19 @@ msgstr "Irány"
 msgid "Buddy"
 msgstr "Társ"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1152,6 +1254,19 @@ msgstr "Társ"
 msgid "Bulk carrier maritime"
 msgstr "Tengeri tömegárú szállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1618,6 +1733,19 @@ msgstr "Konzol érték"
 msgid "Constrained by draught"
 msgstr "Merülés miatt korlátozva"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1654,6 +1782,17 @@ msgstr "KML-ként másolás"
 msgid "Copy as KML..."
 msgstr "KML-ként másolás..."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1707,6 +1846,19 @@ msgstr "Útpont létrehozása"
 msgid "Create Waypoint"
 msgstr "Útpont létrehozása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1719,6 +1871,19 @@ msgstr "Útpont létrehozása"
 msgid "Cruise ship"
 msgstr "Kirándulóhajó"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1839,6 +2004,19 @@ msgstr "Sötét-sárga"
 msgid "Data Connections"
 msgstr "Adat kapcsolatok"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2095,6 +2273,19 @@ msgstr "Pont vonás"
 msgid "Dredge"
 msgstr "Kotró"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2233,6 +2424,19 @@ msgstr "Meteorológiai elővigyázatos terület: viharjelzés (cella vagy front)
 msgid "Environmental Caution Area: Strong currents"
 msgstr "Meteorológiai elővigyázatos terület: erős áramlatok"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2328,6 +2532,19 @@ msgstr ""
 msgid "Failed to initialize the user interface. "
 msgstr "Nem sikerült a felhasználói felület inicializálása. "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2350,6 +2567,19 @@ msgstr "öl"
 msgid "Feet"
 msgstr "láb"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2377,6 +2607,19 @@ msgstr "Szűrési periódus (mp)"
 msgid "Filters"
 msgstr "Szűrők"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2416,6 +2659,19 @@ msgstr "Teljes adatbázis újraépítés kényszerítése"
 msgid "Format uploads for Furuno GP3X"
 msgstr "Formátum feltöltés Furuno GP3X-re"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2428,6 +2684,19 @@ msgstr "Formátum feltöltés Furuno GP3X-re"
 msgid "Freightbarge"
 msgstr "Teherbárka"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2457,6 +2726,19 @@ msgstr "GPS eltolás az orrtól (m)"
 msgid "GPS Offset from Midship (m)"
 msgstr "GPS eltolás a középvonaltól (m)"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2485,6 +2767,19 @@ msgstr ""
 msgid "GUID"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2507,6 +2802,19 @@ msgstr "Általános"
 msgid "General Options"
 msgstr "Általános beállítások"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2617,6 +2925,19 @@ msgstr "Gyorsjáratú jármű"
 msgid "Highlight Tracks"
 msgstr "Nyomvonal kiemelése"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2667,6 +2988,19 @@ msgstr "GPX fájl importálása"
 msgid "Important Text Only"
 msgstr "Csak a fontos szövegek"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2679,6 +3013,17 @@ msgstr "Csak a fontos szövegek"
 msgid "In"
 msgstr "Be"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2878,6 +3223,19 @@ msgstr "Szakasz"
 msgid "Leg: from "
 msgstr "Szakasz: honnan "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2988,6 +3346,19 @@ msgstr "Hivatkozások megnyitva szerkesztésre."
 msgid "Links are opened in the default browser."
 msgstr "Hivatkozások az alapértelmezett böngészőben nyílnak."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3176,6 +3547,17 @@ msgstr "Összefésüljem az útpontot?"
 msgid "Merge waypoints?"
 msgstr "Összefésüljem az útpontokat?"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3186,6 +3568,17 @@ msgstr "Összefésüljem az útpontokat?"
 msgid "Message accepted"
 msgstr "Üzenet elfogadva"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3228,6 +3621,19 @@ msgstr ""
 msgid "Moored"
 msgstr "Vesztegel"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3240,6 +3646,19 @@ msgstr "Vesztegel"
 msgid "Motor freighter"
 msgstr "Motoros áruszállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3252,6 +3671,19 @@ msgstr "Motoros áruszállító"
 msgid "Motor freighter pushing at least one tank-ship"
 msgstr "Motoros áruszállító, legalább egy tolt tankhajóval"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3264,6 +3696,19 @@ msgstr "Motoros áruszállító, legalább egy tolt tankhajóval"
 msgid "Motor freighter pushing one or more freighters"
 msgstr "Motoros áruszállító, egy vagy tolt szállítóval"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3276,6 +3721,19 @@ msgstr "Motoros áruszállító, egy vagy tolt szállítóval"
 msgid "Motor freighter with one or more ships alongside"
 msgstr "Motoros áruszállító, egy vagy több szállítóval mellévett alakzatban"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3288,6 +3746,19 @@ msgstr "Motoros áruszállító, egy vagy több szállítóval mellévett alakza
 msgid "Motor freighter with tanker"
 msgstr "Motoros áruszállító tankhajóval"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3300,6 +3771,19 @@ msgstr "Motoros áruszállító tankhajóval"
 msgid "Motor freighter, tug"
 msgstr "Motoros áruszállító tankhajóval"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3312,6 +3796,19 @@ msgstr "Motoros áruszállító tankhajóval"
 msgid "Motor tanker"
 msgstr "Motoros tanker"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3324,6 +3821,19 @@ msgstr "Motoros tanker"
 msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
 msgstr "Motoros tanker, száraz rakománnyal (pl. cement)"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3336,6 +3846,19 @@ msgstr "Motoros tanker, száraz rakománnyal (pl. cement)"
 msgid "Motor tanker, liquid cargo, type C"
 msgstr "Motoros tanker, C típusú folyékony rakomány"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3348,6 +3871,19 @@ msgstr "Motoros tanker, C típusú folyékony rakomány"
 msgid "Motor tanker, liquid cargo, type N"
 msgstr "Motoros tanker, N típusú folyékony rakomány"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3386,6 +3922,17 @@ msgstr ""
 msgid "NMEA 2000"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3460,6 +4007,19 @@ msgstr "Új térkép csoport"
 msgid "New Group..."
 msgstr "Új csoport..."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3481,6 +4041,17 @@ msgstr "Következő árapály esemény"
 msgid "Nighttime"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3552,6 +4123,19 @@ msgstr "Objektum lekérdezése"
 msgid "Object Query..."
 msgstr "Objektum lekérdezése..."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3564,6 +4148,19 @@ msgstr "Objektum lekérdezése..."
 msgid "Object, not otherwise specified"
 msgstr "Nem specifikált objektum"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3713,6 +4310,17 @@ msgstr "Beállítások"
 msgid "Other - Define in associated text field"
 msgstr "Más: csatolt szövegben definiálva"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3727,6 +4335,19 @@ msgstr "Ki"
 msgid "Output"
 msgstr "Kimenet"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3796,6 +4417,19 @@ msgstr ""
 msgid "Passenger Ship"
 msgstr "Utasszállító jármű"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3808,6 +4442,19 @@ msgstr "Utasszállító jármű"
 msgid "Passenger ship without accomodation"
 msgstr "Személyszállító, szálláshely nélkül"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3835,6 +4482,17 @@ msgstr "Nyomvonal beillesztése"
 msgid "Paste Waypoint"
 msgstr "Útpont beillesztése"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3888,6 +4546,19 @@ msgstr ""
 msgid "Pleasure craft"
 msgstr "Kedvtelési hajó"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3986,6 +4657,19 @@ msgstr "Javasolt csatorna bal oldal"
 msgid "Preferred Channel Starboard Hand"
 msgstr "Javasolt csatorna jobb oldal"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4004,6 +4688,19 @@ msgstr ""
 msgid "Preserve Scale when Switching Charts"
 msgstr "Lépték megtartása térkép váltáskor"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4064,6 +4761,19 @@ msgstr "Haladjon tovább erre a pontra - várjon utasításra"
 msgid "Processing Waypoints..."
 msgstr "Útpontok feldolgozása..."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4090,6 +4800,19 @@ msgstr "Tulajdonságok..."
 msgid "Protocol"
 msgstr "Protokoll"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4102,6 +4825,19 @@ msgstr "Protokoll"
 msgid "Pushboat, single"
 msgstr "Tolóhajó, egyedüli"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4114,6 +4850,19 @@ msgstr "Tolóhajó, egyedüli"
 msgid "Pushtow, eight barges at least one tanker or gas barge"
 msgstr "Tolóhajó, nyolc bárka, legalább egy tanker vagy gázszállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4126,6 +4875,19 @@ msgstr "Tolóhajó, nyolc bárka, legalább egy tanker vagy gázszállító"
 msgid "Pushtow, eight cargo barges"
 msgstr "Tolóhajó, nyolc bárka"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4138,6 +4900,19 @@ msgstr "Tolóhajó, nyolc bárka"
 msgid "Pushtow, five barges at least one tanker or gas barge"
 msgstr "Tolóhajó, öt bárka, legalább egy tanker vagy gázszállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4150,6 +4925,19 @@ msgstr "Tolóhajó, öt bárka, legalább egy tanker vagy gázszállító"
 msgid "Pushtow, five cargo barges"
 msgstr "Tolóhajó, öt bárka"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4162,6 +4950,19 @@ msgstr "Tolóhajó, öt bárka"
 msgid "Pushtow, four barges at least one tanker or gas barge"
 msgstr "Tolóhajó, négy bárka, legalább egy tanker vagy gázszállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4174,6 +4975,19 @@ msgstr "Tolóhajó, négy bárka, legalább egy tanker vagy gázszállító"
 msgid "Pushtow, four cargo barges"
 msgstr "Tolóhajó, négy bárka"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4186,6 +5000,19 @@ msgstr "Tolóhajó, négy bárka"
 msgid "Pushtow, nine or more barges"
 msgstr "Tolóhajó, kilenc vagy több bárka"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4198,6 +5025,19 @@ msgstr "Tolóhajó, kilenc vagy több bárka"
 msgid "Pushtow, nine or more barges at least one tanker or gas barge"
 msgstr "Tolóhajó, kilenc vagy több bárka, legalább egy tanker vagy gázszállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4210,6 +5050,19 @@ msgstr "Tolóhajó, kilenc vagy több bárka, legalább egy tanker vagy gázszá
 msgid "Pushtow, one cargo barge"
 msgstr "Tolóhajó, egy bárka"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4222,6 +5075,19 @@ msgstr "Tolóhajó, egy bárka"
 msgid "Pushtow, one tank/gas barge"
 msgstr "Tolóhajó, egy tanker/gázszállító bárka"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4234,6 +5100,19 @@ msgstr "Tolóhajó, egy tanker/gázszállító bárka"
 msgid "Pushtow, seven barges at least one tanker or gas barge"
 msgstr "Tolóhajó, hét bárka, legalább egy tanker vagy gázszállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4246,6 +5125,19 @@ msgstr "Tolóhajó, hét bárka, legalább egy tanker vagy gázszállító"
 msgid "Pushtow, seven cargo barges"
 msgstr "Tolóhajó, hét bárka"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4258,6 +5150,19 @@ msgstr "Tolóhajó, hét bárka"
 msgid "Pushtow, six barges at least one tanker or gas barge"
 msgstr "Tolóhajó, hat bárka, legalább egy tanker vagy gázszállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4270,6 +5175,19 @@ msgstr "Tolóhajó, hat bárka, legalább egy tanker vagy gázszállító"
 msgid "Pushtow, six cargo barges"
 msgstr "Tolóhajó, hat bárka"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4282,6 +5200,19 @@ msgstr "Tolóhajó, hat bárka"
 msgid "Pushtow, three barges at least one tanker or gas barge"
 msgstr "Tolóhajó, három bárka, legalább egy tanker vagy gázszállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4294,6 +5225,19 @@ msgstr "Tolóhajó, három bárka, legalább egy tanker vagy gázszállító"
 msgid "Pushtow, three cargo barges"
 msgstr "Tolóhajó, három bárka"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4306,6 +5250,19 @@ msgstr "Tolóhajó, három bárka"
 msgid "Pushtow, two barges at least one tanker or gas barge"
 msgstr "Tolóhajó, kettő bárka, legalább egy tanker vagy gázszállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4376,6 +5333,19 @@ msgstr "Összefésüljem az útpontokat?"
 msgid "Red"
 msgstr "Vörös"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4414,6 +5384,19 @@ msgstr "Ref. pont"
 msgid "Reference Point"
 msgstr "Viszonyítási pont"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4543,6 +5526,17 @@ msgstr "Korlátozott terület: horgonyzás tiltott"
 msgid "Restricted Manoeuvrability"
 msgstr "Korlátozott műveletvégző képesség"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4613,6 +5607,19 @@ msgstr "Útvonal nyomtatása"
 msgid "Route Properties"
 msgstr "Útvonal tulajdonságok"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4785,6 +5792,19 @@ msgstr ""
 "Válaszd ki a maximális megengedhető hibát (méterben)\n"
 "az adat összevonás után."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4797,6 +5817,19 @@ msgstr ""
 msgid "Send"
 msgstr "Küldés"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4828,6 +5861,19 @@ msgstr "Mondat szűrő"
 msgid "Serial"
 msgstr "Soros"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5094,6 +6140,17 @@ msgstr ""
 msgid "Solid"
 msgstr "Szilárd"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5120,6 +6177,12 @@ msgstr "Speciális"
 msgid "Special Mark"
 msgstr "Speciális jel"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #, fuzzy
@@ -5228,6 +6291,19 @@ msgstr ""
 msgid "TCPA"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5240,6 +6316,19 @@ msgstr ""
 msgid "Tankbarge"
 msgstr "Tankhajó"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5252,6 +6341,19 @@ msgstr "Tankhajó"
 msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
 msgstr "Tanker bárka, száraz rakománnyal (pl. cement)"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5264,6 +6366,19 @@ msgstr "Tanker bárka, száraz rakománnyal (pl. cement)"
 msgid "Tankbarge, gas"
 msgstr "Gázszállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5276,6 +6391,19 @@ msgstr "Gázszállító"
 msgid "Tankbarge, liquid cargo, type C"
 msgstr "Tankerbárka, C típusú folyékony rakomány"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5478,6 +6606,19 @@ msgstr "Ez a szakasz"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr "Ez az útpont része egy rétegnek, ezért nem szerkeszthető"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5544,6 +6685,19 @@ msgstr "Útpontig"
 msgid "To route"
 msgstr "Út időtartama"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5567,6 +6721,19 @@ msgstr "Követés átkapcsolása"
 msgid "Toggle track"
 msgstr "Követés átkapcsolása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5670,6 +6837,19 @@ msgstr "Nyomvonal"
 msgid "Tug"
 msgstr "Vontató"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5682,6 +6862,19 @@ msgstr "Vontató"
 msgid "Tug freighter, coupled"
 msgstr "Tolóhajó és áruszállító kötelékben"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5694,6 +6887,19 @@ msgstr "Tolóhajó és áruszállító kötelékben"
 msgid "Tug, assisting a vessel or linked combination"
 msgstr "Tolóhajó más jármű segítségén, vagy kötelkében"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5706,6 +6912,19 @@ msgstr "Tolóhajó más jármű segítségén, vagy kötelkében"
 msgid "Tug, freighter"
 msgstr "Tolóhajó, áruszállító"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5718,6 +6937,19 @@ msgstr "Tolóhajó, áruszállító"
 msgid "Tug, freighter/tanker, coupled"
 msgstr "Tolóhajó, áruszállító/tanker"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5730,6 +6962,19 @@ msgstr "Tolóhajó, áruszállító/tanker"
 msgid "Tug, one or more tows"
 msgstr "Tolóhajó, egy vagy több"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5742,6 +6987,19 @@ msgstr "Tolóhajó, egy vagy több"
 msgid "Tug, single"
 msgstr "Tolóhajó, egyedüli"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5804,6 +7062,19 @@ msgstr "Úton"
 msgid "Undo"
 msgstr "Vissza"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5932,6 +7203,19 @@ msgstr "Hosszú vontató jármű"
 msgid "Vessel requesting non-distress assistance"
 msgstr "Nem vészhelyzeti segítséget igénylő hajó"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5944,6 +7228,19 @@ msgstr "Nem vészhelyzeti segítséget igénylő hajó"
 msgid "Vessel, type unknown"
 msgstr "Ismertelen típusú jármű"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6114,6 +7411,17 @@ msgstr ""
 msgid "Yellow"
 msgstr "Sárga"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6299,6 +7607,126 @@ msgstr ""
 msgid "mph"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "  Térkép fájl RLL adat sérült "
+
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "  Térkép fájlnak nincs BSB fejléce, nem lehet inicializálni."
+
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "  Nem tudtam az első %d bájtot kiolvasni a térkép fájl fejlécéből: "
+
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+msgid "NMi"
+msgstr "tmf"
+
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
+#, fuzzy
+msgid "kts"
+msgstr "Csomó"
+
+#
+#
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Biztos, hogy MINDEGYIK útvonalat törölni akarod?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr "Hiba történt az útpont feltöltés közben. Ellenőrizd a naplófájlt..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+#, fuzzy
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+"Egyes útpontok útvonal részei vagy horgonyőrök. Ezeket is törölni szeretnéd? "
+"Ekkor megváltozank az útvonalak és kikapcsolnak a horgonyőrök. 'Nem' válasz "
+"esetén az útvonalakban vagy horgonyőrben használt útpontok megmaradnak."
+
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "in "
+msgstr "Hivatkozás"
+
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6312,6 +7740,17 @@ msgstr ""
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6329,6 +7768,19 @@ msgstr ""
 #~ "\n"
 #~ "Libgps beállítása folytatódik..."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6342,6 +7794,19 @@ msgstr ""
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "      Maximális sebesség vesztegléshez (csomó):"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6355,18 +7820,19 @@ msgstr ""
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "      Célpont nyomvonal hossza (perc):"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
 #
 #
 #
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "  Térkép fájl RLL adat sérült "
-
 #
 #
 #
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "  Térkép fájlnak nincs BSB fejléce, nem lehet inicializálni."
-
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6380,12 +7846,19 @@ msgstr ""
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "  Térképi vetület ismeretlen, feltétlezem a Mercator vetületet: "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
 #
 #
 #
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "  Nem tudtam az első %d bájtot kiolvasni a térkép fájl fejlécéből: "
-
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6399,6 +7872,19 @@ msgstr ""
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  AIS soros port megnyitása sikertelen '"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6412,6 +7898,19 @@ msgstr ""
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  Nem lehet megnyitni a soros portot '"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6425,6 +7924,19 @@ msgstr ""
 #~ msgid " COG: %03d Deg."
 #~ msgstr " COG: %03d fok"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6438,6 +7950,14 @@ msgstr ""
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG: 000 fok"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6446,6 +7966,19 @@ msgstr ""
 #~ msgid " is %5g"
 #~ msgstr " %5g"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6459,6 +7992,32 @@ msgstr ""
 #~ msgid "&Export Track..."
 #~ msgstr "Nyomvonal export"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6485,6 +8044,19 @@ msgstr ""
 #~ msgid "&Toggle Chart"
 #~ msgstr "Térkép kapcsolása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6502,6 +8074,19 @@ msgstr ""
 #~ "'\n"
 #~ "Próbáld xxx.xxx.xxx.xxx' formában"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6519,6 +8104,19 @@ msgstr ""
 #~ "'\n"
 #~ "Próbáld meg becsukni a többi alkalmazást!"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6532,6 +8130,19 @@ msgstr ""
 #~ msgid ":               "
 #~ msgstr ":               "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6551,6 +8162,18 @@ msgstr ""
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6563,6 +8186,17 @@ msgstr ""
 #~ msgid "<--Remove"
 #~ msgstr "<--Eltávolít"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6574,6 +8208,19 @@ msgstr ""
 #~ msgid "AIS Port (Shared)"
 #~ msgstr "AIS Port (megosztott)"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6587,6 +8234,19 @@ msgstr ""
 #~ msgid "AIS SART Alert"
 #~ msgstr "AIS SART riasztás"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6600,6 +8260,19 @@ msgstr ""
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "CM93 eltolás bekapcsolása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6613,6 +8286,19 @@ msgstr ""
 #~ msgid "Activate Next in Route"
 #~ msgstr "Következő aktiválása az útvonalban"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6626,6 +8312,19 @@ msgstr ""
 #~ msgid "Activate Route"
 #~ msgstr "Útvonal aktiválása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6639,6 +8338,19 @@ msgstr ""
 #~ msgid "Add Selection"
 #~ msgstr "Kiválasztás hozzáadása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6652,6 +8364,18 @@ msgstr ""
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Térkép összefűzéshez adása."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6664,6 +8388,19 @@ msgstr ""
 #~ msgid "Add-->"
 #~ msgstr "Hozzáad-->"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6677,6 +8414,19 @@ msgstr ""
 #~ msgid "Additional information"
 #~ msgstr "További információ"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6690,6 +8440,19 @@ msgstr ""
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Minden fájl (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6703,6 +8466,19 @@ msgstr ""
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Autopilot port"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6716,6 +8492,19 @@ msgstr ""
 #~ msgid "Available Chart Directories"
 #~ msgstr "Elérhető térkép könyvtárak"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6729,6 +8518,19 @@ msgstr ""
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Iránylat:                %03d fok\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6742,6 +8544,19 @@ msgstr ""
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Iránylat:                Nem áll rendelkezésre\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6755,6 +8570,19 @@ msgstr ""
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6768,6 +8596,19 @@ msgstr ""
 #~ msgid "CM93 Offset Display"
 #~ msgstr "CM93 eltolás megjelenítés"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6781,6 +8622,19 @@ msgstr ""
 #~ msgid "CM93 Offsets"
 #~ msgstr "CM93 eltolás"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6794,6 +8648,19 @@ msgstr ""
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "CM93 nagyítás részletessége"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6807,6 +8674,19 @@ msgstr ""
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f tmf\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6828,6 +8708,19 @@ msgstr ""
 #~ "\n"
 #~ "gpsd host: "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6841,6 +8734,17 @@ msgstr ""
 #~ msgid "CallSign:             "
 #~ msgstr "Hívójel:             "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6852,6 +8756,19 @@ msgstr ""
 #~ msgid "Can't send waypoint. Found no serial data port with output defined."
 #~ msgstr "Az útpont nem küldhető el. Nincs kimenetként definiált soros port."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6865,6 +8782,19 @@ msgstr ""
 #~ msgid "Chart"
 #~ msgstr "Térkép"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6878,6 +8808,19 @@ msgstr ""
 #~ msgid "Chart Display Filters"
 #~ msgstr "Térkép megjelenítés szűrése"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6891,6 +8834,18 @@ msgstr ""
 #~ msgid "Chart Display Style"
 #~ msgstr "Térkép megjelenítés stílusa"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6903,6 +8858,18 @@ msgstr ""
 #~ msgid "Chart Groups..."
 #~ msgstr "Térkép csoportok..."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6915,6 +8882,19 @@ msgstr ""
 #~ msgid "Chart Groups...New Group"
 #~ msgstr "Térkép csoportok...Új csoport"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6928,6 +8908,17 @@ msgstr ""
 #~ msgid "Class:                "
 #~ msgstr "Osztály:                "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6939,6 +8930,19 @@ msgstr ""
 #~ msgid "Copy"
 #~ msgstr "Másolás"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6952,6 +8956,19 @@ msgstr ""
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "TCP/IP állomás névfeloldása sikertelen '"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6965,6 +8982,19 @@ msgstr ""
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "Irány:                 %03d fok\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6978,6 +9008,19 @@ msgstr ""
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Irány:                 000 fok\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -6991,6 +9034,19 @@ msgstr ""
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "Irány:                 Nem áll rendelkezésre\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7004,6 +9060,19 @@ msgstr ""
 #~ msgid "Cursor: "
 #~ msgstr "Kurzor: "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7017,6 +9086,19 @@ msgstr ""
 #~ msgid "Deactivate Route"
 #~ msgstr "Útvonal inaktiválása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7030,6 +9112,19 @@ msgstr ""
 #~ msgid "Default dataset"
 #~ msgstr "Alap adatkészlet"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7043,6 +9138,19 @@ msgstr ""
 #~ msgid "Deg"
 #~ msgstr "fok"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7056,6 +9164,19 @@ msgstr ""
 #~ msgid "Delete Mark"
 #~ msgstr "Jel törlése"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7069,6 +9190,19 @@ msgstr ""
 #~ msgid "Delete Route"
 #~ msgstr "Útvonal törlése"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7082,6 +9216,19 @@ msgstr ""
 #~ msgid "Depth Settings"
 #~ msgstr "Mélység beállítások"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7095,6 +9242,19 @@ msgstr ""
 #~ msgid "Destination:          "
 #~ msgstr "Célállomás:          "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7108,6 +9268,19 @@ msgstr ""
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Vektor"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7121,6 +9294,19 @@ msgstr ""
 #~ msgid "Enable CM93 Detail Slider"
 #~ msgstr "CM93 részletesség csúszka engedélyezése"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7134,6 +9320,19 @@ msgstr ""
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "Engedélyezze a kézi CM93 eltolást"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7147,6 +9346,19 @@ msgstr ""
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Nagyítás egérgörgővel"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7160,6 +9372,32 @@ msgstr ""
 #~ msgid "Etc."
 #~ msgstr "Egyebek"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7186,6 +9424,19 @@ msgstr ""
 #~ msgid "Exit OpenCPN"
 #~ msgstr "Kilépés az OpenCPN-ből"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7199,6 +9450,19 @@ msgstr ""
 #~ msgid "From Ownship: %03d Deg  %6.2f NMi"
 #~ msgstr "Saját hajótól: %03d fok  %6.2f tmf"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7212,6 +9476,19 @@ msgstr ""
 #~ msgid "GPSD Data Server"
 #~ msgstr "GPSD adat kiszolgáló"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7225,6 +9502,18 @@ msgstr ""
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Menj a jelhez/útponthoz"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7237,6 +9526,17 @@ msgstr ""
 #~ msgid "Groups"
 #~ msgstr "Csoportok"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7248,6 +9548,19 @@ msgstr ""
 #~ msgid "Harmonic dataset to use:"
 #~ msgstr "Használandó harmonikus adatsor:"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7261,6 +9574,19 @@ msgstr ""
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Iránylat:                %03d fok\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7274,6 +9600,32 @@ msgstr ""
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "IMO:                 %8d\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7300,6 +9652,19 @@ msgstr ""
 #~ msgid "Import new layer"
 #~ msgstr "Új réteg importálása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7313,6 +9678,19 @@ msgstr ""
 #~ msgid "Inland Blue Flag        Clear\n"
 #~ msgstr "Belvízi kék zászló        Törölve\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7326,6 +9704,19 @@ msgstr ""
 #~ msgid "Jump To"
 #~ msgstr "Ugrás"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7339,6 +9730,19 @@ msgstr ""
 #~ msgid "Jump To Position"
 #~ msgstr "Ugrás a pozícióhoz"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7352,6 +9756,17 @@ msgstr ""
 #~ msgid "Jump To Position..."
 #~ msgstr "Pozícióra ugrás..."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7363,6 +9778,19 @@ msgstr ""
 #~ msgid "Just "
 #~ msgstr "Csak"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7376,6 +9804,19 @@ msgstr ""
 #~ msgid "Language/Fonts"
 #~ msgstr "Nyelv/betűtípus"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7389,6 +9830,19 @@ msgstr ""
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Utolsó pozíció jelentési idő:  "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7402,6 +9856,17 @@ msgstr ""
 #~ msgid "Leg/Route"
 #~ msgstr "Szakasz/útvonal"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7413,6 +9878,19 @@ msgstr ""
 #~ msgid "Loaded legacy PLIB data: "
 #~ msgstr "Örökölt PLIB adat betöltése: "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7426,6 +9904,19 @@ msgstr ""
 #~ msgid "META Objects"
 #~ msgstr "META objektumok"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7440,6 +9931,19 @@ msgstr ""
 #~ msgid "MMSI:                 %09d\n"
 #~ msgstr "Típus:"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7453,6 +9957,19 @@ msgstr ""
 #~ msgid "Mark Icon"
 #~ msgstr "Jelölés képe"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7466,6 +9983,19 @@ msgstr ""
 #~ msgid "Mark Name"
 #~ msgstr "Jel neve"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7479,6 +10009,19 @@ msgstr ""
 #~ msgid "Mark Properties"
 #~ msgstr "Jel tulajdonságok"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7492,6 +10035,19 @@ msgstr ""
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Jel/útpont tulajdonságok..."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7505,6 +10061,19 @@ msgstr ""
 #~ msgid "Measure....."
 #~ msgstr "Mérés....."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7518,6 +10087,19 @@ msgstr ""
 #~ msgid "Metres"
 #~ msgstr "Méter"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7531,6 +10113,19 @@ msgstr ""
 #~ msgid "NMEA Data Source"
 #~ msgstr "NMEA adatforrás"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7544,11 +10139,19 @@ msgstr ""
 #~ msgid "NMEA Options"
 #~ msgstr "NMEA beállítások"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
 #
 #
-#~ msgid "NMi"
-#~ msgstr "tmf"
-
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7562,6 +10165,19 @@ msgstr ""
 #~ msgid "Name:  "
 #~ msgstr "Név:  "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7575,6 +10191,19 @@ msgstr ""
 #~ msgid "Navigation Data"
 #~ msgstr "Navigációs adatok"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7588,6 +10217,17 @@ msgstr ""
 #~ msgid "Navigational Status:  "
 #~ msgstr "Navigációs státus:  "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7599,6 +10239,22 @@ msgstr ""
 #~ msgid "Network LIBGPS"
 #~ msgstr "Hálózati LIBGPS"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7615,6 +10271,19 @@ msgstr ""
 #~ msgid "New Mark"
 #~ msgstr "Új jel"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7628,6 +10297,18 @@ msgstr ""
 #~ msgid "Number of radar rings shown"
 #~ msgstr "Radar gyűrűk száma"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7640,6 +10321,19 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Más"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7653,6 +10347,19 @@ msgstr ""
 #~ msgid "OwnShip COG arrow predictor length (Minutes):"
 #~ msgstr "Saját hajó COG nyíl előrejelzés hossza (perc):"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7666,6 +10373,19 @@ msgstr ""
 #~ msgid "OwnShip Display Options"
 #~ msgstr "Saját hajó megjelenítés beállításai"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7679,6 +10399,19 @@ msgstr ""
 #~ msgid "Place Trackpoints at distance interval (NMi):"
 #~ msgstr "Nyomvonalpontok távolsága (tmf):"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7692,6 +10425,19 @@ msgstr ""
 #~ msgid "Place Trackpoints at time interval (Seconds):"
 #~ msgstr "Nyomvonalpontok időbeli sűrűsége (mp):"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7705,6 +10451,19 @@ msgstr ""
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Tervezett sebesség (csomó)"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7722,6 +10481,23 @@ msgstr ""
 #~ "Pozíció jelentés életkora:             %3d mp.\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7739,6 +10515,19 @@ msgstr ""
 #~ msgid "Position:               "
 #~ msgstr "Pozíció:"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7760,6 +10549,19 @@ msgstr ""
 #~ "\n"
 #~ "Ennek ellenére használjam a libgps-t?"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7773,6 +10575,19 @@ msgstr ""
 #~ msgid "Radar rings"
 #~ msgstr "Radar gyűrűk"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7786,6 +10601,19 @@ msgstr ""
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Távolság:                  Nem áll rendelkezésre\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7799,6 +10627,19 @@ msgstr ""
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Távolság:                %5.1f tmf\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7812,6 +10653,19 @@ msgstr ""
 #~ msgid "Raster"
 #~ msgstr "Raszter"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7825,6 +10679,19 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Fordulás sebessége:            %3d fok/perc. Balra\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7838,6 +10705,19 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Fordulás sebessége:            %3d fok/perc. Jobbra\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7851,6 +10731,19 @@ msgstr ""
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Fordulás sebessége:            0\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7864,6 +10757,19 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Fordulás sebessége:       > 5 fok/30 sec. Balrara\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7877,6 +10783,32 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Fordulás sebessége:       > 5 fok/30 sec. Jobbra\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7907,6 +10839,19 @@ msgstr ""
 #~ "Utolsó jelentési periódus:   %3d mp.\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7920,6 +10865,17 @@ msgstr ""
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Térkép kivétele az összefűzésből."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7931,6 +10887,19 @@ msgstr ""
 #~ msgid "RenderHPGL: The '%s' instruction is not implemented."
 #~ msgstr "RenderHPGL: '%s' utasítás nincs megvalósítva."
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7944,6 +10913,19 @@ msgstr ""
 #~ msgid "Reverse Route"
 #~ msgstr "Útvonal megfordítása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7957,6 +10939,19 @@ msgstr ""
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Válaszd ki az összefűzendő térkép típusokat"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7970,6 +10965,19 @@ msgstr ""
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Irány fent mód beállítása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7983,6 +10991,19 @@ msgstr ""
 #~ msgid "Settings"
 #~ msgstr "Beállítások"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -7996,6 +11017,19 @@ msgstr ""
 #~ msgid "Show ATON labels"
 #~ msgstr "ATON címkék mutatása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8009,6 +11043,19 @@ msgstr ""
 #~ msgid "Show Printing Icon"
 #~ msgstr "Nyomtatási ikon mutatása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8022,6 +11069,19 @@ msgstr ""
 #~ msgid "Show Track icon"
 #~ msgstr "Nyomvonal ikon mutatása"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8035,6 +11095,19 @@ msgstr ""
 #~ msgid "Show layers initially"
 #~ msgstr "Rétegek mutatása induláskor"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8052,6 +11125,29 @@ msgstr ""
 #~ "Méret:                 %dm x %dm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8080,6 +11176,19 @@ msgstr ""
 #~ "Méret:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8097,6 +11206,19 @@ msgstr ""
 #~ "Méret:                 %dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8114,6 +11236,19 @@ msgstr ""
 #~ "Méret:                 %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8131,6 +11266,19 @@ msgstr ""
 #~ "Méret:                 ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8148,6 +11296,19 @@ msgstr ""
 #~ "Méret:                 ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8165,6 +11326,19 @@ msgstr ""
 #~ "Méret:               %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8182,6 +11356,19 @@ msgstr ""
 #~ "Méret:               %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8195,6 +11382,19 @@ msgstr ""
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Sebesség:                  Nem elérhető\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8208,6 +11408,19 @@ msgstr ""
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Sebesség:                %5.2f csomó\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8221,6 +11434,19 @@ msgstr ""
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "TCP/IP WiFi adatkiszolgáló"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8234,6 +11460,19 @@ msgstr ""
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA:                 %02d:%02d óra:perc\n"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8247,6 +11486,19 @@ msgstr ""
 #~ msgid "Text Element"
 #~ msgstr "Szöveg elem"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8260,6 +11512,19 @@ msgstr ""
 #~ msgid "ToolBox"
 #~ msgstr "Eszközök"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8273,6 +11538,19 @@ msgstr ""
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "Valós méretarány: %8.0f             "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8286,6 +11564,19 @@ msgstr ""
 #~ msgid "Type:                 "
 #~ msgstr "Típus:                 "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8299,6 +11590,19 @@ msgstr ""
 #~ msgid "UN Ship Type:         "
 #~ msgstr "UN hajó típus:         "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8318,6 +11622,19 @@ msgstr ""
 #~ "\n"
 #~ "gpsd host: "
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8331,6 +11648,19 @@ msgstr ""
 #~ msgid "Unable to load libgps"
 #~ msgstr "Libgps betöltése sikertelen"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8344,6 +11674,19 @@ msgstr ""
 #~ msgid "Unavailable"
 #~ msgstr "Nem elérhető"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8357,6 +11700,19 @@ msgstr ""
 #~ msgid "Units"
 #~ msgstr "Mértékegységek"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8370,6 +11726,19 @@ msgstr ""
 #~ msgid "Use OpenGL"
 #~ msgstr "OpenGL használata"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8383,6 +11752,19 @@ msgstr ""
 #~ msgid "Use SCAMIN"
 #~ msgstr "SCAMIN használata"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8396,6 +11778,19 @@ msgstr ""
 #~ msgid "WiFi Options"
 #~ msgstr "WiFi beállítások"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8409,6 +11804,19 @@ msgstr ""
 #~ msgid "X Offset (Positive moves map to East) (NMi Projected) :"
 #~ msgstr "X eltolás (Pozitív érték keletre mozgatja a térképet) (tmf) :"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8422,6 +11830,19 @@ msgstr ""
 #~ msgid "Y Offset (Positive moves map to North) (NMi Projected) :"
 #~ msgstr "Y eltolás (Pozitív érték északra mozgatja a térképet) (tmf) :"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #
@@ -8435,12 +11856,19 @@ msgstr ""
 #~ msgid "cm93 Detail"
 #~ msgstr "cm93 részletesség"
 
+# #-#-#-#-#  .merge_file_F1Pqx5 (opencpn 2.6.1718)  #-#-#-#-#
 #
 #
-#, fuzzy
-#~ msgid "kts"
-#~ msgstr "Csomó"
-
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_Wz2iDU (opencpn 2.6.1718)  #-#-#-#-#
+#
 #
 #
 #

@@ -333,7 +333,7 @@ bool ToolBarSimple::Realize()
 	else
 		style.SetOrientation(wxTB_HORIZONTAL);
 
-	wxSize toolSize = style.GetToolSize();
+	wxSize toolSize = wxSize(-1, -1);
 	int separatorSize = style.GetToolSeparation();
 
 	ToolBarTool* lastTool = NULL;
@@ -342,6 +342,15 @@ bool ToolBarSimple::Realize()
 
 	while (node != m_tools.end()) {
 		ToolBarTool* tool = static_cast<ToolBarTool*>(*node);
+
+		// Set the tool size to be the size of the first non-separator tool, usually the first one
+		if (toolSize.x == -1) {
+			if (!tool->IsSeparator()) {
+				toolSize.x = tool->m_width;
+				toolSize.y = tool->m_height;
+			}
+		}
+
 		tool->firstInLine = firstNode;
 		tool->lastInLine = false;
 		firstNode = false;
@@ -667,8 +676,7 @@ void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 		if (tool->IsEnabled()) {
 			bmp = tool->GetNormalBitmap();
 			if (!bmp.IsOk())
-				bmp = style.GetToolIcon(tool->GetToolname(), gui::TOOLICON_NORMAL,
-										   tool->rollover);
+				bmp = style.GetToolIcon(tool->GetToolname(), gui::TOOLICON_NORMAL, tool->rollover);
 		} else {
 			bmp = tool->GetDisabledBitmap();
 			if (!bmp.IsOk())
@@ -681,8 +689,7 @@ void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 			// If it is not in the style we build a new icon from the style BG and the plugin icon.
 
 			if (tool->IsToggled()) {
-				bmp = style.GetToolIcon(tool->GetToolname(), gui::TOOLICON_TOGGLED,
-										   tool->rollover);
+				bmp = style.GetToolIcon(tool->GetToolname(), gui::TOOLICON_TOGGLED, tool->rollover);
 				if (bmp.GetDepth() == 1) {
 					if (tool->rollover) {
 						bmp = style.BuildPluginIcon(tool->pluginRolloverIcon,
@@ -738,7 +745,15 @@ void ToolBarSimple::DrawTool(wxDC& dc, wxToolBarToolBase* toolBase)
 		drawAt.y -= (bmp.GetHeight() - style.GetToolSize().y) / 2;
 	}
 
-	dc.DrawBitmap(bmp, drawAt);
+	// could cache this in the tool...
+	if (bmp.GetWidth() != tool->m_width || bmp.GetHeight() != tool->m_height) {
+		wxImage scaled_image = bmp.ConvertToImage();
+		wxBitmap sbmp
+			= wxBitmap(scaled_image.Scale(tool->m_width, tool->m_height, wxIMAGE_QUALITY_NORMAL));
+		dc.DrawBitmap(sbmp, drawAt);
+	} else {
+		dc.DrawBitmap(bmp, drawAt);
+	}
 }
 
 // ----------------------------------------------------------------------------

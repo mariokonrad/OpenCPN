@@ -356,7 +356,17 @@ msgstr "%D dagen, %H:%M"
 msgid "%H:%M"
 msgstr "%H:%M"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -436,7 +446,17 @@ msgstr "&Lettertype: "
 msgid "&Go To"
 msgstr "&Ga naar"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -520,7 +540,17 @@ msgstr "&Omdraaien"
 msgid "&Send to GPS"
 msgstr "&Zend naar GPS ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -616,7 +646,13 @@ msgstr "(reserved for future use)"
 msgid "(unnamed)"
 msgstr "(onbenoemd)"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -874,7 +910,17 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -928,8 +974,17 @@ msgstr "AIS Objecten"
 msgid "AIS target list"
 msgstr "AIS objectenlijst"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -940,7 +995,17 @@ msgstr "AIS objectenlijst"
 msgid "AISRollover"
 msgstr "Info AIS bij aanwijzen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -952,8 +1017,17 @@ msgstr "Info AIS bij aanwijzen"
 msgid "AISTargetAlert"
 msgstr "AIS objectwaarschuwing"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -1000,7 +1074,13 @@ msgstr "Over"
 msgid "About OpenCPN"
 msgstr "Over OpenCPN"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -1333,7 +1413,15 @@ msgstr "Gemiddelde vaart (knopen)"
 msgid "B"
 msgstr "B"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -1474,7 +1562,15 @@ msgstr "Peiling"
 msgid "Buddy"
 msgstr "Buddy"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -1484,7 +1580,15 @@ msgstr "Buddy"
 msgid "Bulk carrier maritime"
 msgstr "bulkcarrier (zee)"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -2072,7 +2176,15 @@ msgstr "Console waarde"
 msgid "Constrained by draught"
 msgstr "beperkt door diepgang"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -2106,7 +2218,13 @@ msgstr "Kopiëren als KML"
 msgid "Copy as KML..."
 msgstr "Kopiëren als KML ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -2177,7 +2295,15 @@ msgstr "Maak routepunt"
 msgid "Create Waypoint"
 msgstr "Maak routepunt"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -2187,7 +2313,17 @@ msgstr "Maak routepunt"
 msgid "Cruise ship"
 msgstr "cruise schip"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -2334,7 +2470,17 @@ msgstr "donkergeel"
 msgid "Data Connections"
 msgstr "Gegevensverbindingen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -2681,7 +2827,17 @@ msgstr "punt-streep"
 msgid "Dredge"
 msgstr "bag/v"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -2850,7 +3006,17 @@ msgstr "Weerwaarschuwing: storm (cel of stormenlijn)"
 msgid "Environmental Caution Area: Strong currents"
 msgstr "Weerwaarschuwing: sterke stroom"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -2862,8 +3028,17 @@ msgstr "Weerwaarschuwing: sterke stroom"
 msgid "Error on Route Upload.  Please check logfiles..."
 msgstr "Fout bij laden van route. Raadpleeg logbestanden ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -2968,7 +3143,15 @@ msgstr "vis/v"
 msgid "Failed to initialize the user interface. "
 msgstr "Kon de gebruikersinterface niet initialiseren. "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -2994,7 +3177,15 @@ msgstr "vadem"
 msgid "Feet"
 msgstr "voet"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3024,7 +3215,15 @@ msgstr "Filterperiode (sec):"
 msgid "Filters"
 msgstr "Filters"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3066,7 +3265,15 @@ msgstr "Forceer volledige herbouw van database"
 msgid "Format uploads for Furuno GP3X"
 msgstr "Format voor Furuno GP3X uploads"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3076,7 +3283,15 @@ msgstr "Format voor Furuno GP3X uploads"
 msgid "Freightbarge"
 msgstr "vrachtduwbak (VDB)"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3106,7 +3321,18 @@ msgstr "GPS-offset vanaf boeg (m)"
 msgid "GPS Offset from Midship (m)"
 msgstr "GPS-offset vanaf middenlijn (m)"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3143,7 +3369,17 @@ msgstr "GPX"
 msgid "GUID"
 msgstr "GUID"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3172,7 +3408,15 @@ msgstr "NMEA Algemeen"
 msgid "General Options"
 msgstr "Opties Gebruikersinterface"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3212,7 +3456,15 @@ msgstr "Groep \""
 msgid "HSC"
 msgstr "HSV"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3321,7 +3573,15 @@ msgstr "hogesnelheidsvaartuig"
 msgid "Highlight Tracks"
 msgstr "Markeer tracks"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3385,7 +3645,17 @@ msgstr "Importeer GPX-bestand"
 msgid "Important Text Only"
 msgstr "Toon alleen belangrijke tekst"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3397,7 +3667,13 @@ msgstr "Toon alleen belangrijke tekst"
 msgid "In"
 msgstr "In"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3515,7 +3791,15 @@ msgstr "Lokale Middelbare Tijd"
 msgid "LMT @ Track Start"
 msgstr "LMT @ trackstart"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3643,7 +3927,17 @@ msgstr "Deel"
 msgid "Leg: from "
 msgstr "Routedeel: van "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3783,7 +4077,15 @@ msgstr "Links zijn geopend voor aanpassing."
 msgid "Links are opened in the default browser."
 msgstr "Links zijn geopend in de standaard browser."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -3959,8 +4261,17 @@ msgstr "nautische standaard"
 msgid "Mark targets as lost after (min)"
 msgstr "Markeer object als verdwenen na (minuten): "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4035,7 +4346,13 @@ msgstr "Routepunt samenvoegen?"
 msgid "Merge waypoints?"
 msgstr "Routepunten samenvoegen?"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4043,7 +4360,13 @@ msgstr "Routepunten samenvoegen?"
 msgid "Message accepted"
 msgstr "Bericht geaccepteerd"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4089,7 +4412,15 @@ msgstr "Ochtendschemering"
 msgid "Moored"
 msgstr "gemeerd"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4099,7 +4430,15 @@ msgstr "gemeerd"
 msgid "Motor freighter"
 msgstr "motorvrachtschip"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4109,7 +4448,15 @@ msgstr "motorvrachtschip"
 msgid "Motor freighter pushing at least one tank-ship"
 msgstr "lang samenstel, min. 1 MTS"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4119,7 +4466,15 @@ msgstr "lang samenstel, min. 1 MTS"
 msgid "Motor freighter pushing one or more freighters"
 msgstr "lang samenstel, MVS"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4129,7 +4484,15 @@ msgstr "lang samenstel, MVS"
 msgid "Motor freighter with one or more ships alongside"
 msgstr "breed samenstel, MVS"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4139,7 +4502,15 @@ msgstr "breed samenstel, MVS"
 msgid "Motor freighter with tanker"
 msgstr "breed samenstel, min. 1 MTS"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4149,7 +4520,15 @@ msgstr "breed samenstel, min. 1 MTS"
 msgid "Motor freighter, tug"
 msgstr "slepend MVS"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4159,7 +4538,15 @@ msgstr "slepend MVS"
 msgid "Motor tanker"
 msgstr "motortankschip"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4169,7 +4556,15 @@ msgstr "motortankschip"
 msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
 msgstr "motortankschip, droge lading"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4179,7 +4574,15 @@ msgstr "motortankschip, droge lading"
 msgid "Motor tanker, liquid cargo, type C"
 msgstr "motortankschip, vloeibare lading, type C"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4189,7 +4592,15 @@ msgstr "motortankschip, vloeibare lading, type C"
 msgid "Motor tanker, liquid cargo, type N"
 msgstr "motortankschip, vloeibare lading, type N"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4231,7 +4642,13 @@ msgstr "NMEA 0183"
 msgid "NMEA 2000"
 msgstr "NMEA 2000"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4289,7 +4706,17 @@ msgstr "Zet koers uit naar hier"
 msgid "Navigate To This"
 msgstr "Zet koers uit hier naar toe"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4318,7 +4745,17 @@ msgstr "Nieuwe kaartgroep"
 msgid "New Group..."
 msgstr "Nieuwe groep ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4340,7 +4777,13 @@ msgstr "Volgend HW/LW"
 msgid "Nighttime"
 msgstr "'s-Nachts"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4430,7 +4873,15 @@ msgstr "Kaartobjectgegevens"
 msgid "Object Query..."
 msgstr "Kaartobjectgegevens ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4440,7 +4891,15 @@ msgstr "Kaartobjectgegevens ..."
 msgid "Object, not otherwise specified"
 msgstr "object, niet nader gespecificeerd"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4651,7 +5110,13 @@ msgstr "Optionele Instellingen"
 msgid "Other - Define in associated text field"
 msgstr "Overig - Definieer in tekstveld"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4663,7 +5128,17 @@ msgstr "Uit"
 msgid "Output"
 msgstr "Output"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4751,7 +5226,15 @@ msgstr "pas/s"
 msgid "Passenger Ship"
 msgstr "passagierschip"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4761,7 +5244,15 @@ msgstr "passagierschip"
 msgid "Passenger ship without accomodation"
 msgstr "passagierschip zonder accomodatie"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4795,7 +5286,13 @@ msgstr "Plak track"
 msgid "Paste Waypoint"
 msgstr "Plak markeringspunt"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4865,7 +5362,15 @@ msgstr "Start OpenCPN opnieuw om de nieuwe taalkeuze te activeren."
 msgid "Pleasure craft"
 msgstr "pleziervaartuig"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -4993,7 +5498,17 @@ msgstr "aanbevolen vaarwater 'bakboordszijde'"
 msgid "Preferred Channel Starboard Hand"
 msgstr "aanbevolen vaarwater 'stuurboordszijde'"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5015,7 +5530,17 @@ msgstr ""
 msgid "Preserve Scale when Switching Charts"
 msgstr "Behoud zoom-factor wanneer kaart wordt gewisseld"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5112,7 +5637,17 @@ msgstr "Vaar naar deze positie - wacht op instructies"
 msgid "Processing Waypoints..."
 msgstr "Verwerken markeringspunten ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5144,7 +5679,15 @@ msgstr "Eigenschappen ..."
 msgid "Protocol"
 msgstr "Protocol:"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5154,7 +5697,15 @@ msgstr "Protocol:"
 msgid "Pushboat, single"
 msgstr "duwboot losvarend"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5164,7 +5715,15 @@ msgstr "duwboot losvarend"
 msgid "Pushtow, eight barges at least one tanker or gas barge"
 msgstr "duwboot 8 DB - min. 1 (G) TDB"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5174,7 +5733,15 @@ msgstr "duwboot 8 DB - min. 1 (G) TDB"
 msgid "Pushtow, eight cargo barges"
 msgstr "duwboot met 8 vrachtduwbakken"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5184,7 +5751,15 @@ msgstr "duwboot met 8 vrachtduwbakken"
 msgid "Pushtow, five barges at least one tanker or gas barge"
 msgstr "duwboot 5 DB - min. 1 (G) TDB"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5194,7 +5769,15 @@ msgstr "duwboot 5 DB - min. 1 (G) TDB"
 msgid "Pushtow, five cargo barges"
 msgstr "duwboot met 5 vrachtduwbakken"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5204,7 +5787,15 @@ msgstr "duwboot met 5 vrachtduwbakken"
 msgid "Pushtow, four barges at least one tanker or gas barge"
 msgstr "duwboot 4 DB - min. 1 (G) TDB"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5214,7 +5805,15 @@ msgstr "duwboot 4 DB - min. 1 (G) TDB"
 msgid "Pushtow, four cargo barges"
 msgstr "duwboot met 4 vrachtduwbakken"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5224,7 +5823,15 @@ msgstr "duwboot met 4 vrachtduwbakken"
 msgid "Pushtow, nine or more barges"
 msgstr "duwboot met 9+ vrachtduwbakken"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5234,7 +5841,15 @@ msgstr "duwboot met 9+ vrachtduwbakken"
 msgid "Pushtow, nine or more barges at least one tanker or gas barge"
 msgstr "duwboot 9+ DB - min. 1 (G) TDB"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5244,7 +5859,15 @@ msgstr "duwboot 9+ DB - min. 1 (G) TDB"
 msgid "Pushtow, one cargo barge"
 msgstr "duwboot met 1 vrachtduwbak"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5254,7 +5877,15 @@ msgstr "duwboot met 1 vrachtduwbak"
 msgid "Pushtow, one tank/gas barge"
 msgstr "duwboot 1 (G) TDB"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5264,7 +5895,15 @@ msgstr "duwboot 1 (G) TDB"
 msgid "Pushtow, seven barges at least one tanker or gas barge"
 msgstr "duwboot 7 DB - min. 1 (G) TDB"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5274,7 +5913,15 @@ msgstr "duwboot 7 DB - min. 1 (G) TDB"
 msgid "Pushtow, seven cargo barges"
 msgstr "duwboot met 7 vrachtduwbakken"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5284,7 +5931,15 @@ msgstr "duwboot met 7 vrachtduwbakken"
 msgid "Pushtow, six barges at least one tanker or gas barge"
 msgstr "duwboot 6 DB - min. 1 (G) TDB"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5294,7 +5949,15 @@ msgstr "duwboot 6 DB - min. 1 (G) TDB"
 msgid "Pushtow, six cargo barges"
 msgstr "duwboot met 6 vrachtduwbakken"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5304,7 +5967,15 @@ msgstr "duwboot met 6 vrachtduwbakken"
 msgid "Pushtow, three barges at least one tanker or gas barge"
 msgstr "duwboot 3 DB - min. 1 (G) TDB"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5314,7 +5985,15 @@ msgstr "duwboot 3 DB - min. 1 (G) TDB"
 msgid "Pushtow, three cargo barges"
 msgstr "duwboot met 3 vrachtduwbakken"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5324,7 +6003,15 @@ msgstr "duwboot met 3 vrachtduwbakken"
 msgid "Pushtow, two barges at least one tanker or gas barge"
 msgstr "duwboot 2 DB - 1 (G) TDB"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5410,7 +6097,15 @@ msgstr "Opgeslagen routepunten"
 msgid "Red"
 msgstr "rood"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5450,7 +6145,17 @@ msgstr "ref.pt"
 msgid "Reference Point"
 msgstr "referentiepunt "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5462,7 +6167,13 @@ msgstr "referentiepunt "
 msgid "Reference Station :"
 msgstr "Referentiestation: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5602,7 +6313,13 @@ msgstr "Beperkt gebied: niet ankeren"
 msgid "Restricted Manoeuvrability"
 msgstr "beperkt manoeuvreerbaar"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5696,7 +6413,17 @@ msgstr "Route afdrukken"
 msgid "Route Properties"
 msgstr "Route-eigenschappen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5916,7 +6643,17 @@ msgstr ""
 "Selecteer de maximaal toegestane fout (in meters)\n"
 "na gegevensreductie:"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5928,7 +6665,17 @@ msgstr ""
 msgid "Send"
 msgstr "Zend"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -5968,7 +6715,15 @@ msgstr "Stringfilter"
 msgid "Serial"
 msgstr "Serieel"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -6374,7 +7129,13 @@ msgstr "SOG"
 msgid "Solid"
 msgstr "ononderbroken"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -6553,7 +7314,15 @@ msgstr "TCP"
 msgid "TCPA"
 msgstr "TCPA"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -6563,7 +7332,15 @@ msgstr "TCPA"
 msgid "Tankbarge"
 msgstr "tankduwbak (TDB)"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -6573,7 +7350,15 @@ msgstr "tankduwbak (TDB)"
 msgid "Tankbarge, dry cargo as if liquid (e.g. cement)"
 msgstr "tankduwbak (TDB), droge lading"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -6583,7 +7368,15 @@ msgstr "tankduwbak (TDB), droge lading"
 msgid "Tankbarge, gas"
 msgstr "gas-tankduwbak (GTDB)"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -6593,7 +7386,15 @@ msgstr "gas-tankduwbak (GTDB)"
 msgid "Tankbarge, liquid cargo, type C"
 msgstr "tankduwbak (TDB), vloeibare lading, type C"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -6846,7 +7647,17 @@ msgstr "Dit routedeel"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr "Dit routepunt is deel van een kaartlaag en kan niet worden gewijzigd"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -6858,8 +7669,15 @@ msgstr "Dit routepunt is deel van een kaartlaag en kan niet worden gewijzigd"
 msgid "Tide"
 msgstr "Getijhoogte"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -6938,7 +7756,17 @@ msgstr "Naar punt"
 msgid "To route"
 msgstr "Naar route"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -6966,7 +7794,17 @@ msgstr "Tracking Aan/Uit"
 msgid "Toggle track"
 msgstr "Track Aan/Uit"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7107,7 +7945,15 @@ msgstr "Track"
 msgid "Tug"
 msgstr "sleepboot"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7117,7 +7963,15 @@ msgstr "sleepboot"
 msgid "Tug freighter, coupled"
 msgstr "gekoppelde sleep-vrachtschepen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7127,7 +7981,15 @@ msgstr "gekoppelde sleep-vrachtschepen"
 msgid "Tug, assisting a vessel or linked combination"
 msgstr "sleepboot assisterend"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7137,7 +7999,15 @@ msgstr "sleepboot assisterend"
 msgid "Tug, freighter"
 msgstr "sleep-vrachtschip"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7147,7 +8017,15 @@ msgstr "sleep-vrachtschip"
 msgid "Tug, freighter/tanker, coupled"
 msgstr "gekoppelde sleep-sch. min. 1 SL-TS"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7157,7 +8035,15 @@ msgstr "gekoppelde sleep-sch. min. 1 SL-TS"
 msgid "Tug, one or more tows"
 msgstr "sleepboot, 1 of meer aanhangen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7167,7 +8053,15 @@ msgstr "sleepboot, 1 of meer aanhangen"
 msgid "Tug, single"
 msgstr "sleepboot, losvarend"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7242,7 +8136,15 @@ msgstr "varend"
 msgid "Undo"
 msgstr "Herstel"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7402,7 +8304,15 @@ msgstr "vaartuig slepend, lang"
 msgid "Vessel requesting non-distress assistance"
 msgstr "Vaartuig verzoekt assistentie (niet in nood)"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7412,7 +8322,15 @@ msgstr "Vaartuig verzoekt assistentie (niet in nood)"
 msgid "Vessel, type unknown"
 msgstr "vaartuig, type onbekend"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7506,8 +8424,17 @@ msgstr "Routepunteigenschappen"
 msgid "Waypoint Properties, Layer: "
 msgstr "Markeringspunt-eigenschappen, laag:"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7629,7 +8556,13 @@ msgstr "ple/v"
 msgid "Yellow"
 msgstr "geel"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7789,7 +8722,7 @@ msgstr "Het oude logbestand wordt verplaatst naar opencpn.log.log"
 
 #
 msgid "SAR Aircraft"
-msgstr ""
+msgstr "SAR vliegtuig"
 
 #
 msgid ""
@@ -7816,6 +8749,208 @@ msgstr ""
 msgid "Would you like include the Great Circle routing points for this leg?"
 msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
+#
+#
+#
+#
+#
+msgid "   Chart File RLL data corrupt on chart "
+msgstr " Kaartbestand: RLL gegevensfout op kaart "
+
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
+#
+#
+#
+#
+#
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr " Kaartbestand bevat geen BSB-header, kan niet initiëren."
+
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
+#
+#
+#
+#
+#
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr " Kan de eerste %d bytes van de header niet lezen van kaartbestand: "
+
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+msgid "--"
+msgstr "--"
+
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "NMi"
+msgstr "NM"
+
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
+#
+msgid "km"
+msgstr "km"
+
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
+#
+msgid "kts"
+msgstr "Knopen"
+
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
+#
+msgid "m"
+msgstr "m"
+
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
+#
+msgid "mi"
+msgstr "mi"
+
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
+#
+msgid "mph"
+msgstr "mph"
+
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Weet u zeker dat u <ALLE> routes wilt verwijderen?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr "Fout bij laden van markeringspunten. Raadpleeg logbestanden ..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+#, fuzzy
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+"Enkele markeringspunten worden gebruikt in routes of voor ankeralarms. Wilt "
+"u deze ook verwijderen? Daardoor zullen de routes veranderen en de "
+"ankeralarms deactiveren. Het antwoord 'Nee' behoudt de markeringspunten die "
+"worden gebruikt in routes of alarms."
+
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "in "
+msgstr "in"
+
 #
 #
 #
@@ -7825,8 +8960,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Special Position Report"
 #~ msgstr "Speciaal Positierapport"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7845,8 +8997,43 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7889,8 +9076,21 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7911,8 +9111,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "\n"
 #~ "Doorgaan met libgps setup ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7931,8 +9148,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "     Vectorlengte (in tijdminuten): "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7951,8 +9185,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "     Max. vaart geankerde objecten (knopen): "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -7971,26 +9222,36 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "     Tijdsduur tracking (minuten)"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
 #
 #
 #
 #
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr " Kaartbestand: RLL gegevensfout op kaart "
-
 #
 #
 #
 #
 #
 #
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr " Kaartbestand bevat geen BSB-header, kan niet initiëren."
-
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8020,17 +9281,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr " Onbekende kaartprojectie (aanname is Mercator): "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
 #
 #
 #
 #
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr " Kan de eerste %d bytes van de header niet lezen van kaartbestand: "
-
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8068,8 +9356,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "   PlugInManager: Cannot load library: "
 #~ msgstr "   PlugInManager: Kan library niet laden: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8107,8 +9431,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "   PlugInManager: Cannot load symbol create_pi: "
 #~ msgstr "   PlugInManager: Kan symbool create_pi niet laden: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8146,8 +9506,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "   PlugInManager: Cannot load symbol destroy_pi: "
 #~ msgstr "   PlugInManager: Kan symbool destroy_pi niet laden: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8165,8 +9541,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr " Kan de AIS poort niet openen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8184,8 +9576,14 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "  Could not open serial port '"
 #~ msgstr " Kan de seriële poort niet openen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8193,8 +9591,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid " </b>in<b> "
 #~ msgstr " </b>in<b> "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8211,8 +9624,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid " COG: %03d Deg."
 #~ msgstr "COG: %03d°"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8229,8 +9657,16 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid " COG: 000 Deg."
 #~ msgstr "COG: 000°"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8240,8 +9676,18 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid " is %5g"
 #~ msgstr " is %5g"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8253,8 +9699,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "&Export Track..."
 #~ msgstr "&Exporteer track ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8276,8 +9738,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "'\n"
 #~ "Suggestie: probeer 'xxx.xxx.xxx.xxx' notatie."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8299,8 +9777,32 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "'\n"
 #~ "Suggestie: probeer andere applicaties te sluiten."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8326,6 +9828,7 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "(m)"
 #~ msgstr "(m)"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
 #
@@ -8334,11 +9837,17 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #
 #
 #
-#~ msgid "--"
-#~ msgstr "--"
-
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8358,8 +9867,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid ":               "
 #~ msgstr ":       "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8385,8 +9912,21 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8401,8 +9941,37 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "<--Remove"
 #~ msgstr "<--Verwijder"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8434,8 +10003,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "AIS SART Alert"
 #~ msgstr "AIS waarschuwing"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8452,8 +10036,34 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "Activeer CM93 offsets"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8481,8 +10091,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Activate Route"
 #~ msgstr "Activeer route"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8500,8 +10126,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Active Charts"
 #~ msgstr "Actieve Kaarten"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8520,8 +10163,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Add Selection"
 #~ msgstr "Voeg selectie toe"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8539,8 +10198,21 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Voeg deze kaart toe aan samenvoeging."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8555,8 +10227,39 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Add-->"
 #~ msgstr "Toevoegen-->"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8589,8 +10292,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Additional information"
 #~ msgstr "Aanvullende informatie"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8609,8 +10329,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Alle bestanden (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8628,8 +10364,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Poort voor autopilot"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8648,8 +10401,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Available Chart Directories"
 #~ msgstr "Beschikbare Kaartmappen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8687,8 +10476,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "BaseClassCommonName"
 #~ msgstr "BaseClassCommonName"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8708,8 +10515,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Peiling:                  %03d°\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8729,8 +10554,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Peiling:                  niet beschikbaar\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8749,8 +10591,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8769,8 +10627,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Activeer CM93 detail-schuifbalk"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8787,8 +10660,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "CM93 Offset Display"
 #~ msgstr "CM93 Offsets Weergave"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8805,8 +10693,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "CM93 Offsets"
 #~ msgstr "CM93 Offsets"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8825,8 +10730,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "CM93 zoomdetail"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8846,8 +10769,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "CPA:       \n"
 #~ msgstr "CPA:       \n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8867,8 +10808,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f NM\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8894,8 +10851,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "\n"
 #~ "gpsd host is: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8915,8 +10890,14 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "CallSign:             "
 #~ msgstr "Roepnaam:         "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8925,8 +10906,38 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgstr ""
 #~ "Kan routepunt niet verzenden. De opgegeven seriële poort is niet gevonden."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8958,8 +10969,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Chart"
 #~ msgstr "Kaart"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8978,8 +11006,21 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Chart Display Filters"
 #~ msgstr "Filters Kaartweergave"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -8994,8 +11035,21 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Chart Groups..."
 #~ msgstr "Kaartgroepen ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9010,8 +11064,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Chart Groups...New Group"
 #~ msgstr "Kaartgroepen ... Nieuwe groep"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9030,8 +11100,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Chart Position"
 #~ msgstr "Positie"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9051,8 +11139,17 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Class:                "
 #~ msgstr "Klasse:       "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9063,8 +11160,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Copy"
 #~ msgstr "Kopiëren"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9082,8 +11195,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "Kan TCP/IP host niet vinden"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9103,8 +11234,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "Koers:               %03d°\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9124,8 +11273,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Koers:               000°\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9145,8 +11312,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "Koers:                    niet beschikbaar\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9165,8 +11349,34 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Cursor: "
 #~ msgstr "POS cursor: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9194,8 +11404,36 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Deactivate Route"
 #~ msgstr "Deactiveer route"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9225,8 +11463,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Default dataset"
 #~ msgstr "standaard gegevens "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9243,8 +11496,34 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Deg"
 #~ msgstr "°"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9272,8 +11551,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Delete Mark"
 #~ msgstr "Markeringspunt verwijderen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9292,8 +11588,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Delete Route"
 #~ msgstr "Route verwijderen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9312,8 +11625,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Delete Selection"
 #~ msgstr "Selectie verwijderen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9332,8 +11662,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Delete Track"
 #~ msgstr "Track verwijderen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9352,8 +11699,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Depth Settings"
 #~ msgstr "Diepteinstellingen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9373,8 +11738,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Destination:          "
 #~ msgstr "Bestemming:          "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9393,8 +11774,18 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Display Style"
 #~ msgstr "Stijl Kaartweergave"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9406,8 +11797,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "E&xport All..."
 #~ msgstr "E&xporteer alles ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9426,8 +11834,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Vector"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9447,8 +11873,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "ETA:"
 #~ msgstr "ETA:"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9468,8 +11912,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "ETA:                  "
 #~ msgstr "ETA:                 "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9507,8 +11987,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "ETE/Timestamp"
 #~ msgstr "Vaartijd/Tijdstip"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9525,8 +12020,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "Activeer handmatige CM93 offsets"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9545,8 +12057,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Activeer Zoom-met-Muiswiel-naar-Cursorpositie"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9565,8 +12094,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Etc."
 #~ msgstr "Overig"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9586,8 +12132,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "WP cursor: %03d° | %6.2f NM"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9606,8 +12169,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9625,8 +12204,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "GPSD Data Server"
 #~ msgstr "GPSD dataserver"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9645,8 +12241,34 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Go To Here"
 #~ msgstr "Ga naar hier"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9674,8 +12296,21 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Ga naar markeringspunt/routepunt"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9690,8 +12325,33 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Groups"
 #~ msgstr "Groepen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9718,8 +12378,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Harmonic dataset to use:"
 #~ msgstr "Te gebruiken harmonische gegevens:"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9739,8 +12417,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Peiling:                  %03d°\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9760,8 +12456,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "IMO:                 %8d\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9781,8 +12495,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Inland Blue Flag        Clear\n"
 #~ msgstr "Blauwe Bord binnenwateren     Verwijder\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9801,8 +12532,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Jump To"
 #~ msgstr "Spring naar"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9821,8 +12569,32 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Jump To Position"
 #~ msgstr "Spring naar positie"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9848,8 +12620,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Jump To Position..."
 #~ msgstr "Spring naar positie ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9869,8 +12658,18 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Jump To..."
 #~ msgstr "Spring naar"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9882,8 +12681,36 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Just "
 #~ msgstr "Precies"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9913,8 +12740,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Language/Fonts"
 #~ msgstr "Taal/Lettertype"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9934,8 +12779,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Laatste rapportagetijdstip: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9954,8 +12816,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Leg/Route"
 #~ msgstr "Routedeel<>Route"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -9974,8 +12853,39 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "META Objects"
 #~ msgstr "Toon metagegevens"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10008,8 +12918,39 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "MMSI:                 %09d\n"
 #~ msgstr "MMSI:                 %09d\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10042,8 +12983,39 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Mark Icon"
 #~ msgstr "Markeringspunt-icoon"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10076,8 +13048,18 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Mark Name"
 #~ msgstr "Markeringspunt-naam"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10089,8 +13071,34 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Mark Properties"
 #~ msgstr "Markeringspunt-eigenschappen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10118,8 +13126,34 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Markeringspunt-/Routepunt-eigenschappen ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10147,8 +13181,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Measure....."
 #~ msgstr "Meten Aan"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10167,8 +13218,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Metres"
 #~ msgstr "meter"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10186,8 +13253,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "NMEA Data Source"
 #~ msgstr "NMEA databron"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10206,6 +13290,7 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "NMEA Options"
 #~ msgstr "NMEA Opties"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
 #
@@ -10219,11 +13304,12 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #
 #
 #
-#~ msgid "NMi"
-#~ msgstr "NM"
-
 #
 #
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10243,8 +13329,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Name:  "
 #~ msgstr " Naam: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10264,8 +13368,42 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Navigational Status:  "
 #~ msgstr "Navigatiestatus: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10301,8 +13439,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "New Mark"
 #~ msgstr "markering, nieuw gevaar"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10321,8 +13475,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Number of Radar Rings"
 #~ msgstr "   Aantal te tonen cirkels: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10360,8 +13550,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "OpenCPN PlugIn Base Class"
 #~ msgstr "OpenCPN PlugIn Basis Klasse"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10403,8 +13629,17 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "OpenCPN PlugIn Basis Klasse\n"
 #~ "PlugInManager heeft deze klasse gecreëerd."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10415,8 +13650,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Other"
 #~ msgstr "andere"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10435,8 +13686,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Weergaveoptie Eigen Vaartuig"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10455,8 +13722,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "Plaats trackpunten met afstandinterval van (zeemijl): "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10475,8 +13758,18 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Plaats trackpunten met tijdinterval van (seconden):"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10488,8 +13781,43 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Verwachte vaart (knopen)"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10526,8 +13854,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "PlugInManager searching for PlugIns in location "
 #~ msgstr "PlugInManager zoekt naar PlugIns op lokatie"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10565,8 +13929,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "PlugInManager: Deactivating PlugIn: "
 #~ msgstr "PlugInManager: Deactiveert PlugIn: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10604,8 +14004,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "PlugInManager: Initializing PlugIn: "
 #~ msgstr "PlugInManager: Initialiseert PlugIn: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10643,8 +14079,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "PlugInManager: Loading PlugIn: "
 #~ msgstr "PlugInManager: Laadt PlugIn: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10682,8 +14154,44 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "PlugInManager: UnLoading PlugIn: "
 #~ msgstr "PlugInManager: Verwijdert PlugIn: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10721,8 +14229,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "PlugInManager: Unloading PlugIn with invalid API version %d.%d: "
 #~ msgstr "PlugInManager: Verwijdert PlugIn met verkeerde API versie %d.%d:"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10746,8 +14272,43 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "Ouderdom rapportage:           %3d sec\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10784,8 +14345,36 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Position:               "
 #~ msgstr "Positie:"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10823,8 +14412,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "\n"
 #~ "Wilt u deze versie van Libgps toch gebruiken?"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10842,8 +14447,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Radar rings"
 #~ msgstr "Weergaveopties Afstandcirkels"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10863,8 +14486,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Afstand:                niet beschikbaar\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10884,8 +14525,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Afstand:                %5.1f NM\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10904,8 +14562,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Raster"
 #~ msgstr "Raster"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10925,8 +14601,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Draaisnelheid:             %3d°/min. BB\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10946,8 +14640,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Draaisnelheid:             %3d°/min. SB\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10967,8 +14679,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Draaisnelheid:              0\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -10988,8 +14718,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Draaisnelheid:             > 5°/30 sec. BB\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11009,8 +14757,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Draaisnelheid:             > 5°/30 sec. SB\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11029,8 +14793,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Verwijder deze kaart uit samenvoeging."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11048,8 +14828,15 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Verwijder deze kaart uit samenvoeging."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11058,8 +14845,34 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "RenderHPGL: The '%s' instruction is not implemented."
 #~ msgstr "RenderHPGL: de '%s' instructie is niet uitgevoerd."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11087,8 +14900,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Reverse Route"
 #~ msgstr "Route omdraaien"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11107,8 +14937,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Route Properties..."
 #~ msgstr "Route-eigenschappen ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11128,8 +14975,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Route/Track"
 #~ msgstr "Maak route van track"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11148,8 +15012,18 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Selecteer kaarttypen voor samenvoeging"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11161,8 +15035,34 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Send to GPS ( "
 #~ msgstr "Zend naar GPS ("
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11190,8 +15090,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Koers-Boven presentatie"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11210,8 +15127,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Settings"
 #~ msgstr "Schermweergave"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11230,8 +15164,36 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Show ATON labels"
 #~ msgstr "Toon labels bij navigatiesymbolen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11261,8 +15223,36 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Show Printing Icon"
 #~ msgstr "Toon afdruk-icoon"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11292,8 +15282,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Show Track icon"
 #~ msgstr "Toon track-icoon"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11310,8 +15315,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Show layers initially"
 #~ msgstr "Toon kaartlagen initieel"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11335,8 +15358,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "Grootte:                %dm x %dm \n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11360,8 +15401,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "Grootte:                %dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11385,8 +15444,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "Grootte:                %dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11410,8 +15487,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "Grootte:                ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11435,8 +15530,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "Grootte:                ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11460,8 +15573,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "Grootte:                %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11485,8 +15616,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "Grootte:                %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11506,8 +15655,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Vaart:            niet beschikbaar\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11527,8 +15694,16 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Vaart:                %5.2f knopen\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11538,8 +15713,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "T"
 #~ msgstr "Naar"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11558,8 +15750,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "TCP/IP WiFi dataserver"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11579,8 +15789,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "TCPA:  \n"
 #~ msgstr "TCPA:  \n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11600,8 +15828,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA:                 %02d:%02d uur:min\n"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11620,8 +15865,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Text Element"
 #~ msgstr "Tekstelement"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11641,8 +15903,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "Getijden && Stromen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11660,8 +15937,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Tide/Current Data Selector"
 #~ msgstr "Info getijgrafiek bij aanwijzen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11680,8 +15974,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "ToolBox"
 #~ msgstr "Toolbox voor instellingen"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11700,8 +16011,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Track Properties..."
 #~ msgstr "Track-eigenschappen ..."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11720,8 +16048,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "Schaal 1 : %8.0f         "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11741,8 +16087,26 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Type:                 "
 #~ msgstr "Type:               "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11762,8 +16126,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "UN Ship Type:         "
 #~ msgstr "VN scheepstype: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11787,8 +16167,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "\n"
 #~ "gpsd host is: "
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11806,8 +16202,18 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Unable to load libgps"
 #~ msgstr "Kan libgps niet laden."
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11819,8 +16225,24 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Unavailable"
 #~ msgstr "niet beschikbaar"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11838,8 +16260,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Units"
 #~ msgstr "Eenheid voor afstandcirkels"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11856,8 +16293,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Use OpenGL"
 #~ msgstr "Gebruik OpenGL"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11876,8 +16330,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Use SCAMIN"
 #~ msgstr "Gebruik SCAMIN"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11896,8 +16367,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Waypoint Locking"
 #~ msgstr "Route- en Markeringspunten Vastzetten"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11916,8 +16404,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "WiFi Options"
 #~ msgstr "WiFi opties"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11934,8 +16437,23 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "X Offset (Positive moves map to East) (NMi Projected) :"
 #~ msgstr "     X offset (in NM; positief verplaatst kaart naar oosten):"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11952,8 +16470,25 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "Y Offset (Positive moves map to North) (NMi Projected) :"
 #~ msgstr "     Y offset (in NM; positief verplaatst kaart naar noorden):"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -11972,18 +16507,36 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ msgid "cm93 Detail"
 #~ msgstr "cm93 detail"
 
+# #-#-#-#-#  .merge_file_dC3XdI (opencpn 3.3.1117)  #-#-#-#-#
 #
 #
-#~ msgid "km"
-#~ msgstr "km"
-
 #
 #
-#~ msgid "kts"
-#~ msgstr "Knopen"
-
 #
 #
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_x2X5Ew (opencpn 3.3.1419)  #-#-#-#-#
 #
 #
 #
@@ -12021,18 +16574,3 @@ msgstr "Wilt u voor dit routedeel grootcirkel routepunten opnemen?"
 #~ "OpenCPN heeft versie %d.%d gevonden, maar vereist tenminste versie 3.0\n"
 #~ "\n"
 #~ "Wilt u deze versie van libgps toch gebruiken?"
-
-#
-#
-#~ msgid "m"
-#~ msgstr "m"
-
-#
-#
-#~ msgid "mi"
-#~ msgstr "mi"
-
-#
-#
-#~ msgid "mph"
-#~ msgstr "mph"

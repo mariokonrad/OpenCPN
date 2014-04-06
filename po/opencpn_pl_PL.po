@@ -289,6 +289,20 @@ msgstr ""
 msgid "%H:%M"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -357,6 +371,20 @@ msgstr "&Rodzaj czcionki:"
 msgid "&Go To"
 msgstr "&Idź do"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -427,6 +455,20 @@ msgstr "Odw&róć drogę"
 msgid "&Send to GPS"
 msgstr "Wyślij do &GPS..."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -736,6 +778,20 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -799,6 +855,20 @@ msgstr "Pokaż listę obiektów AIS"
 msgid "AISRollover"
 msgstr "Najazd na obiekt AIS"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1890,6 +1960,20 @@ msgstr "Usuń punkt drogi"
 msgid "Cruise ship"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2006,6 +2090,20 @@ msgstr ""
 msgid "Data Connections"
 msgstr "Opcje czcionki"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2308,6 +2406,20 @@ msgstr ""
 msgid "Dredge"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2462,6 +2574,20 @@ msgstr ""
 msgid "Environmental Caution Area: Strong currents"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2611,6 +2737,20 @@ msgstr "Okres filtrowania (s.)"
 msgid "Filters"
 msgstr "&Kilometry"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2681,6 +2821,21 @@ msgstr ""
 msgid "GPS Offset from Midship (m)"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2714,6 +2869,20 @@ msgstr "GPS"
 msgid "GUID"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2907,6 +3076,20 @@ msgstr "Importuj plik GPX"
 msgid "Important Text Only"
 msgstr "Pokaż tylko istotne teksty"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3138,6 +3321,20 @@ msgstr "Odcinek"
 msgid "Leg: from "
 msgstr "Odcinek: od "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3692,6 +3889,20 @@ msgstr "Mapy"
 msgid "New Group..."
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3979,6 +4190,20 @@ msgstr ""
 msgid "Output"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4252,6 +4477,20 @@ msgstr "Główny tor, lewa strona"
 msgid "Preferred Channel Starboard Hand"
 msgstr "Główny tor, prawa strona"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4272,6 +4511,20 @@ msgstr "Przygotuj GPS do odebrania Dróg/Punktów drogi i naciśnij Wyślij..."
 msgid "Preserve Scale when Switching Charts"
 msgstr "Zachowaj skalę przy zmianie map"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4364,6 +4617,20 @@ msgstr ""
 msgid "Processing Waypoints..."
 msgstr "Przetwarzanie punktów drogi..."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4569,6 +4836,20 @@ msgstr ""
 msgid "Reference Point"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4782,6 +5063,20 @@ msgstr "Właściwości drogi"
 msgid "Route Properties"
 msgstr "Właściwości drogi"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4968,6 +5263,20 @@ msgid ""
 "after data reduction:"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4981,6 +5290,20 @@ msgstr ""
 msgid "Send"
 msgstr "Wyślij"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5391,6 +5714,13 @@ msgstr ""
 msgid "Special Mark"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 # 
 # 
@@ -5748,6 +6078,20 @@ msgstr "Ten odcinek"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5826,6 +6170,20 @@ msgstr "Do punktu drogi"
 msgid "To route"
 msgstr "Czas w drodze"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5852,6 +6210,20 @@ msgstr "Włącz/wyłącz ślad"
 msgid "Toggle track"
 msgstr "Włącz/wyłącz ślad"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6580,6 +6952,147 @@ msgstr ""
 msgid "mph"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+# 
+# 
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "   Plik mapy uszkodzony w RLL "
+
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+# 
+# 
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "   Chart file has no BSB header, cannot Init."
+
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+# 
+# 
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "   Could not read first %d bytes of header for chart file: "
+
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+# 
+# 
+msgid "--"
+msgstr "--"
+
+#
+# 
+# 
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Naprawdę chcesz usunąć <WSZYSTKIE> drogi?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr "Błąd w przesyłaniu punktu. Sprawdź pliki dziennika..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+# 
+# 
+#, fuzzy
+msgid "in "
+msgstr "Odsyłacze"
+
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -6608,6 +7121,54 @@ msgstr ""
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -6662,6 +7223,34 @@ msgstr ""
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -6690,6 +7279,34 @@ msgstr ""
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "      Długość strzałki przewidywanego COG (minuty):"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -6718,6 +7335,34 @@ msgstr ""
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "      Max prędkość obiektu uznanego za nieruchomy (w.):"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -6746,20 +7391,47 @@ msgstr ""
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "      Długość śladu obiektów (minuty):"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
 # 
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "   Plik mapy uszkodzony w RLL "
-
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
 #
-#
-# 
-# 
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "   Chart file has no BSB header, cannot Init."
-
 #
 #
 #
@@ -6801,13 +7473,55 @@ msgstr ""
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "   Chart projection is UNKNOWN, assuming Mercator: "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 # 
 # 
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "   Could not read first %d bytes of header for chart file: "
-
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -6857,6 +7571,55 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load library: "
 #~ msgstr "  Wtyczki: nie można załadować biblioteki "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -6906,6 +7669,55 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load symbol create_pi: "
 #~ msgstr "  Wtyczki: nie można załadować symbolu create_pi"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -6955,6 +7767,33 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load symbol destroy_pi: "
 #~ msgstr "  Wtyczki: nie można załadować symbolu destroy_pi"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -6982,6 +7821,33 @@ msgstr ""
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr " Nie można otworzyć portu szeregowego AIS '"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7009,6 +7875,15 @@ msgstr ""
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  Nie mogę otworzyć portu szeregowego'"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7018,6 +7893,20 @@ msgstr ""
 #~ msgid " is %5g"
 #~ msgstr " is %5g"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7032,6 +7921,64 @@ msgstr ""
 #~ msgid "&Export Track..."
 #~ msgstr "&Eksportuj ślad..."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7090,6 +8037,33 @@ msgstr ""
 #~ msgid "&Toggle Chart"
 #~ msgstr "Wł./Wył. na mapie"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7121,6 +8095,33 @@ msgstr ""
 #~ "'\n"
 #~ " Sugestia: Spróbuj notacji 'xxx.xxx.xxx.xxx'"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7152,15 +8153,35 @@ msgstr ""
 #~ "'\n"
 #~ "Sugestia: Spóbuj zamknąć inne aplikacje."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
 #
 # 
 # 
-#~ msgid "--"
-#~ msgstr "--"
-
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7191,6 +8212,35 @@ msgstr ""
 #~ msgid ":               "
 #~ msgstr "Klasa:                "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7224,6 +8274,48 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Namiar:                b.d.\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7267,6 +8359,34 @@ msgstr ""
 #~ msgid "AIS SART Alert"
 #~ msgstr "Ostrzeżenie AIS"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7295,6 +8415,43 @@ msgstr ""
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "Włącz przesunięcie CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7332,6 +8489,34 @@ msgstr ""
 #~ msgid "Activate Route"
 #~ msgstr "Aktywuj drogę"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7360,6 +8545,33 @@ msgstr ""
 #~ msgid "Add Selection"
 #~ msgstr "Dodaj wybrane"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7387,6 +8599,50 @@ msgstr ""
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Dodaj tę mapę do sklejki."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7431,6 +8687,34 @@ msgstr ""
 #~ msgid "Additional information"
 #~ msgstr "Informacje dodatkowe"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7459,6 +8743,58 @@ msgstr ""
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Wszystkie pliki (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7511,6 +8847,33 @@ msgstr ""
 #~ msgid "Attempting to load libgps.so"
 #~ msgstr "Próba załadowania libgps.so"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7538,6 +8901,34 @@ msgstr ""
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Port wyjścia autopilota"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7566,6 +8957,55 @@ msgstr ""
 #~ msgid "Available Chart Directories"
 #~ msgstr "Katalogi dostępnych map"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7615,6 +9055,35 @@ msgstr ""
 #~ msgid "BaseClassCommonName"
 #~ msgstr "BaseClassCommonName"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7644,6 +9113,35 @@ msgstr ""
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Namiar:                 %03d Deg.\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7673,6 +9171,34 @@ msgstr ""
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Namiar:                b.d.\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7701,6 +9227,33 @@ msgstr ""
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7729,6 +9282,34 @@ msgstr ""
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Pokaż regulator szczegółów CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7757,6 +9338,72 @@ msgstr ""
 #~ msgid "CM93 Offset Display"
 #~ msgstr "Wyswietl przesunięcie CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7823,6 +9470,72 @@ msgstr ""
 #~ msgid "CM93 Offset Off"
 #~ msgstr "Przesunięcie CM93 wyłączone"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7889,6 +9602,72 @@ msgstr ""
 #~ msgid "CM93 Offset On"
 #~ msgstr "Przesunięcie CM93 włączone"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -7955,6 +9734,72 @@ msgstr ""
 #~ msgid "CM93 Offset Tool Off"
 #~ msgstr "Wyłącz narzędzie przesuwania CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8021,6 +9866,34 @@ msgstr ""
 #~ msgid "CM93 Offset Tool....."
 #~ msgstr "Narzędzie przesuwania CM93..."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8049,6 +9922,72 @@ msgstr ""
 #~ msgid "CM93 Offsets"
 #~ msgstr "Przesunięcia CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8115,6 +10054,34 @@ msgstr ""
 #~ msgid "CM93 Offsets On"
 #~ msgstr "Włącz przesunięcia CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8143,6 +10110,35 @@ msgstr ""
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "Poziom szczegółowości CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8172,6 +10168,35 @@ msgstr ""
 #~ msgid "CPA:       \n"
 #~ msgstr "CPA:       \n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8201,6 +10226,33 @@ msgstr ""
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f Mm\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8236,6 +10288,35 @@ msgstr ""
 #~ "\n"
 #~ "węzeł gpsd:"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8265,6 +10346,70 @@ msgstr ""
 #~ msgid "CallSign:             "
 #~ msgstr "Sygn. wyw.:           "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8330,6 +10475,70 @@ msgstr ""
 #~ msgid "Cell X Offset"
 #~ msgstr "Ustaw przesunięcie CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8395,6 +10604,49 @@ msgstr ""
 #~ msgid "Cell Y Offset"
 #~ msgstr "Ustaw przesunięcie CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8438,6 +10690,34 @@ msgstr ""
 #~ msgid "Chart"
 #~ msgstr "Mapa"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8466,6 +10746,33 @@ msgstr ""
 #~ msgid "Chart Display Filters"
 #~ msgstr "Filtry wyświetlania map"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8494,6 +10801,35 @@ msgstr ""
 #~ msgid "Chart Position"
 #~ msgstr "Pozycja"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8523,6 +10859,33 @@ msgstr ""
 #~ msgid "Class:                "
 #~ msgstr "Klasa:                "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8550,6 +10913,35 @@ msgstr ""
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "Nie można rozwiązać adresu węzła TCP/IP"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8579,6 +10971,35 @@ msgstr ""
 #~ msgid "Course:                 %03d Deg.\n"
 #~ msgstr "Kurs:                 %03d Deg.\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8608,6 +11029,35 @@ msgstr ""
 #~ msgid "Course:                 000 Deg.\n"
 #~ msgstr "Kurs:                 000 Deg.\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8637,6 +11087,34 @@ msgstr ""
 #~ msgid "Course:                 Unavailable\n"
 #~ msgstr "Kurs:                 b.d.\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8665,6 +11143,43 @@ msgstr ""
 #~ msgid "Cursor: "
 #~ msgstr "Kursor :  "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8702,6 +11217,46 @@ msgstr ""
 #~ msgid "Deactivate Route"
 #~ msgstr "Dezaktywuj drogę"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8743,6 +11298,34 @@ msgstr ""
 #~ msgid "Default dataset"
 #~ msgstr "Kolor domyślny"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8772,6 +11355,43 @@ msgstr ""
 #~ msgid "Deg"
 #~ msgstr "Odcinek"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8809,6 +11429,34 @@ msgstr ""
 #~ msgid "Delete Mark"
 #~ msgstr "Usuń znak"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8837,6 +11485,34 @@ msgstr ""
 #~ msgid "Delete Route"
 #~ msgstr "Usuń drogę"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8865,6 +11541,34 @@ msgstr ""
 #~ msgid "Delete Selection"
 #~ msgstr "Usuń wybrane"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8893,6 +11597,34 @@ msgstr ""
 #~ msgid "Delete Track"
 #~ msgstr "Usuń ślad"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8921,6 +11653,35 @@ msgstr ""
 #~ msgid "Depth Settings"
 #~ msgstr "Ustawienia głębokości"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8950,6 +11711,33 @@ msgstr ""
 #~ msgid "Destination:          "
 #~ msgstr "Port przeznaczenia: "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8978,6 +11766,23 @@ msgstr ""
 #~ msgid "Display Style"
 #~ msgstr "Styl wyświetlania map"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -8995,6 +11800,34 @@ msgstr ""
 #~ msgid "E&xport All..."
 #~ msgstr "E&xportuj wszystko..."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9023,6 +11856,35 @@ msgstr ""
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Wektorowe"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9052,6 +11914,35 @@ msgstr ""
 #~ msgid "ETA:"
 #~ msgstr "ETA:"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9081,6 +11972,55 @@ msgstr ""
 #~ msgid "ETA:                  "
 #~ msgstr "ETA:         "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9130,6 +12070,34 @@ msgstr ""
 #~ msgid "ETE/Timestamp"
 #~ msgstr "ETE/Znacznik czasu"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9158,6 +12126,34 @@ msgstr ""
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "Włącz ręczne ustawianie przesunięć CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9186,6 +12182,34 @@ msgstr ""
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Uaktywnij funkcję skalowania pokrętłem"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9214,6 +12238,58 @@ msgstr ""
 #~ msgid "Etc."
 #~ msgstr "Itd."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9266,6 +12342,58 @@ msgstr ""
 #~ msgid "Failed to load libgps.so"
 #~ msgstr "Błąd ładowania libgps.so"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9318,6 +12446,34 @@ msgstr ""
 #~ msgid "Failed to load libgps.so.19"
 #~ msgstr "Błąd ładowania libgps.so.19"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9347,6 +12503,34 @@ msgstr ""
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "Od statku :  %03d Deg  %6.2f Mm"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9375,6 +12559,33 @@ msgstr ""
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9402,6 +12613,34 @@ msgstr ""
 #~ msgid "GPSD Data Server"
 #~ msgstr "Serwer danych GPSD"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9430,6 +12669,43 @@ msgstr ""
 #~ msgid "Go To Here"
 #~ msgstr "Płyń tutaj"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9467,6 +12743,35 @@ msgstr ""
 #~ msgid "Go To Mark/WP"
 #~ msgstr "Płyń do znaku/punktu drogi"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9497,6 +12802,35 @@ msgstr ""
 #~ msgid "Heading:                %03d Deg.\n"
 #~ msgstr "Namiar:                 %03d Deg.\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9527,6 +12861,64 @@ msgstr ""
 #~ msgid "IMO:                 %8d\n"
 #~ msgstr "ETA:         "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9585,6 +12977,35 @@ msgstr ""
 #~ msgid "Import new layer"
 #~ msgstr "Importuj nową warstwę"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9614,6 +13035,34 @@ msgstr ""
 #~ msgid "Inland Blue Flag        Clear\n"
 #~ msgstr "Błekitny znacznik (śródląd.)     Kasuj \n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9642,6 +13091,34 @@ msgstr ""
 #~ msgid "Jump To"
 #~ msgstr "Skocz do"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9670,6 +13147,43 @@ msgstr ""
 #~ msgid "Jump To Position"
 #~ msgstr "Skocz do pozycji"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9707,6 +13221,34 @@ msgstr ""
 #~ msgid "Jump To Position..."
 #~ msgstr "Mapa do pozycji..."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9736,6 +13278,47 @@ msgstr ""
 #~ msgid "Jump To..."
 #~ msgstr "Skocz do"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9777,6 +13360,35 @@ msgstr ""
 #~ msgid "Language/Fonts"
 #~ msgstr "Język/Czcionki"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9806,6 +13418,34 @@ msgstr ""
 #~ msgid "Last Position Report Time:  "
 #~ msgstr "Czas ostatniego raportu:"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9834,6 +13474,34 @@ msgstr ""
 #~ msgid "Leg/Route"
 #~ msgstr "Odcinek/droga"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9862,6 +13530,50 @@ msgstr ""
 #~ msgid "META Objects"
 #~ msgstr "META Obiekty"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9907,6 +13619,50 @@ msgstr ""
 #~ msgid "MMSI:                 %09d\n"
 #~ msgstr "ETA:         "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9951,6 +13707,50 @@ msgstr ""
 #~ msgid "Mark Icon"
 #~ msgstr "Ikona znaku"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -9995,6 +13795,23 @@ msgstr ""
 #~ msgid "Mark Name"
 #~ msgstr "Nazwa znaku"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10012,6 +13829,43 @@ msgstr ""
 #~ msgid "Mark Properties"
 #~ msgstr "Właściwości znaku/punktu drogi"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10050,6 +13904,43 @@ msgstr ""
 #~ msgid "Mark/WP Properties..."
 #~ msgstr "Właściwości znaku/punktu drogi"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10087,6 +13978,34 @@ msgstr ""
 #~ msgid "Measure....."
 #~ msgstr "Mierz..."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10115,6 +14034,33 @@ msgstr ""
 #~ msgid "Metres"
 #~ msgstr "Metry"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10142,6 +14088,34 @@ msgstr ""
 #~ msgid "NMEA Data Source"
 #~ msgstr "Źródło danych NMEA"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10170,6 +14144,35 @@ msgstr ""
 #~ msgid "NMEA Options"
 #~ msgstr "Opcje NMEA"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10199,6 +14202,35 @@ msgstr ""
 #~ msgid "Name:  "
 #~ msgstr "Nazwa: "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10228,6 +14260,53 @@ msgstr ""
 #~ msgid "Navigational Status:  "
 #~ msgstr "Status nawigacyjny:   "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10275,6 +14354,33 @@ msgstr ""
 #~ msgid "New Mark"
 #~ msgstr "Nowy znak"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10303,6 +14409,55 @@ msgstr ""
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Ilość pokazywanych kręgów radaru"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10352,6 +14507,55 @@ msgstr ""
 #~ msgid "OpenCPN PlugIn Base Class"
 #~ msgstr "Bazowa klasa wtyczki OpenCPN"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10405,6 +14609,19 @@ msgstr ""
 #~ "Bazowa klasa wtyczki OpenCPN\n"
 #~ "utworzona przez modul obsługi wtyczek"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10418,6 +14635,33 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Inne"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10446,6 +14690,33 @@ msgstr ""
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Opcje wyświetlania mapy"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10474,6 +14745,33 @@ msgstr ""
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "Stawiaj punkty śladu w odstępach odległości (Mm):"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10502,6 +14800,20 @@ msgstr ""
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Stawiaj punkty śladu w odstępach czasu (sekundy):"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10516,6 +14828,55 @@ msgstr ""
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Planowana prędkość (w.)"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10565,6 +14926,55 @@ msgstr ""
 #~ msgid "PlugInManager searching for PlugIns in location "
 #~ msgstr "Wtyczkii: szukanie wtyczek w "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10614,6 +15024,55 @@ msgstr ""
 #~ msgid "PlugInManager: Deactivating PlugIn: "
 #~ msgstr "Wtyczki: odłączanie "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10663,6 +15122,55 @@ msgstr ""
 #~ msgid "PlugInManager: Initializing PlugIn: "
 #~ msgstr "Wtyczki: inicjalizacja "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10712,6 +15220,55 @@ msgstr ""
 #~ msgid "PlugInManager: Loading PlugIn: "
 #~ msgstr "Wtyczki: ładowanie"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10761,6 +15318,55 @@ msgstr ""
 #~ msgid "PlugInManager: UnLoading PlugIn: "
 #~ msgstr "Wtyczki: usuwanie "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10810,6 +15416,35 @@ msgstr ""
 #~ msgid "PlugInManager: Unloading PlugIn with invalid API version %d.%d: "
 #~ msgstr "Wtyczki: odstawiona wtyczka o błędnym numerze wersji API %d.%d:"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10841,6 +15476,54 @@ msgstr ""
 #~ "\n"
 #~ msgstr "Wiek raportu:                  %3d sek.\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10889,6 +15572,47 @@ msgstr ""
 #~ msgid "Position:               "
 #~ msgstr "Pozycja:              "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10938,6 +15662,33 @@ msgstr ""
 #~ "\n"
 #~ "                              Czy mimo to chcesz użyć tej wersji libgps?"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10965,6 +15716,35 @@ msgstr ""
 #~ msgid "Radar rings"
 #~ msgstr "Kręgi radaru"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -10994,6 +15774,35 @@ msgstr ""
 #~ msgid "Range:                  Unavailable\n"
 #~ msgstr "Odległość:            b.d.\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11023,6 +15832,34 @@ msgstr ""
 #~ msgid "Range:                %5.1f NM\n"
 #~ msgstr "Odległość:           %5.1f Mm\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11051,6 +15888,35 @@ msgstr ""
 #~ msgid "Raster"
 #~ msgstr "Rastrowe"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11080,6 +15946,35 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Left\n"
 #~ msgstr "Skręt:          %3d°/min.na bakburt\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11109,6 +16004,35 @@ msgstr ""
 #~ msgid "Rate Of Turn            %3d Deg./Min. Right\n"
 #~ msgstr "Skręt:          %3d°/min.na sterburt\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11138,6 +16062,35 @@ msgstr ""
 #~ msgid "Rate Of Turn            0\n"
 #~ msgstr "Skręt:           0\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11167,6 +16120,35 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Left\n"
 #~ msgstr "Skręt:          > 5°/30 sek. na bakburt\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11196,6 +16178,33 @@ msgstr ""
 #~ msgid "Rate Of Turn:       > 5 Deg./30 s. Right\n"
 #~ msgstr "Skręt:          > 5°/30sek na sterburt\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11224,6 +16233,33 @@ msgstr ""
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Usuń tę mapę ze sklejki."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11251,6 +16287,43 @@ msgstr ""
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Usuń tę mapę ze sklejki."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11288,6 +16361,34 @@ msgstr ""
 #~ msgid "Reverse Route"
 #~ msgstr "Odwróć drogę"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11317,6 +16418,34 @@ msgstr ""
 #~ msgid "Route Properties..."
 #~ msgstr "Właściwości drogi"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11346,6 +16475,34 @@ msgstr ""
 #~ msgid "Route/Track"
 #~ msgstr "Droga ze śladu"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11374,6 +16531,23 @@ msgstr ""
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Jakie rodzaje map sklejać"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11392,6 +16566,43 @@ msgstr ""
 #~ msgid "Send to GPS ( "
 #~ msgstr "Wyślij do &GPS..."
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11429,6 +16640,34 @@ msgstr ""
 #~ msgid "Set Course Up Mode"
 #~ msgstr "Obracaj wg kursu do góry"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11457,6 +16696,34 @@ msgstr ""
 #~ msgid "Settings"
 #~ msgstr "Ustawienia"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11485,6 +16752,46 @@ msgstr ""
 #~ msgid "Show ATON labels"
 #~ msgstr "Pokaż nagłówki ATON"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11525,6 +16832,46 @@ msgstr ""
 #~ msgid "Show Printing Icon"
 #~ msgstr "Pokaż ikonę drukarki"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11565,6 +16912,35 @@ msgstr ""
 #~ msgid "Show Track icon"
 #~ msgstr "Pokaż ikonę Ślad"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11599,6 +16975,60 @@ msgstr ""
 #~ "Wymiary:        %dm x %dm \n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11657,6 +17087,35 @@ msgstr ""
 #~ "Wymiary:        %dm x %dm \n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11690,6 +17149,35 @@ msgstr ""
 #~ "Wymiary:        %5dm x %dm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11723,6 +17211,35 @@ msgstr ""
 #~ "Wymiary:        %5dm x %dm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11756,6 +17273,35 @@ msgstr ""
 #~ "Wymiary:         ---m x ---m x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11789,6 +17335,35 @@ msgstr ""
 #~ "Wymiary:         ---m x ---m x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11822,6 +17397,35 @@ msgstr ""
 #~ "Wymiary:       %5.1fm x %4.1fm x %4.1fm\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11855,6 +17459,35 @@ msgstr ""
 #~ "Wymiary:         %5.1fm x %4.1fm x ---m\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11884,6 +17517,35 @@ msgstr ""
 #~ msgid "Speed:                  Unavailable\n"
 #~ msgstr "Prędkość:                b.d.\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11913,6 +17575,18 @@ msgstr ""
 #~ msgid "Speed:                %5.2f Kts.\n"
 #~ msgstr "Prędkość:            %5.2f w.\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11926,6 +17600,34 @@ msgstr ""
 #~ msgid "T"
 #~ msgstr "Do"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11954,6 +17656,35 @@ msgstr ""
 #~ msgid "TCP/IP WiFi Data Server"
 #~ msgstr "Serwer danych TCP/IP WiFi"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -11983,6 +17714,35 @@ msgstr ""
 #~ msgid "TCPA:  \n"
 #~ msgstr "TCPA:  \n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12012,6 +17772,34 @@ msgstr ""
 #~ msgid "TCPA:                 %02d:%02d Hr:Min\n"
 #~ msgstr "TCPA:                 %02d:%02d godz.:min\n"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12040,6 +17828,34 @@ msgstr ""
 #~ msgid "Text Element"
 #~ msgstr "Element tekstowy"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12069,6 +17885,64 @@ msgstr ""
 #~ msgid "Tide & Current Dataset Selection"
 #~ msgstr "Pokaż prądy"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12127,6 +18001,64 @@ msgstr ""
 #~ msgid "Toggle Listing"
 #~ msgstr "Włącz/wyłącz listę"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12185,6 +18117,34 @@ msgstr ""
 #~ msgid "Toggle Names"
 #~ msgstr "Włącz/wyłącz nazwy"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12213,6 +18173,34 @@ msgstr ""
 #~ msgid "ToolBox"
 #~ msgstr "Narzędzia"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12242,6 +18230,34 @@ msgstr ""
 #~ msgid "Track Properties..."
 #~ msgstr "Właściwości śladu"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12270,6 +18286,35 @@ msgstr ""
 #~ msgid "TrueScale: %8.0f             "
 #~ msgstr "Skala rzeczywista: %8.0f  "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12299,6 +18344,35 @@ msgstr ""
 #~ msgid "Type:                 "
 #~ msgstr "Typ:                  "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12328,6 +18402,33 @@ msgstr ""
 #~ msgid "UN Ship Type:         "
 #~ msgstr "Typ statku UN:            "
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12361,6 +18462,33 @@ msgstr ""
 #~ "\n"
 #~ "węzeł gpsd:"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12389,6 +18517,27 @@ msgstr ""
 #~ msgid "Unable to load libgps"
 #~ msgstr "Nie można załadować libgps.so"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12411,6 +18560,33 @@ msgstr ""
 #~ msgid "Unavailable"
 #~ msgstr "Brak dostępnej mapy"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12438,6 +18614,34 @@ msgstr ""
 #~ msgid "Units"
 #~ msgstr "Jednostki"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12466,6 +18670,34 @@ msgstr ""
 #~ msgid "Use SCAMIN"
 #~ msgstr "Użyj SCAMIN"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12494,6 +18726,34 @@ msgstr ""
 #~ msgid "Waypoint Locking"
 #~ msgstr "Blokowanie punktów drogi"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12522,6 +18782,34 @@ msgstr ""
 #~ msgid "WiFi Options"
 #~ msgstr "Opcje WiFi"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12550,6 +18838,34 @@ msgstr ""
 #~ msgid "X Offset (Positive moves map to East) (NMi Projected) :"
 #~ msgstr "przesunięcie X (dodatnie przesuwa mapę na E) (Mmi/cos(szer.gg.))"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12578,6 +18894,34 @@ msgstr ""
 #~ msgid "Y Offset (Positive moves map to North) (NMi Projected) :"
 #~ msgstr "przesunięcie Y (dodatnie przesuwa mapę na N (Mmi/cos(szer.gg.))"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #
@@ -12606,6 +18950,47 @@ msgstr ""
 #~ msgid "cm93 Detail"
 #~ msgstr "Poziom szczegółów CM93"
 
+# #-#-#-#-#  .merge_file_QJKd8g (opencpn 2.1.0)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_S1lKl5 (opencpn 2.1.0)  #-#-#-#-#
+#
 #
 #
 #

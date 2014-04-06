@@ -3819,6 +3819,11 @@ msgstr "Ειδικό"
 msgid "Special Mark"
 msgstr "Ειδικό σημάδι"
 
+# #-#-#-#-#  .merge_file_NdDMm7 (opencpn 3.3.1009)  #-#-#-#-#
+#
+# #-#-#-#-#  .merge_file_ZQWjMX (opencpn 3.3.1009)  #-#-#-#-#
+#
+#
 #
 #, fuzzy
 msgid "Special Position Report"
@@ -4680,51 +4685,129 @@ msgstr ""
 msgid "m"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_NdDMm7 (opencpn 3.3.1009)  #-#-#-#-#
 #
 #
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "   Τα δεδομένα RLL είναι κατεστραμμένα στο αρχείο του χάρτη"
+# #-#-#-#-#  .merge_file_ZQWjMX (opencpn 3.3.1009)  #-#-#-#-#
+#
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "   Τα δεδομένα RLL είναι κατεστραμμένα στο αρχείο του χάρτη"
+
+# #-#-#-#-#  .merge_file_NdDMm7 (opencpn 3.3.1009)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_ZQWjMX (opencpn 3.3.1009)  #-#-#-#-#
+#
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "   Το αρχείο του χάρτη δεν έχει επικεφαλίδα BSB."
+
+# #-#-#-#-#  .merge_file_NdDMm7 (opencpn 3.3.1009)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_ZQWjMX (opencpn 3.3.1009)  #-#-#-#-#
+#
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr ""
+"   Δεν μπόρεσα να διαβάσω τα πρώτα %d bytes της επικεφαλίδας του αρχείου του "
+"χάρτη:"
+
+# #-#-#-#-#  .merge_file_NdDMm7 (opencpn 3.3.1009)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_ZQWjMX (opencpn 3.3.1009)  #-#-#-#-#
+#
+msgid "--"
+msgstr "--"
+
+# #-#-#-#-#  .merge_file_NdDMm7 (opencpn 3.3.1009)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_ZQWjMX (opencpn 3.3.1009)  #-#-#-#-#
+#
+msgid "NMi"
+msgstr "ν.μ."
+
+# #-#-#-#-#  .merge_file_NdDMm7 (opencpn 3.3.1009)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_ZQWjMX (opencpn 3.3.1009)  #-#-#-#-#
+#
+msgid "kts"
+msgstr "κόμβοι"
+
+# #-#-#-#-#  .merge_file_NdDMm7 (opencpn 3.3.1009)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_ZQWjMX (opencpn 3.3.1009)  #-#-#-#-#
+#
+msgid "mi"
+msgstr "μ."
+
+# #-#-#-#-#  .merge_file_NdDMm7 (opencpn 3.3.1009)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_ZQWjMX (opencpn 3.3.1009)  #-#-#-#-#
+#
+msgid "mph"
+msgstr "μ.α.ώ."
 
 #
-#
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "   Το αρχείο του χάρτη δεν έχει επικεφαλίδα BSB."
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Σίγουρα θέλετε να διαγράψετε όλες τις διαδρομές;"
 
 #
-#
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr ""
-#~ "   Δεν μπόρεσα να διαβάσω τα πρώτα %d bytes της επικεφαλίδας του αρχείου "
-#~ "του χάρτη:"
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
 
+#
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr ""
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+#, fuzzy
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+"Υπάρχουν σημεία που χρησιμοποιούνται σε διαδρομές ή επιτηρήσεις "
+"αγκυροβολίων. Θέλετε να διαγράψετε και αυτά; Αυτό θα αλλάξει τις διαδρομές "
+"και θα απενεργοποιήσει τα αγκυροβόλια. Αρνητική απάντηση διατηρεί τα σημεία "
+"που χρησιμοποιούνται."
+
+#
+#, fuzzy
+msgid "in "
+msgstr "Σύνδεσμος"
+
+# #-#-#-#-#  .merge_file_NdDMm7 (opencpn 3.3.1009)  #-#-#-#-#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_ZQWjMX (opencpn 3.3.1009)  #-#-#-#-#
+#
 #
 #
 #
 #
 #~ msgid " is %5g"
 #~ msgstr "είναι %5g"
-
-#
-#
-#~ msgid "--"
-#~ msgstr "--"
-
-#
-#
-#~ msgid "NMi"
-#~ msgstr "ν.μ."
-
-#
-#
-#~ msgid "kts"
-#~ msgstr "κόμβοι"
-
-#
-#
-#~ msgid "mi"
-#~ msgstr "μ."
-
-#
-#
-#~ msgid "mph"
-#~ msgstr "μ.α.ώ."

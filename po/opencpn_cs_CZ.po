@@ -352,6 +352,22 @@ msgstr ""
 msgid "%H:%M"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -436,6 +452,22 @@ msgstr "Rodina &fontů:"
 msgid "&Go To"
 msgstr "Navi&govat na"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -522,6 +554,22 @@ msgstr "&Otočit"
 msgid "&Send to GPS"
 msgstr "Ode&slat do GPS"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -621,6 +669,18 @@ msgstr "(rezervováno pro budoucí použití)"
 msgid "(unnamed)"
 msgstr "(Nepojmenovaná)"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -871,6 +931,22 @@ msgstr "A"
 msgid "AIS"
 msgstr "AIS"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -945,6 +1021,22 @@ msgstr "Seznam cílů AIS"
 msgid "AISRollover"
 msgstr "AISRollover"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1012,6 +1104,18 @@ msgstr "O programu"
 msgid "About OpenCPN"
 msgstr "O OpenCPN"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1345,6 +1449,20 @@ msgstr "Průměrná rychlost (Kts)"
 msgid "B"
 msgstr "B"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -1491,6 +1609,20 @@ msgstr "Kurs"
 msgid "Buddy"
 msgstr "Kumpán"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2096,6 +2228,20 @@ msgstr "Hodnota konzole"
 msgid "Constrained by draught"
 msgstr "Omezené ponorem"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2133,6 +2279,18 @@ msgstr "Kopírovat jako KML"
 msgid "Copy as KML..."
 msgstr "Kopírovat jako KML..."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2208,6 +2366,20 @@ msgstr "Vytvořit trasový bod"
 msgid "Create Waypoint"
 msgstr "Vytvořit trasový bod"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2221,6 +2393,22 @@ msgstr "Vytvořit trasový bod"
 msgid "Cruise ship"
 msgstr "Výletní loď"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2357,6 +2545,22 @@ msgstr "Tmavě žlutá"
 msgid "Data Connections"
 msgstr "Datová spojení"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2704,6 +2908,22 @@ msgstr "Čerchovaná"
 msgid "Dredge"
 msgstr "Bagr"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2870,6 +3090,21 @@ msgstr ""
 msgid "Environmental Caution Area: Strong currents"
 msgstr "Oblast varování prostředí: Silný proud"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -2994,6 +3229,20 @@ msgstr ""
 msgid "Failed to initialize the user interface. "
 msgstr "Nepodařilo se inicializovat uživatelské rozhraní."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3023,6 +3272,20 @@ msgstr "Fathomy (Sáhy)"
 msgid "Feet"
 msgstr "Stopy"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3056,6 +3319,20 @@ msgstr "Perioda filtru (sek)"
 msgid "Filters"
 msgstr "Filtry"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3101,6 +3378,20 @@ msgstr "Vynutit uplné znovuvytvoření databáze"
 msgid "Format uploads for Furuno GP3X"
 msgstr "Formátuj uploady pro Furuno GP3X"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3114,6 +3405,20 @@ msgstr "Formátuj uploady pro Furuno GP3X"
 msgid "Freightbarge"
 msgstr "Nákladní prám"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3147,6 +3452,23 @@ msgstr "Offset GPS od přídě (m)"
 msgid "GPS Offset from Midship (m)"
 msgstr "GPS offset od středu lodě (m)"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3188,6 +3510,22 @@ msgstr "GPX"
 msgid "GUID"
 msgstr "GUID"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3220,6 +3558,20 @@ msgstr "Obecné"
 msgid "General Options"
 msgstr "Obecné nastavení"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3260,6 +3612,20 @@ msgstr "Skupina  \""
 msgid "HSC"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3376,6 +3742,20 @@ msgstr "Vysokorychlostní plavidlo"
 msgid "Highlight Tracks"
 msgstr "Zvýraznit stopy"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3443,6 +3823,22 @@ msgstr "Importuj GPX soubor"
 msgid "Important Text Only"
 msgstr "Pouze důležitý text"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3458,6 +3854,18 @@ msgstr "Pouze důležitý text"
 msgid "In"
 msgstr "In"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3581,6 +3989,20 @@ msgstr "LMT na místě"
 msgid "LMT @ Track Start"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3715,6 +4137,21 @@ msgstr "Úsek"
 msgid "Leg: from "
 msgstr "Úsek: z"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -3860,6 +4297,20 @@ msgstr "Odkazy jsou otevírány pro úpravy."
 msgid "Links are opened in the default browser."
 msgstr "Linky jsou otevírány ve výchozí aplikaci."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4116,6 +4567,18 @@ msgstr "Sloučit trasový bod?"
 msgid "Merge waypoints?"
 msgstr "Sloučit trasové body?"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4127,6 +4590,18 @@ msgstr "Sloučit trasové body?"
 msgid "Message accepted"
 msgstr "Zpráva přijata"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4220,6 +4695,20 @@ msgstr "Níkladní prám s kontejnery"
 msgid "Motor freighter, tug"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4233,6 +4722,20 @@ msgstr ""
 msgid "Motor tanker"
 msgstr "Motorový tanker"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4246,6 +4749,20 @@ msgstr "Motorový tanker"
 msgid "Motor tanker, dry cargo as if liquid (e.g. cement)"
 msgstr "Motorový tanker, tuhý náklad podobné tekutině (např. cement)"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4259,6 +4776,20 @@ msgstr "Motorový tanker, tuhý náklad podobné tekutině (např. cement)"
 msgid "Motor tanker, liquid cargo, type C"
 msgstr "Motorový tanker, tekutý náklad typu C"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4318,6 +4849,18 @@ msgstr "NMEA 0183"
 msgid "NMEA 2000"
 msgstr "NMEA 2000"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4378,6 +4921,22 @@ msgstr "Navigovat sem"
 msgid "Navigate To This"
 msgstr "Navigovat sem"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4409,6 +4968,22 @@ msgstr "Nová skupina map"
 msgid "New Group..."
 msgstr "Nová skupina"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4434,6 +5009,18 @@ msgstr "Příští přílivová událost"
 msgid "Nighttime"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4527,6 +5114,20 @@ msgstr "Dotaz na objekt"
 msgid "Object Query..."
 msgstr "Dotaz na objekt..."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4540,6 +5141,20 @@ msgstr "Dotaz na objekt..."
 msgid "Object, not otherwise specified"
 msgstr "Objekt, jinak nespecifikován"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4756,6 +5371,18 @@ msgstr "Nastavení"
 msgid "Other - Define in associated text field"
 msgstr "Jiný - Definuj v přidruženém textovém poli"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4771,6 +5398,22 @@ msgstr "Ven"
 msgid "Output"
 msgstr "Výstup"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4862,6 +5505,20 @@ msgstr ""
 msgid "Passenger Ship"
 msgstr "Loď s pasažéry"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4875,6 +5532,20 @@ msgstr "Loď s pasažéry"
 msgid "Passenger ship without accomodation"
 msgstr "Loď s pasažéry bez ubytování"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4912,6 +5583,18 @@ msgstr "Vložit stopu"
 msgid "Paste Waypoint"
 msgstr "Vložit trasový bod"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -4987,6 +5670,20 @@ msgstr "Prosím restartuj OpenCPN pro aktivaci nového jazyka nebo stylu."
 msgid "Pleasure craft"
 msgstr "Rekreační plavidlo"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5110,6 +5807,22 @@ msgstr "Hlavní kanál na levoboku"
 msgid "Preferred Channel Starboard Hand"
 msgstr "Hlavní kanál na pravoboku"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5133,6 +5846,22 @@ msgstr "Připrav GPS pro Nahrání tras/trasových bodů a stiskni Poslat..."
 msgid "Preserve Scale when Switching Charts"
 msgstr "Zachovat měřítko při změně mapy"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5212,6 +5941,22 @@ msgstr "Pokračuj na toto místo - vyčkej na instrukce"
 msgid "Processing Waypoints..."
 msgstr "Zpracovávám trasové body..."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5247,6 +5992,20 @@ msgstr "Vlastnosti..."
 msgid "Protocol"
 msgstr "Protokol"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5274,6 +6033,20 @@ msgstr "Tlačný remorkér, samostatný"
 msgid "Pushtow, eight barges at least one tanker or gas barge"
 msgstr "Tlačná souprava, osm nákladních van"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5301,6 +6074,20 @@ msgstr "Tlačná souprava, osm nákladních van"
 msgid "Pushtow, five barges at least one tanker or gas barge"
 msgstr "Tlačná souprava, pět nákladních van"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5328,6 +6115,20 @@ msgstr "Tlačná souprava, pět nákladních van"
 msgid "Pushtow, four barges at least one tanker or gas barge"
 msgstr "Tlačná souprava, čtyři nákladní vany"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5341,6 +6142,19 @@ msgstr "Tlačná souprava, čtyři nákladní vany"
 msgid "Pushtow, four cargo barges"
 msgstr "Tlačná souprava, čtyři nákladní vany"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5366,6 +6180,20 @@ msgstr "Tlačná souprava, devět či více nákladních van"
 msgid "Pushtow, nine or more barges at least one tanker or gas barge"
 msgstr "Tlačná souprava, devět či více nákladních van"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5407,6 +6235,20 @@ msgstr "Tlačná souprava, jedna nákladní vana"
 msgid "Pushtow, seven barges at least one tanker or gas barge"
 msgstr "Tlačná souprava, sedm nákladních van"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5424,6 +6266,20 @@ msgstr "Tlačná souprava, sedm nákladních van"
 msgid "Pushtow, six barges at least one tanker or gas barge"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5451,6 +6307,20 @@ msgstr "Tlačná souprava, šest nákladních van"
 msgid "Pushtow, three barges at least one tanker or gas barge"
 msgstr "Tlačná souprava, tři nákladní vany"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5468,6 +6338,20 @@ msgstr "Tlačná souprava, tři nákladní vany"
 msgid "Pushtow, two barges at least one tanker or gas barge"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5559,6 +6443,20 @@ msgstr "Sloučit trasové body?"
 msgid "Red"
 msgstr "Červená"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5602,6 +6500,22 @@ msgstr "Ref. bod"
 msgid "Reference Point"
 msgstr "Referenční bod"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5617,6 +6531,18 @@ msgstr "Referenční bod"
 msgid "Reference Station :"
 msgstr "Referenční stanice:"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5764,6 +6690,18 @@ msgstr "Zákázaná oblast: Zákaz kotvení"
 msgid "Restricted Manoeuvrability"
 msgstr "Omezená manévrovatelnost"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -5862,6 +6800,21 @@ msgstr "Tisk trasy"
 msgid "Route Properties"
 msgstr "Vlastnosti trasy"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6084,6 +7037,22 @@ msgstr ""
 "Vyber maximální povolenou chybu (v metrech)\n"
 "po redukci dat:"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6099,6 +7068,22 @@ msgstr ""
 msgid "Send"
 msgstr "Poslat"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6142,6 +7127,20 @@ msgstr "Filtr vět"
 msgid "Serial"
 msgstr "Sériový"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6537,6 +7536,18 @@ msgstr "SoG"
 msgid "Solid"
 msgstr "Plný"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -6571,6 +7582,15 @@ msgstr "Speciální"
 msgid "Special Mark"
 msgstr "Speciální značka"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -7027,6 +8047,22 @@ msgstr "Tento úsek"
 msgid "This waypoint is part of a layer and can't be edited"
 msgstr "Tento bod je součástí vrstvy a nemůže být upraven."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -7128,6 +8164,22 @@ msgstr "K trasovému bodu"
 msgid "To route"
 msgstr "Čas na cestě"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -7160,6 +8212,22 @@ msgstr "Přepni záznam stopy"
 msgid "Toggle track"
 msgstr "Přepni záznam stopy"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -7587,6 +8655,20 @@ msgstr "Plavidlo vleče, dlouhý vlek"
 msgid "Vessel requesting non-distress assistance"
 msgstr "Plavidlo požadující asistenci mimo nouzi"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -7811,6 +8893,18 @@ msgstr "Loď"
 msgid "Yellow"
 msgstr "Žlutá"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
 #
 #
 #
@@ -8016,6 +9110,198 @@ msgstr ""
 msgid "mph"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+msgid "   Chart File RLL data corrupt on chart "
+msgstr "  RLL data souboru s mapou poškozena na mapě "
+
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr "  Mapový soubor nemá žádnou BSB hlavičku, nelze inicializovat."
+
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr "   Nemohu načíst prvních %d bytů hlavičky mapového souboru: "
+
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+msgid "--"
+msgstr "--"
+
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+msgid "NMi"
+msgstr "NMi"
+
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#, fuzzy
+msgid "kts"
+msgstr "Kts"
+
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
+#, fuzzy
+msgid "mi"
+msgstr "min"
+
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Určitě chceš smazat <VŠECHNY> trasy?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr "Chyba při nahrávání trasových bodů. Prosím zkontroluj log..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+#, fuzzy
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+"Některé body zíjmu jsou použity v trasách nebo pro kotevní alarmy. Chceš je "
+"také odstranit? To změní trasy a deaktivuje kotevní alarmy. Odpověď Ne "
+"zachoví body, které jsou použity v trasách nebo alarmech."
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "in "
+msgstr "do"
+
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8046,6 +9332,55 @@ msgstr ""
 #~ msgid "\n"
 #~ msgstr "\n"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8101,6 +9436,31 @@ msgstr ""
 #~ "\n"
 #~ "\n"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8132,6 +9492,36 @@ msgstr ""
 #~ "\n"
 #~ "Pokračuje nastavení libgps..."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8162,6 +9552,36 @@ msgstr ""
 #~ msgid "      COG arrow predictor length (Minutes):"
 #~ msgstr "      Délka šipky předpovědi COG (minut):"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8192,6 +9612,36 @@ msgstr ""
 #~ msgid "      Max moored target speed (Kts.):"
 #~ msgstr "      Max rychlost vyvázaného cíle (uzle):"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8222,24 +9672,48 @@ msgstr ""
 #~ msgid "      Target track length (Minutes):"
 #~ msgstr "      Délka stopy cíle (minut):"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
 #
 #
 #
 #
 #
 #
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "  RLL data souboru s mapou poškozena na mapě "
-
 #
 #
 #
 #
 #
 #
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "  Mapový soubor nemá žádnou BSB hlavičku, nelze inicializovat."
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8282,15 +9756,56 @@ msgstr ""
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "  Mapová projekce je NEZNÁMÁ, předpokládáme Mercator:"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
 #
 #
 #
 #
 #
 #
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "   Nemohu načíst prvních %d bytů hlavičky mapového souboru: "
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8341,6 +9856,56 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load library: "
 #~ msgstr "   PlugInManager: Nemohu načíst knihovnu: "
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8391,6 +9956,56 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load symbol create_pi: "
 #~ msgstr "   PlugInManager: Nemmohu načíst symbol create_pi: "
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8441,6 +10056,35 @@ msgstr ""
 #~ msgid "   PlugInManager: Cannot load symbol destroy_pi: "
 #~ msgstr "   PlugInManager: Nemohu načíst symbol destroy_pi: "
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8470,6 +10114,35 @@ msgstr ""
 #~ msgid "  Could not open AIS serial port '"
 #~ msgstr "  Nemohu otevřít sériový port AIS '"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8499,6 +10172,18 @@ msgstr ""
 #~ msgid "  Could not open serial port '"
 #~ msgstr "  Nemohu otevří sériový port '"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8511,6 +10196,33 @@ msgstr ""
 #~ msgid " </b>in<b> "
 #~ msgstr " </b>za<b> "
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8538,6 +10250,33 @@ msgstr ""
 #~ msgid " COG: %03d Deg."
 #~ msgstr " COG: %03d Stu."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8565,6 +10304,17 @@ msgstr ""
 #~ msgid " COG: 000 Deg."
 #~ msgstr " COG: 000 Stu."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8576,6 +10326,22 @@ msgstr ""
 #~ msgid " is %5g"
 #~ msgstr " je %5g"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8592,6 +10358,61 @@ msgstr ""
 #~ msgid "&Export Track..."
 #~ msgstr "&Export stopy...."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8647,6 +10468,35 @@ msgstr ""
 #~ msgid "&Toggle Chart"
 #~ msgstr "Přepnou&t mapu"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8680,6 +10530,35 @@ msgstr ""
 #~ "'\n"
 #~ " Doporučení: Zkus 'xxx.xxx.xxx.xxx' notaci"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8713,6 +10592,7 @@ msgstr ""
 #~ "'\n"
 #~ "Doporučení: Zkus zavřít ostatní aplikace."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
 #
 #
 #
@@ -8720,9 +10600,29 @@ msgstr ""
 #
 #
 #
-#~ msgid "--"
-#~ msgstr "--"
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8754,6 +10654,37 @@ msgstr ""
 #~ msgid ":               "
 #~ msgstr ":                  "
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8788,6 +10719,31 @@ msgstr ""
 #~ "\n"
 #~ msgstr ":            Nedostupný\n"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8813,6 +10769,50 @@ msgstr ""
 #~ msgid "<--Remove"
 #~ msgstr "<--Odstranit"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8858,6 +10858,34 @@ msgstr ""
 #~ msgid "AIS SART Alert"
 #~ msgstr "Výstraha AIS "
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8886,6 +10914,45 @@ msgstr ""
 #~ msgid "Activate CM93 Offset"
 #~ msgstr "Aktivovat posuny CM93"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8925,6 +10992,35 @@ msgstr ""
 #~ msgid "Activate Route"
 #~ msgstr "Aktivovat trasu"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8954,6 +11050,32 @@ msgstr ""
 #~ msgid "Active Charts"
 #~ msgstr "Aktivní mapy"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -8980,6 +11102,36 @@ msgstr ""
 #~ msgid "Active Tide/Current Data"
 #~ msgstr "Aktivní data přílivu/proudu"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9010,6 +11162,35 @@ msgstr ""
 #~ msgid "Add Selection"
 #~ msgstr "Přidat výběr"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9039,6 +11220,31 @@ msgstr ""
 #~ msgid "Add this chart to quilt."
 #~ msgstr "Přidat tuto mapu do sestavy."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9064,6 +11270,52 @@ msgstr ""
 #~ msgid "Add-->"
 #~ msgstr "Přidat-->"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9110,6 +11362,36 @@ msgstr ""
 #~ msgid "Additional information"
 #~ msgstr "Další informace"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9140,6 +11422,59 @@ msgstr ""
 #~ msgid "All files (*.*)|*.*"
 #~ msgstr "Všechny soubory (*.*)|*.*"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9193,6 +11528,35 @@ msgstr ""
 #~ msgid "Attempting to load libgps.so"
 #~ msgstr "Pokouším se nahrát libgps.so"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9222,6 +11586,36 @@ msgstr ""
 #~ msgid "Autopilot Output Port"
 #~ msgstr "Port výstupu autopilota"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9252,6 +11646,56 @@ msgstr ""
 #~ msgid "Available Chart Directories"
 #~ msgstr "Dostupné složky map"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9302,6 +11746,37 @@ msgstr ""
 #~ msgid "BaseClassCommonName"
 #~ msgstr "BaseClassCommonName"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9333,6 +11808,37 @@ msgstr ""
 #~ msgid "Bearing:                %03d Deg.\n"
 #~ msgstr "Kurs:              %03d St.\n"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9364,6 +11870,36 @@ msgstr ""
 #~ msgid "Bearing:                Unavailable\n"
 #~ msgstr "Kurs:            Nedostupný\n"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9394,6 +11930,35 @@ msgstr ""
 #~ msgid "CM93"
 #~ msgstr "CM93"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9424,6 +11989,34 @@ msgstr ""
 #~ msgid "CM93 Detail Slider..."
 #~ msgstr "Povolit posuvník detailu CM93"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9452,6 +12045,68 @@ msgstr ""
 #~ msgid "CM93 Offset Display"
 #~ msgstr "Zobrazení posunu CM93"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9514,6 +12169,68 @@ msgstr ""
 #~ msgid "CM93 Offset Off"
 #~ msgstr "Posun CM93 vyp."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9576,6 +12293,68 @@ msgstr ""
 #~ msgid "CM93 Offset On"
 #~ msgstr "Posun CM93 zap."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9638,6 +12417,68 @@ msgstr ""
 #~ msgid "CM93 Offset Tool Off"
 #~ msgstr "Nástroj Posun CM93 vypnut"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9700,6 +12541,34 @@ msgstr ""
 #~ msgid "CM93 Offset Tool....."
 #~ msgstr "Nástroj Posun CM93...."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9728,6 +12597,68 @@ msgstr ""
 #~ msgid "CM93 Offsets"
 #~ msgstr "Posuny  CM93"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9790,6 +12721,36 @@ msgstr ""
 #~ msgid "CM93 Offsets On"
 #~ msgstr "Posun CM93 zapnut"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9820,6 +12781,37 @@ msgstr ""
 #~ msgid "CM93 Zoom Detail"
 #~ msgstr "Detail přiblížení CM93"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9851,6 +12843,37 @@ msgstr ""
 #~ msgid "CPA:       \n"
 #~ msgstr "CPA:       \n"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9882,6 +12905,34 @@ msgstr ""
 #~ msgid "CPA:                 %6.1f NM\n"
 #~ msgstr "CPA:                 %6.1f nm\n"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9918,6 +12969,37 @@ msgstr ""
 #~ "\n"
 #~ "gpsd hostitel je: "
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -9949,6 +13031,66 @@ msgstr ""
 #~ msgid "CallSign:             "
 #~ msgstr "Volací znak:              "
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10010,6 +13152,66 @@ msgstr ""
 #~ msgid "Cell X Offset"
 #~ msgstr "Nastav posun CM93"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10071,6 +13273,36 @@ msgstr ""
 #~ msgid "Cell Y Offset"
 #~ msgstr "Nastav posun CM93"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10101,6 +13333,31 @@ msgstr ""
 #~ msgid "Chart Display Filters"
 #~ msgstr "Filtry zobrazení map"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10126,6 +13383,31 @@ msgstr ""
 #~ msgid "Chart Groups..."
 #~ msgstr "Skupiny map..."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10151,6 +13433,35 @@ msgstr ""
 #~ msgid "Chart Groups...New Group"
 #~ msgstr "Skupiny map...Nová skupina"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10181,6 +13492,28 @@ msgstr ""
 #~ msgid "Chart Position"
 #~ msgstr "Pozice"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10203,6 +13536,35 @@ msgstr ""
 #~ msgid "Copy"
 #~ msgstr "Kopírovat"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10232,6 +13594,36 @@ msgstr ""
 #~ msgid "Could not resolve TCP/IP host '"
 #~ msgstr "Nemohu rozpoznat TCP/IP hostitele '"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10262,6 +13654,34 @@ msgstr ""
 #~ msgid "Cursor: "
 #~ msgstr "Kurzor:"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10290,6 +13710,36 @@ msgstr ""
 #~ msgid "Deg"
 #~ msgstr "Stupně"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10320,6 +13770,36 @@ msgstr ""
 #~ msgid "Delete Route"
 #~ msgstr "Smazat trasu"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10350,6 +13830,36 @@ msgstr ""
 #~ msgid "Delete Selection"
 #~ msgstr "Smazat výběr"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10380,6 +13890,36 @@ msgstr ""
 #~ msgid "Delete Track"
 #~ msgstr "Smazat trasu"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10410,6 +13950,35 @@ msgstr ""
 #~ msgid "Depth Settings"
 #~ msgstr "Nastavení hloubky"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10440,6 +14009,25 @@ msgstr ""
 #~ msgid "Display Style"
 #~ msgstr "Styl zobrazení map"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10459,6 +14047,36 @@ msgstr ""
 #~ msgid "E&xport All..."
 #~ msgstr "E&xportovat vše...."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10489,6 +14107,34 @@ msgstr ""
 #~ msgid "ENC/Vector"
 #~ msgstr "ENC/Vector"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10517,6 +14163,36 @@ msgstr ""
 #~ msgid "Enable Manual CM93 Offsets"
 #~ msgstr "Povolit manuální posuny  CM93"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10547,6 +14223,36 @@ msgstr ""
 #~ msgid "Enable Wheel-Zoom-to-Cursor"
 #~ msgstr "Povolit přibližování ke kurzoru kolečkem"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10577,6 +14283,36 @@ msgstr ""
 #~ msgid "Etc."
 #~ msgstr "Atd."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10607,6 +14343,36 @@ msgstr ""
 #~ msgid "From Ownship: %03d Deg   "
 #~ msgstr "Od lodi: %03d Deg"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10637,6 +14403,35 @@ msgstr ""
 #~ msgid "GPS"
 #~ msgstr "GPS"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10666,6 +14461,36 @@ msgstr ""
 #~ msgid "GPSD Data Server"
 #~ msgstr "GPSD Data Server"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10696,6 +14521,31 @@ msgstr ""
 #~ msgid "Go To Here"
 #~ msgstr "Navigovat sem"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10721,6 +14571,36 @@ msgstr ""
 #~ msgid "Groups"
 #~ msgstr "Skupiny"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10751,6 +14631,36 @@ msgstr ""
 #~ msgid "Jump To"
 #~ msgstr "Skok na"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10781,6 +14691,36 @@ msgstr ""
 #~ msgid "Jump To Position"
 #~ msgstr "Skok na pozici"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10811,6 +14751,36 @@ msgstr ""
 #~ msgid "Jump To..."
 #~ msgstr "Skok na.."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10841,6 +14811,36 @@ msgstr ""
 #~ msgid "Leg/Route"
 #~ msgstr "Úsek/Trasa"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10871,6 +14871,25 @@ msgstr ""
 #~ msgid "META Objects"
 #~ msgstr "META Objekty"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10890,6 +14909,36 @@ msgstr ""
 #~ msgid "Mark Properties"
 #~ msgstr "Vlastnosti TB"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10920,6 +14969,35 @@ msgstr ""
 #~ msgid "Metres"
 #~ msgstr "Metry"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10949,6 +15027,36 @@ msgstr ""
 #~ msgid "NMEA Data Source"
 #~ msgstr "Datový zdroj NMEA"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -10979,11 +15087,36 @@ msgstr ""
 #~ msgid "NMEA Options"
 #~ msgstr "Volby NMEA"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
 #
 #
-#~ msgid "NMi"
-#~ msgstr "NMi"
-
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11014,6 +15147,35 @@ msgstr ""
 #~ msgid "Navigation Data"
 #~ msgstr "Navigační data"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11044,6 +15206,21 @@ msgstr ""
 #~ msgid "Number of Radar Rings"
 #~ msgstr "Počet zobrazených radarových kruhů"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11059,6 +15236,35 @@ msgstr ""
 #~ msgid "Other"
 #~ msgstr "Jiný"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11089,6 +15295,35 @@ msgstr ""
 #~ msgid "Own Ship Display Options"
 #~ msgstr "Volby zobrazení vlastní lodi"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11119,6 +15354,35 @@ msgstr ""
 #~ msgid "Place Trackpoints at distance interval (NMi)"
 #~ msgstr "Umístit stopové body v intervalu (nm)"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11149,6 +15413,22 @@ msgstr ""
 #~ msgid "Place Trackpoints at time interval (sec)"
 #~ msgstr "Umístit stopové body v intervalu (sekund):"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11165,6 +15445,35 @@ msgstr ""
 #~ msgid "Plan speed (Kts)"
 #~ msgstr "Plánovaná rychlost (Kts)"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11194,6 +15503,36 @@ msgstr ""
 #~ msgid "Radar rings"
 #~ msgstr "Radarové kruhy"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11224,6 +15563,35 @@ msgstr ""
 #~ msgid "Raster"
 #~ msgstr "Rastr"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11253,6 +15621,35 @@ msgstr ""
 #~ msgid "Remove this chart from quilt"
 #~ msgstr "Odstranit tuto mapu ze sestavy"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11282,6 +15679,24 @@ msgstr ""
 #~ msgid "Remove this chart from quilt."
 #~ msgstr "Odstranit tuto mapu ze sestavy."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11300,6 +15715,36 @@ msgstr ""
 #~ msgid "RenderHPGL: The '%s' instruction is not implemented."
 #~ msgstr "RenderHPGL: Instrukce  '%s' není implementována."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11330,6 +15775,35 @@ msgstr ""
 #~ msgid "Route Properties..."
 #~ msgstr "Vlastnosti trasy..."
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11359,6 +15833,36 @@ msgstr ""
 #~ msgid "Route/Track"
 #~ msgstr "Trasa/stopa"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11389,6 +15893,25 @@ msgstr ""
 #~ msgid "Select Chart Types for Quilting"
 #~ msgstr "Vyber typy map pro skládání"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11409,6 +15932,20 @@ msgstr ""
 #~ msgid "Send to GPS ( "
 #~ msgstr "Ode&slat do GPS"
 
+# #-#-#-#-#  .merge_file_RlKsfM (opencpn 2.4.606)  #-#-#-#-#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# #-#-#-#-#  .merge_file_WBcalD (opencpn 2.4.606)  #-#-#-#-#
+#
 #
 #
 #
@@ -11422,15 +15959,3 @@ msgstr ""
 #
 #~ msgid "T"
 #~ msgstr "T"
-
-#
-#
-#, fuzzy
-#~ msgid "kts"
-#~ msgstr "Kts"
-
-#
-#
-#, fuzzy
-#~ msgid "mi"
-#~ msgstr "min"

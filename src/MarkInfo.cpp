@@ -64,18 +64,24 @@ MarkInfoDef::MarkInfoDef(
 	wstyle |= wxSTAY_ON_TOP;
 #endif
 
-	Create(parent, id, title, pos, size, wstyle);
+	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
+	SetFont(*qFont);
 
-	SetSizeHints(wxDefaultSize, wxDefaultSize);
+	Create(parent, id, title, pos, size, wstyle);
 
 	wxBoxSizer* bSizer1;
 	bSizer1 = new wxBoxSizer(wxVERTICAL);
+	SetSizer(bSizer1);
+	bSizer1->SetSizeHints(this); // set size hints to honour minimum size
 
 	m_notebookProperties = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0);
-	m_panelBasicProperties = new wxPanel(m_notebookProperties, wxID_ANY, wxDefaultPosition,
-										 wxDefaultSize, wxTAB_TRAVERSAL);
+	m_panelBasicProperties
+		= new wxScrolledWindow(m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+							   wxHSCROLL | wxVSCROLL | wxTAB_TRAVERSAL);
+	m_notebookProperties->AddPage(m_panelBasicProperties, _("Basic"), true);
 	wxBoxSizer* bSizerBasicProperties;
 	bSizerBasicProperties = new wxBoxSizer(wxVERTICAL);
+	m_panelBasicProperties->SetSizer(bSizerBasicProperties);
 
 	wxStaticBoxSizer* sbSizerProperties;
 	sbSizerProperties = new wxStaticBoxSizer(
@@ -219,8 +225,6 @@ MarkInfoDef::MarkInfoDef(
 	bSizerLinks->Add(m_hyperlink17, 0, wxALL, 5);
 
 	m_scrolledWindowLinks->SetSizer(bSizerLinks);
-	m_scrolledWindowLinks->Layout();
-	bSizerLinks->Fit(m_scrolledWindowLinks);
 	sbSizerLinks->Add(m_scrolledWindowLinks, 1, wxEXPAND | wxALL, 5);
 
 	wxBoxSizer* bSizer9;
@@ -244,10 +248,6 @@ MarkInfoDef::MarkInfoDef(
 
 	bSizerBasicProperties->Add(sbSizerLinks, 2, wxALL | wxEXPAND, 5);
 
-	m_panelBasicProperties->SetSizer(bSizerBasicProperties);
-	m_panelBasicProperties->Layout();
-	bSizerBasicProperties->Fit(m_panelBasicProperties);
-	m_notebookProperties->AddPage(m_panelBasicProperties, _("Basic"), true);
 	m_panelDescription = new wxPanel(m_notebookProperties, wxID_ANY, wxDefaultPosition,
 									 wxDefaultSize, wxTAB_TRAVERSAL);
 	wxBoxSizer* bSizer15;
@@ -258,8 +258,6 @@ MarkInfoDef::MarkInfoDef(
 	bSizer15->Add(m_textCtrlExtDescription, 1, wxALL | wxEXPAND, 5);
 
 	m_panelDescription->SetSizer(bSizer15);
-	m_panelDescription->Layout();
-	bSizer15->Fit(m_panelDescription);
 	m_notebookProperties->AddPage(m_panelDescription, _("Description"), false);
 	m_panelExtendedProperties = new wxPanel(m_notebookProperties, wxID_ANY, wxDefaultPosition,
 											wxDefaultSize, wxTAB_TRAVERSAL);
@@ -299,8 +297,6 @@ MarkInfoDef::MarkInfoDef(
 	bSizerExtendedProperties->Add(m_textCtrlGpx, 1, wxALL | wxEXPAND, 5);
 
 	m_panelExtendedProperties->SetSizer(bSizerExtendedProperties);
-	m_panelExtendedProperties->Layout();
-	bSizerExtendedProperties->Fit(m_panelExtendedProperties);
 	m_notebookProperties->AddPage(m_panelExtendedProperties, _("Extended"), false);
 
 	bSizer1->Add(m_notebookProperties, 1, wxEXPAND | wxALL, 5);
@@ -314,10 +310,18 @@ MarkInfoDef::MarkInfoDef(
 
 	bSizer1->Add(m_sdbSizerButtons, 0, wxALL | wxEXPAND, 5);
 
-	this->SetSizer(bSizer1);
-	this->Layout();
+	// This is a way of calculating the "best" size of a scrollable dialog
+	// We calculate the minimum size of the controlling element ("Properties" page of the notebook)
+	// with scrollability disabled.
+	// Then turn on scrolling by setting scrollrate afterwards.
+	Layout();
+	wxSize sz = bSizer1->CalcMin();
+	sz.IncBy(20); // Account for some decorations?
+	SetClientSize(sz);
+	m_defaultClientSize = sz;
+	m_panelBasicProperties->SetScrollRate(5, 5);
 
-	this->Centre(wxBOTH);
+	Centre(wxBOTH);
 
 	// Connect Events
 	m_textLatitude->Connect(wxEVT_COMMAND_TEXT_ENTER,
@@ -487,6 +491,7 @@ void MarkInfoImpl::InitialFocus(void)
 {
 	m_textName->SetFocus();
 	m_textName->SetInsertionPointEnd();
+	m_panelBasicProperties->Scroll(0, 0);
 }
 
 void MarkInfoImpl::SetColorScheme(global::ColorScheme)
@@ -559,7 +564,6 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 	m_textCtrlGuid->SetValue(m_pRoutePoint->guid());
 
 	build_hyperlink_list();
-	bSizerLinks->Fit(m_scrolledWindowLinks);
 
 	navigation::WaypointManager& waypointmanager = global::OCPN::get().waypointman();
 
@@ -578,8 +582,6 @@ bool MarkInfoImpl::UpdateProperties(bool positionOnly)
 			m_bcomboBoxIcon->Append(ps, icons->GetBitmap(i));
 	}
 	m_bcomboBoxIcon->Select(iconToSelect);
-	this->Fit();
-	sbSizerLinks->Layout();
 	icons = NULL;
 
 	return true;
@@ -814,6 +816,7 @@ void MarkInfoImpl::OnMarkInfoOKClick(wxCommandEvent& event)
 	if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 		pRouteManagerDialog->UpdateWptListCtrl();
 
+	SetClientSize(m_defaultClientSize);
 	event.Skip();
 }
 
@@ -831,6 +834,8 @@ void MarkInfoImpl::OnMarkInfoCancelClick(wxCommandEvent& event)
 
 	Show(false);
 	m_pMyLinkList.clear();
+	SetClientSize(m_defaultClientSize);
+
 	event.Skip();
 }
 

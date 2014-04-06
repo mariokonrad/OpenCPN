@@ -182,6 +182,7 @@ private:
 	wxChoice* m_chWidth;
 
 	wxStaticBoxSizer* m_pListSizer;
+	wxScrolledWindow* itemDialog1;
 
 	static long Start_LMT_Offset; // TODO: must this be static?
 };

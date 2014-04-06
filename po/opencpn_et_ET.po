@@ -21,36 +21,50 @@ msgid ""
 "\n"
 " - your GPS offset from bow must be within your ship's length"
 msgstr ""
+"\n"
+" - teie GPS-i nihe vöörist peab olema te laeva pikkuse piires"
 
 #
 msgid ""
 "\n"
 " - your GPS offset from midship must be within your ship's beam"
 msgstr ""
+"\n"
+" - teie GPS-i nihe keskosast peab olema te laeva laiuse piires"
 
 #
 msgid ""
 "\n"
 " - your minimum ship icon size must be between 1 and 100 mm"
 msgstr ""
+"\n"
+" - teie laeva vähim ikooni suurus peab olema 1 and 100 mm vahel"
 
 #
 msgid ""
 "\n"
 " - your ship's beam must be > 0"
 msgstr ""
+"\n"
+" - te laeva laius peab olema > 0"
 
 #
 msgid ""
 "\n"
 " - your ship's length must be > 0"
 msgstr ""
+"\n"
+" - te laeva pikkus peab olema > 0"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid ""
 "\n"
 "OpenCPN is distributed in the hope that it will be useful,\n"
@@ -66,6 +80,7 @@ msgid ""
 "\n"
 "Please click \"OK\" to agree and proceed, \"Cancel\" to quit.\n"
 msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
 "\n"
 "OpenCPN on loodu, lootuses, et see on sulle kasulikl,\n"
 "kuid ilma GARANTIITA; isegi mitte kaudselt\n"
@@ -79,226 +94,382 @@ msgstr ""
 "ÄRA USALDA OpenCPN-ile täeilikult.\n"
 "\n"
 "Palun vajuta \"OK\" kui oled nõus, \"Katkestal\" väljumiseks.\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"\n"
+"OpenCPN jagatakse lootuses, et see on sulle kasulik,\n"
+"kuid ilma MINGI GARANTIITA; isegi mitte kaudse\n"
+"TURUSTAMISE või KONKREETSELE OTSTARBELE\n"
+"SOBIVUSE garantiita.\n"
+"Vaata GNU General Public License täpsustamiseks.\n"
+"\n"
+"OpenCPN-i peab kasutama ainult koos heakskiidetud\n"
+"paberkaartidega ja navigatsiooni traditsiooniliste meetoditega .\n"
+"\n"
+"ÄRA TOETU OpenCPN-ile elu või omandi ohutuse tagamiseks.\n"
+"\n"
+"Palun vajuta \"OK\" kui oled nõus, \"Katkestal\" väljumiseks.\n"
 
 #
 msgid "    Incompatible PlugIn detected:"
-msgstr ""
+msgstr "    Avastatud mitteühilduv plugin:"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "   Chart File contains less than 3 PLY points: "
-msgstr "Kaardi fail sisaldab vähem kui 3 PLY punkti:"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaardi fail sisaldab vähem kui 3 PLY punkti:\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"   Kaardifail sisaldab vähem kui 3 kalibreerimispunkti: "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "   Chart File corrupt in PostInit() on chart "
-msgstr "Kaardi fail vigastatud PostInit() kohalt"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaardi fail vigastatud PostInit() kohalt\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"   Kaardifail on PostInit() kohas kaardil rikutud "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "   Error creating Line Index for chart "
-msgstr "Ei suuda kaardi indexit teha"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Ei suuda kaardi indexit teha\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"   Viga liinide indeksi loomisel kaardi jaoks"
 
 #
 msgid ""
 "   External application \"xcalib\" not found. Screen brightness not changed."
-msgstr ""
+msgstr "  Ei leitud välist programmi \"xcalib\". Ekraani heledust ei muudetud."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "   Line Index corrupt, recreating Index for chart "
-msgstr "Joone indeks katki, regenereerin kaaardi indexi"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Joone indeks katki, regenereerin kaaardi indexi\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"   Liinide indeks on rikutud, taastan indeksi kaardi jaoks "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "   Result: OK, Internal georef solution used."
-msgstr "   Resulaat: OK, Sisemist georef vahendit kasutatakse."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"   Resulaat: OK, Sisemist georef vahendit kasutatakse.\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"   Tulemus: OK, kasutatakse seespidist georeferenss-lahendust."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "   Trying again with internally calculated georef solution "
-msgstr "Proovin uuesti sisemise kalkuleerimis vahendiga"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Proovin uuesti sisemise kalkuleerimis vahendiga\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"   Proovin seespidiselt arvutatud georeferenss-lahendusega uuesti "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid ""
 "   VP Final Check with internal georef: Georeference Chart_Error_Factor on "
 "chart "
 msgstr ""
-"   VP lõplik sisemine kontroll: Georeference Chart_Error_Factor kaardil"
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"   VP lõplik sisemine kontroll: Georeference Chart_Error_Factor kaardil\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"   VP lõplik kontroll seespidise georeferensiga: georeferensi "
+"Chart_Error_Factor viga kaardil "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "   VP Final Check: Georeference Chart_Error_Factor on chart "
-msgstr "   VP VIIMANE KONTROLL: Georeference Chart_Error_Factor kaardil "
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"   VP VIIMANE KONTROLL: Georeference Chart_Error_Factor kaardil \n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"   VP lõplik kontroll: georeferensi Chart_Error_Factor viga kaardil "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid " %D Days  %H Hours  %M Minutes"
-msgstr " %D Päeva  %H Tundi  %M Minutit"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+" %D Päeva  %H Tundi  %M Minutit\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+" %D päeva  %H tundi  %M minutit"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid " %H Hours  %M Minutes"
-msgstr " %H Tundi  %M Minutit"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+" %H Tundi  %M Minutit\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+" %H tundi  %M minutit"
 
 #
 msgid " (Ctrl-Space)"
-msgstr ""
+msgstr "(Ctrl-Space)"
 
 #
 msgid " (Last Known)"
-msgstr ""
+msgstr " (viimane teadaolev)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid " - "
 msgstr " - "
 
 #
 msgid " -- [Portable(-p) executing from "
-msgstr ""
+msgstr " -- [Käivitan kaasaskantavat(-p) asukohas "
 
 #
-#
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid " COG Unavailable"
-msgstr "Kaart pole saadaval"
+msgstr " COG pole saadaval"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid " ChartFile:  "
-msgstr "Kaardi fail:"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaardi fail:\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kaardifail: "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid " Datum:  "
-msgstr "Kuupäev:"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kuupäev:\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Koordinaatsüsteem: "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid " Depth Units:  "
-msgstr "Sügavuse ühik:  "
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Sügavuse ühik:  \n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Sügavuse ühikud: "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid " ID:  "
-msgstr " ID:  "
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+" ID:  \n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"ID: "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid " Name:  "
 msgstr "Nimi:"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid " Projection:  "
-msgstr "Prognoos:"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
-#, c-format
-msgid " Scale:  1:%d"
-msgstr "Mõõtkava:  1:%d"
-
-#
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid " Projection:  "
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Prognoos:\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"  projektsioon: "
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy, c-format
+msgid " Scale:  1:%d"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Mõõtkava:  1:%d\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Mõõtkava: 1:%d"
+
+#
 msgid " Ship "
-msgstr "Alus:"
+msgstr "Laev"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid " Soundings:  "
-msgstr "Loodimine:"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Loodimine:\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"  sügavused: "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid " Source Edition:  "
-msgstr "Allika muutmine:"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Allika muutmine:\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Väljaanne: "
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid " Updated:  "
-msgstr "Uuendatud:"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Uuendatud:\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"  uuendatud: "
 
 #
 msgid " for details."
-msgstr ""
+msgstr " täpsustamiseks."
 
 #
 msgid " routing points for this leg?"
@@ -309,35 +480,40 @@ msgid ""
 " shorter than rhumbline.\n"
 "\n"
 msgstr ""
+" lühem kui rumbijoon.\n"
+"\n"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid " to "
-msgstr "--"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"--\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+" kuni "
 
 #
 msgid "\" is empty, switching to \"All Active Charts\" group."
-msgstr ""
+msgstr "\" on tühi, lülitun \"All Active Charts\" gruppile ümber."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "\"Ship Name\" MMSI (Call Sign)"
-msgstr "      \"Aluse nimi\" MMSI (Kutsung)"
+msgstr "\"Laev nimi\" MMSI (kutsung)"
 
 #
 msgid "%D Days, %H:%M"
-msgstr ""
+msgstr "%D päeva, %H:%M"
 
 #
 msgid "%H:%M"
-msgstr ""
+msgstr "%H:%M"
 
 #
 #
@@ -354,72 +530,105 @@ msgstr ""
 msgid "&Acknowledge"
 msgstr "&Tunnustama"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "&Activate"
-msgstr "&Aktiveeri"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"&Aktiveeri\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"&Käivita"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "&Cancel"
 msgstr "&Tühista"
 
 #
 msgid "&Center View"
-msgstr ""
+msgstr "Keskenda &vaade"
 
 #
 msgid "&Copy all as text"
-msgstr ""
+msgstr "K&opeeri kõik tekstina"
 
 #
 msgid "&Copy as text"
-msgstr ""
+msgstr "Ko&peeri tekstina"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "&Delete"
-msgstr "&Kustuta"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
-msgid "&Delete All"
-msgstr "&Kustuta Kõik"
-
-#
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "&Delete"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"&Kustuta\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"K&ustuta"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "&Delete All"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"&Kustuta Kõik\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kustut&a kõik"
+
+#
 msgid "&Export selected..."
-msgstr "&Ekspordi teekond"
+msgstr "&Ekspordi valitud..."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "&Font family:"
-msgstr "&Font family:"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"&Font family:\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"&Kirjamärgi grupp:"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "&Go To"
 msgstr "&Mine"
 
@@ -440,78 +649,99 @@ msgid "&Jump To"
 msgstr "Hüppa siia"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "&Merge Selected Tracks"
-msgstr "Kustuta jälg"
+msgstr "&Mesti valitud jäljed"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "&New"
 msgstr "&Uus"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "&OK"
 msgstr "&OK"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "&Point size:"
 msgstr "&Punkti suurus:"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "&Properties"
 msgstr "&Omadused"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "&Properties..."
 msgstr "&Omadused..."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "&Remove Selected"
-msgstr "Kustuta jälg"
+msgstr "&Kõrvalda valitud"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "&Reverse"
-msgstr "&Tagurpidi"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"&Tagurpidi\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"&Pööra ümber"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "&Send to GPS"
-msgstr "&Saada GPS-i..."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"&Saada GPS-i...\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"&Saada GPS-i"
 
 #
 #
@@ -528,97 +758,139 @@ msgstr "&Saada GPS-i..."
 msgid "&Silence Alert"
 msgstr "&Vaikne alarm"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "&Start Track"
-msgstr "&Alusta jälje näitamist"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"&Alusta jälje näitamist\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"&Käivita jälg"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "&Style:"
-msgstr "&Stiil:"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"&Stiil:\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"&Stiil"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "&Underline"
-msgstr "&Alajoon"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"&Alajoon\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"&Allajoonitud"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "&Waypoint Properties..."
-msgstr "&Omadused..."
+msgstr "&Teepunkti omadused..."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "&Weight:"
-msgstr "&Paksus:"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "&Weight:"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"&Paksus:\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"&Paksus"
+
+#
 msgid "(Unnamed Layer)"
-msgstr "(Nimetu teekond)"
+msgstr "(nimetu kiht)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "(Unnamed Route)"
-msgstr "(Nimetu teekond)"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"(Nimetu teekond)\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"(nimetu teekond)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "(Unnamed Track)"
-msgstr "(Nimetu jälg)"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"(Nimetu jälg)\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"(nimetu jälg)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "(Unnamed Waypoint)"
-msgstr "(Nimetu Teepunkt)"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"(Nimetu Teepunkt)\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"(nimetu teepunkt)"
 
 #
 msgid "(reserved for future use)"
-msgstr ""
+msgstr "(reserveeritud tulevikuks)"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "(unnamed)"
-msgstr "(Nimetu teekond)"
+msgstr "(nimetu)"
 
 #
 msgid ", Out: None"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -628,220 +900,238 @@ msgstr ""
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "-"
 msgstr "-"
 
 #
-#
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "---"
-msgstr "--"
+msgstr "---"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "---<<< Warning:  Chart georef accuracy is poor. >>>---"
-msgstr "---<<< HOIATUS: Kaardil asukoht on vale. >>>---"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"---<<< HOIATUS: Kaardil asukoht on vale. >>>---\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"---<<< Hoiatus: kaardi georeferensi täpsus on madal. >>>---"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "---<<< Warning:  Chart georef accuracy may be poor. >>>---"
-msgstr "---<<< HOIATUS: Kaardil asukoht võib olla vale. >>>---"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"---<<< HOIATUS: Kaardil asukoht võib olla vale. >>>---\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"---<<< Hoiatus: kaardi georeferensi täpsus võib olla madal. >>>---"
 
 #
 msgid "..."
-msgstr ""
+msgstr "..."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "...and TCPA is less than (min)"
-msgstr "  ..Ja TCPA on vähem kui (Minutes):"
+msgstr "...ja TCPA on vähem kui (min)"
 
 #
 msgid "0"
-msgstr ""
+msgstr "0"
 
 #
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #
 msgid "1 pixel"
-msgstr ""
+msgstr "1 piksel"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "1.0 NM along COG"
-msgstr "1.0 NM edasi COG"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"1.0 NM edasi COG\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"1.0 miil piki COG"
 
 #
 msgid "10 pixels"
-msgstr ""
+msgstr "10 pikslit"
 
 #
 msgid "115200"
-msgstr ""
+msgstr "115200"
 
 #
 msgid "1200"
-msgstr ""
+msgstr "1200"
 
 #
 msgid "150"
-msgstr ""
+msgstr "150"
 
 #
 msgid "19200"
-msgstr ""
+msgstr "19200"
 
 #
 msgid "2"
-msgstr ""
+msgstr "2"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "2 Color"
 msgstr "2 värvi"
 
 #
 msgid "2 pixels"
-msgstr ""
+msgstr "2 pikslit"
 
 #
 msgid "230400"
-msgstr ""
+msgstr "230400"
 
 #
 msgid "2400"
-msgstr ""
+msgstr "2400"
 
 #
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #
 msgid "3 pixels"
-msgstr ""
+msgstr "3 pikslit"
 
 #
 msgid "300"
-msgstr ""
+msgstr "300"
 
 #
 msgid "38400"
-msgstr ""
+msgstr "38400"
 
 #
 msgid "4"
-msgstr ""
+msgstr "4"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "4 Color"
 msgstr "4 värvi"
 
 #
 msgid "4 pixels"
-msgstr ""
+msgstr "4 pikslit"
 
 #
 msgid "460800"
-msgstr ""
+msgstr "460800"
 
 #
 msgid "4800"
-msgstr ""
+msgstr "4800"
 
 #
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #
 msgid "5 pixels"
-msgstr ""
+msgstr "5 pikslit"
 
 #
 msgid "57600"
-msgstr ""
+msgstr "57600"
 
 #
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #
 msgid "6 pixels"
-msgstr ""
+msgstr "6 pikslit"
 
 #
 msgid "600"
-msgstr ""
+msgstr "600"
 
 #
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #
 msgid "7 pixels"
-msgstr ""
+msgstr "7 pikslit"
 
 #
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #
 msgid "8 pixels"
-msgstr ""
+msgstr "8 pikslit"
 
 #
 msgid "9"
-msgstr ""
+msgstr "9"
 
 #
 msgid "9 pixels"
-msgstr ""
+msgstr "9 pikslit"
 
 #
 msgid "921600"
-msgstr ""
+msgstr "921600"
 
 #
 msgid "9600"
-msgstr ""
+msgstr "9600"
 
 #
 msgid "<font size=-2>(Sector angles are True Bearings from Seaward)</font><br>"
 msgstr ""
+"<font size=-2>(Sektori nurgad on tõelised peilingud mere poolt vaadates)</"
+"font><br>"
 
 #
-# 
-# 
 msgid "?"
-msgstr ""
+msgstr "?"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -852,14 +1142,19 @@ msgstr ""
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "A"
 msgstr "A"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "AIS"
 msgstr "AIS"
 
@@ -879,40 +1174,34 @@ msgid "AIS Alert"
 msgstr "AIS-i alarm"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "AIS Target List..."
-msgstr "AIS-i objektide nimekiri"
+msgstr "AIS märkide nimekiri..."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "AIS Target Name"
-msgstr "AIS-i sihtmärgi päring"
+msgstr "AIS-märgi nimi"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "AIS Target Query"
-msgstr "AIS-i sihtmärgi päring"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "AIS Target Query"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"AIS-i sihtmärgi päring\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"AIS märgi päring"
+
+#
 msgid "AIS Targets"
-msgstr "Näita AIS-i sihtmärke"
+msgstr "AIS märgid"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -922,9 +1211,17 @@ msgstr "Näita AIS-i sihtmärke"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "AIS target list"
-msgstr "AIS-i objektide nimekiri"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"AIS-i objektide nimekiri\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"AIS-märkide loend"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -937,8 +1234,15 @@ msgstr "AIS-i objektide nimekiri"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "AISRollover"
-msgstr "AIS-i Ülekeeramine"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"AIS-i Ülekeeramine\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"AIS-üleliikumine"
 
 #
 #
@@ -955,6 +1259,7 @@ msgstr "AIS-i Ülekeeramine"
 msgid "AISTargetAlert"
 msgstr "AIS sihi Alarm"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -967,45 +1272,58 @@ msgstr "AIS sihi Alarm"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "AISTargetQuery"
-msgstr "AIS objekti päring"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"AIS objekti päring\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"AIS-märgi päring"
 
 #
 msgid "APRS"
-msgstr ""
+msgstr "ARPS"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "APRS Position Report"
-msgstr "Viimane raport aeg:"
+msgstr "ARPS asukoha ettekanne"
 
 #
 msgid "ARPA"
-msgstr ""
+msgstr "ARPA"
 
 #
 msgid "ARPA radar target"
-msgstr ""
+msgstr "ARPA märk"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "About"
 msgstr "Teave"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "About OpenCPN"
-msgstr "Programmist OpenCPN"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Programmist OpenCPN\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"OpenCPN teave"
 
 #
 msgid "Accept"
@@ -1013,97 +1331,77 @@ msgstr ""
 
 #
 msgid "Accept Sentences"
-msgstr ""
+msgstr "Võta vastu teated"
 
 #
 msgid "Accept only sentences"
-msgstr ""
+msgstr "vastu võtta ainult teated"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Activate"
-msgstr "Aktiveeri"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Aktiveeri\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Käivita"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Activate Next Waypoint"
-msgstr "Aktiveeri järgmine teekonnas"
+msgstr "Käivita järgmine teepunkt"
 
 #
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Active"
 msgstr "Aktiveeri"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Active Datasets"
-msgstr "Aktiveeri kaardi kaustad"
+msgstr "Aktiivne andmestik"
 
 #
 msgid "Add"
-msgstr ""
+msgstr "Lisa"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Add Connection"
-msgstr "Kirjatüübi seaded"
+msgstr "Lisa ühendus"
 
 #
 msgid "Add Dataset..."
-msgstr ""
+msgstr "Lisa andmestik..."
 
 #
-# 
-# 
-#, fuzzy
 msgid "Add Directory..."
-msgstr "OpenCPN Kaustast otsimine..."
+msgstr "Lisa asukoht..."
 
 #
 msgid "Add a directory containing chart files"
-msgstr ""
+msgstr "Lisa kaarte sisaldav asukoht"
 
 #
 msgid "Add new"
-msgstr ""
+msgstr "Lisa uus"
 
 #
 msgid "Address"
-msgstr ""
+msgstr "aadress"
 
 #
 msgid "Advanced"
-msgstr ""
+msgstr "Edasijõudnud"
 
 #
-# 
-# 
 msgid "Aground"
-msgstr ""
+msgstr "Madalal"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -1114,48 +1412,35 @@ msgstr ""
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Aid to Navigation"
-msgstr "Navigeerimis ABI"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Navigeerimis ABI\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Meresõidu abivahend"
 
 #
 msgid "All"
-msgstr ""
+msgstr "kõik"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "All Active Charts"
-msgstr "Aktiveeri kaardi kaustad"
+msgstr "Kõik aktiivsed kaardid"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "All Available Charts"
-msgstr "Aktiveeri kaardi kaustad"
+msgstr "Kõik saadaval kaardid"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "All Charts"
-msgstr "Kaardid"
+msgstr "Kõik kaardid"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Altitude"
-msgstr "Laiuskraad"
+msgstr "Kõrgus"
 
 #
 msgid ""
@@ -1165,172 +1450,202 @@ msgid ""
 "out all the sentences with certain TALKER prefix (like GP, AI etc.). The "
 "filter accepts just these three formats."
 msgstr ""
+"NMEA teade on harilikult 3 tähemärki pikk (nagu RMC, GGA jne). Sellel võib "
+"samuti olla 2-täheline eeslide allika ehk TALKER teate määratlemiseks. (Kogu "
+"teade näeks siis välja nagu GPGGA või AITXT). Võite välja filtreerida kindla "
+"TALKER-eesliitega (nagu GP, AI jne) teated. Filter tunnustab ainult neid "
+"kolme formaati."
 
 #
 msgid "Anchorage Area: Anchorage closed"
-msgstr ""
+msgstr "Ankruala: ankurdamine suletud"
 
 #
 msgid "Anchorage Area: Anchorage open"
-msgstr ""
+msgstr "Ankruala: ankurdamine avatud"
 
 #
 msgid "Anchorage Area: Anchoring prohibited"
-msgstr ""
+msgstr "Ankruala: ankurdamine keelatud"
 
 #
 msgid "Anchorage Area: Deep draft anchorage"
-msgstr ""
+msgstr "Ankruala: ankurdamine suure süvisega"
 
 #
 msgid "Anchorage Area: Shallow draft anchorage"
-msgstr ""
+msgstr "Ankruala: ankurdamine väikese süvisega"
 
 #
 msgid "Anchorage Area: Vessel transfer operations"
-msgstr ""
+msgstr "Ankruala: laevalt-laevale tööd"
 
 #
 msgid "Anchorage created "
-msgstr ""
+msgstr "Ankrukoht loodud"
 
 #
 msgid "Answering 'No' will create a new waypoint at the same location."
-msgstr ""
+msgstr "Vastates 'Ei' luuakse uus teepunkt samas kohas."
 
 #
 msgid "Answering 'No' will create all new waypoints for this route."
-msgstr ""
+msgstr "Vastates 'Ei' luuakse täiesti uued teepunktid selle teekonna jaoks."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Append Waypoint"
-msgstr "Ühenda Teepunkt"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Ühenda Teepunkt\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Lisa teepunkt"
 
 #
 msgid "Apply"
-msgstr ""
+msgstr "Rakenda"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Are you sure you want to delete <ALL> routes?"
-msgstr "Oled kindel, et tahad kustutada <KÕIK> teekonnad?"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Oled kindel, et tahad kustutada <KÕIK> teekonnad?\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kas olete kindel, et soovite kustutada <KÕIK> teekonnad?"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Are you sure you want to delete <ALL> tracks?"
-msgstr "Kas oled kindel, et tahad kustutada <KÕIK> jäljed?"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kas oled kindel, et tahad kustutada <KÕIK> jäljed?\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kas olete kindel, et soovite kustutada <KÕIK> jäljed?"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Are you sure you want to delete <ALL> waypoints?"
-msgstr "Oled kindel, et tahad kustutada <KÕIK> vahepunktid?"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Oled kindel, et tahad kustutada <KÕIK> vahepunktid?\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kas olete kindel, et soovite kustutada <KÕIK> teepunktid?"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Are you sure you want to delete the selected object(s)"
-msgstr "Kas oled kindel, et tahad kustutada <KÕIK> jäljed?"
+msgstr "Kas kindlalt soovite valitud objekt(id) kustutada?"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Are you sure you want to delete this route?"
-msgstr "Kas oled kindel, et tahad kustutada <KÕIK> jäljed?"
+msgstr "Kas olete kindel, et soovite selle teekonna kustutada?"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Are you sure you want to delete this track?"
-msgstr "Kas oled kindel, et tahad kustutada <KÕIK> jäljed?"
+msgstr "Kas olete kindel, et soovite seda jälge kustutada?"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Are you sure you want to remove this waypoint?"
-msgstr "Oled kindel, et tahad kustutada <KÕIK> vahepunktid?"
+msgstr "Olete kindel, et soovite selle teepunkti kõrvaldada?"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Assumed 1 Mile Point"
-msgstr "Vale 1 Miili Punkt"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Vale 1 Miili Punkt\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"1 miili oletatav punkt"
 
 #
 msgid "Assumed Magnetic Variation, deg."
-msgstr ""
+msgstr "oletatav magnetvariatsioon, °"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "At Anchor"
-msgstr "Sea ankruvalve"
+msgstr "Ankrul"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "AtoN"
 msgstr "AtoN"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Authors"
 msgstr "Autorid"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Auto Follow"
-msgstr "Automaatne järgnemine"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-msgid "Automatic Daily Tracks"
-msgstr ""
-
-#
-# 
-# 
 #, fuzzy
-msgid "Avg. speed"
-msgstr "Keskmine kiirus (sõlmed)"
+msgid "Auto Follow"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Automaatne järgnemine\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Automaatne järgimine"
 
 #
+msgid "Automatic Daily Tracks"
+msgstr "automaatsed päevajäljed"
+
+#
+msgid "Avg. speed"
+msgstr "Kesk. kiirus"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
 #
 #
 #
@@ -1340,6 +1655,8 @@ msgstr "Keskmine kiirus (sõlmed)"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "B"
 msgstr "B"
 
@@ -1347,14 +1664,23 @@ msgstr "B"
 msgid "Barge, tanker, chemical"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Base"
-msgstr "Base"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Base\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"baas"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -1365,108 +1691,96 @@ msgstr "Base"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Base Station"
-msgstr "Tugijaam"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Tugijaam\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Baasjaam"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Basic"
-msgstr "Base"
+msgstr "Elementaarne"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Baudrate"
-msgstr "NMEA Baud Rate"
+msgstr "Boodi"
 
 #
-# 
-# 
 msgid "Beacon, Isolated Danger"
-msgstr ""
+msgstr "Eraldiohu märk"
 
 #
-# 
-# 
 msgid "Beacon, Port Hand"
-msgstr ""
+msgstr "Vasaku külje paak/torn"
 
 #
-# 
-# 
 msgid "Beacon, Preferred Channel Port Hand"
-msgstr ""
+msgstr "Vasaku külje eelistatud kanali paak/torn"
 
 #
-# 
-# 
 msgid "Beacon, Preferred Channel Starboard Hand"
-msgstr ""
+msgstr "Parema külje eelistatud kanali paak/torn"
 
 #
-# 
-# 
 msgid "Beacon, Safe Water"
-msgstr ""
+msgstr "Farvaatri märk"
 
 #
-# 
-# 
 msgid "Beacon, Special Mark"
-msgstr ""
+msgstr "Eriotstarbe märk"
 
 #
-# 
-# 
 msgid "Beacon, Starboard Hand"
-msgstr ""
+msgstr "Parema külje paak/torn"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Bearing"
-msgstr "Kurss"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
-msgid "Bearing (M)"
-msgstr "Kurss"
+msgid "Bearing"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kurss\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Suund"
 
 #
-# 
+msgid "Bearing (M)"
+msgstr "Peiling (M)"
+
+#
 msgid "Black"
-msgstr ""
+msgstr "must"
 
 #
 msgid "Blacklisted plugin detected..."
-msgstr ""
+msgstr "On avastatud keelatud plugin..."
 
 #
-# 
 msgid "Blue"
-msgstr ""
+msgstr "sinine"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Boundaries"
 msgstr "Piirid"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -1476,12 +1790,19 @@ msgstr "Piirid"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Brg"
-msgstr "Kurss"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kurss\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Peiling"
 
 #
 msgid "Buddy"
-msgstr ""
+msgstr "Sõber"
 
 #
 msgid "Bulk carrier maritime"
@@ -1493,41 +1814,37 @@ msgstr ""
 
 #
 msgid "Buoy/Light Labels"
-msgstr ""
+msgstr "Poi/tule silt"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "C&olour:"
-msgstr "V&ärv:"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"V&ärv:\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"&Värv:"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "CM93 Detail Level"
-msgstr "Max. detailid siin"
+msgstr "CM93 detailide tase"
 
 #
-# 
-# 
-#, fuzzy
 msgid "CM93 Offset Dialog..."
-msgstr "CM93 nihe näitamisel"
+msgstr "CM93 nihke dialoog..."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "COG Predictor Length (min)"
-msgstr "Oma aluse COG-i noole ennustatav pikkus (minutites):"
+msgstr "COG eeldatav asukoht (min)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -1537,33 +1854,55 @@ msgstr "Oma aluse COG-i noole ennustatav pikkus (minutites):"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "CPA"
 msgstr "CPA"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "CPA Calculation"
-msgstr "CPA Kalkuleerimine"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"CPA Kalkuleerimine\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"CPA arvutamine"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "CPA TCPA"
 msgstr "CPA TCPA"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "CPA/TCPA Alerts"
-msgstr "CPA/TCPA Alarmid"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"CPA/TCPA Alarmid\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"CPA/TCPA häired"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -1573,379 +1912,375 @@ msgstr "CPA/TCPA Alarmid"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Call"
-msgstr "Kutsung"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kutsung\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Väljakutse"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Cancel"
 msgstr "Tühista"
 
 #
 msgid "Cancellation - cancel area as identified by Message Linkage ID"
-msgstr ""
+msgstr "Tühistamine - tühistada ala, määratletud teatega seotud ID"
 
 #
-# 
-# 
 msgid "Card. E"
-msgstr ""
+msgstr "Kard. E"
 
 #
-# 
-# 
 msgid "Card. N"
-msgstr ""
+msgstr "Kard. N"
 
 #
-# 
-# 
 msgid "Card. S"
-msgstr ""
+msgstr "Kard. S"
 
 #
-# 
-# 
 msgid "Card. W"
-msgstr ""
+msgstr "Kard. W"
 
 #
-# 
-# 
 msgid "Cardinal E Beacon"
-msgstr ""
+msgstr "Kardinaalne E paak/torn"
 
 #
-# 
-# 
 msgid "Cardinal Mark E"
-msgstr ""
+msgstr "Kardinaalne E-märk"
 
 #
-# 
-# 
 msgid "Cardinal Mark N"
-msgstr ""
+msgstr "Kardinaalne N-märk"
 
 #
-# 
-# 
 msgid "Cardinal Mark S"
-msgstr ""
+msgstr "Kardinaalne S-märk"
 
 #
-# 
-# 
 msgid "Cardinal Mark W"
-msgstr ""
+msgstr "Kardinaalne W-märk"
 
 #
-# 
-# 
 msgid "Cardinal N Beacon"
-msgstr ""
+msgstr "Kardinaalne N paak/torn"
 
 #
-# 
-# 
 msgid "Cardinal S Beacon"
-msgstr ""
+msgstr "Kardinaalne S paak/torn"
 
 #
-# 
-# 
 msgid "Cardinal W Beacon"
-msgstr ""
+msgstr "Kardinaalne W paak/torn"
 
 #
-# 
-# 
 msgid "Cargo Ship"
-msgstr ""
+msgstr "Kaubalaev"
 
 #
 msgid "Caution Area: Cluster of fishing vessels"
-msgstr ""
+msgstr "Ettevaatusala: kalalaevade kogum"
 
 #
 msgid "Caution Area: Derelicts (drifting objects)"
-msgstr ""
+msgstr "Ettevaatusala: mahajäetud triivivad objektid"
 
 #
 msgid "Caution Area: Divers down"
-msgstr ""
+msgstr "Ettevaatusala: sukeldujad vees"
 
 #
 msgid "Caution Area: Dredge operations"
-msgstr ""
+msgstr "Ettevaatusala: süvendustööd"
 
 #
 msgid "Caution Area: Fairway closed"
-msgstr ""
+msgstr "Ettevaatusala: farvaater suletud"
 
 #
 msgid "Caution Area: Fishery - nets in water"
-msgstr ""
+msgstr "Ettevaatusala: kalandus - võrgud vees"
 
 #
 msgid "Caution Area: Harbour closed"
-msgstr ""
+msgstr "Ettevaatusala: sadam suletud"
 
 #
 msgid "Caution Area: Marine event"
-msgstr ""
+msgstr "Ettevaatusala: meresündmus"
 
 #
 msgid "Caution Area: Marine mammals habitat (implies whales NOT observed)"
-msgstr ""
+msgstr "Ettevaatusala: mereimetajate elukoht (ei eelda vaalade olemasolu)"
 
 #
 msgid "Caution Area: Marine mammals in area - reduce speed"
-msgstr ""
+msgstr "Ettevaatusala: mereimetajad alas - vähenda kiirust"
 
 #
 msgid "Caution Area: Marine mammals in area - report sightings"
-msgstr ""
+msgstr "Ettevaatusala: mereimetajad alas - teata märkamistest"
 
 #
 msgid "Caution Area: Marine mammals in area - stay clear"
-msgstr ""
+msgstr "Ettevaatusala: mereimetajad alas - hoia eemale"
 
 #
 msgid "Caution Area: Protected habitat - no fishing or anchoring"
-msgstr ""
+msgstr "Ettevaatusala: kaitstud elukoht - kalapüük ja ankurdamine keelatud"
 
 #
 msgid "Caution Area: Protected habitat - reduce speed"
-msgstr ""
+msgstr "Ettevaatusala: kaitstud elukoht - vähenda kiirust"
 
 #
 msgid "Caution Area: Protected habitat - stay clear"
-msgstr ""
+msgstr "Ettevaatusala: kaitstud elukoht - hoia eemale"
 
 #
 msgid "Caution Area: Risk (define in Associated text field)"
-msgstr ""
+msgstr "Ettevaatusala: risk (määratle seotud tekstiväljas)"
 
 #
 msgid "Caution Area: Seaplane operations"
-msgstr ""
+msgstr "Ettevaatusala: vesilennukite kasutamine"
 
 #
 msgid "Caution Area: Survey operations"
-msgstr ""
+msgstr "Ettevaatusala: mõõdistustööd"
 
 #
 msgid "Caution Area: Swim area"
-msgstr ""
+msgstr "Ettevaatusala: ujumisala"
 
 #
 msgid "Caution Area: Traffic congestion"
-msgstr ""
+msgstr "Ettevaatusala: liiklustakistus"
 
 #
 msgid "Caution Area: Underwater operation"
-msgstr ""
+msgstr "Ettevaatusala: veealused tööd"
 
 #
 msgid "Caution Area: Underwater vehicle operation"
-msgstr ""
+msgstr "Ettevaatusala: veealuse seadme kasutamine"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Cell"
-msgstr "Kutsung"
+msgstr "Element"
 
 #
-# 
-# 
 msgid "Cell Scale"
-msgstr ""
+msgstr "Elemendi mõõtkava"
 
 #
 msgid "Center View"
-msgstr ""
+msgstr "Vaade keskele"
 
 #
 msgid "Center View..."
-msgstr ""
+msgstr "Keskenda vaade..."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Change Color Scheme"
-msgstr "Muuda tausta heledust"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Muuda tausta heledust\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Vaheta värviskeemi"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Chart Depth Units"
-msgstr "Kaardi sügavuse ühikud"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaardi sügavuse ühikud\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kaardi sügavusühikud"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Chart Display Options"
-msgstr "Kaardi vaate seaded"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaardi vaate seaded\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kaardi kuvamise valikud"
 
 #
 msgid "Chart Feature: Bridge closed"
-msgstr ""
+msgstr "Kanali objekt: sild suletud"
 
 #
 msgid "Chart Feature: Bridge fully open"
-msgstr ""
+msgstr "Kaardi objekt: sild täiesti avatud"
 
 #
 msgid "Chart Feature: Bridge partially open"
-msgstr ""
+msgstr "Kaardi objekt: sild osaliselt avatud"
 
 #
 msgid "Chart Feature: Channel obstruction"
-msgstr ""
+msgstr "Kaardi objekt: kanali takistus"
 
 #
 msgid "Chart Feature: Reduced vertical clearance"
-msgstr ""
+msgstr "Kaardi objekt: vähendatud vertikaalne liikumisruum"
 
 #
 msgid "Chart Feature: Semi-submerged object"
-msgstr ""
+msgstr "Kaardi objekt: osaliselt sukeldunud objekt"
 
 #
 msgid "Chart Feature: Shoal area"
-msgstr ""
+msgstr "Kaardi objekt: madal ala"
 
 #
 msgid "Chart Feature: Shoal area due east"
-msgstr ""
+msgstr "Kaardi objekt: madal ala otse E-s"
 
 #
 msgid "Chart Feature: Shoal area due north"
-msgstr ""
+msgstr "Kaardi objekt: madal ala otse N-s"
 
 #
 msgid "Chart Feature: Shoal area due south"
-msgstr ""
+msgstr "Kaardi objekt: madal ala otse S-s"
 
 #
 msgid "Chart Feature: Shoal area due west"
-msgstr ""
+msgstr "Kaardi objekt: madal ala otse W-s"
 
 #
 msgid "Chart Feature: Submerged object"
-msgstr ""
+msgstr "Kaardi objekt: sukeldunud objekt"
 
 #
 msgid "Chart Feature: Sunken vessel"
-msgstr ""
+msgstr "Kaardi objekt: uppunud laev"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Chart Groups"
-msgstr "Kaardid"
+msgstr "Kaartide grupid"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Chart Information Objects"
-msgstr "Koha informatsioon"
+msgstr "Kaardi-info objektid"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Chart Print"
-msgstr "Kaardi print"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaardi print\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kaardi printimine"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Chart Up Mode"
-msgstr "Kurss ülesse töörežiim"
+msgstr "Kaart-üleval tööreþiim"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Chart1::Event...TCMgr Not Available"
-msgstr "Kaart1::Sündmus...TCMgr Pole võimalik"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
-msgid "ChartTexts"
-msgstr "Kaardid"
+msgid "Chart1::Event...TCMgr Not Available"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaart1::Sündmus...TCMgr Pole võimalik\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Chart1::Event...TCMgr pole saadaval"
 
+#
+msgid "ChartTexts"
+msgstr "Tekst kaardil"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Charts"
 msgstr "Kaardid"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Choose Font Color..."
-msgstr "Vali Kirjatüüp..."
+msgstr "Vali tähe värv..."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Choose Font..."
-msgstr "Vali Kirjatüüp..."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Vali Kirjatüüp...\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Vali täht..."
 
 #
 msgid "Choose Format for Copy"
-msgstr ""
+msgstr "Vali kopeerimise formaat"
 
 #
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Choose a file"
-msgstr "Konsooli väärtus"
+msgstr "Vali fail"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -1955,67 +2290,95 @@ msgstr "Konsooli väärtus"
 # 
 # 
 # 
-msgid "Class"
-msgstr "Liik"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-#
-#
-#
-#
-#
-# 
-# 
-# 
-# 
 #, fuzzy
-msgid "Clear"
-msgstr "Puhasta kõik"
+msgid "Class"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Liik\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Klass"
 
+#
+msgid "Clear"
+msgstr "Puhasta"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Clear All"
 msgstr "Puhasta kõik"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Clear Anchor Watch"
-msgstr "Puhasta ankruvalve"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Puhasta ankruvalve\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Lõpeta ankruvaht"
 
 #
 msgid "Clearance granted - proceed to berth"
-msgstr ""
+msgstr "Luba antud - minge kai äärde"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Click to cancel the font selection."
-msgstr "Vajuta Tühista fontide osas"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Vajuta Tühista fontide osas\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Vajuta kirjamärgi valiku tühistamiseks."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Click to confirm the font selection."
-msgstr "Vajuta kinnita fontide osas"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Vajuta kinnita fontide osas\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Vajuta kirjamärgi valiku kinnitamiseks."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Close"
 msgstr "Sulge"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -2025,73 +2388,67 @@ msgstr "Sulge"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "CoG"
 msgstr "CoG"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Color"
-msgstr "V&ärv:"
+msgstr "Värv"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Color:"
-msgstr "V&ärv:"
+msgstr "Värv:"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Colors"
 msgstr "Värvid"
 
 #
 msgid "Combo!"
-msgstr ""
+msgstr "Mõlemad!"
 
 #
 msgid "Confirm deletion of tracks and routes"
-msgstr ""
+msgstr "kinnita teekondade ja -punktide kustutamine"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Connections"
-msgstr "Kirjatüübi seaded"
+msgstr "Ühendused"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Console Legend"
 msgstr "Konsooli legend"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Console Value"
 msgstr "Konsooli väärtus"
 
 #
-# 
-# 
 msgid "Constrained by draught"
-msgstr ""
+msgstr "Süviselt piiratud laev"
 
 #
 msgid "Container vessel"
@@ -2099,27 +2456,27 @@ msgstr ""
 
 #
 msgid "Control checksum"
-msgstr ""
+msgstr "vaata kontrollsumma üle"
 
 #
 msgid "Copy As KML"
-msgstr ""
+msgstr "Kopeeri KML-na"
 
 #
 msgid "Copy Log File to Clipboard"
-msgstr ""
+msgstr "Kopeeri logifail lõikepuhvrisse"
 
 #
 msgid "Copy Settings File to Clipboard"
-msgstr ""
+msgstr "Kopeeri seadete fail lõikepuhvrisse"
 
 #
 msgid "Copy as KML"
-msgstr ""
+msgstr "Kopeeri KML-na"
 
 #
 msgid "Copy as KML..."
-msgstr ""
+msgstr "Kopeeri KML-na"
 
 #
 #, c-format
@@ -2127,69 +2484,60 @@ msgid "Couldn't load sound data from '%s'."
 msgstr ""
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Course"
-msgstr "Kurss ülesse töörežiim"
+msgstr "Kurss"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Course (M)"
-msgstr "Kurss ülesse töörežiim"
+msgstr "Kurss (M)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Course UP Mode"
-msgstr "Kurss ülesse töörežiim"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "Course UP Mode"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kurss ülesse töörežiim\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"kurss-üleval moodus"
+
+#
 msgid "Course Up Mode"
-msgstr "Kurss ülesse töörežiim"
+msgstr "kurss-üleval tööreþiim"
 
 #
 msgid "Course-Up Mode Display Update Period (sec)"
-msgstr ""
+msgstr "kurss-üleval mooduse kuvamise uuendamise periood (sek)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Create Route"
-msgstr "Moodusta teekond"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Moodusta teekond\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Loo teekond"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Create WPT"
-msgstr "Kustuta teepunkt"
+msgstr "Loo WPT"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Create Waypoint"
-msgstr "Kustuta teepunkt"
+msgstr "Loo teepunkt"
 
 #
 msgid "Cruise ship"
@@ -2211,76 +2559,52 @@ msgid "Current"
 msgstr "Hoovus"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Cyan"
-msgstr "Tühista"
+msgstr "erksinine"
 
 #
-# 
-# 
 msgid "D/V"
-msgstr ""
+msgstr "Süv/l"
 
 #
 msgid "DSC"
-msgstr ""
+msgstr "DSC"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "DSC Distress"
-msgstr "Vahemaa"
+msgstr "DSC-häire"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "DSC Position Report"
-msgstr "Viimane raport aeg:"
+msgstr "DSC-asukoha ettekanne"
 
 #
-# 
 msgid "Dark Blue"
-msgstr ""
+msgstr "tumesinine"
 
 #
-# 
 msgid "Dark Cyan"
-msgstr ""
+msgstr "tume-erksinine"
 
 #
-# 
 msgid "Dark Gray"
-msgstr ""
+msgstr "tumehall"
 
 #
-# 
 msgid "Dark Green"
-msgstr ""
+msgstr "tumeroheline"
 
 #
-# 
 msgid "Dark Magenta"
-msgstr ""
+msgstr "tumepurpurviolett"
 
 #
-# 
 msgid "Dark Red"
-msgstr ""
+msgstr "tumepunane"
 
 #
-# 
 msgid "Dark Yellow"
-msgstr ""
+msgstr "tumekollane"
 
 #
 msgid "DarkBlue"
@@ -2321,13 +2645,8 @@ msgid "DarkYellow"
 msgstr "Kutsung"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Data Connections"
-msgstr "Kirjatüübi seaded"
+msgstr "Andmeühendused"
 
 #
 #
@@ -2346,346 +2665,341 @@ msgid "Data Source :"
 msgstr "NMEA andemete allikas"
 
 #
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "DataPort"
-msgstr "AIS-i andemte port"
+msgstr "andmepoord"
 
 #
 msgid "Daytime"
-msgstr ""
+msgstr "Päeva-aeg"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "De-Cluttered Text"
-msgstr "De-Clutter Tekst (exp.)"
+msgstr "Virvarrita tekst"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Deactivate"
-msgstr "Deaktiveeri"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Deaktiveeri\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Peata"
 
 #
 msgid "Decimal Degrees"
-msgstr ""
+msgstr "Kraadi kümnendikud"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Deep Depth"
-msgstr "Sügav sügavus"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Sügav sügavus\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"suur sügavus"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Default"
-msgstr "Teksti värv"
+msgstr "vaikimisi"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Default color"
-msgstr "Teksti värv"
+msgstr "vaikimisi värv"
 
 #
 msgid "Degrees, Decimal Minutes"
-msgstr ""
+msgstr "kraadid, minutite kümnendikud"
 
 #
-# 
 msgid "Degrees, Minutes, Seconds"
-msgstr ""
+msgstr "kraadid, minutid, sekundid"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Delete"
-msgstr "&Kustuta"
+msgstr "Kustuta"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Delete All"
 msgstr "Kustuta kõik"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Delete Group"
-msgstr "Kustuta teekond"
+msgstr "Kustuta grupp"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Delete Waypoint"
 msgstr "Kustuta teepunkt"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Delete..."
-msgstr "&Kustuta"
+msgstr "Kustuta..."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Depart From"
-msgstr "Lahkuma"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Lahkuma\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Alates"
 
 #
-# 
-# 
 msgid "Departure Time (m/d/y h:m)"
 msgstr ""
+"Lahkumise aeg\n"
+"(mm/dd/yyyy hh:mm)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Depth Settings(m)"
-msgstr "Sügavus seaded(m)"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
-msgid "Depth Soundings"
-msgstr "Näita sügavust"
+msgid "Depth Settings(m)"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Sügavus seaded(m)\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Sügavuse seaded (m)"
 
+#
+msgid "Depth Soundings"
+msgstr "Sügavuse mõõdistused"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Description"
 msgstr "Kirjeldus"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Destination"
-msgstr "Sihtkoht"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Sihtkoht\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Sihtpunkt"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Directories"
-msgstr "Aktiveeri kaardi kaustad"
+msgstr "Asukohad"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Disable"
-msgstr "Blokeeri"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Blokeeri\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Keela"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Disable Full Screen Quilting"
-msgstr "Luba kaartide kihistamine"
+msgstr "blokeeri täisekraan-kihistamine"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Display"
-msgstr "Ekraan"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Ekraan\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kuvamine"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Display Category"
-msgstr "Näita kategooriaid"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Näita kategooriaid\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kuva kategooria"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Display Options"
-msgstr "Kaardi vaate seaded"
+msgstr "Kuvamise valikud"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Display parameters"
-msgstr "Näita kategooriaid"
+msgstr "Näita omadused"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Distance"
 msgstr "Vahemaa"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Distance Between Rings"
-msgstr "Radari ringide vahemaa"
+msgstr "Vahemaa ringide vahel"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Distance Unit"
-msgstr "Vahemaa"
+msgstr "Vahemaa ühik"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Distance from Ownship"
-msgstr "Vahemaa"
+msgstr "Vahemaa oma laevast"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Distress"
-msgstr "Vahemaa"
+msgstr "Häda"
 
 #
 msgid "Distress Area: Person overboard"
-msgstr ""
+msgstr "Häire ala: inimene üle parda"
 
 #
 msgid "Distress Area: Pollution response area"
-msgstr ""
+msgstr "Häire ala: reostustõrje ala"
 
 #
 msgid "Distress Area: SAR area"
-msgstr ""
+msgstr "Häire ala: SAR ala"
 
 #
 msgid "Distress Area: Vessel abandoning ship"
-msgstr ""
+msgstr "Häire ala: mahajäetav laev"
 
 #
 msgid "Distress Area: Vessel collision"
-msgstr ""
+msgstr "Häire ala: laeva kokkupõrge"
 
 #
 msgid "Distress Area: Vessel disabled and adrift"
-msgstr ""
+msgstr "Häire ala: juhtimisvõimetu laev triivis"
 
 #
 msgid "Distress Area: Vessel fire/explosion"
-msgstr ""
+msgstr "Häire ala: tulekahju/plahvatus laeval"
 
 #
 msgid "Distress Area: Vessel flooding"
-msgstr ""
+msgstr "Häire ala: laev võtab vett sisse"
 
 #
 msgid "Distress Area: Vessel grounding"
-msgstr ""
+msgstr "Häie ala: laev madalal"
 
 #
 msgid "Distress Area: Vessel listing/capsizing"
-msgstr ""
+msgstr "Häire ala: laev kreenis/kaadumas"
 
 #
 msgid "Distress Area: Vessel requests medical assistance"
-msgstr ""
+msgstr "Häire ala: Laev palub meditsiinilist abi"
 
 #
 msgid "Distress Area: Vessel sinking"
-msgstr ""
+msgstr "Häire ala: uppuv laev"
 
 #
 msgid "Distress Area: Vessel under assault"
-msgstr ""
+msgstr "Häire ala: laeva rünnatakse"
 
 #
 msgid ""
 "Do you also want to make the shared waypoints being part of this route "
 "invisible?"
-msgstr ""
+msgstr "Kas ka soovite selle teekonna ühised teepunktid muuta nähtamatuteks?"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Done."
 msgstr "Tehtud."
 
 #
 msgid "Dot"
-msgstr ""
+msgstr "punktiirjoon"
 
 #
 msgid "Dot dash"
-msgstr ""
+msgstr "punkt-kriips-joon"
 
 #
-# 
-# 
 msgid "Dredge"
-msgstr ""
+msgstr "Süvendaja"
 
 #
 #
@@ -2703,159 +3017,173 @@ msgstr ""
 msgid "Drop"
 msgstr "Pane punkt siia"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Drop MOB Marker"
-msgstr "Pane MOB punkt!"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Pane MOB punkt!\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Pane MOB tähis"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Drop Mark"
-msgstr "Pane punkt siia"
+msgstr "Pane märk"
 
 #
 msgid "Drop Sentences"
-msgstr ""
+msgstr "Jäta kõrvale teated"
 
 #
 msgid "Drop sentences"
-msgstr ""
+msgstr "hülga teated"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "ETA"
-msgstr "ETA:"
+msgstr "ETA"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "ETA          "
 msgstr "ETA          "
 
 #
-# 
 msgid "ETE"
-msgstr ""
+msgstr "ETE"
 
 #
-# 
 msgid "ETE/ETD"
-msgstr ""
+msgstr "ETE/ETD"
 
 #
 msgid "Edit"
-msgstr ""
+msgstr "Muuda"
 
 #
-# 
-# 
 msgid "Elapsed time : "
-msgstr ""
+msgstr "Möödunud aeg:"
 
 #
 msgid "Elements to print..."
-msgstr ""
+msgstr "Elemendid printimiseks..."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Enable"
-msgstr "Aktiveeri"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
-msgid "Enable Chart Quilting"
-msgstr "Luba kaartide kihistamine"
-
-#
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "Enable"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Aktiveeri\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Võimalda"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "Enable Chart Quilting"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Luba kaartide kihistamine\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"luba kaartide kihistamine"
+
+#
 msgid "Enable Target Alert Acknowledge timeout (min)"
-msgstr "Aktiveeri sihtkoha alarmi lõpp  (minutites)"
+msgstr "luba märgi häirele vastamise hilinemine (min)"
 
 #
 msgid "Enable Transparent Toolbar"
-msgstr ""
+msgstr "luba läbipaistev tööriistariba"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "End Route"
-msgstr "Lõpeta teekond"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Lõpeta teekond\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Teekonna lõpp"
 
 #
-# 
-# 
 msgid "Engaged in Fishing"
-msgstr ""
+msgstr "Kalastamas"
 
 #
 msgid "Enter Group Name"
-msgstr ""
+msgstr "Sisesta grupi nimi"
 
 #
 msgid "Enter the NMEA sentence"
-msgstr ""
+msgstr "Sisesta NMEA teade"
 
 #
 msgid "Enter the NMEA sentence (2, 3 or 5 characters)"
-msgstr ""
+msgstr "Sisesta NMEA teade (2, 3 või 5 tähemärki)"
 
 #
 msgid "Environmental Caution Area: Hazardous sea ice"
-msgstr ""
+msgstr "Keskkonna ettevaatusala: ohtlik merejää"
 
 #
 msgid "Environmental Caution Area: Heavy icing"
-msgstr ""
+msgstr "Keskkonna ettevaatusala: kiire jäätumine"
 
 #
 msgid "Environmental Caution Area: High waves"
-msgstr ""
+msgstr "Keskkonna ettevaatusala: kõrged lained"
 
 #
 msgid "Environmental Caution Area: High wind"
-msgstr ""
+msgstr "Keskkonna ettevaatusala: tugev tuul"
 
 #
 msgid "Environmental Caution Area: Restricted visibility (fog, rain, etc.)"
-msgstr ""
+msgstr "Keskkonna ettevaatusala: piiratud nähtavus (udu, vihm jne)"
 
 #
 msgid "Environmental Caution Area: Storm front (line squall)"
-msgstr ""
+msgstr "Keskkonna ettevaatusala: tormi serv (pagi tee)"
 
 #
 msgid ""
 "Environmental Caution Area: Storm warning (storm cell or line of storms)"
-msgstr ""
+msgstr "Keskkonna ettevaatusala: tormihoiatus (tormi süda või tormide rivi)"
 
 #
 msgid "Environmental Caution Area: Strong currents"
-msgstr ""
+msgstr "Keskkonna ettevaatusala: tugevad hoovused"
 
 #
 #
@@ -2872,6 +3200,7 @@ msgstr ""
 msgid "Error on Route Upload.  Please check logfiles..."
 msgstr "Viga teekonna laadimisel. Palun vaata logifaili..."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -2884,188 +3213,185 @@ msgstr "Viga teekonna laadimisel. Palun vaata logifaili..."
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Error on Waypoint Upload.  Please check logfiles..."
-msgstr "Viga teepunkti laadimisel. Palun vaata logifaili..."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Viga teepunkti laadimisel. Palun vaata logifaili...\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Viga teepunktide üleslaadimisel. Vaadake logifaili..."
 
 #
 msgid "Error!"
-msgstr ""
+msgstr "Viga!"
 
 #
-# 
-# 
 msgid "Estimated time : "
-msgstr ""
+msgstr "Eeldatav aeg:"
 
 #
 msgid "EvTwilight"
-msgstr ""
+msgstr "Hämarik"
 
 #
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Export"
-msgstr "&Ekspordi Teepunkt..."
+msgstr "Ekspordi"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Export All Visible..."
-msgstr "&Ekspordi Kõik..."
+msgstr "Ekspordi kõik nähtavad..."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Export GPX file"
-msgstr "Ekspordi GPX fail"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Ekspordi GPX fail\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Ekspordi GPX-fail"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Extend"
-msgstr "Lõpeta teekond"
+msgstr "Pikenda"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Extend Route"
-msgstr "Lõpeta teekond"
+msgstr "Pikenda teekonda"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Extend Track"
-msgstr "Kustuta jälg"
+msgstr "Pikenda jälg"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Extended"
-msgstr "Lõpeta teekond"
+msgstr "Laiendatud"
 
 #
 msgid "Extended Light Sectors"
-msgstr ""
+msgstr "Pikendatud tulesektorid"
 
 #
-# 
-# 
 msgid "ExtendedTideIcon"
-msgstr ""
+msgstr "Üksikasjalik loodete ikoon"
 
 #
-# 
-# 
 msgid "F/V"
-msgstr ""
+msgstr "K/l"
 
 #
 msgid "Failed to initialize the user interface. "
-msgstr ""
+msgstr "Kasutajaliidest ei õnnestunud käivtada."
 
 #
 msgid "Fast ship"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Fathoms"
-msgstr "Süld"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Süld\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"süllad"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Feet"
-msgstr "Jalg"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Jalg\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"jalad"
 
 #
 msgid "Ferry"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Filter NMEA Course and Speed data"
-msgstr "Filtreeri NMEA kursi ja kiiruse andmed"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Filtreeri NMEA kursi ja kiiruse andmed\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"filtreeri NMEA kursi ja kiiruse andmed"
 
 #
-# 
-# 
-#, fuzzy
 msgid "Filter period (sec)"
-msgstr "Filtreeri periood (sekund)"
+msgstr "Filtri periood (s)"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Filters"
-msgstr "&Kilomeeetrid"
+msgstr "Filtrid"
 
 #
 msgid "Fishing boat"
 msgstr ""
 
 #
-# 
-# 
 msgid "Fix.Struct."
-msgstr ""
+msgstr "Fix.ehit"
 
 #
-# 
-# 
 msgid "Fixed Structure"
-msgstr ""
+msgstr "Kohtkindel ehitis"
 
 #
 msgid "Fonts"
-msgstr ""
+msgstr "Kirjamärgid"
 
 #
 msgid "For this leg the Great Circle route is "
-msgstr ""
+msgstr "Selle lõigu jaoks on suure ringi tee"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Force Full Database Rebuild"
-msgstr "Sunni täielikuks andmebaaside uuenduseks"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Sunni täielikuks andmebaaside uuenduseks\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"sunduslik kogu andmebaasi taasloomine"
 
 #
 msgid "Format uploads for Furuno GP3X"
-msgstr ""
+msgstr "vormista üleslaadimine Furuno GP3X jaoks"
 
 #
 msgid "Freightbarge"
@@ -3077,24 +3403,19 @@ msgstr ""
 
 #
 msgid "From"
-msgstr ""
+msgstr "Alates"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Full Route"
-msgstr "Kustuta teekond"
+msgstr "Kogu teekond"
 
 #
 msgid "GPS Offset from Bow (m)"
-msgstr ""
+msgstr "GPS-i nihe vöörist (m)"
 
 #
 msgid "GPS Offset from Midship (m)"
-msgstr ""
+msgstr "GPS-i nihe laeva miidlis (m)"
 
 #
 #
@@ -3114,24 +3435,19 @@ msgstr "GPS/Plotter Port"
 
 #
 msgid "GPSD"
-msgstr ""
+msgstr "GPSD"
 
 #
 msgid "GPSGate Buddy"
-msgstr ""
+msgstr "GPSGate sõber"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "GPX"
-msgstr "GPS"
+msgstr "GPX"
 
 #
 msgid "GUID"
-msgstr ""
+msgstr "GUID"
 
 #
 #
@@ -3150,54 +3466,43 @@ msgid "Gas tanker"
 msgstr "Raster"
 
 #
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "General"
-msgstr "AIS üldine"
+msgstr "Üldine"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "General Options"
-msgstr "GUI seaded"
+msgstr "Üldised valikud"
 
 #
 msgid "General cargo Vessel maritime"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Go to "
 msgstr "Mine"
 
 #
 msgid "GpsGate Buddy"
-msgstr ""
+msgstr "GPSGate sõber"
 
 #
-# 
 msgid "Green"
-msgstr ""
+msgstr "roheline"
 
 #
 msgid "Group \""
-msgstr ""
+msgstr "Grupp \""
 
 #
-# 
-# 
 msgid "HSC"
-msgstr ""
+msgstr "Kiire"
 
 #
 msgid "HW"
@@ -3205,157 +3510,133 @@ msgstr ""
 
 #
 msgid "Heading"
-msgstr ""
+msgstr "Suund"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Help"
 msgstr "Abi"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Here"
-msgstr "Kohal"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kohal\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Siin"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Hide AIS Targets"
-msgstr "Näita AIS-i sihtmärke"
+msgstr "Peida AIS märgid"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Hide All Tracks"
-msgstr "AIS-i sihtmärgi päring"
+msgstr "Peida kõik jäljed"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Hide Target CPA"
-msgstr "AIS-i sihtmärgi päring"
+msgstr "Peida märgi CPA"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Hide Target Track"
-msgstr "AIS-i sihtmärgi päring"
+msgstr "Peida märgi jälg"
 
 #
 msgid "Hide This Chart"
-msgstr ""
+msgstr "Peida see kaart"
 
 #
-# 
-# 
 msgid "Hide WPT names"
-msgstr ""
+msgstr "Peida WPT nimed"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Hide anchored/moored targets, speed max (kn)"
-msgstr "Varja ankrus/sildutud objektid"
+msgstr "peida ankurdatud/sildunud märgid, suurim kiirus kuni (sõlme)"
 
 #
-# 
-# 
 msgid "Hide from chart"
-msgstr ""
+msgstr "Peida kaardilt"
 
 #
 msgid "High"
-msgstr ""
+msgstr "Kõrge"
 
 #
-# 
-# 
 msgid "High Speed Craft"
-msgstr ""
+msgstr "Kiirlaev"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Highlight Tracks"
-msgstr "&Alusta jälje näitamist"
+msgstr "erista jäljed"
 
 #
 msgid "Hydrofoil"
 msgstr ""
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "I&mport GPX..."
-msgstr "&Impordi..."
+msgstr "I&mpordi GPX..."
 
 #
 msgid "IMO"
-msgstr ""
+msgstr "IMO"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Icon"
 msgstr "Ikoon"
 
 #
 msgid "If checked, only the sentences with a valid checksum are passed through"
-msgstr ""
+msgstr "Kui valitud, ainult kehtiva kontrollsummaga teated saavad läbi"
 
 #
 msgid "Ignore Sentences"
-msgstr ""
+msgstr "Eira teated"
 
 #
 msgid "Ignore sentences"
-msgstr ""
+msgstr "eira teateid"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Import GPX file"
-msgstr "Impordi GPX fail"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "Import GPX file"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Impordi GPX fail\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Impordi GPX-faili"
+
+#
 msgid "Important Text Only"
-msgstr "Näita ainult olulist teksti"
+msgstr "Ainult oluline tekst"
 
 #
 #
@@ -3379,244 +3660,218 @@ msgstr ""
 
 #
 msgid "Information: Icebreaker waiting area"
-msgstr ""
+msgstr "Info: jäämurdja ootamise ala"
 
 #
 msgid "Information: Location of response units"
-msgstr ""
+msgstr "Info: eriüksuste asukoht"
 
 #
 msgid "Information: Pilot boarding position"
-msgstr ""
+msgstr "Info: lootsi pealevõtu koht"
 
 #
 msgid "Information: Places of refuge"
-msgstr ""
+msgstr "Info: varjupaigad"
 
 #
 msgid "Information: Position of icebreakers"
-msgstr ""
+msgstr "Info: jäämurdjate asukohad"
 
 #
-#
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Inland Blue Flag"
-msgstr "Sisemaa Sinilipp        Sea\n"
+msgstr "Sisemaa Sinine Lipp"
 
 #
 msgid "Input filtering"
-msgstr ""
+msgstr "Sisendi filtreerimine"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Insert Waypoint"
-msgstr "Sisesta vahepunkt"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Sisesta vahepunkt\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Sisesta teepunkt"
 
 #
 msgid ""
 "Instruction: Await instructions prior to proceeding beyond this point/"
 "juncture"
 msgstr ""
+"Juhis: oodake juhiseid enne kui jätkate sellest punktist/piirist kaugemale "
+"edasi"
 
 #
 msgid "Instruction: Contact Port Administration at this point/juncture"
-msgstr ""
+msgstr "Juhis: Võtke siin punktis/piiril ühendust sadama administratsiooniga"
 
 #
 msgid "Instruction: Contact VTS at this point/juncture"
-msgstr ""
+msgstr "Juhis: võtke siin puntis/piiril ühendust VTS-ga "
 
 #
 msgid "Instruction: Do not proceed beyond this point/juncture"
-msgstr ""
+msgstr "Juhis: ärge ületage seda punkti/piiri"
 
 #
-# 
-# 
 msgid "Isol. Dngr"
-msgstr ""
+msgstr "Era.oht"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Isolated Danger"
-msgstr "Teekonna haldur"
+msgstr "Eraldiasuv oht"
 
 #
 msgid "KML Standard (Google Earth and others)"
-msgstr ""
+msgstr "Standartne KML (Google Earth ja teised)"
 
 #
 msgid "KML with extended waypoint data (QtVlm)"
-msgstr ""
+msgstr "KML koos laiendatud teepunkti andmetega (QtVlm)"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Kilometers"
-msgstr "&Kilomeeetrid"
+msgstr "kilomeetrid"
 
 #
 msgid "Knots"
-msgstr ""
+msgstr "sõlmed"
 
 #
-# 
-# 
 msgid "LE/V"
-msgstr ""
+msgstr "KoKa/l"
 
 #
-# 
-# 
 msgid "LMT @ Location"
-msgstr ""
+msgstr "LMT @ kohapeal"
 
 #
 msgid "LMT @ Track Start"
-msgstr ""
+msgstr "LMT @ jälje alustamine"
 
 #
 msgid "LW"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Language"
 msgstr "Keel"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Latitude"
-msgstr "Laiuskraad"
-
-#
-# 
-# 
-msgid "Law Enforcement Vessel"
 msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Laiuskraad\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"laius"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
+msgid "Law Enforcement Vessel"
+msgstr "Korrakaitse laev"
+
+#
 msgid "Layer Name"
-msgstr "Punkti nimi"
+msgstr "Kihi nimi"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Layer Route"
-msgstr "Moodusta teekond"
+msgstr "Kihi teekond"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Layer Route: "
-msgstr "Moodusta teekond"
+msgstr "Kiht Teekond:"
 
 #
 msgid "Layer Routepoint"
-msgstr ""
+msgstr "Kiht Teekonnapunkt"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Layer Track"
-msgstr "&Ekspordi jälg..."
+msgstr "Kiht Jälg"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Layer Waypoint"
-msgstr "Aktiveeri Teepunktid"
+msgstr "Kiht Teepunkt"
 
 #
-# 
-# 
 msgid "Layers"
-msgstr ""
+msgstr "Kihid"
 
 #
-# 
-# 
 msgid "Ldg Lt Front"
-msgstr ""
+msgstr "Alum. sihim."
 
 #
-# 
-# 
 msgid "Ldg Lt Rear"
-msgstr ""
+msgstr "Ülem. sihim."
 
 #
-# 
-# 
 msgid "Leading Light Front"
-msgstr ""
+msgstr "Alumine sihituli"
 
 #
-# 
-# 
 msgid "Leading Light Rear"
-msgstr ""
+msgstr "Ülemine sihituli"
 
 #
 msgid "Left"
-msgstr ""
+msgstr "vasak"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Leg"
-msgstr "Reis"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Reis\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Lõik"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Leg: from "
-msgstr "Ring: siit"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Ring: siit\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Lõik:alates "
 
 #
 #
@@ -3634,64 +3889,51 @@ msgstr "Ring: siit"
 msgid "Legend"
 msgstr "Konsooli legend"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Length"
 msgstr "Pikkus"
 
 #
 msgid "Length Over All (m)"
-msgstr ""
+msgstr "Üldpikkus (LOA) (m)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "License"
 msgstr "Litsents"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Light"
-msgstr "&Paksus:"
+msgstr "Tuli"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Light Descriptions"
-msgstr "Näita tulede kirjeldust"
+msgstr "Tule kirjeldus"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Light Gray"
-msgstr "&Paksus:"
+msgstr "helehall"
 
 #
-# 
-# 
 msgid "Light Vessel/Rig"
-msgstr ""
+msgstr "Tulelaev/-seade"
 
 #
-# 
-# 
 msgid "Light w/Sectors"
-msgstr ""
+msgstr "Sektoritega tuli"
 
 #
 # 
@@ -3702,6 +3944,7 @@ msgstr ""
 msgid "LightGray"
 msgstr "&Paksus:"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -3709,64 +3952,50 @@ msgstr "&Paksus:"
 #
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Limit range: NM"
-msgstr "Piir ulatus: miili"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Piir ulatus: miili\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"piira ulatust: NM"
 
 #
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Link"
-msgstr "Lingid"
+msgstr "Link"
 
 #
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Link Properties"
-msgstr "Koha omadused"
+msgstr "Lingi omadused"
 
 #
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Link description"
-msgstr "Kirjeldus"
+msgstr "Lingi kirjeldus"
 
 #
 msgid "Link not complete, can't be saved."
-msgstr ""
+msgstr "Link pole lõpetatud, pole võimalik säilitada."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Links"
 msgstr "Lingid"
 
 #
 msgid "Links are opened for editing."
-msgstr ""
+msgstr "Lingid on avatud muutmiseks."
 
 #
 msgid "Links are opened in the default browser."
-msgstr ""
+msgstr "Lingid on avatud vaikimisi brauseris."
 
 #
 #
@@ -3785,123 +4014,117 @@ msgid "Liquified gas tanker"
 msgstr "Raster"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "List contents"
-msgstr "Litsents"
+msgstr "Loenda sisu"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Loaded Charts"
-msgstr "Paberkaart"
+msgstr "Laetud kaardid"
 
 #
-# 
-# 
 msgid "Local @ PC"
-msgstr ""
+msgstr "kohalik @ PC"
 
 #
 msgid "Local file..."
-msgstr ""
+msgstr "Kohalik fail..."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Lock Waypoints (Unless waypoint property dialog visible)"
-msgstr "Lukusta kõik vahepunktid niikaua kui vahepunktide aken on nähtav"
+msgstr "lukusta teepunktid (kui teepunkti omaduste dialoog pole just nähtav)"
 
 #
-# 
-# 
 msgid "Long Tow"
-msgstr ""
+msgstr "Pikk pukseerimine"
 
 #
 msgid "Long dash"
-msgstr ""
+msgstr "pikk joon"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Longitude"
-msgstr "Pikkuskraad"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
-msgid "Look Ahead Mode"
-msgstr "Vaade ette töörežiim"
-
-#
-# 
-# 
-# 
-# 
-msgid "Lost Targets"
-msgstr "Kaotatud objekt"
-
-#
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "Longitude"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Pikkuskraad\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"pikkus"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "Look Ahead Mode"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Vaade ette töörežiim\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"ette-vaate moodus"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "Lost Targets"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaotatud objekt\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kaotatud märgid"
+
+#
 msgid "Low"
-msgstr "Sinna"
+msgstr "madal"
 
 #
-# 
-# 
 msgid "Lt"
-msgstr ""
+msgstr "Tuli"
 
 #
-# 
-# 
 msgid "Lt sect."
-msgstr ""
+msgstr "Tule sekt."
 
 #
-# 
-# 
 msgid "LtV/Rig"
-msgstr ""
+msgstr "Tl/-s"
 
 #
-# 
-# 
 msgid "M/T"
-msgstr ""
+msgstr "M/t"
 
 #
-# 
-# 
 msgid "M/V"
-msgstr ""
+msgstr "M/l"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "MAN OVERBOARD"
 msgstr "MEES ÜLE PARDA"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -3911,46 +4134,44 @@ msgstr "MEES ÜLE PARDA"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "MMSI"
 msgstr "MMSI"
 
 #
-# 
-# 
 msgid "M_COVR ID"
-msgstr ""
+msgstr "M_COVR ID"
 
 #
-# 
 msgid "Magenta"
-msgstr ""
+msgstr "purpurviolett"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Mariner's Standard"
-msgstr "Mere standard"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Mere standard\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Laevniku valik"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Mariners Standard"
-msgstr "Mere standard"
+msgstr "laevniku valik"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Mark targets as lost after (min)"
-msgstr "Märgi objekt kaotatuks peale (Minutit):"
+msgstr "märgista märk kaotatuks peale (min)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -3963,75 +4184,72 @@ msgstr "Märgi objekt kaotatuks peale (Minutit):"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Marks"
 msgstr "Märgid"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Max Detail Here"
-msgstr "Max. detailid siin"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
-msgid "Measure"
-msgstr "Mõõtmine välja"
+msgid "Max Detail Here"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Max. detailid siin\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Maksimaalne detailsus siia"
 
+#
+msgid "Measure"
+msgstr "Mõõtmine"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Measure Off"
 msgstr "Mõõtmine välja"
 
 #
-# 
-# 
 msgid "Med/V"
-msgstr ""
+msgstr "Med/l"
 
 #
-# 
-# 
 msgid "Medical Transport"
-msgstr ""
+msgstr "Meditsiiniline transportlaev"
 
 #
 msgid "Medium"
-msgstr ""
+msgstr "keskmine"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Mercator"
 msgstr "Mercator"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Merge waypoint?"
-msgstr "Muudan Teepunkti nime?"
+msgstr "Mestida teepunkt?"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Merge waypoints?"
-msgstr "Muudan Teepunkti nime?"
+msgstr "Mestida teepunktid?"
 
 #
 msgid "Message accepted"
@@ -4041,43 +4259,45 @@ msgstr ""
 msgid "Message filtered and dropped"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Meters"
-msgstr "Meetrid"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Meetrid\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"meetrid"
 
 #
-# 
-# 
 msgid "Mil/V"
-msgstr ""
+msgstr "S/l"
 
 #
-# 
-# 
 msgid "Military Vessel"
-msgstr ""
+msgstr "Sõjalaev"
 
 #
 msgid "Minimum Screen Size (mm)"
-msgstr ""
+msgstr "Vähim suurus ekraanil (mm)"
 
 #
 msgid "Miscellaneous Options"
-msgstr ""
+msgstr "Erinevad valikud"
 
 #
 msgid "MoTwilight"
-msgstr ""
+msgstr "Koit"
 
 #
-# 
-# 
 msgid "Moored"
-msgstr ""
+msgstr "Sildunud"
 
 #
 msgid "Motor freighter"
@@ -4136,38 +4356,28 @@ msgid "Motor tanker, tug"
 msgstr ""
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Move Boat Here"
-msgstr "Liiguta alus siia"
+msgstr "Pane laev siia"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Move Waypoint"
-msgstr "Teepunkti"
+msgstr "Teisalda teepunkt"
 
 #
 msgid "Mph"
-msgstr ""
+msgstr "mp/h"
 
 #
 msgid "NMEA"
-msgstr ""
+msgstr "NMEA"
 
 #
 msgid "NMEA 0183"
-msgstr ""
+msgstr "NMEA 0183"
 
 #
 msgid "NMEA 2000"
-msgstr ""
+msgstr "NMEA 2000"
 
 #
 # 
@@ -4178,36 +4388,30 @@ msgstr ""
 msgid "NMEA Debug Window"
 msgstr "Näita GPS/NMEA andmete saabumis akent"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Name"
 msgstr "Nimi"
 
 #
 msgid "National text on chart"
-msgstr ""
+msgstr "Rahvuslik tekst kaardil"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Nautical Miles"
-msgstr "&Meremiilid"
+msgstr "meremiilid"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Nautical miles"
-msgstr "&Meremiilid"
+msgstr "meremiil"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -4217,21 +4421,23 @@ msgstr "&Meremiilid"
 # 
 # 
 # 
-msgid "Nav Status"
-msgstr "Nav. staatus"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "Nav Status"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Nav. staatus\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Nav.staatus"
+
+#
 msgid "Navigate To Here"
-msgstr "Navigeerimise andmed"
+msgstr "Navigeeri siia"
 
 #
 msgid "Navigate To This"
-msgstr ""
+msgstr "Navigeeri selle juurde"
 
 #
 #
@@ -4251,20 +4457,15 @@ msgstr "Järgmine"
 
 #
 msgid "Network"
-msgstr ""
+msgstr "võrk"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "New Chart Group"
-msgstr "Kaardid"
+msgstr "Uus kaardigrupp"
 
 #
 msgid "New Group..."
-msgstr ""
+msgstr "Uus grupp..."
 
 #
 #
@@ -4282,106 +4483,94 @@ msgid "Next"
 msgstr "Järgmine"
 
 #
-# 
-# 
 msgid "Next tide event"
-msgstr ""
+msgstr "Järgmised looded"
 
 #
 msgid "Nighttime"
-msgstr ""
+msgstr "Öö-aeg"
 
 #
 msgid "No"
 msgstr ""
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "No CPA Calculation if target range is greater than (NMi)"
-msgstr "Ei kalkuleeri CPA kui siht on kaugemal kui (miili):"
+msgstr "CPA ei arvutata kui märk on kaugemal kui (miili)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "No Chart Available"
-msgstr "Kaart pole saadaval"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "No Chart Available"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaart pole saadaval\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kaarte pole saadaval"
+
+#
 msgid ""
 "No Charts Installed.\n"
 "Please select chart folders in Options > Charts."
 msgstr ""
-"           Kaarte pole määratletud.\n"
-"Palun vali kaardid: Seaded->Kaardid."
+"Kaarte pole paigaldatud.\n"
+"Palun vali kaartide kaustad Valikud > Kaardid."
 
 #
 msgid "No, I don't want to hide it."
-msgstr ""
+msgstr "Ei, ma ei soovi teda peita."
 
 #
 msgid "No, and permanently remove the option to hide it."
-msgstr ""
+msgstr "Ei ning jäädavalt kõrvalda tema peitmise valikuvõimalus."
 
 #
-# 
-# 
 msgid "No. of items"
-msgstr ""
+msgstr "Osa N°"
 
 #
 msgid "None"
-msgstr ""
+msgstr "mitte ühtegi"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "North Up Mode"
-msgstr "Kurss ülesse töörežiim"
+msgstr "N-üleval tööreþiim"
 
 #
-# 
-# 
 msgid "Not Under Command"
-msgstr ""
+msgstr "Juhitavuse kaotanud"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "OK"
 msgstr "OK"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Object Query"
 msgstr "Objekti päring"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Object Query..."
-msgstr "Objekti päring"
+msgstr "Objekti päring..."
 
 #
 msgid "Object, not otherwise specified"
@@ -4392,21 +4581,24 @@ msgid "Object, towed, not otherwise specified"
 msgstr ""
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "ObjectQuery"
-msgstr "Objekti päring"
+msgstr "Objektipäring"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Ok"
-msgstr "Ok"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Ok\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"OK"
 
 #
 msgid "Old log will be moved to "
@@ -4421,72 +4613,121 @@ msgstr ""
 msgid "OpenCPN AIS Alert"
 msgstr "OpenCPN alarm"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "OpenCPN Alert"
-msgstr "OpenCPN alarm"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-msgid "OpenCPN CM93 Cell Offset Adjustments"
-msgstr ""
-
-#
-# 
-# 
-# 
-# 
-msgid "OpenCPN Chart Add...."
-msgstr "OpenCPN kaartide lisamine..."
-
-#
-# 
-# 
-# 
-# 
-msgid "OpenCPN Chart Scan...."
-msgstr "OpenCPN kaartide otsing..."
-
-#
-# 
-# 
-# 
-# 
-msgid "OpenCPN Chart Update"
-msgstr "OpenCPN kaartide uuendus"
-
-#
-# 
-# 
-msgid "OpenCPN Converting Track to Route...."
-msgstr "OpenCPN konverteerib jälje teekonnaks"
-
-#
-# 
-# 
-msgid "OpenCPN Directory Scan...."
-msgstr "OpenCPN Kaustast otsimine..."
-
-#
-# 
-# 
-# 
-# 
 #, fuzzy
-msgid "OpenCPN Group Notice"
-msgstr "OpenCPN teekonna looja"
+msgid "OpenCPN Alert"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"OpenCPN alarm\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"OpenCPN hoiatus"
 
+#
+msgid "OpenCPN CM93 Cell Offset Adjustments"
+msgstr "OpenCPN CM93 elemendi nihke täpsustused"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "OpenCPN Chart Add...."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"OpenCPN kaartide lisamine...\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"OpenCPN lisa kaart...."
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "OpenCPN Chart Scan...."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"OpenCPN kaartide otsing...\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"OpenCPN kaardi otsing...."
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "OpenCPN Chart Update"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"OpenCPN kaartide uuendus\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"OpenCPN kaardi uuendamine"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "OpenCPN Converting Track to Route...."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"OpenCPN konverteerib jälje teekonnaks\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"OpenCPN muudab jälje teekonnaks..."
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "OpenCPN Directory Scan...."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"OpenCPN Kaustast otsimine...\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"OpenCPN asukoha otsing...."
+
+#
+msgid "OpenCPN Group Notice"
+msgstr "OpenCPN grupi märkus"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "OpenCPN Info"
-msgstr "OpenCPN Info"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"OpenCPN Info\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"OpenCPN info"
 
 #
 #
@@ -4505,104 +4746,88 @@ msgid "OpenCPN Message"
 msgstr "OpenCPN sõnum"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "OpenCPN Remove Waypoint"
-msgstr "OpenCPN teekonna looja"
+msgstr "OpenCPN teepunkti kõrvaldamine"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "OpenCPN Route"
-msgstr "OpenCPN teekonna looja"
+msgstr "OpenCPN teekond"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "OpenCPN Route Create"
-msgstr "OpenCPN teekonna looja"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"OpenCPN teekonna looja\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Loo OpenCPN teekond"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "OpenCPN Route Delete"
-msgstr "OpenCPN teekonna looja"
+msgstr "OpenCPN teekonna kustutamine"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "OpenCPN S57 SENC File Create..."
-msgstr "OpenCPNS57 SENC fail loo..."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"OpenCPNS57 SENC fail loo...\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"OpenCPN S57 SENC faili loomine..."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "OpenCPN Track"
-msgstr "OpenCPN alarm"
+msgstr "OpenCPN jälg"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "OpenCPN Track Delete"
-msgstr "OpenCPN alarm"
+msgstr "OpenCPN jälje kustutamine"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "OpenCPN Waypoint"
-msgstr "OpenCPN teekonna looja"
+msgstr "OpenCPN teepunkt"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "OpenCPN cannot start. "
-msgstr "OpenCPN kaartide uuendus"
+msgstr "OpenCPN ei suuda käivituda."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "OpenCPN info"
-msgstr "OpenCPN Info"
+msgstr "OpenPCN teave"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Options"
-msgstr "Seaded"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Seaded\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Valikud"
 
 #
 msgid "Other - Define in associated text field"
-msgstr ""
+msgstr "Muu - määratlege seotud tekstiväljas"
 
 #
 msgid "Out"
@@ -4610,7 +4835,7 @@ msgstr ""
 
 #
 msgid "Output"
-msgstr ""
+msgstr "Väljund"
 
 #
 #
@@ -4630,81 +4855,87 @@ msgstr "OpenCPN sõnum"
 
 #
 msgid "Output filtering"
-msgstr ""
+msgstr "Väljundi filtreerimine"
 
 #
 msgid "Output on this port ( as Autopilot or NMEA Repeater)"
-msgstr ""
+msgstr "väljasta selles pordis (nagu autoroolile või NMEA-kordajale)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "OverZoom"
-msgstr "Ülesuurendus"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Ülesuurendus\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Liigsuum"
 
 #
 msgid "Overwrite Garmin device route number 1?"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Overwrite existing file?"
-msgstr "Kirjutan olemasoleva faili üle?"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kirjutan olemasoleva faili üle?\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Ks olemasolev fail üle kirjutada?"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Own Ship"
-msgstr "Alus:"
+msgstr "Oma laev"
 
 #
-# 
-# 
 msgid "P/V"
-msgstr ""
+msgstr "Lo/l"
 
 #
-# 
-# 
 msgid "PC/V"
-msgstr ""
+msgstr "ReoTõr/l"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Paper Chart"
-msgstr "Paberkaart"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "Paper Chart"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Paberkaart\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"paberkaart"
+
+#
 msgid "Parameters"
-msgstr "Meetrid"
+msgstr "Muutujad"
 
 #
-# 
-# 
 msgid "Pass/V"
-msgstr ""
+msgstr "R/l"
 
 #
-# 
-# 
 msgid "Passenger Ship"
-msgstr ""
+msgstr "Reisilaev"
 
 #
 msgid "Passenger ship without accomodation"
@@ -4715,102 +4946,76 @@ msgid "Passenger ship, ferry, cruise ship, red cross ship"
 msgstr ""
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Paste Route"
-msgstr "Moodusta teekond"
+msgstr "Kleebi teekond"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Paste Track"
-msgstr "&Ekspordi jälg..."
+msgstr "kleebi jälg"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Paste Waypoint"
-msgstr "Aktiveeri Teepunktid"
+msgstr "Kleebi teepunkt"
 
 #
 msgid "Pause"
 msgstr ""
 
 #
-# 
-# 
 msgid "Pilot Vessel"
-msgstr ""
+msgstr "Lootsilaev"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Plain"
-msgstr "Tavaline"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Tavaline\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"lihtne"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Plan Speed"
-msgstr "Plaanitud kiirus"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Plaanitud kiirus\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kavandatud kiirus"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Plan speed"
-msgstr "Plaanitud kiirus"
+msgstr "Kavandatav kiirus"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Play Ships Bells"
-msgstr "Mängi laevakellasid"
+msgstr "helista laevakella"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Play Sound on CPA/TCPA Alerts and DSC/SART emergencies."
-msgstr "Mängi heli CPA/TCPA Alarmile"
+msgstr "mängi heli CPA/TCPA häiretega ja DSC/SART hädaolukordades."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Please restart OpenCPN to activate language or style changes."
-msgstr "Palun taaskäivita OpenCPN, et aktiveeruks keelefail"
+msgstr "Palun taaskäivita OpenCPN keele- või stiilimuutuste aktiveerimiseks."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Pleasure craft"
-msgstr "Mõõtmine välja"
+msgstr "Väikelaev"
 
 #
 msgid "Pleasure craft, longer than 20 metres"
@@ -4823,6 +5028,9 @@ msgid ""
 " This version is known to be unstable and will not be loaded.\n"
 " Please update this PlugIn at the opencpn.org website."
 msgstr ""
+"Plugin %s (%s), versioon %i.%i on avastatud.\n"
+" Teadaolevalt on see versioon ebastabiilne ja teda ei käivitata.\n"
+" Palun uuendage see plugin opencpn.org veebilehelt."
 
 #
 #, c-format
@@ -4831,105 +5039,101 @@ msgid ""
 " This version is known to be unstable.\n"
 " Please update this PlugIn at the opencpn.org website."
 msgstr ""
+"Plugin %s (%s), versioon %i.%i on avastatud.\n"
+" Teadaolevalt on see versioon ebastabiilne.\n"
+" Palun uuendage see plugin opencpn.org veebilehelt."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Plugins"
-msgstr "Lisad"
+msgstr "Pluginad"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Points"
 msgstr "Punktid"
 
 #
-# 
-# 
 msgid "Pollution Control Vessel"
-msgstr ""
+msgstr "Reostustõrjelaev"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Polyconic"
-msgstr "Polyconic"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "Polyconic"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Polyconic\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"polükooniline"
+
+#
 msgid "Port"
-msgstr "Punktid"
+msgstr "v/p"
 
 #
-# 
-# 
 msgid "Port Hand"
-msgstr ""
+msgstr "vasak külg"
 
 #
-# 
-# 
 msgid "Port Hand Mark"
-msgstr ""
+msgstr "vasaku külje märk"
 
 #
-# 
-# 
 msgid "Port Tender"
-msgstr ""
+msgstr "Sadamapuksiir"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Position"
 msgstr "Asukoht"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Position Report"
-msgstr "Viimane raport aeg:"
+msgstr "Asukoha ettekanne"
 
 #
-# 
-# 
 msgid "Pref. Chnl"
-msgstr ""
+msgstr "Eel.kanal"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Preferences"
-msgstr "Seaded"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Seaded\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Eelistused"
 
 #
-# 
-# 
 msgid "Preferred Channel Port Hand"
-msgstr ""
+msgstr "Vasaka külje eelistatud kanal"
 
 #
-# 
-# 
 msgid "Preferred Channel Starboard Hand"
-msgstr ""
+msgstr "Parema külje eelistatud kanal"
 
 #
 #
@@ -4947,13 +5151,8 @@ msgid "Prepare GPS for Route/Waypoint upload and press Send..."
 msgstr "Valmista GPS teekonnaks/Kohapunkt laetakse ja vajuta Saada..."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Preserve Scale when Switching Charts"
-msgstr "Säilita skaala kui vahetab kaarte"
+msgstr "säilita kaarte vahetades mõõtkava"
 
 #
 #
@@ -4970,97 +5169,68 @@ msgstr "Säilita skaala kui vahetab kaarte"
 msgid "Prev"
 msgstr "Eelmine"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Preview:"
 msgstr "Eelvaade:"
 
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Print"
-msgstr "Prindin"
+msgstr "Prindi"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Print Chart"
 msgstr "Prindi kaart"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Print Route"
-msgstr "Kustuta teekond"
+msgstr "Prindi teekond"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Print Route Selection"
-msgstr "Kustuta teekond"
+msgstr "Prindi teekonna valitud osa"
 
 #
 msgid "Priority"
-msgstr ""
+msgstr "Eesõigus"
 
 #
 msgid "Problem discovered"
-msgstr ""
+msgstr "Avastatud probleem"
 
 #
 msgid "Proceed to this location - await instructions"
-msgstr ""
+msgstr "Liikuge sinna asukohta - oodake juhiseid"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Processing Waypoints..."
-msgstr "Töötlen Teepunktid..."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Töötlen Teepunktid...\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Töötlemas teepunkte..."
 
 #
 #
@@ -5077,26 +5247,24 @@ msgstr "Töötlen Teepunktid..."
 msgid "Progress..."
 msgstr "Edenemine..."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Properties"
 msgstr "Omadused"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Properties..."
-msgstr "&Omadused..."
+msgstr "Omadused..."
 
 #
 msgid "Protocol"
-msgstr ""
+msgstr "protokoll"
 
 #
 msgid "Pushboat, single"
@@ -5175,20 +5343,14 @@ msgid "Pushtow, two cargo barges"
 msgstr ""
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Question"
-msgstr "Seaded"
+msgstr "Küsimus"
 
 #
-# 
-# 
 msgid "RACON"
-msgstr ""
+msgstr "Radarimajakas"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -5198,62 +5360,59 @@ msgstr ""
 # 
 # 
 # 
-msgid "Range"
-msgstr "Kaugus"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-msgid "Real"
-msgstr ""
-
-#
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "Range"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaugus\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"vahemaa"
+
+#
+msgid "Real"
+msgstr "Tegelik"
+
+#
 msgid "Real (On Position)"
-msgstr "Asukoht"
+msgstr "Päris (asukohal)"
 
 #
 msgid "Real Scale Bitmap"
-msgstr ""
+msgstr "raster tegelikus mõõtkavas"
 
 #
 msgid "Real Scale Vector"
-msgstr ""
+msgstr "vektor tegelikus mõõtkavas"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Real(Off Position)"
-msgstr "Asukoht"
+msgstr "Päris (asukohalt väljas)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Rebuilding chart database from configuration file entries..."
-msgstr "OpenCPN vajab uuendusi kaartide andmebaasi failidest...."
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
-msgid "Recorded points"
-msgstr "Muudan Teepunkti nime?"
+msgid "Rebuilding chart database from configuration file entries..."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"OpenCPN vajab uuendusi kaartide andmebaasi failidest....\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Taastan kaartide andmebaasi konfiguratsioonifaili kirjetest..."
 
 #
-# 
+msgid "Recorded points"
+msgstr "Salvestatud punktid"
+
+#
 msgid "Red"
-msgstr ""
+msgstr "punane"
 
 #
 msgid "Red cross ship"
@@ -5261,34 +5420,27 @@ msgstr ""
 
 #
 msgid "Redo"
-msgstr ""
+msgstr "Korda"
 
 #
 msgid "Reduce Data Precision"
-msgstr ""
+msgstr "Vähenda andmete täpsust"
 
 #
 msgid "Reduce Data..."
-msgstr ""
+msgstr "Vähenda andmeid..."
 
 #
 msgid "Reduced Detail at Small Scale"
-msgstr ""
+msgstr "Vähendatud detailid väiksel mõõtkaval"
 
 #
-# 
-# 
 msgid "Ref. Pt"
-msgstr ""
+msgstr "Läht/p"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Reference Point"
-msgstr "Järelvaate jaam:"
+msgstr "Lähtepunkt"
 
 #
 #
@@ -5311,230 +5463,224 @@ msgid "Reject"
 msgstr ""
 
 #
-# 
-# 
 msgid "Remaining time : "
-msgstr ""
+msgstr "Järelejäänud aeg: "
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Remove Chart"
-msgstr "Aktiveeri kaardi kaustad"
+msgstr "Eemalda kaart"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Remove Connection"
-msgstr "Kirjatüübi seaded"
+msgstr "Kõrvalda ühendus"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Remove Selected"
-msgstr "Kustuta jälg"
+msgstr "Kõrvalda valitud"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Remove from Route"
-msgstr "Eemalda punkt teekonnast"
+msgstr "Kõrvalda teekonnast"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Remove lost targets after (min)"
-msgstr "Eemalda kaotatud objekt peale (Minutit):"
+msgstr "kõrvalda kaotatud märgid peale (min)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Rename Waypoints?"
-msgstr "Muudan Teepunkti nime?"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Muudan Teepunkti nime?\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Nimetada teepunkt ümber?"
 
 #
 msgid "Report Age"
-msgstr ""
+msgstr "Teate vanus"
 
 #
 msgid "Report as of"
-msgstr ""
+msgstr "Teatatud kui"
 
 #
 msgid "Report from ship: Icing info"
-msgstr ""
+msgstr "Ettekanne laevalt: jäätumise info"
 
 #
 msgid ""
 "Report from ship: Miscellaneous information - define in Associated text field"
-msgstr ""
+msgstr "Ettekanne laevalt: mitmesugune info - määratlege seotud tekstiväljas"
 
 #
-# 
-# 
 msgid "Reserved 11"
-msgstr ""
+msgstr "reserveeritud 11"
 
 #
-# 
-# 
 msgid "Reserved 12"
-msgstr ""
+msgstr "reserveeritud 12"
 
 #
-# 
-# 
 msgid "Reserved 13"
-msgstr ""
+msgstr "reserveeritud 13"
 
 #
 msgid "Reserved 14"
-msgstr ""
+msgstr "reserveeritud 14"
 
 #
 msgid "Restricted Area: Active military OPAREA"
-msgstr ""
+msgstr "Piiranguala: aktiivne sõjaoperatsioonide ala"
 
 #
 msgid "Restricted Area: Drifting Mines"
-msgstr ""
+msgstr "Piiranguala: triivivad miinid"
 
 #
 msgid "Restricted Area: Entry approval required prior to transit"
-msgstr ""
+msgstr "Piiranguala: sisenemisluba nõutud enne läbisõitu"
 
 #
 msgid "Restricted Area: Entry prohibited"
-msgstr ""
+msgstr "Piiranguala: sisenemine keelatud"
 
 #
 msgid "Restricted Area: Firing - danger area."
-msgstr ""
+msgstr "Piiranguala: tulistamine - ohtlik ala"
 
 #
 msgid "Restricted Area: Fishing prohibited"
-msgstr ""
+msgstr "Piiranguala: kalastamine keelatud"
 
 #
 msgid "Restricted Area: No anchoring."
-msgstr ""
+msgstr "Piiranguala: ankurdamine keelatud"
 
 #
-# 
-# 
 msgid "Restricted Manoeuvrability"
-msgstr ""
+msgstr "Piiratud manööverdusvõime"
 
 #
 msgid "Resume"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Retrieving initial Chart Directory set from Windows Registry"
-msgstr "Saan kaadri asukoha info Windowsi registrist"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Saan kaadri asukoha info Windowsi registrist\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Otsin algse kaartide konplekti asukoha Windows-i registrist välja"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Retrieving initial language selection from Windows Registry"
-msgstr "Saan keeleinfo Windowsi registrist"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Saan keeleinfo Windowsi registrist\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Otsin algse keelevaliku Windows-i registrist välja"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Reverse..."
-msgstr "&Tagurpidi"
+msgstr "Pööra ümber..."
 
 #
-#
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Right"
-msgstr "&Paksus:"
+msgstr "parem"
 
 #
 msgid "Rogue or suspicious vessel"
-msgstr ""
+msgstr "Suli või kahtlane laev"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Rollover"
-msgstr "Ülekeere"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Ülekeere\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Liigu üle"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Route"
 msgstr "Teekond"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Route Manager"
-msgstr "Teekonna haldur"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Teekonna haldur\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Teekondade haldur"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Route Name"
 msgstr "Teekonna nimi"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Route Print"
-msgstr "Teekonna omadused"
+msgstr "Teekonna printimine"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Route Properties"
 msgstr "Teekonna omadused"
 
@@ -5553,204 +5699,223 @@ msgstr "Teekonna omadused"
 msgid "Route Uploaded successfully."
 msgstr "Teekond laetud edukalt"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Route from Track"
-msgstr "Teekond jäljest"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Teekond jäljest\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Loo jäljest teekond"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Route: "
-msgstr "Teekond"
+msgstr "Teekond:"
 
 #
 msgid "Route: Alternative route"
-msgstr ""
+msgstr "Teekond: alternatiivne teekond"
 
 #
 msgid "Route: Recommended route"
-msgstr ""
+msgstr "Teekond: soovitatav teekond"
 
 #
 msgid "Route: Recommended route through ice"
-msgstr ""
+msgstr "Teekond: soovitatav teekond läbi jää"
 
 #
-# 
-# 
 msgid "RouteLegInfoRollover"
-msgstr ""
+msgstr "Lõigu lühi-info üleliikudes"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Routes"
 msgstr "Teekonnad"
 
 #
-# 
-# 
 msgid "S/V"
-msgstr ""
+msgstr "Pu/l"
 
 #
-# 
-# 
 msgid "SAR/V"
-msgstr ""
+msgstr "SAR/l"
 
 #
 msgid "SART"
-msgstr ""
+msgstr "SART"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "SOG COG"
 msgstr "SOG COG"
 
 #
-# 
-# 
 msgid "Safe Water"
-msgstr ""
+msgstr "Farvaater"
 
 #
 msgid "Safety Broadcast Message"
-msgstr ""
+msgstr "Ohutusteade"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Safety Depth"
-msgstr "Turvaline sügavus"
-
-#
-# 
-# 
-msgid "Sailing Vessel"
 msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Turvaline sügavus\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"ohutu sügavus"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy, c-format
+msgid "Sailing Vessel"
+msgstr "Purjelaev"
+
+#
+#, c-format
 msgid "Scale %4.0f"
-msgstr "Suurenda"
+msgstr "Mõõtkava %4.0f"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy, c-format
+#, c-format
 msgid "Scale %4.0f (%1.1fx)"
-msgstr "Mõõtkava: %8.0f  Zoom %4.1fx"
+msgstr "Mõõtkava %4.0f (%1.1fx)-st"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy, c-format
+#, c-format
 msgid "Scale %4.0f (%1.2fx)"
-msgstr "Õige mõõtkava: %8.0f  Zoom %4.2fx"
+msgstr "Mõõtkava %4.0f (%1.2fx)-st"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Scale In"
 msgstr "Suurenda"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Scale Out"
 msgstr "Vähenda"
 
 #
-# 
 msgid "Scan Charts and Update Database"
-msgstr ""
+msgstr "otsi kaarte ja uuenda andmebaas"
 
 #
-# 
-# 
 msgid "Search and Rescue Vessel"
-msgstr ""
+msgstr "Päästelaev"
 
 #
 msgid "Seatalk"
-msgstr ""
+msgstr "Seatalk"
 
 #
 msgid "Security Alert - Level 1"
-msgstr ""
+msgstr "Turvalisuse hoiatus - 1. tase"
 
 #
 msgid "Security Alert - Level 2"
-msgstr ""
+msgstr "Turvalisuse hoiatus - 2. tase"
 
 #
 msgid "Security Alert - Level 3"
-msgstr ""
+msgstr "Turvalisuse hoiatus - 3. tase"
 
 #
 msgid "See the log file at "
-msgstr ""
+msgstr "Vaata logifaili"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Select Alert Sound"
-msgstr "Vali alarmi heli"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Vali alarmi heli\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Vali häire heli"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Select All"
 msgstr "Vali kõik"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Select Sound File"
-msgstr "Vali heli fail"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Vali heli fail\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Vali helifail"
 
 #
 msgid "Select Tide/Current Data"
-msgstr ""
+msgstr "Vali loodete/hoovuse andmed"
 
 #
 msgid ""
 "Select the maximum error allowed (in meters)\n"
 "after data reduction:"
 msgstr ""
+"Vali suurim lubatud viga (meetrites)\n"
+"peale andmete vähendamist:"
 
 #
 #
@@ -5782,451 +5947,398 @@ msgstr "Saada"
 msgid "Send Route To GPS"
 msgstr "Saada teekond GPS-i"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Send To GPS..."
-msgstr "Saada GPS-i..."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Saada GPS-i...\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Saada GPS-i"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Send to GPS"
-msgstr "&Saada GPS-i..."
+msgstr "Saada GPS-i"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Sentence Filter"
-msgstr "&Vaikne alarm"
+msgstr "Teate filter"
 
 #
 msgid "Serial"
-msgstr ""
+msgstr "jada"
 
 #
 msgid "Service vessel, police patrol, port service"
 msgstr ""
 
 #
-#
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Set"
-msgstr "Järgmine"
+msgstr "Määra"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Set Anchor Watch"
-msgstr "Sea ankruvalve"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Sea ankruvalve\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Alusta ankruvahti"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Shallow Depth"
-msgstr "Madal sügavus"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Madal sügavus\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"madal vesi"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Shift to Larger Scale Chart"
-msgstr "Mine suuremale mõõtkavale"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Mine suuremale mõõtkavale\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Mine suurema mõõtkavaga kaardile"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Shift to Smaller Scale Chart"
-msgstr "Mine väiksemale mõõtkavale"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Mine väiksemale mõõtkavale\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Mine väiksema mõõtkavaga kaardile"
 
 #
 msgid "Ship Icon Type"
-msgstr ""
+msgstr "laeva ikooni tüüp"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Ships"
-msgstr "Alus:"
+msgstr "Laevad"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Short dash"
-msgstr "Näita tõusu/mõõna jaamasid"
+msgstr "lühike joon"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show"
-msgstr "Näita tõusu/mõõna jaamasid"
+msgstr "Näita"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Show AIS Targets"
-msgstr "Näita AIS-i sihtmärke"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Näita AIS-i sihtmärke\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Näita AIS märke"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show AIS targets real size"
-msgstr "Näita AIS-i sihtmärke"
+msgstr "näita AIS märgi tegelikku suurust"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show All Tracks"
-msgstr "Näita AIS-i sihtmärke"
+msgstr "Näita kõik jäljed"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Show CPA/TCPA Alert Dialog"
-msgstr "Näita CPA/TCPA alarmi akent"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Näita CPA/TCPA alarmi akent\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"näita CPA/TCPA häire dialoogi"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Show Chart Outlines"
-msgstr "Näita kaardi piirjooni"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Näita kaardi piirjooni\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"näita kaardi kontuure"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show Current Information"
-msgstr "Koha informatsioon"
+msgstr "Näita hoovuse infot"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Show Currents"
-msgstr "Näita hoovuseid"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "Show Currents"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Näita hoovuseid\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Näita hoovusi"
+
+#
 msgid "Show Depth Units"
-msgstr "Näita sügavusühikuid"
+msgstr "näita sügavusühikuid"
 
 #
 msgid "Show Distance from each Waypoint to the next one."
-msgstr ""
+msgstr "Näita vahemaad igast teepunktist järgmisse."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Show ENC Text"
 msgstr "Näita ENC teksti"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show Grid"
-msgstr "Näita tõusu/mõõna jaamasid"
+msgstr "näita kaardivõrku"
 
 #
 msgid "Show Highway"
-msgstr ""
+msgstr "Näita magistraali"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show Lat/Long as"
-msgstr "Näita AIS-i sihtmärke"
+msgstr "näita laiust/pikkust kui"
 
 #
 msgid "Show Magnetic bearings and headings"
-msgstr ""
+msgstr "Näita magnetsuundi ja -kursse"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show NMEA Debug Window"
-msgstr "Näita GPS/NMEA andmete saabumis akent"
+msgstr "näita NMEA silumise akent"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show Skewed Raster Charts as North-Up"
-msgstr "Näita viltust raster kaarti Põhi üleval"
+msgstr "näita viltuseid rasterkaarte kui N-üleval"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Show Status Bar"
-msgstr "Näita staatuse riba"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Näita staatuse riba\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"näita olekuriba"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show Target CPA"
-msgstr "Näita AIS-i sihtmärke"
+msgstr "Näita märgi CPA"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show Target Track"
-msgstr "Näita AIS-i sihtmärke"
+msgstr "Näita märgi jälge"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show This Chart"
-msgstr "Näita AIS-i sihtmärke"
+msgstr "Näita seda kaarti"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show Tide Information"
-msgstr "Koha informatsioon"
+msgstr "Näita loodete infot"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Show Tides"
-msgstr "Näita tõusu/mõõna jaamasid"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Näita tõusu/mõõna jaamasid\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Näita loodeid"
 
 #
 msgid "Show Toolbar in Fullscreen Mode"
-msgstr ""
+msgstr "näita tööriistariba täisekraani-reþiimis"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show WPT names"
-msgstr "Näita nime"
+msgstr "Näita WPT nimesid"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show Waypoint description."
-msgstr "Kirjeldus"
+msgstr "Näita teepunkti kirjeldust."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show Waypoint name."
-msgstr "Teepunktidi nimi"
+msgstr "Näita teepunkti nime."
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show Waypoint position."
-msgstr "Koha informatsioon"
+msgstr "Näita teepunkti asukohta."
 
 #
 msgid "Show area notices (from AIS binary messages)"
-msgstr ""
+msgstr "näita ala teateid (AIS binaarteadetest)"
 
 #
 msgid "Show course from each Waypoint to the next one. "
-msgstr ""
+msgstr "Näita kurssi igast teepunktist järgmisse."
 
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show distance as"
-msgstr "Kogu vahemaa"
+msgstr "näita vahemaad kui"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show name"
 msgstr "Näita nime"
 
 #
 msgid "Show names with AIS targets at scale greater than 1:"
-msgstr ""
+msgstr "näita nimesid koos AIS-märkidega suuremal mõõtkaval kui 1:"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show on chart"
-msgstr "Näita AIS-i sihtmärke"
+msgstr "Näita kaardil"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Show radar rings"
-msgstr "Näita radari ringe"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Näita radari ringe\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"näita radariringe"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show speed as"
-msgstr "Näita tõusu/mõõna jaamasid"
+msgstr "näita kiirust kui"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show target COG predictor arrow, length (min)"
-msgstr "Näita objekti COG noolt"
+msgstr "näita märgi COG eeldatavat asukohta, (min) kaugusel"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Show target tracks, length (min)"
-msgstr "Näita sihtpunkti jälgi"
+msgstr "näita märgi jälge, pikkus (minutit)"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Shows the font preview."
-msgstr "Näita fondi eelvaadet."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Näita fondi eelvaadet.\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Näitab kirjamärgi eelvaadet."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Simplified"
-msgstr "Lihtsustatud"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Lihtsustatud\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"lihtsustatud"
 
 #
 msgid "Smooth Panning / Zooming"
-msgstr ""
+msgstr "sujuv panoraamimine / suumimine"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -6236,17 +6348,14 @@ msgstr ""
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "SoG"
 msgstr "SoG"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Solid"
-msgstr "Sümboliseeritud"
+msgstr "jäme"
 
 #
 #, c-format
@@ -6254,28 +6363,16 @@ msgid "Sound file '%s' is in unsupported format."
 msgstr ""
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Spare"
-msgstr "Start"
+msgstr "Tagavara"
 
 #
-# 
-# 
 msgid "Special"
-msgstr ""
+msgstr "Eri"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Special Mark"
-msgstr "Kustuta punkt"
+msgstr "Eriotstarbeline märk"
 
 #
 # 
@@ -6287,163 +6384,148 @@ msgid "Special Position Report"
 msgstr "Viimane raport aeg:"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Speed"
-msgstr "Plaanitud kiirus"
+msgstr "Kiirus"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Speed (Kts)"
-msgstr "Kiirus (sõlmed)"
-
-#
-# 
-# 
-# 
-# 
-#, fuzzy
-msgid "Split"
-msgstr "Kustuta teekond"
-
-#
-# 
-# 
-# 
-# 
-#, fuzzy
-msgid "Split Route"
-msgstr "Kustuta teekond"
-
-#
-# 
-# 
-# 
-# 
-#, fuzzy
-msgid "Split Track"
-msgstr "&Alusta jälje näitamist"
-
-#
-# 
-# 
-# 
-# 
-msgid "Standard"
-msgstr "Standard"
-
-#
-# 
-# 
-msgid "Starboard Hand Mark"
 msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kiirus (sõlmed)\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kiirus (sõlme)"
 
+#
+msgid "Split"
+msgstr "Jaga"
+
+#
+msgid "Split Route"
+msgstr "Poolita teekond"
+
+#
+msgid "Split Track"
+msgstr "Poolita jälg"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "Standard"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Standard\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"standartne"
+
+#
+msgid "Starboard Hand Mark"
+msgstr "Parema külje märk"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Start"
-msgstr "Start"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Start\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Käivita"
 
 #
 msgid "Statistics"
-msgstr ""
+msgstr "Statistika"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "StatusBar"
-msgstr "Näita staatuse riba"
+msgstr "Olekuriba"
 
 #
 msgid "Statute miles"
-msgstr ""
+msgstr "maamiil"
 
 #
-# 
-# 
 msgid "Stbd"
-msgstr ""
+msgstr "p/p"
 
 #
-# 
-# 
 msgid "Stbd Hand"
-msgstr ""
+msgstr "parem külg"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Style"
-msgstr "&Stiil:"
+msgstr "Stiil"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Style:"
-msgstr "&Stiil:"
+msgstr "Stiil:"
 
 #
 msgid "Sunrise"
-msgstr ""
+msgstr "Päikesetõus"
 
 #
 msgid "Sunset"
-msgstr ""
+msgstr "Päikseloojang"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Supress Alerts for anchored/moored targets"
-msgstr "Keela alarm sildutud/ankrus objektidele"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Keela alarm sildutud/ankrus objektidele\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"vaigista ankurdatud/sildunud märkide häired"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Symbolized"
-msgstr "Sümboliseeritud"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Sümboliseeritud\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"lisatud sümbolid"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "TCP"
-msgstr "CPA TCPA"
+msgstr "TCP"
 
 #
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "TCPA"
-msgstr "CPA TCPA"
+msgstr "TCPA"
 
 #
 msgid "Tankbarge"
@@ -6466,40 +6548,22 @@ msgid "Tankbarge, liquid cargo, type N"
 msgstr ""
 
 #
-# 
-# 
 msgid "Tanker"
-msgstr ""
+msgstr "Tanker"
 
 #
-#
-#
-#
-#
-# 
-# 
-#, fuzzy
 msgid "Target Count"
-msgstr "Sihtkoha info"
+msgstr "Märke loendatud"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Target List..."
-msgstr "AIS-i objektide nimekiri"
+msgstr "Märkide nimekiri"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Target Query..."
-msgstr "AIS-i sihtmärgi päring"
+msgstr "Märkide päring..."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -6507,80 +6571,87 @@ msgstr "AIS-i sihtmärgi päring"
 #
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Target info"
-msgstr "Sihtkoha info"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Sihtkoha info\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Märgi info"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Temporary GOTO Route"
-msgstr "Ajutiselt MINE teekonnale"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Ajutiselt MINE teekonnale\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Ajutine GOTO teekond"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Temporary MOB Route"
-msgstr "Ajutiselt MOB teekonnale"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Ajutiselt MOB teekonnale\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Ajutine MOB teekond"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Temporary layer"
-msgstr "Ajutiselt MOB teekonnale"
+msgstr "Ajutine kiht"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Tender"
-msgstr "Saada"
+msgstr "Pukser"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Test Alert Sound"
-msgstr "Kontrolli alarmi helisid"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-#
-#
-#
-#
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "Test Alert Sound"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kontrolli alarmi helisid\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Testi häire heli"
+
+#
 msgid "Testing"
-msgstr "Seaded"
+msgstr "Testin"
 
 #
 msgid ""
 "The Man Over Board button could be an important safety feature.\n"
 "Are you sure you want to hide it?"
 msgstr ""
+"Mees üle parda nupp võiks olla oluline ohutusfuntsioon.\n"
+"Kas olete kindel, et soovite seda peita?"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "The Open Source Chart Plotter/Navigator"
-msgstr ""
-"\n"
-"         OpenCPN...on pisike ja armas vabavara navigeerimisvahend"
+msgstr "Vabavaraline kaardiplotter/navigaator"
 
 #
 #, c-format
@@ -6588,72 +6659,121 @@ msgid ""
 "The amount of data used by the track\n"
 " was reduced by %d%%."
 msgstr ""
+"Teekonna poolt kasutatud andmete\n"
+"kogus on vähendatud %d%%."
 
 #
 msgid ""
 "The currently running Track was not merged.\n"
 "You can merge it later when it is completed."
 msgstr ""
+"Praegu jooksvat jälge ei mestitud.\n"
+"Võite mestida teda hiljem kui ta on lõpetanud."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "The font colour."
-msgstr "Teksti värv"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Teksti värv\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kirjamärgi värv."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "The font family."
-msgstr "The font family."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"The font family.\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kirjamärgi grupp."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "The font point size."
-msgstr "Fondi punkti suurus"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Fondi punkti suurus\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kirjamärgi punkti suurus."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "The font style."
-msgstr "Kirja stiil."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kirja stiil.\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kirjamärgi stiil."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "The font weight."
-msgstr "Fondi paksus."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Fondi paksus.\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kirjamärgi paksus."
 
 #
 msgid "The necessary configuration files were not found. "
-msgstr ""
+msgstr "Ei suudetud leida vajalikke konfiguratsioonifaile."
 
 #
 msgid "The settings for own ship real size are not correct:"
-msgstr ""
+msgstr "Oma laeva tegeliku suuruse seaded ei ole õiged:"
 
 #
 msgid ""
 "The waypoint you want to delete is used in a route, do you really want to "
 "delete it?"
 msgstr ""
+"Teepunkt, mida soovite kustutada, on teekonnas kasutusel, kas tõesti soovite "
+"teda kustutada?"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "There"
 msgstr "Seal"
 
@@ -6676,29 +6796,40 @@ msgid ""
 "pasting. "
 msgstr ""
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid ""
 "There was a problem printing.\n"
 "Perhaps your current printer is not set correctly?"
 msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
 "Probleem printimisega.\n"
-"Tundub, et printer pole korralikult seadistatud?"
+"Tundub, et printer pole korralikult seadistatud?\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Oli probleem printimisega.\n"
+"Võib-olla pole printer korralikult seadistatud?"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "This Leg"
 msgstr "See lõik"
 
 #
 msgid "This waypoint is part of a layer and can't be edited"
-msgstr ""
+msgstr "See teepunkt on osa kihist ning seda ei saa redigeerida"
 
 #
 #
@@ -6717,79 +6848,74 @@ msgstr "Tõus"
 
 #
 msgid "TideCurrentGraphRollover"
-msgstr ""
+msgstr "Hoovuse-loodete graafiku üleliikumine"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Tides && Currents"
-msgstr "Näita hoovuseid"
+msgstr "Looded && hoovused"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
-msgid "Time Enroute"
-msgstr "Teekonna aeg"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
 #, fuzzy
+msgid "Time Enroute"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Teekonna aeg\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Aeg teel"
+
+#
 msgid "Time enroute"
-msgstr "Teekonna aeg"
+msgstr "Aeg teel"
 
 #
 msgid "Time shown as"
-msgstr ""
+msgstr "Aeg on näidatud kui"
 
 #
-# 
-# 
 msgid "Times shown as"
-msgstr ""
+msgstr "Ajad näidatud kui"
 
 #
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Timestamp"
-msgstr "ETE/Timestamp"
+msgstr "Ajatempel"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "To"
-msgstr "Sinna"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Sinna\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kuhu"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "To Waypoint"
 msgstr "Teepunkti"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "To route"
-msgstr "Teekonna aeg"
+msgstr "Teekonnale"
 
 #
 #
@@ -6806,22 +6932,25 @@ msgstr "Teekonna aeg"
 msgid "Today"
 msgstr "Täna"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Toggle Tracking"
-msgstr "Lülita jälgimisele"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Lülita jälgimisele\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Lülita järgimist sisse-välja"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Toggle track"
-msgstr "Lülita jälgimisele"
+msgstr "Lülita jälg sisse-välja"
 
 #
 #
@@ -6838,70 +6967,65 @@ msgstr "Lülita jälgimisele"
 msgid "Tomorrow"
 msgstr "Homme"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "ToolTips"
-msgstr "Tööriista juhendid"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Tööriista juhendid\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Nõuanded"
 
 #
 msgid "Toolbar and Window Style"
-msgstr ""
+msgstr "Tööriistariba ja akna stiil"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Total Distance"
 msgstr "Kogu vahemaa"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Total Length: "
-msgstr "Pikkus"
+msgstr "Kogupikkus: "
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Total distance"
-msgstr "Kogu vahemaa"
+msgstr "Üldine vahemaa"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Tow"
-msgstr "Sinna"
+msgstr "Pukseerimine"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Track"
-msgstr "Jäljed"
+msgstr "Jälg"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Track Name"
 msgstr "Jälje nimi"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -6909,69 +7033,71 @@ msgstr "Jälje nimi"
 # 
 # 
 # 
-msgid "Track Properties"
-msgstr "Jälje omadused"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
-#, fuzzy, c-format
-msgid "Track Properties, Layer: %d"
-msgstr "Koha omadused"
-
-#
-# 
-# 
-# 
-# 
 #, fuzzy
-msgid "Tracking Precision"
-msgstr "Jälje omadused"
+msgid "Track Properties"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Jälje omadused\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Jalje omadused"
 
+#
+#, c-format
+msgid "Track Properties, Layer: %d"
+msgstr "Jälje omadused, kiht: %d"
+
+#
+msgid "Tracking Precision"
+msgstr "järgimise täpsus"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Tracks"
 msgstr "Jäljed"
 
 #
 msgid "Transmit Sentences"
-msgstr ""
+msgstr "Saada teated"
 
 #
 msgid "Transmit sentences"
-msgstr ""
+msgstr "saada teated"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Transverse Mercator"
-msgstr "Transverse Mercator"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Transverse Mercator\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Mercatori põik-"
 
 #
 msgid "Treat WPL sentences as APRS position reports"
-msgstr ""
+msgstr "käsitle WPL-teateid kui ARPS asukoha ettekandeid"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Trk"
-msgstr "Jäljed"
+msgstr "Jälg"
 
 #
-# 
-# 
 msgid "Tug"
-msgstr ""
+msgstr "Puksiir"
 
 #
 msgid "Tug freighter, coupled"
@@ -7015,70 +7141,63 @@ msgstr "Raster"
 
 #
 msgid "Turn Rate"
-msgstr ""
+msgstr "Pöördekiirus"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Type"
 msgstr "Tüüp"
 
 #
 msgid "UDP"
-msgstr ""
+msgstr "UDP"
 
 #
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "UTC"
 msgstr "UTC"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Undefined"
-msgstr "&Alajoon"
+msgstr "Määratlemata"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Undefined (default)"
-msgstr "&Alajoon"
+msgstr "Määratlemata (vaikimisi)"
 
 #
-# 
-# 
 msgid "Under way sailing"
-msgstr ""
+msgstr "Teel purjede all"
 
 #
-# 
-# 
 msgid "Underway"
-msgstr ""
+msgstr "Teel"
 
 #
 msgid "Undo"
-msgstr ""
+msgstr "Võta tagasi"
 
 #
 msgid "Unit carrier maritime"
 msgstr ""
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -7089,154 +7208,151 @@ msgstr ""
 # 
 # 
 # 
-msgid "Unk"
-msgstr "Unk"
-
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
 #
-# 
-# 
-# 
-# 
-msgid "Unknown"
-msgstr "Tundmatu"
-
-#
-# 
-# 
-msgid "Unlist contents"
-msgstr ""
-
-#
-# 
-# 
-# 
-# 
 #, fuzzy
-msgid "Unspecified"
-msgstr "&Alajoon"
+msgid "Unk"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Unk\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Teadmata"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "Unknown"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Tundmatu\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"tundmatu"
+
+#
+msgid "Unlist contents"
+msgstr "Tühjenda nimekiri"
+
+#
+msgid "Unspecified"
+msgstr "Määratlemata"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Update Control"
-msgstr "Uuenda kontrolli"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Uuenda kontrolli\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Uuenduste kontroll"
 
 #
 msgid "Use Accelerated Graphics (OpenGL)"
-msgstr ""
+msgstr "kasuta graafikakiirendit (OpenGL)"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Use Garmin (GRMN) mode for input"
-msgstr "Kasuta Garmini GRMN (host) modes, et laadida teepunktid ja teekonnad."
+msgstr "kasuta Garmini (GRMN) moodust sisendiks"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Use Garmin GRMN (Host) mode for uploads"
-msgstr "Kasuta Garmini GRMN (host) modes, et laadida teepunktid ja teekonnad."
+msgstr "kasuta Garmini GRMN (host) moodust üleslaadimiseks"
 
 #
 msgid "Use magnetic bearings in output sentence ECAPB"
-msgstr ""
+msgstr "kasuta magnetpeilingut väljuvas ECAPB-teates"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Use nearby waypoint?"
-msgstr "Kasutan lähimat Teepunkti?"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kasutan lähimat Teepunkti?\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kasutada lähimat teepunkti?"
 
 #
 msgid "User Interface"
-msgstr ""
+msgstr "Kasutjajliides"
 
 #
-# 
-# 
-#, fuzzy
 msgid "User X Offset"
-msgstr "Uuenda CM93 nihe"
+msgstr "Kasutaja X-nihe"
 
 #
-# 
-# 
 msgid "User X Offset (Metres)"
-msgstr ""
+msgstr "Kasutaja X-nihe meetrites"
 
 #
-# 
-# 
-#, fuzzy
 msgid "User Y Offset"
-msgstr "Uuenda CM93 nihe"
+msgstr "Kasutaja Y-nihe"
 
 #
-# 
-# 
 msgid "User Y Offset (Metres)"
-msgstr ""
+msgstr "Kasutaja Y-nihe meetrites"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "VTS active target"
-msgstr "Aktiveeri kaardi kaustad"
+msgstr "VTS-i aktiivne märk"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Vector Charts"
-msgstr "Vektor kaardid"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Vektor kaardid\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Vektorkaardid"
 
 #
-# 
-# 
 msgid "Vessel Diving"
-msgstr ""
+msgstr "Sukeldumine laevalt"
 
 #
-# 
-# 
 msgid "Vessel Dredging"
-msgstr ""
+msgstr "Süvendav laev"
 
 #
-# 
-# 
 msgid "Vessel Fishing"
-msgstr ""
+msgstr "Kalastav laev"
 
 #
-# 
-# 
 msgid "Vessel Towing"
-msgstr ""
+msgstr "Pukseeriv laev"
 
 #
-# 
-# 
 msgid "Vessel Towing, Long"
-msgstr ""
+msgstr "Pukseeriv laev, pikk koosseis"
 
 #
 msgid "Vessel requesting non-distress assistance"
-msgstr ""
+msgstr "Merehädas mitteolev laev vajab abi"
 
 #
 msgid "Vessel, type unknown"
@@ -7249,92 +7365,78 @@ msgid ""
 msgstr ""
 
 #
-# 
-# 
 msgid "Virtual"
-msgstr ""
+msgstr "Virtuaalne"
 
 #
-# 
-# 
 msgid "Virtual (Off Position)"
-msgstr ""
+msgstr "Virtuaalne (asukohalt väljas)"
 
 #
-# 
-# 
 msgid "Virtual (On Position)"
-msgstr ""
+msgstr "Virtuaalne (asukohal)"
 
 #
 msgid "Visible buttons"
-msgstr ""
+msgstr "Nähtavad nupud"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "WAV files (*.wav)|*.wav|All files (*.*)|*.*"
-msgstr "WAV failid (*.wav)|*.wav|Kõik failid (*.*)|*.*"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"WAV failid (*.wav)|*.wav|Kõik failid (*.*)|*.*\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"WAV-failid (*.wav)|*.wav|Kõik failid (*.*)|*.*"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Warn if CPA less than (NMi)"
-msgstr "Hoiata kui TCPA on lähemal (Minutit):"
+msgstr "hoiata kui CPA on vähem kui (miili)"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Waypoint"
-msgstr "Teepunktid"
+msgstr "Teepunkt"
 
 #
 msgid "Waypoint Arrival Circle Radius (NMi)"
-msgstr ""
+msgstr "teepunkti saabumisringi raadius (miili)"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Waypoint Information"
-msgstr "Koha informatsioon"
+msgstr "Teepunkti info"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Waypoint Name"
-msgstr "Teepunktidi nimi"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Teepunktidi nimi\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Teepunkti nimi"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Waypoint Properties"
-msgstr "&Omadused..."
+msgstr "Teepunkti omadused"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Waypoint Properties, Layer: "
-msgstr "Koha omadused"
+msgstr "Kiht Teepunkti omadused:"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 #
 #
@@ -7347,70 +7449,103 @@ msgstr "Koha omadused"
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Waypoint(s) Uploaded successfully."
-msgstr "Punkt(id) laetud"
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Punkt(id) laetud\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Teepunkt(id) on edukalt üleslaetud."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Waypoints"
 msgstr "Teepunktid"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid ""
 "Waypoints can be renamed to reflect the new order, the names will be '001', "
 "'002' etc.\n"
 "\n"
 "Do you want to rename the waypoints?"
 msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
 "Teepunktide nimed muudetakse, nimeks saavad '001', '002' jms.\n"
 "\n"
-"Kas tahad teepunktide nimesid muuta?"
+"Kas tahad teepunktide nimesid muuta?\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Teepunkte saab ümber nimetada uue järjekorra kasjatamiseks, nimed oleksid "
+"'001', 002' jne.\n"
+"\n"
+"Kas soovite teepunktid ümber nimetadaa?"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "Welcome to OpenCPN"
-msgstr "Tere tulemast OpenCPN-i"
-
-#
-# 
-# 
-# 
-# 
-msgid "Whether the font is underlined."
-msgstr "Kui font on allajoonitud"
-
-#
-# 
-msgid "White"
 msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Tere tulemast OpenCPN-i\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Tere tulemast!"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "Whether the font is underlined."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kui font on allajoonitud\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"Kas kirjamärk on allajoonitud."
+
+#
+msgid "White"
+msgstr "valge"
 
 #
 msgid "Width"
-msgstr ""
+msgstr "Laius"
 
 #
 msgid "Width Over All (m)"
-msgstr ""
+msgstr "Suurim laius (m)"
 
 #
 msgid "Width:"
-msgstr ""
+msgstr "Laius: "
 
 #
-# 
-# 
 msgid "Wing In Ground Effect"
-msgstr ""
+msgstr "Lendlaev"
 
 #
 msgid "Would you like include the Great Circle"
@@ -7424,38 +7559,37 @@ msgstr ""
 
 #
 msgid "Wrong length of the NMEA filter value"
-msgstr ""
+msgstr "NMEA filtri väärtuse vale pikkus"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "XTE         L"
 msgstr "XTE         L"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "XTE         R"
 msgstr "XTE         R"
 
 #
-# 
-# 
 msgid "Yat"
-msgstr ""
+msgstr "Jaht"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Yellow"
-msgstr "Kutsung"
+msgstr "kollane"
 
 #
 msgid "Yes"
@@ -7463,126 +7597,105 @@ msgstr ""
 
 #
 msgid "Yes, hide it."
-msgstr ""
+msgstr "Jah, peida ta."
 
 #
 msgid ""
 "You can't hide the last tool from the toolbar\n"
 "as this would make it inaccessible."
 msgstr ""
+"Te ei saa peita viimast vahendit tööriistaribal,\n"
+"sest see muudaks ta kättesaamatuks."
 
 #
 msgid "You must enter the address..."
-msgstr ""
+msgstr "Te peate sisestama aadressi..."
 
 #
 msgid "You must select or enter the port..."
-msgstr ""
+msgstr "Peate valima või sisenema porti..."
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Zoom In"
 msgstr "Suurenda"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
 msgid "Zoom Out"
 msgstr "Vähenda"
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "Zoom to Cursor"
-msgstr "Suurenda"
+msgstr "suumi hiire juurde"
 
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
 #
 # 
 # 
 # 
 # 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
 msgid "[Class] Type (Status)"
-msgstr "[Class] Tüüp (Staatus)"
-
-#
-# 
-# 
-# 
-# 
-#, fuzzy
-msgid "_A"
-msgstr "A"
-
-#
-# 
-# 
-# 
-# 
-#, fuzzy
-msgid "_B"
-msgstr "B"
-
-#
-# 
-# 
-msgid "_plus"
 msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"[Class] Tüüp (Staatus)\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"[Klass] tüüp (olek)"
+
+#
+msgid "_A"
+msgstr "_A"
+
+#
+msgid "_B"
+msgstr "_B"
+
+#
+msgid "_plus"
+msgstr "_pluss"
 
 #
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #
 msgid "fa"
-msgstr ""
+msgstr "sülda"
 
 #
 msgid "ft"
-msgstr ""
+msgstr "jalga"
 
 #
-#
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "in"
-msgstr "Lingid"
+msgstr "tolli"
 
 #
 msgid "km/h"
-msgstr ""
+msgstr "km/h"
 
 #
 msgid "m/s"
-msgstr ""
+msgstr "m/s"
 
 #
-#
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "min"
-msgstr "Lingid"
+msgstr "min"
 
 #
 msgid ""
@@ -7591,41 +7704,32 @@ msgid ""
 msgstr ""
 
 #
-# 
-# 
-# 
-# 
-#, fuzzy
 msgid "track"
-msgstr "Jäljed"
+msgstr "jälg"
 
 #
-# 
-# 
 msgid "wgsox"
-msgstr ""
+msgstr "wgsox"
 
 #
-# 
-# 
 msgid "wgsoy"
-msgstr ""
+msgstr "wgsoy"
 
 #
 msgid "wxFB Website"
-msgstr ""
+msgstr "wxFB veebileht"
 
 #
 msgid "NMi"
-msgstr ""
+msgstr "Mm"
 
 #
 msgid "Old log will be moved to opencpn.log.log"
-msgstr ""
+msgstr "Vana logi viiakse opencpn.log.log"
 
 #
 msgid "SAR Aircraft"
-msgstr ""
+msgstr "SAR-lennuk"
 
 #
 msgid ""
@@ -7633,6 +7737,9 @@ msgid ""
 "are pasting. Would you like to just merge the pasted data into them?\n"
 "\n"
 msgstr ""
+"Seal on samas kohas, kuhu soovite mõned kleepida, olemas teepunktid,. Kas "
+"soovite kleebitavad andmed nendega mestida?\n"
+"\n"
 
 #
 msgid ""
@@ -7640,30 +7747,144 @@ msgid ""
 "pasting. Would you like to merge the pasted data with it?\n"
 "\n"
 msgstr ""
+"Seal on samas kohas olemas teepunkt, kuhu soovite seda kleepida. Kas soovite "
+"kleebitavad andmed temaga mestida?\n"
+"\n"
 
 #
 msgid "Would you like include the Great Circle routing points for this leg?"
-msgstr ""
+msgstr "Kas sooviksite lisada selle lõigu jaoks suure ringi teekonna punktid?"
 
 #
 msgid "km"
-msgstr ""
+msgstr "km"
 
 #
 msgid "kts"
-msgstr ""
+msgstr "sõlme"
 
 #
 msgid "m"
-msgstr ""
+msgstr "m"
 
 #
 msgid "mi"
-msgstr ""
+msgstr "miili"
 
 #
 msgid "mph"
+msgstr "mp/h"
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "   Chart File RLL data corrupt on chart "
 msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaardi faili RLL andemd on vigastatud\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"   Kaardifaili RLL-andmed on kaardil rikutud "
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy
+msgid "   Chart file has no BSB header, cannot Init."
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"Kaardi fail ei sisalda BSB päist, ei suuda installeerida\n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"   Kaardifailil pole BSB-päist, ei suuda käivitada."
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+#, fuzzy, c-format
+msgid "   Could not read first %d bytes of header for chart file: "
+msgstr ""
+"#-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#\n"
+"   Ei suutnud lugeda %d baite kaardi päisest: \n"
+"#-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#\n"
+"   Ei suutnud lugeda kaardifaili päise esimesi %d baite: "
+
+# #-#-#-#-#  .merge_file_FWHC73 (opencpn 2.1.622)  #-#-#-#-#
+#
+#
+#
+#
+# 
+# 
+# 
+# 
+# #-#-#-#-#  .merge_file_yPtI2T (opencpn 3.3.1328)  #-#-#-#-#
+#
+msgid "--"
+msgstr "--"
+
+#
+#, fuzzy
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Kas olete kindel, et soovite kustutada <KÕIK> teekonnad?"
+
+#
+msgid "Enable Touchscreen/Tablet Interface"
+msgstr ""
+
+#
+#, fuzzy
+msgid "Error on Waypoint Upload.  Garmin GPS not connected"
+msgstr "Viga teepunktide üleslaadimisel. Vaadake logifaili..."
+
+#
+msgid ""
+"OpenCPN requires access to serial ports to use serial NMEA data.\n"
+"You currently do not have permission to access the serial ports on this "
+"system.\n"
+"\n"
+"It is suggested that you exit OpenCPN now,\n"
+"and add yourself to the correct group to enable serial port access.\n"
+"\n"
+"You may do so by executing the following command from the linux command "
+"line:\n"
+"\n"
+"                sudo usermod -a -G "
+msgstr ""
+
+#
+#, fuzzy
+msgid ""
+"There are some waypoints used in routes or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the routes and disable the anchor alarms.\n"
+" Answering No keeps the waypoints used in routes or alarms."
+msgstr ""
+"Mõned teepunktid on kasutusel teekondades või ankru häiretes. Kas soovite ka "
+"nemad kustutada? See muudab teekonnad ja blokeerib ankruhäired. Vastates Ei "
+"hoiatakse teekondade ja häirete punktid alles."
+
+#
+#, fuzzy
+msgid "in "
+msgstr "tolli"
 
 #
 #
@@ -7843,24 +8064,6 @@ msgstr ""
 
 #
 #
-# 
-# 
-# 
-# 
-#~ msgid "   Chart File RLL data corrupt on chart "
-#~ msgstr "Kaardi faili RLL andemd on vigastatud"
-
-#
-#
-# 
-# 
-# 
-# 
-#~ msgid "   Chart file has no BSB header, cannot Init."
-#~ msgstr "Kaardi fail ei sisalda BSB päist, ei suuda installeerida"
-
-#
-#
 #
 #
 #
@@ -7901,15 +8104,6 @@ msgstr ""
 # 
 #~ msgid "   Chart projection is UNKNOWN, assuming Mercator: "
 #~ msgstr "Kaardi projektsioon on tundmatu, jultunud Mercator:"
-
-#
-#
-# 
-# 
-# 
-# 
-#~ msgid "   Could not read first %d bytes of header for chart file: "
-#~ msgstr "   Ei suutnud lugeda %d baite kaardi päisest: "
 
 #
 #
@@ -8214,17 +8408,6 @@ msgstr ""
 #~ msgstr ""
 #~ "'\n"
 #~ "SOOVITUS: Proovi sulgeda teised programmid."
-
-#
-#
-#
-#
-# 
-# 
-# 
-# 
-#~ msgid "--"
-#~ msgstr "--"
 
 #
 #

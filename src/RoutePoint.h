@@ -141,6 +141,7 @@ public:
 	Segment segment; // segment from the last route point to this one, invalid for the starting point
 
 	bool m_bPtIsSelected;
+	bool m_bIsBeingEdited;
 
 	bool m_bIsInRoute; // FIXME: resolve this
 	bool m_bIsInTrack; // FIXME: resolve this

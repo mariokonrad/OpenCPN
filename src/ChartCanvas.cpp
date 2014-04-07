@@ -5777,7 +5777,9 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 	}
 
 	if (event.LeftUp()) {
-		bool b_startedit = false;
+		bool b_startedit_route = false;
+		bool b_startedit_mark = false;
+
 		if (g_bmobile) {
 			if (parent_frame->nRoute_State && !m_bChartDragging) { // creating route?
 
@@ -5948,12 +5950,13 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 
 				Refresh(false);
 			} else {
-				bool b_was_editing = m_bRouteEditing;
+				bool b_was_editing_route = m_bRouteEditing;
+				bool b_was_editing_mark = m_bMarkEditing;
 				FindRoutePointsAtCursor(SelectRadius, true); // Not creating Route
 				if (!m_EditRouteArray.empty()) {
-					if (!b_was_editing)
-						b_startedit = true;
-					wxBell();
+					if (!b_was_editing_route) {
+						b_startedit_route = true;
+					}
 					wxRect pre_rect;
 					for (unsigned int ir = 0; ir < m_EditRouteArray.size(); ++ir) {
 						Route* pr = m_EditRouteArray.at(ir);
@@ -5969,10 +5972,21 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 					}
 					RefreshRect(pre_rect, false);
 				}
+
+					if (m_bMarkEditing) {
+						if (!b_was_editing_mark)
+							b_startedit_mark = true;
+
+						if (m_pRoutePointEditTarget) {
+							wxRect wp_rect;
+							m_pRoutePointEditTarget->CalculateDCRect(m_dc_route, wp_rect);
+							RefreshRect(wp_rect, false);
+						}
+					}
 			}
 		} // g_bmobile
 
-		if (m_bRouteEditing && !b_startedit) {
+		if (m_bRouteEditing && !b_startedit_route) {
 			if (m_pRoutePointEditTarget) {
 				pSelect->UpdateSelectableRouteSegments(m_pRoutePointEditTarget);
 
@@ -6018,7 +6032,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 			m_pRoutePointEditTarget = NULL;
 			if (!g_FloatingToolbarDialog->IsShown())
 				gFrame->SurfaceToolbar();
-		} else if (m_bMarkEditing) {
+		} else if (m_bMarkEditing && !b_startedit_mark) {
 			if (m_pRoutePointEditTarget) {
 				pConfig->UpdateWayPoint(m_pRoutePointEditTarget);
 				undo->AfterUndoableAction(m_pRoutePointEditTarget);

@@ -1111,10 +1111,15 @@ bool Config::LoadLayers(const wxString& path)
 			filename.Prepend(wxFileName::GetPathSeparator());
 			filename.Prepend(path);
 			wxFileName f(filename);
-			if (f.GetExt().IsSameAs(wxT("gpx")))
+			if (f.GetExt().IsSameAs(wxT("gpx"))) {
 				file_array.Add(filename); // single-gpx-file layer
-			else
-				wxDir::GetAllFiles(filename, &file_array, wxT("*.gpx")); // layers subdirectory set
+			} else {
+				wxDir dir(filename);
+				if (dir.IsOpened()) {
+					// layers subdirectory set
+					dir.GetAllFiles(filename, &file_array, wxT("*.gpx"));
+				}
+			}
 
 			if (file_array.size()) {
 				++g_LayerIdx;
@@ -1140,7 +1145,7 @@ bool Config::LoadLayers(const wxString& path)
 
 				pLayerList->push_back(layer);
 
-				//  Load the entire file array as a single layer
+				// Load the entire file array as a single layer
 
 				for (unsigned int i = 0; i < file_array.size(); i++) {
 					wxString file_path = file_array[i];
@@ -1148,8 +1153,13 @@ bool Config::LoadLayers(const wxString& path)
 					if (::wxFileExists(file_path)) {
 						NavObjectCollection* pSet = new NavObjectCollection;
 						pSet->load_file(file_path.fn_str());
-						layer->setNoOfItems(
-							pSet->LoadAllGPXObjectsAsLayer(layer->getID(), bLayerViz));
+						long nItems = pSet->LoadAllGPXObjectsAsLayer(layer->getID(), bLayerViz);
+						layer->setNoOfItems(layer->getNoOfItems() + nItems);
+
+						wxString objmsg;
+						objmsg.Printf(wxT("Loaded GPX file %s with %d items."), file_path.c_str(),
+									  nItems);
+						wxLogMessage(objmsg);
 
 						delete pSet;
 					}

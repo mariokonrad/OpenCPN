@@ -31,6 +31,7 @@
 #include <gui/FontManager.h>
 
 #include <global/OCPN.h>
+#include <global/ColorManager.h>
 
 #include <util/uuid.h>
 
@@ -268,7 +269,6 @@ void RoutePoint::ReLoadIcon(void)
 void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 {
 	wxRect hilitebox;
-	unsigned char transparency = 100;
 
 	wxPoint r = cc1->GetCanvasPointPix(position);
 
@@ -325,10 +325,17 @@ void RoutePoint::Draw(ocpnDC& dc, wxPoint* rpn)
 	hilitebox.y -= r.y;
 	hilitebox.Inflate(2);
 
+	wxColour hi_colour = route_point_color;
+	unsigned char transparency = 100;
+	if (m_bIsBeingEdited) {
+		hi_colour = global::OCPN::get().color().get_color(_T("YELO1"));
+		transparency = 150;
+	}
+
 	// Highlite any selected point
-	if (m_bPtIsSelected) {
+	if (m_bPtIsSelected || m_bIsBeingEdited) {
 		dc.AlphaBlending(r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height,
-						 0.0, route_point_color, transparency);
+						 0.0, hi_colour, transparency);
 	}
 
 	bool bDrawHL = false;

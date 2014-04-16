@@ -8157,10 +8157,10 @@ void ChartCanvas::RenderChartOutline(ocpnDC& dc, int dbIndex, const ViewPort& vp
 	using namespace chart;
 	const global::ColorManager& colors = global::OCPN::get().color();
 
-	if (ChartData->GetDBChartType(dbIndex) == CHART_TYPE_S57)
-		dc.SetPen(wxPen(colors.get_color(_T("UINFG")), 1, wxSOLID));
-	else if (ChartData->GetDBChartType(dbIndex) == CHART_TYPE_CM93)
+	if (ChartData->GetDBChartType(dbIndex) == CHART_TYPE_CM93)
 		dc.SetPen(wxPen(colors.get_color(_T("YELO1")), 1, wxSOLID));
+	else if (ChartData->GetDBChartFamily(dbIndex) == CHART_FAMILY_VECTOR)
+		dc.SetPen(wxPen(colors.get_color(_T("UINFG")), 1, wxSOLID));
 	else
 		dc.SetPen(wxPen(colors.get_color(_T("UINFR")), 1, wxSOLID));
 

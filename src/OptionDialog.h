@@ -61,6 +61,7 @@ class MainFrame;
 #define GROUPS_CHANGED   512
 #define STYLE_CHANGED   1024
 #define TIDES_CHANGED   2048
+#define GL_CHANGED      4096
 
 class options : public wxDialog
 {

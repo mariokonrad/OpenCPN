@@ -48,6 +48,7 @@ namespace chart {
 class RuleHash;
 
 WX_DECLARE_HASH_MAP(wxString, Rule*, wxStringHash, wxStringEqual, RuleHash);
+WX_DECLARE_HASH_MAP(int, wxString, wxIntegerHash, wxIntegerEqual, MyNatsurHash);
 WX_DEFINE_SORTED_ARRAY(LUPrec*, wxArrayOfLUPrec);
 WX_DECLARE_STRING_HASH_MAP(int, CARC_Hash);
 
@@ -275,6 +276,7 @@ public:
 	std::vector<wxString> OBJLDescriptions;
 
 	RuleHash* _symb_sym; // symbol symbolisation rules
+	MyNatsurHash m_natsur_hash; // hash table for cacheing NATSUR string values from int attributes
 
 private:
 	int S52_load_Plib(const wxString& PLib, bool b_forceLegacy);

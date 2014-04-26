@@ -1368,11 +1368,10 @@ char* _getParamVal(ObjRazRules* rzRules, char* str, char* buf, int bsz)
 
 		// special case when ENC returns an index for particular attribute types
 		if (!strncmp(buf, "NATSUR", 6)) {
-
-			wxString natsur_att(_T ( "NATSUR" ));
+			wxString natsur_att(_T("NATSUR"));
 			wxString result;
 			wxString svalue = value;
-			wxStringTokenizer tkz(svalue, _T ( "," ));
+			wxStringTokenizer tkz(svalue, _T(","));
 
 			int icomma = 0;
 			while (tkz.HasMoreTokens()) {
@@ -1383,16 +1382,19 @@ char* _getParamVal(ObjRazRules* rzRules, char* str, char* buf, int bsz)
 				long i;
 				if (token.ToLong(&i)) {
 					wxString nat;
-					if (rzRules->obj->m_chart_context->chart) {
-						nat = rzRules->obj->m_chart_context->chart->GetAttributeDecode(natsur_att,
-																					   (int)i);
+					if (!ps52plib->m_natsur_hash[i].IsEmpty()) { // entry available?
+						nat = ps52plib->m_natsur_hash[i];
+					} else {
+						nat = s57chart::GetAttributeDecode(natsur_att, (int)i);
+						ps52plib->m_natsur_hash[i] = nat; // cache the entry
 					}
+
 					if (!nat.IsEmpty())
 						result += nat; // value from ENC
 					else
-						result += _T ( "unk" );
+						result += _T("unk");
 				} else
-					result += _T ( "unk" );
+					result += _T("unk");
 
 				icomma++;
 			}
@@ -2590,9 +2592,11 @@ int s52plib::RenderLS(ObjRazRules* rzRules, Rules* rules, const ViewPort& vp)
 				ptp[0] = pra; // insert beginning node
 			}
 
-			//  Get the edge
+			// Get the edge
 			unsigned int enode = *index_run++;
-			VE_Element* pedge = (*ve_hash)[enode];
+			VE_Element* pedge = 0;
+			if (enode)
+				pedge = (*ve_hash)[enode];
 
 			int nls = 0;
 
@@ -4077,8 +4081,9 @@ int s52plib::PrioritizeLineFeature(ObjRazRules* rzRules, int npriority)
 
 			// Get the edge
 			int enode = *index_run++;
-
-			VE_Element* pedge = (*edge_hash)[enode];
+			VE_Element* pedge = 0;
+			if (enode)
+				pedge = (*edge_hash)[enode];
 
 			// Set priority
 			if (pedge)
@@ -6089,9 +6094,8 @@ bool s52plib::ObjectRenderCheckPos(ObjRazRules* rzRules, const ViewPort& vp)
 
 	// Of course, the object must be at least partly visible in the viewport
 	BoundingBox BBView = vp.GetBBox();
-	if (BBView.Intersect(rzRules->obj->BBObj, 0)
-		== BoundingBox::_OUT) // Object is wholly outside window
-	{
+	if (BBView.Intersect(rzRules->obj->BBObj, 0) == BoundingBox::_OUT) {
+		// Object is wholly outside window
 		//  Do a secondary test if the viewport crosses Greenwich
 		//  This will pick up objects east of Greenwich
 		if (vp.GetBBox().GetMaxX() > 360.0) {

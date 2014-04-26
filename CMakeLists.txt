@@ -44,8 +44,8 @@ project(OpenCPN)
 
 SET(VERSION_MAJOR "3")
 SET(VERSION_MINOR "3")
-SET(VERSION_PATCH "1606")
-SET(VERSION_DATE "2014-04-06")
+SET(VERSION_PATCH "1618")
+SET(VERSION_DATE "2014-04-18")
 
 if(APPLE)
 	set(PACKAGE_NAME OpenCPN)
@@ -1066,7 +1066,7 @@ if (USE_S57)
 		)
 
 	add_library(S57ENC STATIC ${SRC_S57ENC})
-	add_dependencies(S57ENC tinyxml)
+	add_dependencies(S57ENC tinyxml wxjson)
 	include_directories("${CMAKE_SOURCE_DIR}/src/mygdal")
 	set(EXTRA_LIBS ${EXTRA_LIBS} S57ENC)
 else (USE_S57)
@@ -1243,7 +1243,11 @@ if(APPLE)
 
 	SET_SOURCE_FILES_PROPERTIES(buildosx/opencpn.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources )
 	SET_SOURCE_FILES_PROPERTIES(buildosx/MainMenu.xib PROPERTIES MACOSX_PACKAGE_LOCATION Resources/English.lproj)
+	# These variables get substituted into the Info.plist template file at build time
 	SET(MACOSX_BUNDLE_ICON_FILE opencpn.icns)
+	SET(MACOSX_BUNDLE_SHORT_VERSION_STRING "${PACKAGE_VERSION}")
+	SET(MACOSX_BUNDLE_BUNDLE_NAME "OpenCPN")
+	SET(MACOSX_BUNDLE_GUI_IDENTIFIER "org.opencpn")
 
 	ADD_EXECUTABLE(${PACKAGE_NAME} MACOSX_BUNDLE
 		${HDRS}
@@ -1274,6 +1278,8 @@ if(APPLE)
 		geo
 		util
 		)
+	set_target_properties(${PACKAGE_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST
+		"${CMAKE_SOURCE_DIR}/buildosx/Info.plist.in")
 ENDIF(APPLE)
 
 IF(UNIX AND NOT APPLE)
@@ -1626,8 +1632,7 @@ INCLUDE(CPack)
 
 IF(APPLE)
 	# -- Run the BundleUtilities cmake code
-	SET(CPACK_BUNDLE_PLIST "${CMAKE_SOURCE_DIR}/buildosx/Info.plist")
-	SET(MACOSX_BUNDLE_BUNDLE_NAME "OpenCPN")
+	SET(CPACK_BUNDLE_PLIST "${CMAKE_SOURCE_DIR}/buildosx/Info.plist.in")
 
 	SET(APPS "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app")
 	SET(DIRS "")

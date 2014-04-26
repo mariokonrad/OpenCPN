@@ -3614,6 +3614,9 @@ void MainFrame::HandlePianoRollover(int selected_index, int selected_dbIndex)
 	if (s_ProgDialog)
 		return;
 
+	if (ChartData && ChartData->IsBusy())
+		return;
+
 	const wxPoint position = stats->GetPosition();
 	const wxPoint key_location = stats->pPiano->GetKeyOrigin(selected_index);
 	wxPoint rolloverPos = stats->GetParent()->ScreenToClient(position);
@@ -3977,6 +3980,9 @@ bool MainFrame::DoChartUpdate(void)
 	if (bDBUpdateInProgress)
 		return false;
 	if (!ChartData)
+		return false;
+
+	if (ChartData->IsBusy())
 		return false;
 
 	const global::System::Config& sys = global::OCPN::get().sys().config();

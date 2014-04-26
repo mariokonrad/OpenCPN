@@ -1477,7 +1477,7 @@ wxArrayString GetChartDBDirArrayString()
 	return ChartData->GetChartDirArrayString();
 }
 
-int AddChartToDBInPlace(wxString& full_path, bool WXUNUSED(b_ProgressDialog))
+int AddChartToDBInPlace(wxString& full_path, bool b_RefreshCanvas)
 {
 	// extract the path from the chart name
 	wxFileName fn(full_path);
@@ -1504,8 +1504,10 @@ int AddChartToDBInPlace(wxString& full_path, bool WXUNUSED(b_ProgressDialog))
 				g_options->UpdateDisplayedChartDirList(ChartData->GetChartDirArray());
 			}
 
-			ViewPort vp;
-			gFrame->ChartsRefresh(-1, vp);
+			if (b_RefreshCanvas) {
+				ViewPort vp;
+				gFrame->ChartsRefresh(-1, vp);
+			}
 		}
 	}
 	return bret;

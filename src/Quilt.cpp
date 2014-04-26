@@ -1132,8 +1132,12 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 {
 	if (!ChartData)
 		return false;
+	if (ChartData->IsBusy()) // This prevent recursion on chart loads that Yeild()
+		return false;
 	if (m_bbusy)
 		return false;
+
+	m_bbusy = true;
 
 	ChartData->UnLockCache();
 
@@ -1775,6 +1779,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 	}
 
 	m_xa_hash = xa_hash;
+	m_bbusy = false;
 	return true;
 }
 

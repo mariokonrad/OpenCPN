@@ -64,6 +64,7 @@ namespace chart {
 bool G_FloatPtInPolygon(MyFlPoint* rgpts, int wnumpts, float x, float y);
 
 ChartDB::ChartDB(MainFrame* parent)
+	: m_b_busy(false)
 {
 	pParent = parent;
 	pChartCache = new wxArrayPtrVoid;
@@ -86,6 +87,11 @@ ChartDB::~ChartDB()
 {
 	PurgeCache();
 	delete pChartCache;
+}
+
+bool ChartDB::IsBusy() const
+{
+	return m_b_busy;
 }
 
 bool ChartDB::LoadBinary(const wxString& filename, const ChartDirectories& dir_array_check)
@@ -628,7 +634,9 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 		}
 	}
 
-	if (!bInCache) { // not in cache
+	if (!bInCache) {
+		m_b_busy = true;
+
 		// Use memory limited cache policy, if defined....
 		const global::System::Config& sys = global::OCPN::get().sys().config();
 		if (sys.memCacheLimit) {
@@ -859,6 +867,8 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 				}
 			}
 		}
+
+		m_b_busy = false;
 
 		return Ch;
 	}

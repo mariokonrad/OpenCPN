@@ -97,6 +97,8 @@ public:
 	void ClearCacheInUseFlags(void);
 	void PurgeCacheUnusedCharts(bool b_force = false);
 
+	bool IsBusy() const;
+
 protected:
 	virtual ChartBase* GetChart(const wxChar* theFilePath,
 								const chart::ChartClassDescriptor& chart_desc) const;
@@ -113,6 +115,7 @@ private:
 
 	MainFrame* pParent;
 	bool m_b_locked;
+	bool m_b_busy;
 };
 
 }

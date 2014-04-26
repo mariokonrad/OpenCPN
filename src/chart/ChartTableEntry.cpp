@@ -455,6 +455,42 @@ std::string ChartTableEntry::read_path(wxInputStream& is) const
 	return path;
 }
 
+void ChartTableEntry::read_ply_table(wxInputStream& is)
+{
+	if (nPlyEntries) {
+		pPlyTable = new float[nPlyEntries * 2];
+		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
+	}
+}
+
+void ChartTableEntry::read_aux_ply_table(wxInputStream& is)
+{
+	if (nAuxPlyEntries) {
+		pAuxPlyTable = (float**)malloc(nAuxPlyEntries * sizeof(float*));
+		pAuxCntTable = new int[nAuxPlyEntries];
+		is.Read(pAuxCntTable, nAuxPlyEntries * sizeof(int));
+
+		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
+			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
+			is.Read(pAuxPlyTable[nAuxPlyEntry], pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
+		}
+	}
+}
+
+void ChartTableEntry::read_nocovr_ply(wxInputStream& is)
+{
+	if (nNoCovrPlyEntries) {
+		pNoCovrCntTable = new int[nNoCovrPlyEntries];
+		is.Read(pNoCovrCntTable, nNoCovrPlyEntries * sizeof(int));
+
+		pNoCovrPlyTable = (float**)malloc(nNoCovrPlyEntries * sizeof(float*));
+		for (int i = 0; i < nNoCovrPlyEntries; i++) {
+			pNoCovrPlyTable[i] = (float *)malloc(pNoCovrCntTable[i] * 2 * sizeof(float));
+			is.Read(pNoCovrPlyTable[i], pNoCovrCntTable[i] * 2 * sizeof(float));
+		}
+	}
+}
+
 void ChartTableEntry::read_18(wxInputStream& is)
 {
 	fullpath = read_path(is);
@@ -490,32 +526,9 @@ void ChartTableEntry::read_18(wxInputStream& is)
 
 	bValid = cte.bValid;
 
-	if (nPlyEntries) {
-		pPlyTable = new float[nPlyEntries * 2];
-		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
-	}
-
-	if (nAuxPlyEntries) {
-		pAuxPlyTable = (float**)malloc(nAuxPlyEntries * sizeof(float*));
-		pAuxCntTable = new int[nAuxPlyEntries];
-		is.Read(pAuxCntTable, nAuxPlyEntries * sizeof(int));
-
-		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
-			is.Read(pAuxPlyTable[nAuxPlyEntry], pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
-		}
-	}
-
-	if (nNoCovrPlyEntries) {
-		pNoCovrCntTable = new int[nNoCovrPlyEntries];
-		is.Read(pNoCovrCntTable, nNoCovrPlyEntries * sizeof(int));
-
-		pNoCovrPlyTable = (float**)malloc(nNoCovrPlyEntries * sizeof(float*));
-		for (int i = 0; i < nNoCovrPlyEntries; i++) {
-			pNoCovrPlyTable[i] = (float *)malloc(pNoCovrCntTable[i] * 2 * sizeof(float));
-			is.Read(pNoCovrPlyTable[i], pNoCovrCntTable[i] * 2 * sizeof(float));
-		}
-	}
+	read_ply_table(is);
+	read_aux_ply_table(is);
+	read_nocovr_ply(is);
 }
 
 void ChartTableEntry::read_17(wxInputStream & is)
@@ -552,32 +565,9 @@ void ChartTableEntry::read_17(wxInputStream & is)
 
 	bValid = cte.bValid;
 
-	if (nPlyEntries) {
-		pPlyTable = new float[nPlyEntries * 2];
-		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
-	}
-
-	if (nAuxPlyEntries) {
-		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-		pAuxCntTable = new int[nAuxPlyEntries];
-		is.Read(pAuxCntTable, nAuxPlyEntries * sizeof(int));
-
-		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
-			is.Read(pAuxPlyTable[nAuxPlyEntry], pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
-		}
-	}
-
-	if (nNoCovrPlyEntries) {
-		pNoCovrCntTable = new int[nNoCovrPlyEntries];
-		is.Read(pNoCovrCntTable, nNoCovrPlyEntries * sizeof(int));
-
-		pNoCovrPlyTable = (float **)malloc(nNoCovrPlyEntries * sizeof(float *));
-		for (int i = 0; i < nNoCovrPlyEntries; i++) {
-			pNoCovrPlyTable[i] = (float *)malloc(pNoCovrCntTable[i] * 2 * sizeof(float));
-			is.Read(pNoCovrPlyTable[i], pNoCovrCntTable[i] * 2 * sizeof(float));
-		}
-	}
+	read_ply_table(is);
+	read_aux_ply_table(is);
+	read_nocovr_ply(is);
 }
 
 void ChartTableEntry::read_16(wxInputStream & is)
@@ -612,21 +602,8 @@ void ChartTableEntry::read_16(wxInputStream & is)
 
 	bValid = cte.bValid;
 
-	if (nPlyEntries) {
-		pPlyTable = new float[nPlyEntries * 2];
-		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
-	}
-
-	if (nAuxPlyEntries) {
-		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-		pAuxCntTable = new int[nAuxPlyEntries];
-		is.Read(pAuxCntTable, nAuxPlyEntries * sizeof(int));
-
-		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
-			is.Read(pAuxPlyTable[nAuxPlyEntry], pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
-		}
-	}
+	read_ply_table(is);
+	read_aux_ply_table(is);
 }
 
 void ChartTableEntry::read_15(wxInputStream & is)
@@ -638,7 +615,7 @@ void ChartTableEntry::read_15(wxInputStream & is)
 	ChartTableEntry_onDisk_15 cte;
 	is.Read(&cte, sizeof(ChartTableEntry_onDisk_15));
 
-	//    Transcribe the elements....
+	// Transcribe the elements....
 	EntryOffset = cte.EntryOffset;
 	ChartType = static_cast<ChartTypeEnum>(cte.ChartType);
 	LatMax = cte.LatMax;
@@ -655,21 +632,8 @@ void ChartTableEntry::read_15(wxInputStream & is)
 
 	bValid = cte.bValid;
 
-	if (nPlyEntries) {
-		pPlyTable = new float[nPlyEntries * 2];
-		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
-	}
-
-	if (nAuxPlyEntries) {
-		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-		pAuxCntTable = new int[nAuxPlyEntries];
-		is.Read(pAuxCntTable, nAuxPlyEntries * sizeof(int));
-
-		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
-			is.Read(pAuxPlyTable[nAuxPlyEntry], pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
-		}
-	}
+	read_ply_table(is);
+	read_aux_ply_table(is);
 }
 
 void ChartTableEntry::read_14(wxInputStream & is)
@@ -695,21 +659,8 @@ void ChartTableEntry::read_14(wxInputStream & is)
 	nAuxPlyEntries = cte.nAuxPlyEntries;
 	bValid = cte.bValid;
 
-	if (nPlyEntries) {
-		pPlyTable = new float[nPlyEntries * 2];
-		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
-	}
-
-	if (nAuxPlyEntries) {
-		pAuxPlyTable = (float **)malloc(nAuxPlyEntries * sizeof(float *));
-		pAuxCntTable = new int[nAuxPlyEntries];
-		is.Read(pAuxCntTable, nAuxPlyEntries * sizeof(int));
-
-		for (int nAuxPlyEntry = 0; nAuxPlyEntry < nAuxPlyEntries; nAuxPlyEntry++) {
-			pAuxPlyTable[nAuxPlyEntry] = (float *)malloc(pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
-			is.Read(pAuxPlyTable[nAuxPlyEntry],pAuxCntTable[nAuxPlyEntry] * 2 * sizeof(float));
-		}
-	}
+	read_ply_table(is);
+	read_aux_ply_table(is);
 }
 
 bool ChartTableEntry::Read(const ChartDatabase * pDb, wxInputStream & is)

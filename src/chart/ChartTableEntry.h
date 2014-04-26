@@ -90,6 +90,10 @@ private:
 	void read_15(wxInputStream& is);
 	void read_14(wxInputStream& is);
 
+	void read_ply_table(wxInputStream& is);
+	void read_aux_ply_table(wxInputStream& is);
+	void read_nocovr_ply(wxInputStream& is);
+
 private:
 	int EntryOffset;
 	ChartTypeEnum ChartType;

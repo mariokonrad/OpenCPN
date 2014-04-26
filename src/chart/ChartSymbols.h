@@ -81,6 +81,9 @@ private:
 	typedef std::vector<ColorTable*> ColorTables;
 	static ColorTables colorTables;
 
+	typedef std::map<wxString, wxRect> symbolGraphicsHashMap;
+	static symbolGraphicsHashMap* symbolGraphicLocations;
+
 	s52plib* plib;
 };
 

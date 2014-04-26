@@ -47,15 +47,12 @@ wxBitmap ChartSymbols::rasterSymbols;
 int ChartSymbols::rasterSymbolsLoadedColorMapNumber = -1;
 wxString ChartSymbols::configFileDirectory;
 ChartSymbols::ColorTables ChartSymbols::colorTables;
-
-WX_DECLARE_STRING_HASH_MAP(wxRect, symbolGraphicsHashMap);
+ChartSymbols::symbolGraphicsHashMap* ChartSymbols::symbolGraphicLocations = NULL;
 
 using chart::SymbolSizeInfo;
 using chart::OCPNPattern;
 using chart::ChartSymbol;
 
-static symbolGraphicsHashMap* symbolGraphicLocations
-	= NULL; // FIXME: this should be part of the class
 
 ChartSymbols::ChartSymbols(void)
 	: plib(NULL)
@@ -88,7 +85,6 @@ void ChartSymbols::InitializeGlobals(void)
 
 void ChartSymbols::DeleteGlobals(void)
 {
-	symbolGraphicLocations->clear();
 	delete symbolGraphicLocations;
 	symbolGraphicLocations = NULL;
 

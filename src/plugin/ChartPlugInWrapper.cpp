@@ -111,8 +111,9 @@ chart::InitReturn ChartPlugInWrapper::Init(const wxString& name, chart::ChartIni
 		}
 
 		return ret_val;
-	} else
+	} else {
 		return chart::INIT_FAIL_REMOVE;
+	}
 }
 
 int ChartPlugInWrapper::GetCOVREntries() const
@@ -431,42 +432,41 @@ wxString GetPlugInPath(opencpn_plugin* pplugin)
 	return ret_val;
 }
 
-//      API 1.11 Access to Vector PlugIn charts
+// API 1.11 Access to Vector PlugIn charts
 
-ListOfPI_S57Obj *PlugInManager::GetPlugInObjRuleListAtLatLon( ChartPlugInWrapper *target, float zlat, float zlon,
-                                                 float SelectRadius, const ViewPort& vp )
+ListOfPI_S57Obj* PlugInManager::GetPlugInObjRuleListAtLatLon(ChartPlugInWrapper* target, float zlat,
+															 float zlon, float SelectRadius,
+															 const ViewPort& vp)
 {
-    if(target) {
-        PlugInChartBaseGL *picbgl = dynamic_cast <PlugInChartBaseGL *>(target->GetPlugInChart());
-        if(picbgl){
-            PlugIn_ViewPort pi_vp = CreatePlugInViewport( vp );
-            ListOfPI_S57Obj *piol = picbgl->GetObjRuleListAtLatLon(zlat, zlon, SelectRadius, &pi_vp);
+	if (target) {
+		PlugInChartBaseGL* picbgl = dynamic_cast<PlugInChartBaseGL*>(target->GetPlugInChart());
+		if (picbgl) {
+			PlugIn_ViewPort pi_vp = CreatePlugInViewport(vp);
+			ListOfPI_S57Obj* piol
+				= picbgl->GetObjRuleListAtLatLon(zlat, zlon, SelectRadius, &pi_vp);
 
-            return piol;
-        }
-        else
-            return NULL;
-    }
-    else
-        return NULL;
+			return piol;
+		} else
+			return NULL;
+	} else
+		return NULL;
 }
 
-wxString PlugInManager::CreateObjDescriptions( ChartPlugInWrapper *target, ListOfPI_S57Obj *rule_list )
+wxString PlugInManager::CreateObjDescriptions(ChartPlugInWrapper* target,
+											  ListOfPI_S57Obj* rule_list)
 {
-    wxString ret_str;
-    if(target) {
-        PlugInChartBaseGL *picbgl = dynamic_cast <PlugInChartBaseGL *>(target->GetPlugInChart());
-        if(picbgl){
-            ret_str = picbgl->CreateObjDescriptions( rule_list );
-        }
-    }
+	wxString ret_str;
+	if (target) {
+		PlugInChartBaseGL* picbgl = dynamic_cast<PlugInChartBaseGL*>(target->GetPlugInChart());
+		if (picbgl) {
+			ret_str = picbgl->CreateObjDescriptions(rule_list);
+		}
+	}
 
-    return ret_str;
+	return ret_str;
 }
 
-
-
-//      API 1.11 Access to S52 PLIB
+// API 1.11 Access to S52 PLIB
 wxString PI_GetPLIBColorScheme()
 {
 	return _T(""); // ps52plib->GetPLIBColorScheme()
@@ -474,32 +474,32 @@ wxString PI_GetPLIBColorScheme()
 
 int PI_GetPLIBDepthUnitInt()
 {
-    if(ps52plib)
-        return ps52plib->m_nDepthUnitDisplay;
-    else
-        return 0;
+	if (ps52plib)
+		return ps52plib->m_nDepthUnitDisplay;
+	else
+		return 0;
 }
 
 int PI_GetPLIBSymbolStyle()
 {
-    if(ps52plib)
-        return ps52plib->m_nSymbolStyle;
-    else
-        return 0;
+	if (ps52plib)
+		return ps52plib->m_nSymbolStyle;
+	else
+		return 0;
 }
 
 int PI_GetPLIBBoundaryStyle()
 {
-    if(ps52plib)
-        return ps52plib->m_nBoundaryStyle;
-    else
-        return 0;
+	if (ps52plib)
+		return ps52plib->m_nBoundaryStyle;
+	else
+		return 0;
 }
 
 bool PI_PLIBObjectRenderCheck(PI_S57Obj* pObj, PlugIn_ViewPort* vp)
 {
 	if (ps52plib) {
-		//  Create and populate a compatible s57 Object
+		// Create and populate a compatible s57 Object
 		chart::S57Obj cobj;
 		CreateCompatibleS57Object(pObj, &cobj);
 
@@ -507,7 +507,7 @@ bool PI_PLIBObjectRenderCheck(PI_S57Obj* pObj, PlugIn_ViewPort* vp)
 
 		S52PLIB_Context* pContext = (S52PLIB_Context*)pObj->S52_Context;
 
-		//  Create and populate a minimally compatible object container
+		// Create and populate a minimally compatible object container
 		ObjRazRules rzRules;
 		rzRules.obj = &cobj;
 		rzRules.LUP = pContext->LUP;
@@ -522,10 +522,10 @@ bool PI_PLIBObjectRenderCheck(PI_S57Obj* pObj, PlugIn_ViewPort* vp)
 
 int PI_GetPLIBStateHash()
 {
-    if(ps52plib)
-        return ps52plib->GetStateHash();
-    else
-        return 0;
+	if (ps52plib)
+		return ps52plib->GetStateHash();
+	else
+		return 0;
 }
 
 void CreateCompatibleS57Object(PI_S57Obj* pObj, chart::S57Obj* cobj)
@@ -865,20 +865,20 @@ int PI_PLIBRenderAreaToGL(const wxGLContext& glcc, PI_S57Obj* pObj, PlugIn_ViewP
 						  wxRect& render_rect)
 {
 #ifdef ocpnUSE_GL
-	//  Create and populate a compatible s57 Object
+	// Create and populate a compatible s57 Object
 	S57Obj cobj;
 
 	CreateCompatibleS57Object(pObj, &cobj);
 
 	S52PLIB_Context* pContext = (S52PLIB_Context*)pObj->S52_Context;
 
-	//  Set up object SM rendering constants
+	// Set up object SM rendering constants
 	sm_parms transform;
 	geo::toSM(geo::Position(vp->clat, vp->clon),
 			  geo::Position(pObj->chart_ref_lat, pObj->chart_ref_lon), &transform.easting_vp_center,
 			  &transform.northing_vp_center);
 
-	//  Create and populate a minimally compatible object container
+	// Create and populate a minimally compatible object container
 	ObjRazRules rzRules;
 	rzRules.obj = &cobj;
 	rzRules.LUP = pContext->LUP;
@@ -901,20 +901,20 @@ int PI_PLIBRenderAreaToGL(const wxGLContext& glcc, PI_S57Obj* pObj, PlugIn_ViewP
 int PI_PLIBRenderObjectToGL(const wxGLContext& glcc, PI_S57Obj* pObj, PlugIn_ViewPort* vp,
 							wxRect& render_rect)
 {
-	//  Create and populate a compatible s57 Object
+	// Create and populate a compatible s57 Object
 	S57Obj cobj;
 
 	CreateCompatibleS57Object(pObj, &cobj);
 
 	S52PLIB_Context* pContext = (S52PLIB_Context*)pObj->S52_Context;
 
-	//  Set up object SM rendering constants
+	// Set up object SM rendering constants
 	sm_parms transform;
 	geo::toSM(geo::Position(vp->clat, vp->clon),
 			  geo::Position(pObj->chart_ref_lat, pObj->chart_ref_lon), &transform.easting_vp_center,
 			  &transform.northing_vp_center);
 
-	//  Create and populate a minimally compatible object container
+	// Create and populate a minimally compatible object container
 	ObjRazRules rzRules;
 	rzRules.obj = &cobj;
 	rzRules.LUP = pContext->LUP;
@@ -924,10 +924,10 @@ int PI_PLIBRenderObjectToGL(const wxGLContext& glcc, PI_S57Obj* pObj, PlugIn_Vie
 
 	ViewPort cvp = CreateCompatibleViewport(*vp);
 
-	//  Do the render
+	// Do the render
 	ps52plib->RenderObjectToGL(glcc, &rzRules, cvp, render_rect);
 
-	//  Update the PLIB context after the render operation
+	// Update the PLIB context after the render operation
 	UpdatePIObjectPlibContext(pObj, &cobj);
 
 	return 1;

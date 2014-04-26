@@ -108,10 +108,7 @@ public:
 	bool UpdateConfig();
 
 	PlugInContainer* LoadPlugIn(wxString plugin_file);
-	ArrayOfPlugIns* GetPlugInArray()
-	{
-		return &plugin_array;
-	}
+	ArrayOfPlugIns* GetPlugInArray();
 
 	bool RenderAllCanvasOverlayPlugIns(ocpnDC& dc, const ViewPort& vp);
 	bool RenderAllGLCanvasOverlayPlugIns(wxGLContext* pcontext, const ViewPort& vp);
@@ -121,10 +118,7 @@ public:
 	void NotifySetupOptions();
 	void CloseAllPlugInPanels(int);
 
-	ArrayOfPlugInToolbarTools& GetPluginToolbarToolArray()
-	{
-		return m_PlugInToolbarTools;
-	}
+	ArrayOfPlugInToolbarTools& GetPluginToolbarToolArray();
 	int AddToolbarTool(wxString label, wxBitmap* bitmap, wxBitmap* bmpDisabled, wxItemKind kind,
 					   wxString shortHelp, wxString longHelp, wxObject* clientData, int position,
 					   int tool_sel, opencpn_plugin* pplugin);
@@ -136,10 +130,7 @@ public:
 	opencpn_plugin* FindToolOwner(const int id);
 	wxString GetToolOwnerCommonName(const int id);
 
-	ArrayOfPlugInMenuItems& GetPluginContextMenuItemArray()
-	{
-		return m_PlugInMenuItems;
-	}
+	ArrayOfPlugInMenuItems& GetPluginContextMenuItemArray();
 	int AddCanvasContextMenuItem(wxMenuItem* pitem, opencpn_plugin* pplugin);
 	void RemoveCanvasContextMenuItem(int item);
 	void SetCanvasContextMenuItemViz(int item, bool viz);
@@ -164,10 +155,7 @@ public:
 	wxString CreateObjDescriptions(ChartPlugInWrapper* target, ListOfPI_S57Obj* rule_list);
 
 	wxString GetLastError();
-	MainFrame* GetParentFrame()
-	{
-		return pParent;
-	}
+	MainFrame* GetParentFrame();
 
 	void DimeWindow(wxWindow* win);
 	sound::OCPN_Sound m_plugin_sound;

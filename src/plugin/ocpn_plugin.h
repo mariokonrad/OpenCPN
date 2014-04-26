@@ -55,6 +55,7 @@ class wxGLContext;
 #include <chart/s52s57.h>
 
 #include <list>
+#include <vector>
 
 // This is the most modern API Version number
 // It is expected that the API will remain downward compatible, meaning that
@@ -786,7 +787,7 @@ extern "C" DECL_EXP int RemoveChartFromDBInPlace(wxString& full_path);
 
 class PI_S57Obj;
 
-WX_DECLARE_LIST(PI_S57Obj, ListOfPI_S57Obj); // FIXME: replace this with std containers
+typedef std::vector<PI_S57Obj*> ListOfPI_S57Obj;
 
 // ----------------------------------------------------------------------------
 // PlugInChartBaseGL

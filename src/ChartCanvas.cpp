@@ -7025,9 +7025,6 @@ void ChartCanvas::ShowObjectQueryWindow(int x, int y, float zlat, float zlon)
 
 		delete rule_list;
 		delete overlay_rule_list;
-
-		if (pi_rule_list)
-			pi_rule_list->Clear();
 		delete pi_rule_list;
 
 		SetCursor(wxCURSOR_ARROW);

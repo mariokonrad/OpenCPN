@@ -169,6 +169,26 @@ PlugInManager::~PlugInManager()
 {
 }
 
+MainFrame* PlugInManager::GetParentFrame()
+{
+	return pParent;
+}
+
+ArrayOfPlugIns* PlugInManager::GetPlugInArray()
+{
+	return &plugin_array;
+}
+
+ArrayOfPlugInToolbarTools& PlugInManager::GetPluginToolbarToolArray()
+{
+	return m_PlugInToolbarTools;
+}
+
+ArrayOfPlugInMenuItems& PlugInManager::GetPluginContextMenuItemArray()
+{
+	return m_PlugInMenuItems;
+}
+
 bool PlugInManager::LoadAllPlugIns(const wxString& plugin_dir)
 {
 	m_plugin_location = plugin_dir;

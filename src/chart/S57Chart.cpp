@@ -6682,13 +6682,13 @@ bool s57_CheckExtendedLightSectors(int mx, int my, const ViewPort& viewport,
 		int n_attr = 0;
 		wxArrayOfS57attVal* attValArray = NULL;
 
-		ListOfObjRazRules::reverse_iterator snode = rule_list->rend();
-		ListOfPI_S57Obj::Node* pnode = NULL;
+		ListOfObjRazRules::reverse_iterator snode;
+		ListOfPI_S57Obj::reverse_iterator pnode;
 
 		if (Chs57)
 			snode = rule_list->rbegin();
 		else if (target_plugin_chart)
-			pnode = pi_rule_list->GetLast();
+			pnode = pi_rule_list->rbegin();
 
 		while (true) {
 			bool is_light = false;
@@ -6706,9 +6706,9 @@ bool s57_CheckExtendedLightSectors(int mx, int my, const ViewPort& viewport,
 					is_light = true;
 				}
 			} else if (target_plugin_chart) {
-				if (!pnode)
+				if (pnode == pi_rule_list->rend())
 					break;
-				PI_S57Obj* light = pnode->GetData();
+				PI_S57Obj* light = *pnode;
 				if (!strcmp(light->FeatureName, "LIGHTS")) {
 					objPos = wxPoint2DDouble(light->m_lat, light->m_lon);
 					curr_att = light->att_array;
@@ -6841,15 +6841,11 @@ bool s57_CheckExtendedLightSectors(int mx, int my, const ViewPort& viewport,
 			if (Chs57)
 				++snode;
 			else if (target_plugin_chart)
-				pnode = pnode->GetPrevious();
+				++pnode;
 		}
 
 		delete rule_list;
-
-		if (pi_rule_list) {
-			pi_rule_list->Clear();
-			delete pi_rule_list;
-		}
+		delete pi_rule_list;
 	}
 
 	// Work with the sector legs vector to identify  and mark "Leading Lights"

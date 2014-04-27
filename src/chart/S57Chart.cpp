@@ -2339,9 +2339,9 @@ bool s57chart::DCRenderLPB(wxMemoryDC& dcinput, const ViewPort& vp, wxRect* WXUN
 	return true;
 }
 
-bool s57chart::IsCellOverlayType(const char* pFullPath)
+bool s57chart::IsCellOverlayType(const wxString& fullpath)
 {
-	wxFileName fn(wxString(pFullPath, wxConvUTF8));
+	wxFileName fn(fullpath);
 	// Get the "Usage" character
 	wxString cname = fn.GetName();
 	return ((cname[2] == 'L') || (cname[2] == 'A'));

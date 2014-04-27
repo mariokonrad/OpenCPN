@@ -66,7 +66,7 @@ public:
 	const float* GetpNoCovrPlyTableEntry(int index) const;
 	int GetNoCovrCntTableEntry(int index) const;
 
-	const char* GetpFullPath() const;
+	wxString GetFullPath() const;
 	float GetLonMax() const;
 	float GetLonMin() const;
 	float GetLatMax() const;

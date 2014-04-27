@@ -2305,9 +2305,8 @@ bool MainFrame::CheckGroup(int igroup)
 
 		for (unsigned int ic = 0; ic < (unsigned int)ChartData->GetChartTableEntries(); ic++) {
 			const chart::ChartTableEntry& cte = ChartData->GetChartTableEntry(ic);
-			wxString chart_full_path(cte.GetpFullPath(), wxConvUTF8);
 
-			if (chart_full_path.StartsWith(element_root)) {
+			if (cte.GetFullPath().StartsWith(element_root)) {
 				b_chart_in_group = true;
 				break;
 			}
@@ -2324,8 +2323,7 @@ bool MainFrame::existsChartDataTableEntryStartingWith(const wxString& element_ro
 {
 	for (unsigned int ic = 0; ic < (unsigned int)ChartData->GetChartTableEntries(); ++ic) {
 		const chart::ChartTableEntry& cte = ChartData->GetChartTableEntry(ic);
-		const wxString chart_full_path(cte.GetpFullPath(), wxConvUTF8);
-		if (chart_full_path.StartsWith(element_root)) {
+		if (cte.GetFullPath().StartsWith(element_root)) {
 			return true;
 		}
 	}

@@ -192,9 +192,9 @@ int ChartTableEntry::GetNoCovrCntTableEntry(int index) const
 	return pNoCovrCntTable[index];
 }
 
-const char* ChartTableEntry::GetpFullPath() const
+wxString ChartTableEntry::GetFullPath() const
 {
-	return fullpath.c_str();
+	return wxString(fullpath.c_str(), wxConvUTF8);
 }
 
 float ChartTableEntry::GetLonMax() const
@@ -582,7 +582,7 @@ void ChartTableEntry::read_16(wxInputStream & is)
 	ChartTableEntry_onDisk_16 cte;
 	is.Read(&cte, sizeof(ChartTableEntry_onDisk_16));
 
-	//    Transcribe the elements....
+	// Transcribe the elements....
 	EntryOffset = cte.EntryOffset;
 	ChartType = static_cast<ChartTypeEnum>(cte.ChartType);
 	LatMax = cte.LatMax;
@@ -636,7 +636,7 @@ void ChartTableEntry::read_15(wxInputStream & is)
 	read_aux_ply_table(is);
 }
 
-void ChartTableEntry::read_14(wxInputStream & is)
+void ChartTableEntry::read_14(wxInputStream& is)
 {
 	fullpath = read_path(is);
 	wxLogVerbose(_T("  Chart %s"), fullpath.c_str());
@@ -645,7 +645,7 @@ void ChartTableEntry::read_14(wxInputStream & is)
 	ChartTableEntry_onDisk_14 cte;
 	is.Read(&cte, sizeof(ChartTableEntry_onDisk_14));
 
-	//    Transcribe the elements....
+	// Transcribe the elements....
 	EntryOffset = cte.EntryOffset;
 	ChartType = static_cast<ChartTypeEnum>(cte.ChartType);
 	LatMax = cte.LatMax;
@@ -654,7 +654,7 @@ void ChartTableEntry::read_14(wxInputStream & is)
 	LonMin = cte.LonMin;
 	Scale = cte.Scale;
 	edition_date = cte.edition_date;
-	file_date = 0;                        //  file_date does not exist in V14;
+	file_date = 0; // file_date does not exist in V14;
 	nPlyEntries = cte.nPlyEntries;
 	nAuxPlyEntries = cte.nAuxPlyEntries;
 	bValid = cte.bValid;
@@ -663,7 +663,7 @@ void ChartTableEntry::read_14(wxInputStream & is)
 	read_aux_ply_table(is);
 }
 
-bool ChartTableEntry::Read(const ChartDatabase * pDb, wxInputStream & is)
+bool ChartTableEntry::Read(const ChartDatabase* pDb, wxInputStream& is)
 {
 	// TODO: exception handling
 

@@ -1255,7 +1255,7 @@ bool Quilt::Compose(const ViewPort& vp_in) // FIXME: holy fucking shit, this met
 			// a geographical cell with the same extents.
 			// Overlays will be picked up in the next pass, if any are found
 			if (chart::CHART_TYPE_S57 == m_reference_type) {
-				if (chart::s57chart::IsCellOverlayType(cte.GetpFullPath())) {
+				if (chart::s57chart::IsCellOverlayType(cte.GetFullPath())) {
 					b_has_overlays = true;
 					continue;
 				}

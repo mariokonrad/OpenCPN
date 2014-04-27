@@ -470,7 +470,7 @@ bool ChartDB::CopyStack(ChartStack* pa, ChartStack* pb)
 wxString ChartDB::GetFullPath(ChartStack* ps, int stackindex)
 {
 	int dbIndex = ps->GetDBIndex(stackindex);
-	return wxString(GetChartTableEntry(dbIndex).GetpFullPath(), wxConvUTF8);
+	return GetChartTableEntry(dbIndex).GetFullPath();
 }
 
 /// Get PlyPoint from stack
@@ -504,7 +504,7 @@ int ChartDB::GetStackEntry(ChartStack* ps, wxString fp)
 {
 	for (int i = 0; i < ps->nEntry; i++) {
 		const ChartTableEntry& entry = GetChartTableEntry(ps->GetDBIndex(i));
-		if (fp.IsSameAs(wxString(entry.GetpFullPath(), wxConvUTF8)))
+		if (fp.IsSameAs(entry.GetFullPath()))
 			return i;
 	}
 
@@ -593,7 +593,7 @@ ChartBase* ChartDB::OpenChartUsingCache(int dbindex, ChartInitFlag init_flag)
 		return NULL;
 
 	const ChartTableEntry& cte = GetChartTableEntry(dbindex);
-	wxString ChartFullPath(cte.GetpFullPath(), wxConvUTF8);
+	const wxString ChartFullPath = cte.GetFullPath();
 	ChartTypeEnum chart_type = (ChartTypeEnum)cte.GetChartType();
 
 	ChartBase* Ch = NULL;

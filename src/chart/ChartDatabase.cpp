@@ -330,10 +330,9 @@ wxString ChartDatabase::GetFullChartInfo(ChartBase* pc, int dbIndex, int* char_w
 		// TODO why can't this be cte.GetbValid()?
 		wxString line;
 		line = _(" ChartFile:  ");
-		wxString longline(cte.GetpFullPath(), wxConvUTF8);
+		wxString longline = cte.GetFullPath();
 		if (longline.Len() > target_width) {
-			line += SplitPath(wxString(cte.GetpFullPath(), wxConvUTF8), _T("/,\\"), target_width,
-							  15, &ncr);
+			line += SplitPath(cte.GetFullPath(), _T("/,\\"), target_width, 15, &ncr);
 			max_width = wxMax(max_width, target_width + 4);
 			lc += ncr;
 		} else {
@@ -555,7 +554,7 @@ int ChartDatabase::FinddbIndex(const wxString& PathToFind) const
 {
 	// Find the chart
 	for (unsigned int i = 0; i < chartTable.size(); ++i) {
-		if (PathToFind.IsSameAs(wxString(chartTable[i].GetpFullPath(), wxConvUTF8))) {
+		if (PathToFind.IsSameAs(chartTable[i].GetFullPath())) {
 			return i;
 		}
 	}
@@ -567,7 +566,7 @@ int ChartDatabase::DisableChart(const wxString& PathToDisable)
 {
 	// Find the chart
 	for (unsigned int i = 0; i < chartTable.size(); ++i) {
-		if (PathToDisable.IsSameAs(wxString(chartTable[i].GetpFullPath(), wxConvUTF8))) {
+		if (PathToDisable.IsSameAs(chartTable[i].GetFullPath())) {
 			ChartTableEntry* pentry = &chartTable[i];
 			pentry->Disable();
 			return 1;
@@ -629,7 +628,7 @@ int ChartDatabase::TraverseDirAndAddCharts(
 
 		const int nEntries = chartTable.size();
 		for (int ic = 0; ic < nEntries; ++ic) {
-			wxFileName fn(wxString(chartTable[ic].GetpFullPath(), wxConvUTF8));
+			wxFileName fn(chartTable[ic].GetFullPath());
 			wxString t = fn.GetPath();
 
 			while (fn.GetDirCount() >= dir_path_count) {
@@ -723,7 +722,7 @@ bool ChartDatabase::IsChartDirUsed(const wxString& theDir) const
 
 	dir.Append(wxT("*"));
 	for (unsigned int i = 0; i < chartTable.size(); ++i) {
-		wxString chartPath(chartTable[i].GetpFullPath(), wxConvUTF8);
+		wxString chartPath = chartTable[i].GetFullPath();
 		if (chartPath.Matches(dir))
 			return true;
 	}
@@ -891,7 +890,7 @@ int ChartDatabase::SearchDirAndAddCharts(wxString& dir_name_base,
 			// one
 			const int nEntry = chartTable.size();
 			for (int i = 0; i < nEntry; ++i) {
-				wxString table_file_name(chartTable[isearch].GetpFullPath(), wxConvUTF8);
+				wxString table_file_name = chartTable[isearch].GetFullPath();
 
 				// If the chart full file paths are exactly the same, select the newer one
 				if (bthis_dir_in_dB && full_name.IsSameAs(table_file_name)) {
@@ -997,7 +996,7 @@ bool ChartDatabase::AddChart(wxString& chartfilename, ChartClassDescriptor& char
 	// traverse the existing database looking for duplicates, and choosing the right one
 	int nEntry = chartTable.size();
 	for (int i = 0; i < nEntry; i++) {
-		wxString table_file_name(chartTable[isearch].GetpFullPath(), wxConvUTF8);
+		wxString table_file_name = chartTable[isearch].GetFullPath();
 
 		// If the chart full file paths are exactly the same, select the newer one
 		if (bthis_dir_in_dB && full_name.IsSameAs(table_file_name)) {
@@ -1164,7 +1163,7 @@ bool ChartDatabase::RemoveSingleChart(wxString& ChartFullPath)
 
 	// Walk the chart table, looking for the target
 	for (unsigned int i = 0; i < chartTable.size(); ++i) {
-		if (!strcmp(ChartFullPath.mb_str(), GetChartTableEntry(i).GetpFullPath())) {
+		if (ChartFullPath == GetChartTableEntry(i).GetFullPath()) {
 			chartTable.RemoveAt(i);
 			break;
 		}
@@ -1283,7 +1282,7 @@ int ChartDatabase::GetDBChartFamily(int dbIndex) const
 wxString ChartDatabase::GetDBChartFileName(int dbIndex) const
 {
 	if (bValid && (dbIndex >= 0) && (dbIndex < static_cast<int>(chartTable.size())))
-		return wxString(chartTable[dbIndex].GetpFullPath(), wxConvUTF8);
+		return chartTable[dbIndex].GetFullPath();
 	else
 		return _T("");
 }
@@ -1382,7 +1381,7 @@ void ChartDatabase::ApplyGroupArray(chart::ChartGroupArray* pGroupArray) // FIXM
 		ChartTableEntry* pcte = &chartTable[ic];
 		pcte->GetGroupArray().clear();
 
-		wxString chart_full_path(pcte->GetpFullPath(), wxConvUTF8);
+		wxString chart_full_path = pcte->GetFullPath();
 
 		for (unsigned int igroup = 0; igroup < pGroupArray->size(); igroup++) {
 			chart::ChartGroup* pGroup = pGroupArray->at(igroup);

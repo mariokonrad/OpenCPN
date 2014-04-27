@@ -79,7 +79,7 @@ public:
 
 	bool GetbValid() const;
 	void SetEntryOffset(int n);
-	std::vector<int>& GetGroupArray(void);
+	std::vector<int>& GetGroupArray(void); // FIXME: breaks encapsulation
 	const wxString& GetFileName(void) const;
 
 private:
@@ -107,9 +107,9 @@ private:
 	time_t edition_date;
 	time_t file_date;
 
-	// ply table, data and number of entries
-	float* pPlyTable; // FIXME: use std::vector
-	int nPlyEntries;
+	// ply table, data and number of entries. the entries are always
+	// pairs of floats.
+	std::vector<float> plytable;
 
 	int nAuxPlyEntries;
 	float** pAuxPlyTable; // FIXME: use std::vector

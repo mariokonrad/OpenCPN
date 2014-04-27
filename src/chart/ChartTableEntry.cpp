@@ -154,12 +154,12 @@ time_t ChartTableEntry::GetFileTime() const
 
 int ChartTableEntry::GetnPlyEntries() const
 {
-	return nPlyEntries;
+	return plytable.size() / 2;
 }
 
 const float* ChartTableEntry::GetpPlyTable() const
 {
-	return pPlyTable;
+	return &plytable[0];
 }
 
 int ChartTableEntry::GetnAuxPlyEntries() const
@@ -285,37 +285,33 @@ ChartTableEntry::ChartTableEntry(ChartBase& theChart)
 
 	// If COVR table has only one entry, us it for the primary Ply Table
 	if (theChart.GetCOVREntries() == 1) {
-		nPlyEntries = theChart.GetCOVRTablePoints(0);
-		pPlyTable = new float[nPlyEntries * 2];
-		float* pfe = pPlyTable;
+		plytable.resize(theChart.GetCOVRTablePoints(0) * 2);
 		Plypoint* ppp = reinterpret_cast<Plypoint*>(theChart.GetCOVRTableHead(0)); // FIXME
 
-		for (int i = 0; i < nPlyEntries; i++) {
-			*pfe++ = ppp->ltp;
-			*pfe++ = ppp->lnp;
+		for (size_t i = 0; i < plytable.size(); i += 2) {
+			plytable[i + 0] = ppp->ltp;
+			plytable[i + 1] = ppp->lnp;
 			ppp++;
 		}
 	} else {
 		// Else create a rectangular primary Ply Table from the chart extents
 		// and create AuxPly table from the COVR tables
 		// Create new artificial Ply table from chart extents
-		nPlyEntries = 4;
-		pPlyTable = new float[nPlyEntries * 2];
-		float* pfe = pPlyTable;
+		plytable.resize(4 * 2);
 		Extent fext;
 		theChart.GetChartExtent(fext);
 
-		*pfe++ = fext.NLAT; // LatMax;
-		*pfe++ = fext.WLON; // LonMin;
+		plytable[0] = fext.NLAT; // LatMax;
+		plytable[1] = fext.WLON; // LonMin;
 
-		*pfe++ = fext.NLAT; // LatMax;
-		*pfe++ = fext.ELON; // LonMax;
+		plytable[2] = fext.NLAT; // LatMax;
+		plytable[3] = fext.ELON; // LonMax;
 
-		*pfe++ = fext.SLAT; // LatMin;
-		*pfe++ = fext.ELON; // LonMax;
+		plytable[4] = fext.SLAT; // LatMin;
+		plytable[5] = fext.ELON; // LonMax;
 
-		*pfe++ = fext.SLAT; // LatMin;
-		*pfe++ = fext.WLON; // LonMin;
+		plytable[6] = fext.SLAT; // LatMin;
+		plytable[7] = fext.WLON; // LonMin;
 
 		// Fill in the structure for pAuxPlyTable
 
@@ -361,8 +357,6 @@ ChartTableEntry::ChartTableEntry()
 
 ChartTableEntry::~ChartTableEntry()
 {
-	delete[] pPlyTable;
-
 	for (int i = 0; i < nAuxPlyEntries; i++)
 		free(pAuxPlyTable[i]);
 	free(pAuxPlyTable);
@@ -457,9 +451,8 @@ std::string ChartTableEntry::read_path(wxInputStream& is) const
 
 void ChartTableEntry::read_ply_table(wxInputStream& is)
 {
-	if (nPlyEntries) {
-		pPlyTable = new float[nPlyEntries * 2];
-		is.Read(pPlyTable, nPlyEntries * 2 * sizeof(float));
+	if (plytable.size()) {
+		is.Read(&plytable[0], plytable.size() * sizeof(float));
 	}
 }
 
@@ -519,7 +512,7 @@ void ChartTableEntry::read_18(wxInputStream& is)
 	edition_date = cte.edition_date;
 	file_date = cte.file_date;
 
-	nPlyEntries = cte.nPlyEntries;
+	plytable.resize(cte.nPlyEntries * 2);
 	nAuxPlyEntries = cte.nAuxPlyEntries;
 
 	nNoCovrPlyEntries = cte.nNoCovrPlyEntries;
@@ -558,7 +551,7 @@ void ChartTableEntry::read_17(wxInputStream & is)
 	edition_date = cte.edition_date;
 	file_date = cte.file_date;
 
-	nPlyEntries = cte.nPlyEntries;
+	plytable.resize(cte.nPlyEntries * 2);
 	nAuxPlyEntries = cte.nAuxPlyEntries;
 
 	nNoCovrPlyEntries = cte.nNoCovrPlyEntries;
@@ -597,7 +590,7 @@ void ChartTableEntry::read_16(wxInputStream & is)
 	edition_date = cte.edition_date;
 	file_date = cte.file_date;
 
-	nPlyEntries = cte.nPlyEntries;
+	plytable.resize(cte.nPlyEntries * 2);
 	nAuxPlyEntries = cte.nAuxPlyEntries;
 
 	bValid = cte.bValid;
@@ -627,7 +620,7 @@ void ChartTableEntry::read_15(wxInputStream & is)
 	edition_date = cte.edition_date;
 	file_date = cte.file_date;
 
-	nPlyEntries = cte.nPlyEntries;
+	plytable.resize(cte.nPlyEntries * 2);
 	nAuxPlyEntries = cte.nAuxPlyEntries;
 
 	bValid = cte.bValid;
@@ -655,7 +648,7 @@ void ChartTableEntry::read_14(wxInputStream& is)
 	Scale = cte.Scale;
 	edition_date = cte.edition_date;
 	file_date = 0; // file_date does not exist in V14;
-	nPlyEntries = cte.nPlyEntries;
+	plytable.resize(cte.nPlyEntries * 2);
 	nAuxPlyEntries = cte.nAuxPlyEntries;
 	bValid = cte.bValid;
 
@@ -702,7 +695,7 @@ bool ChartTableEntry::Write(const ChartDatabase* WXUNUSED(pDb), wxOutputStream& 
 	cte.edition_date = edition_date;
 	cte.file_date = file_date;
 
-	cte.nPlyEntries = nPlyEntries;
+	cte.nPlyEntries = plytable.size() / 2;
 	cte.nAuxPlyEntries = nAuxPlyEntries;
 
 	cte.skew = Skew;
@@ -716,8 +709,8 @@ bool ChartTableEntry::Write(const ChartDatabase* WXUNUSED(pDb), wxOutputStream& 
 	wxLogVerbose(_T("  Wrote Chart %s"), fullpath.c_str());
 
 	// Write out the tables
-	if (nPlyEntries) {
-		os.Write(pPlyTable, nPlyEntries * 2 * sizeof(float));
+	if (plytable.size()) {
+		os.Write(&plytable[0], plytable.size() * sizeof(float));
 	}
 
 	if (nAuxPlyEntries) {
@@ -749,8 +742,7 @@ void ChartTableEntry::Clear()
 	LonMin = 0.0f;
 	fullpath.clear();
 	Scale = 0;
-	pPlyTable = NULL;// FIXME: memory leak?
-	nPlyEntries = 0;
+	plytable.clear();
 	nAuxPlyEntries = 0;
 	pAuxPlyTable = NULL; // FIXME: memory leak?
 	pAuxCntTable = NULL; // FIXME: memory leak?

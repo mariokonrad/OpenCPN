@@ -137,16 +137,32 @@ void Config::disable_changeset_update()
 
 void Config::CreateRotatingNavObjBackup()
 {
-	// Rotate navobj backups
+	// Rotate navobj backups, but just in case there are some changes in the current version to
+	// prevent the user trying to "fix" the problem by continuously starting the application to
+	// overwrite all of his good backups...
 	if (navobjbackups > 0) {
-		for (int i = navobjbackups - 1; i >= 1; --i) {
-			const wxString filename = wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i);
-			if (wxFile::Exists(filename))
-				wxCopyFile(filename,
-						   wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i + 1));
+		wxFile f;
+		wxString oldname = m_sNavObjSetFile;
+		wxString newname = wxString::Format(_T("%s.1"), m_sNavObjSetFile.c_str());
+		f.Open(oldname);
+		wxFileOffset s_diff = f.Length();
+		f.Close();
+		f.Open(newname);
+		s_diff -= f.Length();
+		f.Close();
+		if (s_diff != 0) {
+			for (int i = navobjbackups - 1; i >= 1; i--) {
+				oldname = wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i);
+				newname = wxString::Format(_T("%s.%d"), m_sNavObjSetFile.c_str(), i + 1);
+				if (wxFile::Exists(oldname))
+					wxCopyFile(oldname, newname);
+			}
+
+			if (wxFile::Exists(m_sNavObjSetFile)) {
+				newname = wxString::Format(_T("%s.1"), m_sNavObjSetFile.c_str());
+				wxCopyFile(m_sNavObjSetFile, newname);
+			}
 		}
-		if (wxFile::Exists(m_sNavObjSetFile))
-			wxCopyFile(m_sNavObjSetFile, wxString::Format(_T("%s.1"), m_sNavObjSetFile.c_str()));
 	}
 
 	// try to clean the backups the user doesn't want - breaks if he deleted some by

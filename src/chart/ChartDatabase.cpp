@@ -182,9 +182,6 @@ const ChartTableEntry& ChartDatabase::GetChartTableEntry(int index) const
 
 bool ChartDatabase::Read(const wxString& filePath)
 {
-	ChartTableEntry entry;
-	int entries;
-
 	bValid = false;
 
 	wxFileName file(filePath);
@@ -215,9 +212,12 @@ bool ChartDatabase::Read(const wxString& filePath)
 	if (0 == cth.GetDirEntries())
 		wxLogMessage(_T("  Nil"));
 
-	for (int iDir = 0; iDir < cth.GetDirEntries(); iDir++) {
+	int entries = 0;
+	ChartTableEntry entry;
+
+	for (int i = 0; i < cth.GetDirEntries(); ++i) {
 		wxString dir;
-		int dirlen;
+		int dirlen = 0;
 		ifs.Read(&dirlen, sizeof(int));
 		while (dirlen > 0) {
 			char dirbuf[1024];
@@ -229,16 +229,16 @@ bool ChartDatabase::Read(const wxString& filePath)
 			dir.Append(wxString(dirbuf, wxConvUTF8));
 		}
 		wxString msg;
-		msg.Printf(wxT("  Chart directory #%d: "), iDir);
+		msg.Printf(wxT("  Chart directory #%d: "), i);
 		msg.Append(dir);
 		wxLogMessage(msg);
 		m_chartDirs.push_back(dir);
 	}
 
-	// FIXME: be aware: the allocation and the Read/push_back combo do not caus calls to constructor
+	// FIXME: be aware: the allocation and the Read/push_back combo do not cause calls to constructor
 	entries = cth.GetTableEntries();
 	chartTable.Alloc(entries);
-	while (entries-- && entry.Read(this, ifs))
+	while (entries-- && entry.read(GetVersion(), ifs))
 		chartTable.push_back(entry);
 
 	entry.Clear();
@@ -276,8 +276,8 @@ bool ChartDatabase::Write(const wxString& filePath)
 		ofs.Write(s, dirlen);
 	}
 
-	for (unsigned int iTable = 0; iTable < chartTable.size(); iTable++)
-		chartTable[iTable].Write(this, ofs);
+	for (unsigned int i = 0; i < chartTable.size(); ++i)
+		chartTable[i].write(ofs);
 
 	// Explicitly set the version
 	m_dbversion = DB_VERSION_CURRENT;
@@ -1213,25 +1213,25 @@ ChartTableEntry* ChartDatabase::CreateChartTableEntry(const wxString& filePath,
 {
 	wxLogMessage(wxT("Loading chart data for ") + filePath);
 
-	ChartBase* pch = GetChart(filePath, chart_desc);
+	ChartBase* chart = GetChart(filePath, chart_desc);
 
-	if (pch == NULL) {
+	if (chart == NULL) {
 		wxLogMessage(wxT("   ...creation failed for ") + filePath);
 		return NULL;
 	}
 
-	InitReturn rc = pch->Init(filePath, HEADER_ONLY);
+	InitReturn rc = chart->Init(filePath, HEADER_ONLY);
 	if (rc != INIT_OK) {
-		delete pch;
+		delete chart;
 		wxLogMessage(wxT("   ...initialization failed for ") + filePath);
 		return NULL;
 	}
 
-	ChartTableEntry* ret_val = new ChartTableEntry(*pch);
+	// FIXME: refactor to a chart table entry factory
+	ChartTableEntry* ret_val = new ChartTableEntry(*chart);
 	ret_val->SetValid(true);
 
-	delete pch;
-
+	delete chart;
 	return ret_val;
 }
 

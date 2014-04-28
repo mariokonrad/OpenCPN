@@ -24,31 +24,30 @@
 #ifndef __CHART__CHARTTABLEENTRY__H__
 #define __CHART__CHARTTABLEENTRY__H__
 
-#include <vector>
-#include <wx/string.h>
-#include <string>
 #include <chart/ChartType.h>
 #include <chart/ChartFamily.h>
+#include <wx/string.h>
+#include <string>
+#include <vector>
 
 class wxInputStream;
 class wxOutputStream;
 
 namespace chart {
 
-class ChartDatabase;
 class ChartBase;
 
 struct ChartTableEntry
 {
 public:
 	ChartTableEntry();
-	ChartTableEntry(ChartBase& theChart);
+	ChartTableEntry(const ChartBase& theChart);
 	~ChartTableEntry();
 
 	bool IsEqualTo(const ChartTableEntry& cte) const;
 	bool IsEarlierThan(const ChartTableEntry& cte) const;
-	bool Read(const ChartDatabase* pDb, wxInputStream& is);
-	bool Write(const ChartDatabase* pDb, wxOutputStream& os);
+	bool read(int version, wxInputStream& is);
+	bool write(wxOutputStream& os);
 	void Disable();
 	void SetValid(bool valid);
 	time_t GetFileTime() const;

@@ -24,7 +24,6 @@
 #include "ChartTableEntry.h"
 
 #include <chart/ChartBase.h>
-#include <chart/ChartDatabase.h>
 #include <chart/PlyPoint.h>
 
 #include <wx/filename.h>
@@ -252,7 +251,7 @@ const wxString& ChartTableEntry::GetFileName(void) const
 	return m_filename;
 }
 
-ChartTableEntry::ChartTableEntry(ChartBase& theChart)
+ChartTableEntry::ChartTableEntry(const ChartBase& theChart)
 {
 	Clear();
 
@@ -410,8 +409,9 @@ int ChartTableEntry::GetChartType() const
 			default:
 				return CHART_TYPE_UNKNOWN;
 		}
-	} else
+	} else {
 		return ChartType;
+	}
 }
 
 int ChartTableEntry::GetChartFamily() const
@@ -656,14 +656,14 @@ void ChartTableEntry::read_14(wxInputStream& is)
 	read_aux_ply_table(is);
 }
 
-bool ChartTableEntry::Read(const ChartDatabase* pDb, wxInputStream& is)
+bool ChartTableEntry::read(int version, wxInputStream& is)
 {
 	// TODO: exception handling
 
 	Clear(); // FIXME: potential memory leak
 
 	// Allow reading of current db format, and maybe others
-	switch (pDb->GetVersion()) {
+	switch (version) {
 		case 18: read_18(is); break;
 		case 17: read_17(is); break;
 		case 16: read_16(is); break;
@@ -674,7 +674,7 @@ bool ChartTableEntry::Read(const ChartDatabase* pDb, wxInputStream& is)
 	return true;
 }
 
-bool ChartTableEntry::Write(const ChartDatabase* WXUNUSED(pDb), wxOutputStream& os)
+bool ChartTableEntry::write(wxOutputStream& os)
 {
 	os.Write(fullpath.c_str(), fullpath.size() + 1);
 

@@ -192,6 +192,7 @@ private:
 	wxCheckBox* pCBMagShow;
 	wxTextCtrl* pMagVar;
 	wxCheckBox* pMobile;
+	wxCheckBox* pResponsive;
 
 	int k_tides;
 

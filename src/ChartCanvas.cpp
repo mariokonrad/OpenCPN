@@ -176,7 +176,8 @@ extern CM93DSlide* pCM93DetailSlider;
 
 extern ChartCanvas* cc1;
 
-extern bool g_bmobile;
+extern bool g_btouch;
+extern bool g_bresponsive;
 
 extern chart::ChartStack* pCurrentStack;
 extern bool g_bquiting;
@@ -5199,7 +5200,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 	if (s_ProgDialog)
 		return;
 
-	if (!g_bmobile) {
+	if (!g_btouch) {
 		if ((m_bMeasure_Active && (m_nMeasureState >= 2)) || (parent_frame->nRoute_State > 1)
 			|| (parent_frame->nRoute_State) > 1) {
 			wxPoint p = ClientToScreen(wxPoint(x, y));
@@ -5218,7 +5219,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 	mouse_leftisdown = event.LeftIsDown();
 
 	// Retrigger the route leg / AIS target popup timer
-	if (!g_bmobile) {
+	if (!g_btouch) {
 		if (m_pRouteRolloverWin && m_pRouteRolloverWin->IsActive()) {
 			// faster response while the rollover is turned on
 			m_RolloverPopupTimer.Start(10, wxTIMER_ONE_SHOT);
@@ -5237,7 +5238,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 	// Calculate meaningful SelectRadius
 	float SelectRadius;
 	int sel_rad_pix = 8;
-	if (g_bmobile)
+	if (g_btouch)
 		sel_rad_pix = 50;
 
 	SelectRadius = sel_rad_pix / (m_true_scale_ppm * 1852 * 60); // Degrees, approximately
@@ -5328,7 +5329,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 		}
 	}
 
-	if (!g_bmobile) {
+	if (!g_btouch) {
 		mouse_route_rubber_band(event); // Route Creation Rubber Banding
 		mouse_measure_rubber_band(event); // Measure Tool Rubber Banding
 	}
@@ -5346,7 +5347,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 		last_drag.y = my;
 		leftIsDown = true;
 
-		if (!g_bmobile) {
+		if (!g_btouch) {
 			if (parent_frame->nRoute_State) {
 				// creating route?
 
@@ -5523,7 +5524,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 			}
 		}
 
-		if (g_bmobile) {
+		if (g_btouch) {
 			// Check to see if there is a route or AIS target under the cursor
 			// If so, start the rollover timer which creates the popup
 			bool b_start_rollover = false;
@@ -5780,7 +5781,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 		bool b_startedit_route = false;
 		bool b_startedit_mark = false;
 
-		if (g_bmobile) {
+		if (g_btouch) {
 			if (parent_frame->nRoute_State && !m_bChartDragging) { // creating route?
 
 				SetCursor(*pCursorPencil);
@@ -5984,7 +5985,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 						}
 					}
 			}
-		} // g_bmobile
+		}
 
 		if (m_bRouteEditing && !b_startedit_route) {
 			if (m_pRoutePointEditTarget) {
@@ -6046,7 +6047,7 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 		} else if (leftIsDown) { // left click for chart center
 			leftIsDown = false;
 
-			if (!g_bmobile) {
+			if (!g_btouch) {
 				if (!m_bChartDragging && !m_bMeasure_Active) {
 					switch (cursor_region) {
 						case MID_RIGHT:
@@ -6378,7 +6379,7 @@ void MenuPrepend(wxMenu* menu, int id, wxString label)
 {
 	wxMenuItem* item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
-	if (g_bmobile) {
+	if (g_bresponsive) {
 	wxFont* qFont = GetOCPNScaledFont(_T("Menu"), 12);
 		item->SetFont(*qFont);
 	}
@@ -6390,7 +6391,7 @@ void MenuAppend(wxMenu* menu, int id, wxString label)
 {
 	wxMenuItem* item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
-	if (g_bmobile) {
+	if (g_bresponsive) {
 	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
 		item->SetFont(*qFont);
 	}
@@ -7059,7 +7060,7 @@ void ChartCanvas::ShowMarkPropertiesDialog(RoutePoint* markPoint)
 	if (NULL == pMarkPropDialog) // There is one global instance of the MarkProp Dialog
 		pMarkPropDialog = new MarkInfoImpl(this);
 
-	if (g_bmobile) {
+	if (g_bresponsive) {
 
 		wxSize canvas_size = cc1->GetSize();
 		wxPoint canvas_pos = cc1->GetPosition();
@@ -7102,7 +7103,7 @@ void ChartCanvas::ShowRoutePropertiesDialog(wxString title, Route* selected)
 		pRoutePropDialog = new RouteProp(this);
 
 	// FIXME: check for code duplication with ChartCanvas::ShowMarkPropertiesDialog(RoutePoint* markPoint)
-	if (g_bmobile) {
+	if (g_bresponsive) {
 		wxSize canvas_size = cc1->GetSize();
 		wxPoint canvas_pos = cc1->GetPosition();
 		wxSize fitted_size = pRoutePropDialog->GetSize();
@@ -8385,7 +8386,7 @@ void ChartCanvas::RenderRouteLegs(ocpnDC& dc)
 			route->m_NextLegGreatCircle = true;
 		}
 
-		if (!g_bmobile) {
+		if (!g_bresponsive) {
 			route->DrawPointWhich(dc, route->m_lastMousePointIndex, &lastPoint);
 
 			if (route->m_NextLegGreatCircle) {

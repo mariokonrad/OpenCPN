@@ -111,7 +111,8 @@ extern bool g_bserial_access_checked;
 
 options* g_pOptions;
 
-extern bool g_bmobile;
+extern bool g_btouch;
+extern bool g_bresponsive;
 
 extern "C" bool CheckSerialAccess(void);
 
@@ -1388,8 +1389,12 @@ void options::CreatePanel_Display(size_t parent, int border_size, int WXUNUSED(g
 	itemStaticBoxSizerCDO->Add(pSkewComp, 1, wxALL, border_size);
 
 	// Mobile/Tochscreen checkbox
-	pMobile = new wxCheckBox(itemPanelUI, ID_MOBILEBOX, _("Enable Touchscreen/Tablet Interface"));
+	pMobile = new wxCheckBox(itemPanelUI, ID_MOBILEBOX, _("Enable Touchscreen/Tablet interface"));
 	itemStaticBoxSizerCDO->Add(pMobile, 1, wxALL, border_size);
+
+	pResponsive
+		= new wxCheckBox(itemPanelUI, ID_REPONSIVEBOX, _("Enable Responsive graphics interface"));
+	itemStaticBoxSizerCDO->Add(pResponsive, 1, wxALL, border_size);
 
 	// "Mag Heading" checkbox
 	pCBMagShow
@@ -1754,7 +1759,7 @@ void options::CreateControls()
 	int width, height;
 	::wxDisplaySize(&width, &height);
 
-	if (!g_bmobile) {
+	if (!g_bresponsive) {
 		if (height <= 800) {
 			border_size = 2;
 			check_spacing = 2;
@@ -1779,7 +1784,7 @@ void options::CreateControls()
 		= new wxListbook(itemDialog1, ID_NOTEBOOK, wxDefaultPosition, wxSize(-1, -1), wxLB_TOP);
 
 	// Reduce the Font size on ListBook(ListView) selectors to allow single line layout
-	if (g_bmobile) {
+	if (g_bresponsive) {
 		wxListView* lv = m_pListbook->GetListView();
 		wxFont* sFont = wxTheFontList->FindOrCreateFont(10, wxFONTFAMILY_DEFAULT,
 														wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
@@ -1959,7 +1964,8 @@ void options::SetInitialSettings()
 	pFullScreenQuilt->SetValue(!view.fullscreen_quilt);
 	pSDepthUnits->SetValue(view.show_depth_units);
 	pSkewComp->SetValue(view.skew_comp);
-	pMobile->SetValue(g_bmobile);
+	pMobile->SetValue(g_btouch);
+	pResponsive->SetValue(g_bresponsive);
 	pOpenGL->SetValue(view.opengl);
 	pSmoothPanZoom->SetValue(view.smooth_pan_zoom);
 	if (view.enable_zoom_to_cursor || pEnableZoomToCursor->GetValue()) {
@@ -2535,7 +2541,8 @@ void options::OnApplyClick(wxCommandEvent& event)
 
 	gui.set_view_show_depth_units(pSDepthUnits->GetValue());
 	gui.set_skew_comp(pSkewComp->GetValue());
-	g_bmobile = pMobile->GetValue();
+	g_btouch = pMobile->GetValue();
+	g_bresponsive = pResponsive->GetValue();
 	bool temp_bopengl = pOpenGL->GetValue();
 	gui.set_smooth_pan_zoom(pSmoothPanZoom->GetValue());
 

@@ -72,7 +72,8 @@ extern LayerList* pLayerList;
 extern int g_LayerIdx;
 extern ArrayOfConnPrm* g_pConnectionParams;
 extern chart::ChartGroupArray* g_pGroupArray;
-extern bool g_bmobile;
+extern bool g_btouch;
+extern bool g_bresponsive;
 
 #ifdef USE_S57
 extern chart::s52plib* ps52plib;
@@ -552,7 +553,8 @@ int Config::LoadConfig(int iteration) // FIXME: get rid of this 'iteration'
 	sys.set_config_restore_dbindex(read_long(_T("InitialdBIndex"), -1));
 
 	gui.set_ChartNotRenderScaleFactor(read_double(_T("ChartNotRenderScaleFactor"), 1.5));
-	Read(_T("MobileTouch"), &g_bmobile, 0);
+	Read(_T("MobileTouch"), &g_btouch, 0);
+	Read(_T("ResponsiveGraphics"), &g_bresponsive, 0);
 
 	load_cm93(display_width, display_height);
 
@@ -1599,7 +1601,8 @@ void Config::UpdateSettings()
 
 	Write(_T("GPSIdent"), sys.config().GPS_Ident);
 	Write(_T("UseGarminHostUpload"), sys.config().GarminHostUpload);
-	Write(_T("MobileTouch"), g_bmobile);
+	Write(_T("MobileTouch"), g_btouch);
+	Write(_T("ResponsiveGraphics"), g_bresponsive);
 
 	Write(_T("PlanSpeed"), wxString::Format(_T("%g"), track.PlanSpeed));
 

@@ -151,7 +151,8 @@ extern Select* pSelect;
 extern Select* pSelectTC;
 extern Select* pSelectAIS;
 extern MainFrame* gFrame;
-extern bool g_bmobile;
+extern bool g_btouch;
+extern bool g_bresponsive;
 extern double g_pix_per_mm;
 
 #ifdef __WXMSW__
@@ -1344,7 +1345,7 @@ bool App::OnInit()
 	pConfig = new Config(wxString(_T("")), wxString(_T("")), sys.data().config_file);
 	pConfig->LoadConfig(0);
 
-	if (g_bmobile) {
+	if (g_btouch) {
 		int SelectPixelRadius = 50;
 		pSelect->SetSelectPixelRadius(SelectPixelRadius);
 		pSelectTC->SetSelectPixelRadius(wxMax(25, SelectPixelRadius));
@@ -1562,7 +1563,7 @@ bool App::OnInit()
 	if (global::OCPN::get().gui().frame().maximized)
 		gFrame->Maximize(true);
 
-	if (g_bmobile && (g_pix_per_mm > 4.0))
+	if (g_bresponsive && (g_pix_per_mm > 4.0))
 		gFrame->Maximize(true);
 
 	stats = new StatWin(cc1);

@@ -234,7 +234,8 @@ wxSize options_lastWindowSize(0, 0);
 
 double g_pix_per_mm;
 
-bool g_bmobile;
+bool g_btouch;
+bool g_bresponsive;
 
 #ifdef __WXMSW__
 // System color control support
@@ -302,7 +303,7 @@ wxFont* GetOCPNScaledFont(wxString item, int default_size) // FIXME: refactoring
 {
 	wxFont* dFont = global::OCPN::get().font().GetFont(item, default_size);
 
-	if (g_bmobile) {
+	if (g_bresponsive) {
 		if (dFont->GetPointSize() < 20) {
 			wxFont* qFont = wxTheFontList->FindOrCreateFont(20, dFont->GetFamily(),
 															dFont->GetStyle(), dFont->GetWeight());
@@ -2095,7 +2096,7 @@ int MainFrame::DoOptionsDialog()
 	if (options_lastPage >= 0)
 		g_options->set_page_selection(options_lastPage);
 
-	if (!g_bmobile) {
+	if (!g_bresponsive) {
 		g_options->set_last_window_pos(options_lastWindowPos);
 		if (options_lastWindowPos != wxPoint(0, 0)) {
 			g_options->Move(options_lastWindowPos);

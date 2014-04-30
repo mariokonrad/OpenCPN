@@ -44,7 +44,7 @@
 extern ChartCanvas* cc1;
 extern wxMenu* g_FloatingToolbarConfigMenu;
 extern MainFrame* gFrame;
-extern bool g_bmobile;
+extern bool g_bresponsive;
 
 BEGIN_EVENT_TABLE(OCPNFloatingToolbarDialog, wxDialog)
 	EVT_MOUSE_EVENTS(OCPNFloatingToolbarDialog::MouseEvent)
@@ -88,7 +88,7 @@ OCPNFloatingToolbarDialog::OCPNFloatingToolbarDialog(wxWindow* parent, wxPoint p
 	gui::Style& style = global::OCPN::get().styleman().current();
 	m_marginsInvisible = style.isMarginsInvisible();
 
-	if (g_bmobile)
+	if (g_bresponsive)
 		m_marginsInvisible = true;
 
 	Hide();
@@ -138,7 +138,7 @@ void OCPNFloatingToolbarDialog::SetGeometry()
 
 	const gui::Style& style = global::OCPN::get().styleman().current();
 	wxSize style_tool_size = style.GetToolSize();
-	if (g_bmobile) {
+	if (g_bresponsive) {
 		style_tool_size.x *= 2;
 		style_tool_size.y *= 2;
 	}

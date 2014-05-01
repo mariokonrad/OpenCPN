@@ -2184,7 +2184,7 @@ S57Obj * cm93chart::CreateS57Obj(
 			//    associate the vector(edge) index table
 			pobj->m_n_lsindex = xgeom->n_vector_indices;
 			pobj->m_lsindex_array = xgeom->pvector_index; // object now owns the array
-			pobj->m_n_edge_max_points = xgeom->n_max_edge_points;
+			pobj->m_n_edge_max_points = 0;
 
 			// Find the proper WGS offset for this object
 			if (m_CIB->b_have_offsets || m_CIB->b_have_user_offsets) {
@@ -2357,7 +2357,7 @@ S57Obj * cm93chart::CreateS57Obj(
 				*pdl++ = lat;
 			}
 
-			//  Set the object base point
+			// Set the object base point
 			p.x = (int)pobj->x;
 			p.y = (int)pobj->y;
 			Transform(&p, trans_WGS84_offset_x, trans_WGS84_offset_y, &lat, &lon);
@@ -2376,14 +2376,14 @@ S57Obj * cm93chart::CreateS57Obj(
 			pobj->geoPt = (pt*)xgeom->vertex_array;
 			xgeom->vertex_array = NULL; // object now owns the array
 
-			//  Declare x/y of the object to be average of all cm93points
+			// Declare x/y of the object to be average of all cm93points
 			pobj->x = (xgeom->xmin + xgeom->xmax) / 2.0;
 			pobj->y = (xgeom->ymin + xgeom->ymax) / 2.0;
 
-			//    associate the vector(edge) index table
+			// associate the vector(edge) index table
 			pobj->m_n_lsindex = xgeom->n_vector_indices;
 			pobj->m_lsindex_array = xgeom->pvector_index; // object now owns the array
-			pobj->m_n_edge_max_points = xgeom->n_max_edge_points;
+			pobj->m_n_edge_max_points = 0;
 
 			//    Find the proper WGS offset for this object
 			if (m_CIB->b_have_offsets || m_CIB->b_have_user_offsets) {
@@ -2400,7 +2400,7 @@ S57Obj * cm93chart::CreateS57Obj(
 				}
 			}
 
-			//  Set the s57obj bounding box as lat/lon
+			// Set the s57obj bounding box as lat/lon
 			double lat, lon;
 			cm93_point p;
 

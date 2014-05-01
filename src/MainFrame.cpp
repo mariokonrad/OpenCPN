@@ -117,6 +117,7 @@
 #include <ais/AIS_Decoder.h>
 
 #include <chart/ChartDB.h>
+#include <chart/ChartTableEntry.h>
 #include <chart/ChartStack.h>
 #include <chart/CacheEntry.h>
 #include <chart/ChartBaseBSB.h>
@@ -1559,12 +1560,12 @@ void MainFrame::OnToolLeftClick(wxCommandEvent& event)
 
 	switch (event.GetId()) {
 		case ID_STKUP:
-			DoStackUp();
+			DoStackDelta(1);
 			DoChartUpdate();
 			break;
 
 		case ID_STKDN:
-			DoStackDown();
+			DoStackDelta(-1);
 			DoChartUpdate();
 			break;
 
@@ -2683,49 +2684,126 @@ void MainFrame::ClearRouteTool()
 
 void MainFrame::DoStackDown(void)
 {
-	// FIXME: partial code duplication of DoStackUp
-
-	int current_stack_index = pCurrentStack->CurrentStackEntry;
-
-	if (0 == current_stack_index)
-		return;
-
-	if (!chart_canvas->GetQuiltMode()) {
-		SelectChartFromStack(current_stack_index - 1);
-	} else {
-		int new_dbIndex = pCurrentStack->GetDBIndex(current_stack_index - 1);
-
-		if (!chart_canvas->IsChartQuiltableRef(new_dbIndex)) {
-			ToggleQuiltMode();
-			SelectChartFromStack(current_stack_index - 1);
-		} else {
-			SelectQuiltRefChart(current_stack_index - 1);
-		}
-	}
-
-	chart_canvas->SetQuiltChartHiLiteIndex(-1);
-	chart_canvas->ReloadVP();
+	DoStackDelta(-1);
+//	// FIXME: partial code duplication of DoStackUp
+//
+//	int current_stack_index = pCurrentStack->CurrentStackEntry;
+//
+//	if (0 == current_stack_index)
+//		return;
+//
+//	if (!chart_canvas->GetQuiltMode()) {
+//		SelectChartFromStack(current_stack_index - 1);
+//	} else {
+//		int new_dbIndex = pCurrentStack->GetDBIndex(current_stack_index - 1);
+//
+//		if (!chart_canvas->IsChartQuiltableRef(new_dbIndex)) {
+//			ToggleQuiltMode();
+//			SelectChartFromStack(current_stack_index - 1);
+//		} else {
+//			SelectQuiltRefChart(current_stack_index - 1);
+//		}
+//	}
+//
+//	chart_canvas->SetQuiltChartHiLiteIndex(-1);
+//	chart_canvas->ReloadVP();
 }
 
 void MainFrame::DoStackUp(void)
 {
-	// FIXME: partial code duplication of DoStackDown
+	DoStackDelta(1);
+//	// FIXME: partial code duplication of DoStackDown
+//
+//	int current_stack_index = pCurrentStack->CurrentStackEntry;
+//
+//	if (current_stack_index >= pCurrentStack->nEntry - 1)
+//		return;
+//
+//	if (!chart_canvas->GetQuiltMode()) {
+//		SelectChartFromStack(current_stack_index + 1);
+//	} else {
+//		int new_dbIndex = pCurrentStack->GetDBIndex(current_stack_index + 1);
+//
+//		if (!chart_canvas->IsChartQuiltableRef(new_dbIndex)) {
+//			ToggleQuiltMode();
+//			SelectChartFromStack(current_stack_index + 1);
+//		} else {
+//			SelectQuiltRefChart(current_stack_index + 1);
+//		}
+//	}
+//
+//	chart_canvas->SetQuiltChartHiLiteIndex(-1);
+//	chart_canvas->ReloadVP();
+}
 
-	int current_stack_index = pCurrentStack->CurrentStackEntry;
-
-	if (current_stack_index >= pCurrentStack->nEntry - 1)
-		return;
-
+void MainFrame::DoStackDelta(int direction)
+{
 	if (!chart_canvas->GetQuiltMode()) {
-		SelectChartFromStack(current_stack_index + 1);
+		int current_stack_index = pCurrentStack->CurrentStackEntry;
+		if ((current_stack_index + direction) >= pCurrentStack->nEntry)
+			return;
+		if ((current_stack_index + direction) < 0)
+			return;
+
+		if (m_bpersistent_quilt && global::OCPN::get().gui().view().quilt_enable) {
+			int new_dbIndex = pCurrentStack->GetDBIndex(current_stack_index + direction);
+
+			if (chart_canvas->IsChartQuiltableRef(new_dbIndex)) {
+				ToggleQuiltMode();
+				SelectQuiltRefdbChart(new_dbIndex);
+				m_bpersistent_quilt = false;
+			}
+		} else {
+			SelectChartFromStack(current_stack_index + direction);
+		}
 	} else {
-		int new_dbIndex = pCurrentStack->GetDBIndex(current_stack_index + 1);
+		std::vector<int> piano_chart_index_array = chart_canvas->GetQuiltExtendedStackdbIndexArray();
+		int refdb = chart_canvas->GetQuiltRefChartdbIndex();
+
+		// Find the ref chart in the stack
+		int current_index = -1;
+		for (unsigned int i = 0; i < piano_chart_index_array.size(); ++i) {
+			if (refdb == piano_chart_index_array[i]) {
+				current_index = i;
+				break;
+			}
+		}
+		if (current_index == -1)
+			return;
+
+		const chart::ChartTableEntry& ctet = ChartData->GetChartTableEntry(refdb);
+		int target_family = ctet.GetChartFamily();
+
+		int new_index = -1;
+		int check_index = current_index + direction;
+		bool found = false;
+		int check_dbIndex = -1;
+		int new_dbIndex = -1;
+
+		// When quilted. switch within the same chart family
+		while (!found && (unsigned int)check_index < piano_chart_index_array.size()
+			   && (check_index >= 0)) {
+			check_dbIndex = piano_chart_index_array[check_index];
+			const chart::ChartTableEntry& cte = ChartData->GetChartTableEntry(check_dbIndex);
+			if (target_family == cte.GetChartFamily()) {
+				found = true;
+				new_index = check_index;
+				new_dbIndex = check_dbIndex;
+				break;
+			}
+
+			check_index += direction;
+		}
+
+		if (!found)
+			return;
 
 		if (!chart_canvas->IsChartQuiltableRef(new_dbIndex)) {
 			ToggleQuiltMode();
-			SelectChartFromStack(current_stack_index + 1);
+			SelectdbChart(new_dbIndex);
+			m_bpersistent_quilt = true;
 		} else {
-			SelectQuiltRefChart(current_stack_index + 1);
+			SelectQuiltRefChart(new_index);
 		}
 	}
 

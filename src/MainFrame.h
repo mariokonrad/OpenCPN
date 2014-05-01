@@ -104,6 +104,7 @@ public:
 	void ClearRouteTool();
 	void DoStackUp(void);
 	void DoStackDown(void);
+	void DoStackDelta(int direction);
 
 	void MouseEvent(wxMouseEvent& event);
 	void SelectChartFromStack(int index, bool bDir = false,

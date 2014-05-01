@@ -2685,55 +2685,11 @@ void MainFrame::ClearRouteTool()
 void MainFrame::DoStackDown(void)
 {
 	DoStackDelta(-1);
-//	// FIXME: partial code duplication of DoStackUp
-//
-//	int current_stack_index = pCurrentStack->CurrentStackEntry;
-//
-//	if (0 == current_stack_index)
-//		return;
-//
-//	if (!chart_canvas->GetQuiltMode()) {
-//		SelectChartFromStack(current_stack_index - 1);
-//	} else {
-//		int new_dbIndex = pCurrentStack->GetDBIndex(current_stack_index - 1);
-//
-//		if (!chart_canvas->IsChartQuiltableRef(new_dbIndex)) {
-//			ToggleQuiltMode();
-//			SelectChartFromStack(current_stack_index - 1);
-//		} else {
-//			SelectQuiltRefChart(current_stack_index - 1);
-//		}
-//	}
-//
-//	chart_canvas->SetQuiltChartHiLiteIndex(-1);
-//	chart_canvas->ReloadVP();
 }
 
 void MainFrame::DoStackUp(void)
 {
 	DoStackDelta(1);
-//	// FIXME: partial code duplication of DoStackDown
-//
-//	int current_stack_index = pCurrentStack->CurrentStackEntry;
-//
-//	if (current_stack_index >= pCurrentStack->nEntry - 1)
-//		return;
-//
-//	if (!chart_canvas->GetQuiltMode()) {
-//		SelectChartFromStack(current_stack_index + 1);
-//	} else {
-//		int new_dbIndex = pCurrentStack->GetDBIndex(current_stack_index + 1);
-//
-//		if (!chart_canvas->IsChartQuiltableRef(new_dbIndex)) {
-//			ToggleQuiltMode();
-//			SelectChartFromStack(current_stack_index + 1);
-//		} else {
-//			SelectQuiltRefChart(current_stack_index + 1);
-//		}
-//	}
-//
-//	chart_canvas->SetQuiltChartHiLiteIndex(-1);
-//	chart_canvas->ReloadVP();
 }
 
 void MainFrame::DoStackDelta(int direction)

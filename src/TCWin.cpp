@@ -91,7 +91,7 @@ TCWin::TCWin(ChartCanvas* parent, int x, int y, tide::IDX_entry* pvIDX)
 	wxDialog::Create(parent, wxID_ANY, wxString(_T("test")), wxPoint(x, y), wxSize(550, 480),
 					 wstyle);
 
-	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
+	wxFont* qFont = GetOCPNScaledFont(_("Dialog"), 10);
 	SetFont(*qFont);
 
 	gpIDXn++;

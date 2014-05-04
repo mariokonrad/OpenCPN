@@ -950,6 +950,9 @@ if (USE_S57)
 	add_definitions(-DUSE_S57)
 
 	set(SRC_S57ENC
+		src/TexFont.h
+		src/TexFont.cpp
+
 		src/chart/geometry/ExtendedGeometry.cpp
 		src/chart/geometry/ExtendedGeometry.h
 		src/chart/geometry/TriPrim.cpp

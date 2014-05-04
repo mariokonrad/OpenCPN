@@ -84,7 +84,7 @@ public:
 
 protected:
 	wxNotebook* m_notebook1;
-	wxPanel* m_panelBasic;
+	wxScrolledWindow* m_panelBasic;
 	wxStaticText* m_stName;
 	wxTextCtrl* m_tName;
 	wxStaticText* m_stFrom;
@@ -109,7 +109,7 @@ protected:
 	wxRadioButton* m_rbShowTimePC;
 	wxRadioButton* m_rbShowTimeLocal;
 	OCPNTrackListCtrl* m_lcPoints;
-	wxPanel* m_panelAdvanced;
+	wxScrolledWindow* m_panelAdvanced;
 	wxStaticText* m_stDescription;
 	wxTextCtrl* m_tDescription;
 	wxScrolledWindow* m_scrolledWindowLinks;

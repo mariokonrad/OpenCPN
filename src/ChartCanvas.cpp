@@ -6010,13 +6010,11 @@ void ChartCanvas::MouseEvent(wxMouseEvent & event) // FIXME: refactor this clust
 							Route* pr = m_EditRouteArray.at(ir);
 							if (global::OCPN::get().routeman().IsRouteValid(pr)) {
 								if (!pr->IsTrack() && pRoutePropDialog->getRoute() == pr) {
-									pRoutePropDialog->SetRouteAndUpdate(pr);
-									pRoutePropDialog->UpdateProperties();
+									pRoutePropDialog->SetRouteAndUpdate(pr, true);
 								} else if ((NULL != pTrackPropDialog)
 										   && (pTrackPropDialog->IsShown())
 										   && pTrackPropDialog->m_pRoute == pr) {
 									pTrackPropDialog->SetTrackAndUpdate(pr);
-									pTrackPropDialog->UpdateProperties();
 								}
 							}
 						}
@@ -6380,7 +6378,7 @@ void MenuPrepend(wxMenu* menu, int id, wxString label)
 	wxMenuItem* item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
 	if (g_bresponsive) {
-	wxFont* qFont = GetOCPNScaledFont(_T("Menu"), 12);
+	wxFont* qFont = GetOCPNScaledFont(_("Menu"), 10);
 		item->SetFont(*qFont);
 	}
 #endif
@@ -6392,7 +6390,7 @@ void MenuAppend(wxMenu* menu, int id, wxString label)
 	wxMenuItem* item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
 	if (g_bresponsive) {
-	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
+	wxFont* qFont = GetOCPNScaledFont(_("Dialog"), 10);
 		item->SetFont(*qFont);
 	}
 #endif
@@ -7050,8 +7048,7 @@ void ChartCanvas::RemovePointFromRoute(RoutePoint* point, Route* route)
 	pSelect->AddSelectableRoutePoint(point->get_position(), point);
 
 	if (pRoutePropDialog && (pRoutePropDialog->IsShown())) {
-		pRoutePropDialog->SetRouteAndUpdate(route);
-		pRoutePropDialog->UpdateProperties();
+		pRoutePropDialog->SetRouteAndUpdate(route, true);
 	}
 }
 
@@ -7766,8 +7763,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 			pConfig->UpdateRoute(m_pSelectedRoute);
 
 			if (pRoutePropDialog && (pRoutePropDialog->IsShown())) {
-				pRoutePropDialog->SetRouteAndUpdate(m_pSelectedRoute);
-				pRoutePropDialog->UpdateProperties();
+				pRoutePropDialog->SetRouteAndUpdate(m_pSelectedRoute, true);
 			}
 
 			break;
@@ -7857,8 +7853,7 @@ void ChartCanvas::PopupMenuHandler(wxCommandEvent& event)
 
 				if (pRoutePropDialog && (pRoutePropDialog->IsShown())) {
 					if (m_pSelectedRoute) {
-						pRoutePropDialog->SetRouteAndUpdate(m_pSelectedRoute);
-						pRoutePropDialog->UpdateProperties();
+						pRoutePropDialog->SetRouteAndUpdate(m_pSelectedRoute, true);
 					} else
 						pRoutePropDialog->Hide();
 				}
@@ -8028,8 +8023,7 @@ void ChartCanvas::FinishRoute(void)
 			m_pMouseRoute->RebuildGUIDList(); // ensure the GUID list is intact and good
 
 		if (pRoutePropDialog && (pRoutePropDialog->IsShown())) {
-			pRoutePropDialog->SetRouteAndUpdate(m_pMouseRoute);
-			pRoutePropDialog->UpdateProperties();
+			pRoutePropDialog->SetRouteAndUpdate(m_pMouseRoute, true);
 		}
 
 		if (pRouteManagerDialog && pRouteManagerDialog->IsShown())

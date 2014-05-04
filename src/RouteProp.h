@@ -121,7 +121,7 @@ public:
 
 	static bool ShowToolTips();
 
-	void SetRouteAndUpdate(Route* pR);
+	void SetRouteAndUpdate(Route* pR, bool only_points = false);
 
 	bool UpdateProperties(void);
 	wxString MakeTideInfo(int jx, time_t tm, int tz_selection, long LMT_Offset);

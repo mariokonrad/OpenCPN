@@ -145,7 +145,7 @@ RouteProp::RouteProp(wxWindow* parent, wxWindowID id, const wxString& caption, c
 	wstyle |= wxSTAY_ON_TOP;
 #endif
 
-	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
+	wxFont* qFont = GetOCPNScaledFont(_("Dialog"), 10);
 	SetFont(*qFont);
 
 	Create(parent, id, caption, pos, size, wstyle);
@@ -718,7 +718,6 @@ void RouteProp::OnRoutePropMenuSelected(wxCommandEvent& event)
 					break;
 				RoutePoint* wp = reinterpret_cast<RoutePoint*>(m_wpList->GetItemData(item));
 				cc1->RemovePointFromRoute(wp, m_pRoute);
-				SetRouteAndUpdate(m_pRoute);
 			}
 			break;
 		}
@@ -752,75 +751,78 @@ void RouteProp::SetDialogTitle(const wxString& title)
 	SetTitle(title);
 }
 
-void RouteProp::SetRouteAndUpdate(Route* pR)
+void RouteProp::SetRouteAndUpdate(Route* pR, bool only_points)
 {
 	if (NULL == pR)
 		return;
 
 	// Fetch any config file values
+	if (!only_points) {
+		m_tz_selection = 1;
 
-	m_tz_selection = 1;
-
-	if (pR == m_pRoute) {
-		Start_LMT_Offset = 0;
-		if (!pR->m_PlannedDeparture.IsValid())
-			m_tz_selection = 0;
-	} else {
-		g_StartTime = wxInvalidDateTime;
-		g_StartTimeTZ = 1;
-		if (pR->m_PlannedDeparture.IsValid())
-			m_starttime = pR->m_PlannedDeparture;
-		else
-			m_starttime = g_StartTime;
-		if (pR->m_TimeDisplayFormat == RTE_TIME_DISP_UTC)
-			m_tz_selection = 0;
-		else if (pR->m_TimeDisplayFormat == RTE_TIME_DISP_LOCAL)
-			m_tz_selection = 2;
-		else
-			m_tz_selection = g_StartTimeTZ;
-		Start_LMT_Offset = 0;
-		m_pEnroutePoint = NULL;
-		m_bStartNow = false;
-		m_planspeed = pR->m_PlannedSpeed;
-	}
-
-	m_pRoute = pR;
-
-	pDispTz->SetSelection(m_tz_selection);
-
-	if (m_pRoute) {
-		// Calculate  LMT offset from the first point in the route
-		if (m_pEnroutePoint && m_bStartNow)
-			Start_LMT_Offset = static_cast<long>((m_pEnroutePoint->longitude()) * 3600.0 / 15.0);
-		else
-			Start_LMT_Offset = static_cast<long>((m_pRoute->routepoints().front()->longitude()) * 3600.0 / 15.0);
-	}
-
-	// Reorganize dialog for route or track display
-	if (m_pRoute) {
-		if (m_pRoute->m_bIsTrack) {
-			m_PlanSpeedLabel->SetLabel(_("Avg. speed"));
-			m_PlanSpeedCtl->SetEditable(false);
-			m_ExtendButton->SetLabel(_("Extend Track"));
-			m_SplitButton->SetLabel(_("Split Track"));
+		if (pR == m_pRoute) {
+			Start_LMT_Offset = 0;
+			if (pR->m_PlannedDeparture.IsValid())
+				m_starttime = pR->m_PlannedDeparture;
+			else
+				m_starttime = g_StartTime;
 		} else {
-			m_PlanSpeedLabel->SetLabel(_("Plan speed"));
-			m_PlanSpeedCtl->SetEditable(true);
-			m_ExtendButton->SetLabel(_("Extend Route"));
-			m_SplitButton->SetLabel(_("Split Route"));
+			g_StartTime = wxInvalidDateTime;
+			g_StartTimeTZ = 1;
+			if (pR->m_PlannedDeparture.IsValid())
+				m_starttime = pR->m_PlannedDeparture;
+			else
+				m_starttime = g_StartTime;
+			if (pR->m_TimeDisplayFormat == RTE_TIME_DISP_UTC)
+				m_tz_selection = 0;
+			else if (pR->m_TimeDisplayFormat == RTE_TIME_DISP_LOCAL)
+				m_tz_selection = 2;
+			else
+				m_tz_selection = g_StartTimeTZ;
+			Start_LMT_Offset = 0;
+			m_pEnroutePoint = NULL;
+			m_bStartNow = false;
+			m_planspeed = pR->m_PlannedSpeed;
 		}
 
-		// Fill in some top pane properties from the Route member elements
-		m_RouteNameCtl->SetValue(m_pRoute->get_name());
-		m_RouteStartCtl->SetValue(m_pRoute->get_startString());
-		m_RouteDestCtl->SetValue(m_pRoute->get_endString());
-		m_RouteNameCtl->SetFocus();
-	} else {
-		m_RouteNameCtl->Clear();
-		m_RouteStartCtl->Clear();
-		m_RouteDestCtl->Clear();
-		m_PlanSpeedCtl->Clear();
-		m_StartTimeCtl->Clear();
+		m_pRoute = pR;
+
+		pDispTz->SetSelection(m_tz_selection);
+
+		if (m_pRoute) {
+			// Calculate  LMT offset from the first point in the route
+			if (m_pEnroutePoint && m_bStartNow)
+				Start_LMT_Offset = static_cast<long>((m_pEnroutePoint->longitude()) * 3600.0 / 15.0);
+			else
+				Start_LMT_Offset = static_cast<long>((m_pRoute->routepoints().front()->longitude()) * 3600.0 / 15.0);
+		}
+
+		// Reorganize dialog for route or track display
+		if (m_pRoute) {
+			if (m_pRoute->m_bIsTrack) {
+				m_PlanSpeedLabel->SetLabel(_("Avg. speed"));
+				m_PlanSpeedCtl->SetEditable(false);
+				m_ExtendButton->SetLabel(_("Extend Track"));
+				m_SplitButton->SetLabel(_("Split Track"));
+			} else {
+				m_PlanSpeedLabel->SetLabel(_("Plan speed"));
+				m_PlanSpeedCtl->SetEditable(true);
+				m_ExtendButton->SetLabel(_("Extend Route"));
+				m_SplitButton->SetLabel(_("Split Route"));
+			}
+
+			// Fill in some top pane properties from the Route member elements
+			m_RouteNameCtl->SetValue(m_pRoute->get_name());
+			m_RouteStartCtl->SetValue(m_pRoute->get_startString());
+			m_RouteDestCtl->SetValue(m_pRoute->get_endString());
+			m_RouteNameCtl->SetFocus();
+		} else {
+			m_RouteNameCtl->Clear();
+			m_RouteStartCtl->Clear();
+			m_RouteDestCtl->Clear();
+			m_PlanSpeedCtl->Clear();
+			m_StartTimeCtl->Clear();
+		}
 	}
 
 	m_wpList->DeleteAllItems();

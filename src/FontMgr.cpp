@@ -81,11 +81,14 @@ wxString FontMgr::GetFontConfigKey(const wxString& description) const
 
 wxFont* FontMgr::find_font(const wxString& text_element)
 {
-	// Look thru the font list for a match
+	const wxString locale = global::OCPN::get().sys().data().locale;
 
+	// Look thru the font list for a match
 	for (FontList::const_iterator i = fontlist.begin(); i != fontlist.end(); ++i) {
-		if ((*i)->m_dialogstring == text_element)
+		if ((*i)->m_dialogstring == text_element) {
+			if ((*i)->m_configstring.BeforeFirst('-') == locale)
 			return (*i)->m_font;
+		}
 	}
 	return NULL;
 }

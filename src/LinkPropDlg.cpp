@@ -34,7 +34,7 @@ LinkPropDialog::LinkPropDialog(
 		long style)
 	: wxDialog(parent, id, title, pos, size, style)
 {
-	wxFont* qFont = GetOCPNScaledFont(_T("Dialog"), 12);
+	wxFont* qFont = GetOCPNScaledFont(_("Dialog"), 10);
 	SetFont(*qFont);
 
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);

@@ -52,74 +52,9 @@ WX_DECLARE_HASH_MAP(int, wxString, wxIntegerHash, wxIntegerEqual, MyNatsurHash);
 WX_DEFINE_SORTED_ARRAY(LUPrec*, wxArrayOfLUPrec);
 WX_DECLARE_STRING_HASH_MAP(int, CARC_Hash);
 
-// FIXME: copied code, separate
-
-#ifdef ocpnUSE_GL
-/* Copyright (c) Mark J. Kilgard, 1997. */
-
-/* This program is freely distributable without licensing fees  and is
- provided without guarantee or warrantee expressed or  implied. This
- program is -not- in the public domain. */
-
-/*  Heavily edited for OpenCPN by David S. Register    */
-
-#ifndef __TEXFONT_H__
-#define __TEXFONT_H__
-
-#define TXF_FORMAT_BYTE       0
-#define TXF_FORMAT_BITMAP     1
-
-struct TexGlyphInfo
-{
-	unsigned short c; // Potentially support 16-bit glyphs.
-	unsigned char width;
-	unsigned char height;
-	signed char xoffset;
-	signed char yoffset;
-	signed char advance;
-	char dummy; // Space holder for alignment reasons.
-	short x;
-	short y;
-};
-
-struct TexGlyphVertexInfo
-{
-	GLfloat t0[2];
-	GLshort v0[2];
-	GLfloat t1[2];
-	GLshort v1[2];
-	GLfloat t2[2];
-	GLshort v2[2];
-	GLfloat t3[2];
-	GLshort v3[2];
-	GLfloat advance;
-};
-
-struct TexFont
-{
-	GLuint texobj;
-	int tex_width;
-	int tex_height;
-	int max_ascent;
-	int max_descent;
-	int num_glyphs;
-	int min_glyph;
-	int range;
-	unsigned char* teximage;
-	TexGlyphInfo* tgi;
-	TexGlyphVertexInfo* tgvi;
-	TexGlyphVertexInfo** lut;
-};
-
-#endif /* __TEXFONT_H__ */
-
-#else
-typedef struct {} TexFont;
-
-#endif
 
 class RenderFromHPGL;
-
+class TexFont;
 
 //-----------------------------------------------------------------------------
 //      LUP Array container, and friends

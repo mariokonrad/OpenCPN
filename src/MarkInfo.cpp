@@ -143,6 +143,8 @@ MarkInfoDef::MarkInfoDef(
 
 	bSizerTextProperties->Add(bSizer8, 0, wxEXPAND, 5);
 
+	bSizerTextProperties->AddSpacer(15);
+
 	wxBoxSizer* bSizerLatLon;
 	bSizerLatLon = new wxBoxSizer(wxHORIZONTAL);
 
@@ -704,7 +706,6 @@ void MarkInfoImpl::OnAddLink(wxCommandEvent& event)
 
 		add_hyperlink(desc, m_pLinkProp->m_textCtrlLinkUrl->GetValue());
 		bSizerLinks->Fit(m_scrolledWindowLinks);
-		this->Fit();
 
 		m_pRoutePoint->add_link(Hyperlink(m_pLinkProp->m_textCtrlLinkDescription->GetValue(),
 										  m_pLinkProp->m_textCtrlLinkUrl->GetValue(),

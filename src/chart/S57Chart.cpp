@@ -3846,17 +3846,18 @@ int s57chart::BuildSENCFile(const wxString& FullPath000, const wxString& SENCFil
 			iObj++;
 
 			// Update the progress dialog
-			sobj = wxString(objectDef->GetDefnRef()->GetName(), wxConvUTF8);
-			wxString idx = wxString::Format(_T("  %d/%d       "), iObj, m_nGeoRecords);
-			sobj += idx;
-
-			nProg = iObj;
-			if (nProg > m_nGeoRecords - 1)
+			if (iObj > m_nGeoRecords - 1)
 				nProg = m_nGeoRecords - 1;
-			// We update just every 10th object to improve performance as updating the dialog is
-			// very expensive...
-			if (s_ProgDialog && nProg % 10 == 0)
+			else
+				nProg = iObj;
+			if (s_ProgDialog && nProg % 10 == 0) {
+				sobj = wxString(objectDef->GetDefnRef()->GetName(), wxConvUTF8);
+				sobj.Append(wxString::Format(_T("  %d/%d       "), iObj, m_nGeoRecords));
+
+				// We update just every 10th object to improve performance as updating the dialog is
+				// very expensive...
 				bcont = s_ProgDialog->Update(nProg, sobj);
+			}
 
 			geoType = wkbUnknown;
 			// This test should not be necessary for real (i.e not C_AGGR) features

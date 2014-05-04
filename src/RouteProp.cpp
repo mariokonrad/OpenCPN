@@ -730,7 +730,6 @@ void RouteProp::OnRoutePropMenuSelected(wxCommandEvent& event)
 			if (!wp)
 				break;
 			RouteManagerDialog::WptShowPropertiesDialog(wp, this);
-			UpdateProperties();
 			break;
 		}
 	}

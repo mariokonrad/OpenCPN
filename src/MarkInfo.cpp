@@ -50,6 +50,7 @@ extern Select* pSelect;
 extern Config* pConfig;
 extern ChartCanvas* cc1;
 extern RouteManagerDialog* pRouteManagerDialog;
+extern RouteProp* pRoutePropDialog;
 
 MarkInfoDef::MarkInfoDef(
 		wxWindow* parent,
@@ -816,6 +817,9 @@ void MarkInfoImpl::OnMarkInfoOKClick(wxCommandEvent& event)
 
 	if (pRouteManagerDialog && pRouteManagerDialog->IsShown())
 		pRouteManagerDialog->UpdateWptListCtrl();
+
+	if (pRoutePropDialog && pRoutePropDialog->IsShown())
+		pRoutePropDialog->UpdateProperties();
 
 	SetClientSize(m_defaultClientSize);
 	event.Skip();

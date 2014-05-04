@@ -453,17 +453,21 @@ void DataStream::OnSocketEvent(wxSocketEvent& event)
 			bool done = false;
 
 			while (!done) {
-				size_t nmea_end = m_sock_buffer.find(
-					'*'); // detect the potential end of a NMEA string by finding the checkum marker
-				if (nmea_end != wxString::npos && nmea_end < m_sock_buffer.size() - 2) {
-					nmea_end += 3; // move to the char after the 2 checksum digits
+				// detect the potential end of a NMEA string by finding the checkum marker or EOL
+				int nmea_tail = 2;
+				size_t nmea_end = m_sock_buffer.find_first_of(_T("*\r\n"));
+				if (nmea_end != wxString::npos && m_sock_buffer[nmea_end] != '*')
+					nmea_tail = 0;
+
+				if (nmea_end != wxString::npos && nmea_end < m_sock_buffer.size() - nmea_tail) {
+					// move to the char after the 2 checksum digits, if present
+					nmea_end += nmea_tail + 1;
 					wxString nmea_line = m_sock_buffer.substr(0, nmea_end);
 					m_sock_buffer = m_sock_buffer.substr(nmea_end);
 
-					size_t nmea_start
-						= nmea_line.find_last_of(_T("$!")); // detect the potential start of a NMEA
-															// string, skipping preceding chars that
-															// may look like the start of a string.
+					// detect the potential start of a NMEA string, skipping preceding chars that
+					// may look like the start of a string.
+					size_t nmea_start = nmea_line.find_last_of(_T("$!"));
 					if (nmea_start != wxString::npos) {
 						nmea_line = nmea_line.substr(nmea_start);
 						nmea_line += _T("\r\n"); // Add cr/lf, possibly superfluous

@@ -49,13 +49,6 @@ enum ChartInitFlag
 	THUMB_ONLY
 };
 
-enum RenderTypeEnum
-{
-	DC_RENDER_ONLY = 0,
-	DC_RENDER_RETURN_DIB,
-	DC_RENDER_RETURN_IMAGE
-};
-
 enum InitReturn
 {
 	INIT_OK = 0,
@@ -144,9 +137,6 @@ public:
 	virtual float* GetNoCOVRTableHead(int iTable) const;
 
 protected:
-	int m_Chart_Scale;
-	ChartTypeEnum m_ChartType;
-	chart::ChartFamilyEnum m_ChartFamily;
 	wxString m_FullPath;
 	wxString m_Name;
 	wxString m_Description;
@@ -163,6 +153,9 @@ protected:
 	wxBitmap* pcached_bitmap;
 	ThumbData* pThumbData;
 	global::ColorScheme m_global_color_scheme;
+	int m_Chart_Scale;
+	ChartTypeEnum m_ChartType;
+	chart::ChartFamilyEnum m_ChartFamily;
 	bool bReadyToRender;
 	double Chart_Error_Factor;
 	double m_Chart_Skew;

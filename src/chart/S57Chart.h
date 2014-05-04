@@ -206,6 +206,12 @@ protected:
 	geo::Position reference_point; // Common reference point, derived from FullExtent
 
 private:
+	enum RenderTypeEnum {
+		DC_RENDER_ONLY = 0,
+		DC_RENDER_RETURN_DIB,
+		DC_RENDER_RETURN_IMAGE
+	};
+
 	void SetSafetyContour(void);
 	bool DoRenderViewOnDC(wxMemoryDC& dc, const ViewPort& VPoint, RenderTypeEnum option,
 						  bool force_new_view);

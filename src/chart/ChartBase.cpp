@@ -27,33 +27,26 @@
 namespace chart {
 
 ChartBase::ChartBase()
+	: m_projection(PROJECTION_MERCATOR)
+	, m_depth_unit_id(DEPTH_UNIT_UNKNOWN)
+	, m_EdDate(1, wxDateTime::Jan, 2000)
+	, pcached_bitmap(NULL)
+	, pThumbData(NULL)
+	, m_global_color_scheme(global::GLOBAL_COLOR_SCHEME_RGB)
+	, m_Chart_Scale(10000) // a benign value
+	, m_ChartType(CHART_TYPE_UNKNOWN)
+	, m_ChartFamily(CHART_FAMILY_UNKNOWN)
+	, bReadyToRender(false)
+	, Chart_Error_Factor(0)
+	, m_Chart_Skew(0.0)
+	, m_nCOVREntries(0)
+	, m_pCOVRTablePoints(NULL)
+	, m_pCOVRTable(NULL)
+	, m_nNoCOVREntries(0)
+	, m_pNoCOVRTablePoints(NULL)
+	, m_pNoCOVRTable(NULL)
 {
-	pcached_bitmap = NULL;
-
-	m_depth_unit_id = DEPTH_UNIT_UNKNOWN;
-
 	pThumbData = new ThumbData;
-
-	m_global_color_scheme = global::GLOBAL_COLOR_SCHEME_RGB;
-
-	bReadyToRender = false;
-
-	Chart_Error_Factor = 0;
-
-	m_Chart_Scale = 10000; // a benign value
-	m_Chart_Skew = 0.0;
-
-	m_nCOVREntries = 0;
-	m_pCOVRTable = NULL;
-	m_pCOVRTablePoints = NULL;
-
-	m_nNoCOVREntries = 0;
-	m_pNoCOVRTable = NULL;
-	m_pNoCOVRTablePoints = NULL;
-
-	m_EdDate.Set(1, wxDateTime::Jan, 2000);
-
-	m_projection = PROJECTION_MERCATOR; // default
 }
 
 ChartBase::~ChartBase()
@@ -65,18 +58,23 @@ ChartBase::~ChartBase()
 
 	// Free the COVR tables
 
-	for (unsigned int j = 0; j < (unsigned int)m_nCOVREntries; ++j)
+	for (int j = 0; j < m_nCOVREntries; ++j)
 		free(m_pCOVRTable[j]);
 
 	free(m_pCOVRTable);
 	free(m_pCOVRTablePoints);
+
+	// FIXME: what about releasing 'm_pNoCOVRTablePoints'?
+	// FIXME: what about releasing 'm_pNoCOVRTable'?
 }
 
 void ChartBase::Activate(void)
-{}
+{
+}
 
 void ChartBase::Deactivate(void)
-{}
+{
+}
 
 OcpnProjType ChartBase::GetChartProjectionType() const
 {

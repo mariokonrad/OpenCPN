@@ -457,8 +457,8 @@ TC_Error_Code TCDS_Binary_Harmonic::LoadData(const wxString& data_file_path)
 				unit_c = findunit(psd->unit);
 
 			if (unit_c != -1) {
-				strncpy(psd->units_conv, get_unit(unit_c).name, sizeof(psd->units_conv) - 1);
-				strncpy(psd->units_abbrv, get_unit(unit_c).abbrv, sizeof(psd->units_abbrv) - 1);
+				strncpy(psd->units_conv, get_unit(unit_c).name.c_str(), sizeof(psd->units_conv) - 1);
+				strncpy(psd->units_abbrv, get_unit(unit_c).abbrv.c_str(), sizeof(psd->units_abbrv) - 1);
 			} else {
 				strncpy(psd->units_conv, psd->unit, sizeof(psd->units_conv) - 1);
 				strncpy(psd->units_abbrv, psd->unit, sizeof(psd->units_abbrv) - 1);

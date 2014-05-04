@@ -26,6 +26,7 @@
 
 #include <tide/TC_Error_Code.h>
 #include <wx/string.h>
+#include <string>
 
 namespace tide {
 
@@ -53,8 +54,8 @@ protected:
 
 	struct UnitInfo
 	{
-		char* name;
-		char* abbrv;
+		std::string name;
+		std::string abbrv;
 		unit_type type;
 		double conv_factor;
 	};

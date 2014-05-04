@@ -436,8 +436,8 @@ TC_Error_Code TCDS_Ascii_Harmonic::LoadHarmonicData(IDX_entry* pIDX)
 			unit_c = findunit(psd->unit);
 
 		if (unit_c != -1) {
-			strcpy(psd->units_conv, get_unit(unit_c).name);
-			strcpy(psd->units_abbrv, get_unit(unit_c).abbrv);
+			strncpy(psd->units_conv, get_unit(unit_c).name.c_str(), sizeof(psd->units_conv) - 1);
+			strncpy(psd->units_abbrv, get_unit(unit_c).abbrv.c_str(), sizeof(psd->units_abbrv) - 1);
 		}
 
 		// Get constituents

@@ -547,6 +547,7 @@ void MainFrame::OnActivate(wxActivateEvent& event)
 	}
 #endif
 
+	Raise();
 	event.Skip();
 }
 

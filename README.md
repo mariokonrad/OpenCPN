@@ -34,6 +34,8 @@ Notes
 The purpose of this repository is to achieve a refactored version
 of the OpenCPN navigation software.
 
+Since I cannot keep up with changes, this refactoring is abandoned.
+
 
 Changes
 -------
